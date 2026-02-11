@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: Add New Memory - Journey with Puchki</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "primary-50": "#fef2f2",
+                        "primary-100": "#fee2e2",
+                        "primary-200": "#fecaca",
+                        "primary-600": "#dc2626",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d1b1c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display antialiased min-h-screen">
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="max-w-4xl mx-auto p-4 md:p-8 pb-24">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Add New Memory</h1>
+            <p class="text-gray-500">Capture a special moment with Puchki</p>
+        </header>
+
+        <form action="/add" method="POST" enctype="multipart/form-data" class="space-y-8">
+
+            <!-- Details Section -->
+            <div
+                class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8">
+                <h2 class="text-xl font-semibold mb-6">Memory Details</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Title</label>
+                        <input type="text" name="title" required
+                            class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Date</label>
+                        <input type="text" name="date" placeholder="e.g. October 25, 2025" required
+                            class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary">
+                    </div>
+
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="block text-sm font-medium">Type / Category</label>
+                        <select name="type"
+                            class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary">
+                            <option value="date">Date Night</option>
+                            <option value="milestone">Milestone</option>
+                            <option value="trip">Trip</option>
+                            <option value="food">Food</option>
+                            <option value="movie">Movie</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="family">Family</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="block text-sm font-medium">Description / Story</label>
+                        <textarea name="description" rows="5" required
+                            class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary"
+                            placeholder="Write your heart out..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photos Section -->
+            <div
+                class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8">
+                <h2 class="text-xl font-semibold mb-6">Photos</h2>
+
+                <div class="space-y-4">
+                    <label class="block text-sm font-medium">Upload Photos</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label for="dropzone-file"
+                            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <span class="material-icons text-4xl text-gray-500 mb-2">cloud_upload</span>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                        class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Images only</p>
+                            </div>
+                            <input id="dropzone-file" name="photos" type="file" class="hidden" multiple
+                                accept="image/*" />
+                        </label>
+                    </div>
+                    <div id="preview-area" class="grid grid-cols-4 gap-4 mt-4"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-6">
+                <button type="submit"
+                    class="bg-primary hover:bg-primary-600 text-white font-medium py-3 px-8 rounded-lg shadow-lg transition-colors flex items-center gap-2">
+                    <span class="material-icons">send</span>
+                    Publish Memory
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script>
+        const fileInput = document.getElementById('dropzone-file');
+        const previewArea = document.getElementById('preview-area');
+
+        fileInput.addEventListener('change', function (e) {
+            previewArea.innerHTML = '';
+            const files = e.target.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.startsWith('image/')) continue;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const div = document.createElement('div');
+                    div.className = 'relative aspect-square rounded-lg overflow-hidden border border-gray-200';
+                    div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                    previewArea.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShaiX2 Memory Lane - The beautiful journey</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                        "paper-texture": "#fdfbf7",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    backgroundImage: {
+                        'tape-pattern': "url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cpath d=\\'M0 0h20v20H0z\\' fill=\\'%23ffffff\\' fill-opacity=\\'0.4\\'/%3E%3C/svg%3E')",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .paper-texture {
+            background-color: #f8f6f6;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        }
+        .polaroid-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0,0,0,0.02);
+        }
+        .timeline-container {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 overflow-hidden h-screen flex flex-col paper-texture">
+<nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-icons">favorite</span>
+</div>
+<div>
+<h1 class="font-bold text-lg text-gray-900 dark:text-white leading-tight">ShaiX2 Memory Lane</h1>
+<p class="text-xs text-primary font-medium">The beautiful journey of Shaiwal &amp; Shaila</p>
+</div>
+</div>
+<div class="hidden md:flex items-center space-x-6">
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors text-sm font-medium" href="#">Home</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors text-sm font-medium" href="#">Gallery</a>
+<a class="text-primary font-bold text-sm bg-primary/5 px-4 py-2 rounded-full" href="#">Timeline</a>
+</div>
+<button class="md:hidden text-gray-600 dark:text-gray-300">
+<span class="material-icons">menu</span>
+</button>
+</nav>
+<main class="flex-1 w-full h-full relative overflow-hidden flex items-center">
+<div class="absolute top-20 right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute bottom-10 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="timeline-container w-full h-full flex items-center overflow-x-auto px-10 md:px-32 space-x-12 py-20 no-scrollbar">
+<div class="flex-shrink-0 flex flex-col items-center justify-center space-y-4 w-64 text-center mr-8">
+<div class="w-20 h-20 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg border-2 border-primary/20">
+<span class="material-icons text-primary text-4xl">favorite_border</span>
+</div>
+<div>
+<h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">Our Story Begins</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 italic">"Every love story is beautiful, but ours is my favorite."</p>
+</div>
+</div>
+<div class="absolute left-0 right-0 top-1/2 h-0.5 bg-primary/20 border-t-2 border-dashed border-primary/30 w-[3000px] -z-10 transform -translate-y-1/2"></div>
+<div class="relative flex-shrink-0 w-80 group">
+<div class="absolute left-1/2 top-full h-12 w-0.5 bg-primary/30 border-l-2 border-dashed border-primary/30 -translate-x-1/2"></div>
+<div class="absolute left-1/2 top-[calc(100%+2.8rem)] w-4 h-4 bg-primary rounded-full -translate-x-1/2 ring-4 ring-white dark:ring-background-dark shadow-md z-10"></div>
+<div class="bg-white dark:bg-gray-800 p-4 pb-6 rounded-lg polaroid-shadow transform transition-transform duration-300 hover:-translate-y-2 hover:rotate-1 relative mb-12">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-primary/10 backdrop-blur-sm transform -rotate-1 opacity-80 z-20"></div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded mb-4 overflow-hidden relative">
+<img alt="Holding hands" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfLO6Nyq6nEwYhqb0yDy8NN4S7EO3vBWnaBW-zZHH_uqGgdDGzy8iaglmtMtRMxUoV_osDLj-d7QC4UbLWP0SAH_YVuC3RrLChqvA01C-s39Mti_blKNlvHMrA-KdBhJQ6vmNtqGhFNFZA5NkiNQcYTQnpCEcc62wAfw7Axw6pJ4MKQBY5xSgNA-93itXFCAzhRqm61M_fzjI_rb-FsKnRw7-bSlqEnF-q2QA0JEClhhd1vGWc31sqd8r4cSSTOpx4qo0MNfOtO3Rt"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<span class="font-display font-bold text-lg text-gray-900 dark:text-white">Matched on Hinge</span>
+<span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full">Dec 2021</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed">
+                            One swipe right changed everything. I almost didn't check the app that day!
+                        </p>
+</div>
+<div class="absolute -bottom-4 right-4 bg-white dark:bg-gray-700 shadow-md rounded-full px-3 py-1 flex items-center space-x-1 border border-gray-100 dark:border-gray-600 cursor-pointer hover:scale-110 transition-transform">
+<span class="text-lg">🥰</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">12</span>
+</div>
+</div>
+</div>
+<div class="relative flex-shrink-0 w-80 group mt-48">
+<div class="absolute left-1/2 bottom-full h-12 w-0.5 bg-primary/30 border-l-2 border-dashed border-primary/30 -translate-x-1/2"></div>
+<div class="absolute left-1/2 bottom-[calc(100%+2.8rem)] w-4 h-4 bg-primary rounded-full -translate-x-1/2 ring-4 ring-white dark:ring-background-dark shadow-md z-10"></div>
+<div class="bg-white dark:bg-gray-800 p-4 pb-6 rounded-lg polaroid-shadow transform transition-transform duration-300 hover:translate-y-2 hover:-rotate-1 relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-primary/10 backdrop-blur-sm transform rotate-2 opacity-80 z-20"></div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded mb-4 overflow-hidden relative">
+<img alt="Coffee cups" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcWgkpP7bIHKNEp1GEo1Ez4tUb5WC9_fOJD-0muSK7t1zrOaqo_KKvpcNRpI3KRqiKlJt3tmcsA6_4uhYv18FttCUllZdAwzaG8XGXlQeIM1A0Ogc4hCUKDEqQZ2KHOLvgFybaLdw8bkapUj3Vlnh0K4qQkckuKz5H7PBmq_AFmA7ZLsKNHyUUPeCE4ZOykGA4PzYx_cuKA23jJzbnbnq4Luv99YO7Fi8_Ku-pB1iTNJ0G0mLhu9zwLpF1-wcajTh0AjqFisd--EEi"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<span class="font-display font-bold text-lg text-gray-900 dark:text-white">First Date Coffee</span>
+<span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full">Jan 2022</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed">
+                            We met at Blue Tokai. We intended to stay for 30 minutes but talked for 4 hours straight.
+                        </p>
+</div>
+<div class="absolute -bottom-4 right-4 bg-white dark:bg-gray-700 shadow-md rounded-full px-3 py-1 flex items-center space-x-1 border border-gray-100 dark:border-gray-600 cursor-pointer hover:scale-110 transition-transform">
+<span class="text-lg">☕️</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">8</span>
+</div>
+</div>
+</div>
+<div class="relative flex-shrink-0 w-80 group">
+<div class="absolute left-1/2 top-full h-12 w-0.5 bg-primary/30 border-l-2 border-dashed border-primary/30 -translate-x-1/2"></div>
+<div class="absolute left-1/2 top-[calc(100%+2.8rem)] w-4 h-4 bg-primary rounded-full -translate-x-1/2 ring-4 ring-white dark:ring-background-dark shadow-md z-10"></div>
+<div class="bg-white dark:bg-gray-800 p-4 pb-6 rounded-lg polaroid-shadow transform transition-transform duration-300 hover:-translate-y-2 hover:rotate-1 relative mb-12">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-primary/10 backdrop-blur-sm transform -rotate-1 opacity-80 z-20"></div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded mb-4 overflow-hidden relative">
+<img alt="Running in field" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-b0vPJeB30LhH-MweXto260p23tFmbzOGgjxDCTBzayItqLBzQaLyq2lUsf8UAAce2RWOBZ8Hkfik5vONCa5SSwbAF9GTG8U0WubT2780ScHbjaw3EvIvE1lruUcYdOlvXNvhmHlkVWIgcSb78OVU_wEndzMUDHIoygFcDd9atfwy89PXvw4rdk3_eHAbCcnXoDgKyCblqpHyW9DNtn7d5flgc97LcR-vlOUUJY6dA4aWy3nmBycvmbw6ndI_XWb9LTq7ImTlTURu"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<span class="font-display font-bold text-lg text-gray-900 dark:text-white">First Trip Together</span>
+<span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full">Jun 2022</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed">
+                            Goa! The sunsets were magical, but getting lost on the scooter was the real adventure.
+                        </p>
+</div>
+<div class="absolute -bottom-4 right-4 bg-white dark:bg-gray-700 shadow-md rounded-full px-3 py-1 flex items-center space-x-1 border border-gray-100 dark:border-gray-600 cursor-pointer hover:scale-110 transition-transform">
+<span class="text-lg">✈️</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">24</span>
+</div>
+</div>
+</div>
+<div class="relative flex-shrink-0 w-80 group mt-48">
+<div class="absolute left-1/2 bottom-full h-12 w-0.5 bg-primary/30 border-l-2 border-dashed border-primary/30 -translate-x-1/2"></div>
+<div class="absolute left-1/2 bottom-[calc(100%+2.8rem)] w-4 h-4 bg-primary rounded-full -translate-x-1/2 ring-4 ring-white dark:ring-background-dark shadow-md z-10"></div>
+<div class="bg-white dark:bg-gray-800 p-4 pb-6 rounded-lg polaroid-shadow transform transition-transform duration-300 hover:translate-y-2 hover:-rotate-2 relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-primary/10 backdrop-blur-sm transform rotate-1 opacity-80 z-20"></div>
+<div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded mb-4 overflow-hidden relative">
+<img alt="Engagement ring" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkbONiLcYwPlzpIHOGeBM9jSy3JhlowNaWNDr_iSzNkctWgNm0GbjmtbkD0ChsJyI0BBeCJTUlTF87u-bJToPSNXkQ_mpUSbjskH9cMz-XV_8R7ujYw2Uz2LFTg5Vr63syRvfBrF9h8rGuTN7JhYEWESGCttMRbdQWR4RbYu3N4XriJN9GpZ_2qwEtAWXhp5cxhwvZa01F59Mc83dlUDqQSpJT1efqcTsiV2VR6tAfIIFRXrQcvNNOoB5JnMJRlU5g1FE4WK3Sf344"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-baseline">
+<span class="font-display font-bold text-lg text-gray-900 dark:text-white">She Said Yes!</span>
+<span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full">Today</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed">
+                            The best day of my life. I was so nervous I almost dropped the ring in the sand!
+                        </p>
+</div>
+<div class="absolute -bottom-4 right-4 bg-white dark:bg-gray-700 shadow-md rounded-full px-3 py-1 flex items-center space-x-1 border border-gray-100 dark:border-gray-600 cursor-pointer hover:scale-110 transition-transform">
+<span class="text-lg">💍</span>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">102</span>
+</div>
+</div>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center space-y-4 w-48 text-center ml-12">
+<div class="w-16 h-16 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg border-2 border-primary/20 hover:bg-primary/5 transition-colors cursor-pointer group">
+<span class="material-icons text-primary/50 group-hover:text-primary transition-colors text-3xl">add</span>
+</div>
+<div>
+<h3 class="font-bold text-xl text-gray-800 dark:text-white">To be continued...</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Add your next memory</p>
+</div>
+</div>
+<div class="w-20 flex-shrink-0"></div>
+</div>
+</main>
+<div class="fixed bottom-8 right-8 z-40">
+<button class="bg-primary hover:bg-red-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 group relative">
+<span class="material-icons text-2xl">add_a_photo</span>
+<span class="absolute right-full mr-4 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Add Memory</span>
+</button>
+</div>
+<div class="fixed bottom-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-800">
+<div class="h-full bg-primary w-1/3 rounded-r-full"></div>
+</div>
+
+</body></html>

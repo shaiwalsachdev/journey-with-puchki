@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShaiX2 - Shopping &amp; Metro Craziness</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4ab25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221c10",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .metro-lines {
+            background-image: 
+                linear-gradient(45deg, rgba(244, 171, 37, 0.05) 25%, transparent 25%, transparent 50%, rgba(244, 171, 37, 0.05) 50%, rgba(244, 171, 37, 0.05) 75%, transparent 75%, transparent);
+            background-size: 40px 40px;
+        }
+        .scollage-img {
+            transition: transform 0.3s ease;
+        }
+        .scollage-img:hover {
+            transform: scale(1.02) rotate(1deg);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Background Pattern -->
+<div class="fixed inset-0 metro-lines pointer-events-none z-0"></div>
+<!-- Main Container -->
+<div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+<!-- Navbar -->
+<nav class="flex items-center justify-between mb-16">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/30">
+                    S2
+                </div>
+<span class="text-xl font-bold tracking-tight">ShaiX2 <span class="text-primary opacity-60">Diaries</span></span>
+</div>
+<div class="hidden sm:flex items-center gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Timeline</a>
+<a class="text-primary font-bold" href="#">Memories</a>
+<a class="hover:text-primary transition-colors" href="#">Map</a>
+<button class="bg-white dark:bg-slate-800 p-2 rounded-full shadow-sm hover:shadow-md transition-shadow text-primary">
+<span class="material-icons-round">favorite</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+<!-- Left Column: Story & Ticket -->
+<div class="lg:col-span-5 flex flex-col gap-8 sticky top-8">
+<!-- Header Text -->
+<div class="space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+<span class="material-icons-round text-sm">local_mall</span>
+                        Shopping Spree
+                    </div>
+<h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
+                        Metro Madness &amp; <br/>
+<span class="text-primary inline-block transform -rotate-2">Bag Battles</span>
+</h1>
+<p class="text-lg text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
+                        Surviving the Delhi crowds with you is my favorite extreme sport. One day, two markets, and a lifetime of laughter.
+                    </p>
+</div>
+<!-- Metro Ticket Card -->
+<div class="group relative w-full transform transition-transform hover:-translate-y-1 duration-300">
+<!-- Ticket Holes -->
+<div class="absolute -left-3 top-1/2 w-6 h-6 bg-background-light dark:bg-background-dark rounded-full z-20"></div>
+<div class="absolute -right-3 top-1/2 w-6 h-6 bg-background-light dark:bg-background-dark rounded-full z-20"></div>
+<!-- Ticket Body -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700">
+<!-- Top Strip -->
+<div class="bg-primary h-2 w-full"></div>
+<div class="p-6 sm:p-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Date</p>
+<p class="text-2xl font-bold font-display">01 FEB 2026</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Time</p>
+<p class="text-2xl font-bold font-display">10:30 AM</p>
+</div>
+</div>
+<!-- Route Visual -->
+<div class="relative flex items-center justify-between py-6 my-2">
+<!-- Line -->
+<div class="absolute left-0 right-0 top-1/2 h-1 bg-slate-100 dark:bg-slate-700 -z-10"></div>
+<div class="absolute left-0 right-0 top-1/2 h-1 bg-primary w-2/3 -z-10 animate-pulse"></div>
+<!-- Start -->
+<div class="flex flex-col items-center gap-2 bg-white dark:bg-slate-800 px-2">
+<div class="w-4 h-4 rounded-full border-4 border-primary bg-white"></div>
+<span class="text-xs font-bold text-slate-500 uppercase">Karol Bagh</span>
+</div>
+<!-- Icon -->
+<div class="bg-primary text-white p-2 rounded-full shadow-lg shadow-primary/30 transform rotate-12">
+<span class="material-icons-round">directions_subway</span>
+</div>
+<!-- End -->
+<div class="flex flex-col items-center gap-2 bg-white dark:bg-slate-800 px-2">
+<div class="w-4 h-4 rounded-full border-4 border-slate-300 dark:border-slate-600 bg-white"></div>
+<span class="text-xs font-bold text-slate-500 uppercase">Lajpat Nagar</span>
+</div>
+</div>
+<div class="mt-4 pt-6 border-t border-dashed border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-icons-round text-slate-300">qr_code_2</span>
+<span class="text-xs font-mono text-slate-400">SHAI-X2-TOKEN-883</span>
+</div>
+<span class="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded">VALID FOREVER</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quote Bubble -->
+<div class="bg-primary text-white p-6 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-sm shadow-lg transform rotate-1 hover:rotate-0 transition-transform cursor-default relative">
+<span class="absolute -top-4 -right-2 text-6xl text-white opacity-20 font-serif">”</span>
+<p class="text-lg sm:text-xl font-medium italic leading-relaxed">
+                        Walking was so tiring but so much fun with you! Can't believe we managed to carry all those suit bags on the metro!
+                    </p>
+<div class="mt-4 flex items-center gap-2 opacity-80">
+<div class="h-px bg-white w-8"></div>
+<span class="text-sm font-bold">Shaila</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Photo Collage & Stats -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<!-- Main Collage -->
+<div class="grid grid-cols-2 gap-4 h-[600px]">
+<!-- Large vertical photo -->
+<div class="col-span-1 row-span-2 relative h-full group scollage-img">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-lg opacity-60 z-10"></div>
+<img alt="Couple laughing together in a colorful urban setting" class="w-full h-full object-cover rounded-lg shadow-md" data-alt="Couple laughing holding shopping bags" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLiBT7Kwlg1PEppMNhssi_0DnVpxq38Rnbit6pyPpz9aK2N7HyY_zksshoL2Cxpkth14qNSd39iXBZ8ageNcd61LQgew2N0MZGXPJqCvRR_TtDwGnfuKM5usnA1a2iOCkvwT9VgR2iyFBryW7-JAdsVitvJL9Gk9ASSMAMLRhMZiEOY0_Ij7zFg5IamO7HIUhMuHT2M3ZJVA4QoYPubAoVpPy_7GNP_FFokuG0rghILuDH0akOq-UAA5U1Sy6pnNLmvEgJoYwNyLu5"/>
+<div class="absolute bottom-4 left-4 right-4 z-20 text-white">
+<span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold mb-2 inline-block">Metro Station</span>
+<p class="font-medium text-sm">Waiting for the Yellow Line 🚇</p>
+</div>
+</div>
+<!-- Top right photo -->
+<div class="col-span-1 h-full relative group scollage-img">
+<img alt="Woman carrying multiple colorful shopping bags walking confidently" class="w-full h-full object-cover rounded-lg shadow-md" data-alt="Woman carrying many shopping bags" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcH6W9Y9-xEh8APh_Iu6eeuuNWhCIg85uXR17XIfklC5LW9AaIDmRP60ddp8kFFtxiTecKv15N_GuxNQCxiEsq09eGTepvR_WBhMniL2UMLt3izq9q2lxlj4mKeb-mSWBQL1E5gst1Z_bsfTJZbLITq-iqi8PzFr1fcS-m1F-VhJDnzA4ddf6FIJlIZcKRTwikvK7kpekti1LEH1669bBGIyrEHZaOnfOjwg05e0HMP8q2MkO9VxqgLf5DGEhkp_KUIfI64gdJ8b9_"/>
+</div>
+<!-- Bottom right photo -->
+<div class="col-span-1 h-full relative group scollage-img">
+<img alt="Vibrant Indian market street scene with fabrics and people" class="w-full h-full object-cover rounded-lg shadow-md" data-alt="Colorful fabric market stall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuxs-V8Wj08JA7NtR11z2D3WXUPn3l1Gg_2Cj8nI5OzT6owa9XkaQnP3oEFTWNc4LQe4yM5IXxI02LalcAQlYRxhs4AxqFrD1nlySKZ_-244_UHbdrcyw-yhVBl35e157vZahY-k0_EEMNX5oYb3BwcYVltcQQ66hZycZIU8nvbnOb0I2mgITJVJgE_wEf2_6kY6tJgBVddI1GQgNCpGEBuFmUv6s3WpM1sFo-Vo73m1uG9x_YD9DrXdAURKOnJeU5go1HVvTPZ4cX"/>
+<!-- Sticker Overlay -->
+<div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white dark:bg-slate-800 rounded-full shadow-xl flex items-center justify-center transform -rotate-12 z-30 border-4 border-background-light dark:border-background-dark">
+<span class="text-3xl">🛍️</span>
+</div>
+</div>
+</div>
+<!-- Stats of the Day -->
+<div class="mt-8">
+<h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+<span class="w-8 h-1 bg-primary rounded-full"></span>
+                        Stats of the Day
+                    </h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<!-- Stat 1 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center justify-center text-center group hover:border-primary transition-colors">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-3 group-hover:scale-110 transition-transform">
+<span class="material-icons-round">directions_walk</span>
+</div>
+<h4 class="text-3xl font-extrabold text-slate-800 dark:text-white mb-1">15,000+</h4>
+<p class="text-sm font-medium text-slate-500 uppercase tracking-wide">Steps Walked</p>
+</div>
+<!-- Stat 2 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center justify-center text-center group hover:border-primary transition-colors">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-3 group-hover:scale-110 transition-transform">
+<span class="material-icons-round">bolt</span>
+</div>
+<h4 class="text-xl font-extrabold text-slate-800 dark:text-white mb-1">Off Charts</h4>
+<p class="text-sm font-medium text-slate-500 uppercase tracking-wide">Craziness Level</p>
+</div>
+<!-- Stat 3 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center justify-center text-center group hover:border-primary transition-colors">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-3 group-hover:scale-110 transition-transform">
+<span class="material-icons-round">sentiment_very_dissatisfied</span>
+</div>
+<h4 class="text-xl font-extrabold text-slate-800 dark:text-white mb-1">Like Jelly</h4>
+<p class="text-sm font-medium text-slate-500 uppercase tracking-wide">Legs Feeling</p>
+</div>
+</div>
+</div>
+<!-- Map Snapshot (Abstract) -->
+<div class="relative w-full h-48 bg-slate-200 dark:bg-slate-700 rounded-lg overflow-hidden mt-4 group cursor-pointer">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity filter grayscale group-hover:grayscale-0" data-alt="Abstract map view of Delhi streets" data-location="New Delhi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS6e75Bdrs_AWUIe9BJx0hRWWdqGAX1fov3Q38zkA80LEgOWIoQ4T26HMFEjrP2QPhI0aGPJxul1Vqv5WcZMp8i1RBjP4tfiU4ZGFDErGweu-Swnt8CwGJnIE3nSLOwMk2cJFLa8pP3QBTQGzBdbmdWy6Pw152hmCfYDEntV5tOZF-SteSFaLrcBw4WfeHlFsBX9irIovx33w2P4pLrRiuB2rJzsU0cmFps8K6FBNioavbHpROYjphNmlRlfHbe716YcDG1HWnnoEY"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="bg-white dark:bg-slate-800 text-slate-800 dark:text-white px-5 py-2 rounded-full font-bold shadow-lg flex items-center gap-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+<span class="material-icons-round text-primary">map</span>
+                            View Route Map
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Navigation Pill -->
+<div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+<div class="bg-slate-900/90 dark:bg-white/90 backdrop-blur-md text-white dark:text-slate-900 px-6 py-3 rounded-full shadow-2xl flex items-center gap-6 border border-white/10 dark:border-slate-200">
+<button class="hover:text-primary transition-colors">
+<span class="material-icons-round text-xl">arrow_back</span>
+</button>
+<span class="font-bold text-sm tracking-wide">Memory 12 of 48</span>
+<button class="hover:text-primary transition-colors">
+<span class="material-icons-round text-xl">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

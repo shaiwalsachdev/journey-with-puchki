@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Roka & Blessings - Journey with Puchki</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c91352",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211116",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100">
+
+    {% include 'partials/navbar.html' %}
+
+    <!-- Hero -->
+    <section class="relative h-[60vh] md:h-[80vh] w-full overflow-hidden">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4A4CsdbKpO907xqS2mkzsb8sHC2wyqD2GSjI8N_A1A6K2Hbgs6gMp7SQjh0K6ml9Zjtp-78dQN3DVBB4Ns6Mudj43lw20GPSKefIGGjkBqbjynigS4x27DHYaF8v_GMna3Sv5_W-cyeNBSHWvAcE4Ng1KNWkESAEWD7dIXRrKPywR0UqfTLISuXjmCxCWcM4qw2skbDj6ceSqb4gSK4wPLQ6ahTRypguSkylO5-Bc0PgdhHIE-A9ENfrEi55f4t9NU27P-NwHveCq"
+            class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-12 left-8 md:left-12 text-white">
+            <span
+                class="bg-primary px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-4 inline-block">March
+                12, 2026</span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">The Grand Roka</h1>
+            <p class="text-xl italic opacity-90">"Where two families become one."</p>
+        </div>
+
+        <!-- Kundli Seal -->
+        <div
+            class="absolute bottom-12 right-8 md:right-12 w-32 h-32 bg-primary/90 rounded-full flex flex-col items-center justify-center text-white border-4 border-yellow-200 animate-pulse hidden md:flex">
+            <span class="text-3xl font-bold">32/36</span>
+            <span class="text-[10px] uppercase font-bold">Kundli Match</span>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold italic text-primary">Milestones of Union</h2>
+            <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+            <!-- Card 1 -->
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-primary/10">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="material-icons text-primary bg-primary/10 p-2 rounded-full">home</span>
+                    <span class="text-primary font-bold text-xs tracking-widest">OCT 11, 2025</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">First Meet at Home</h3>
+                <p class="text-gray-600 dark:text-gray-400 italic">"Nervous smiles, warm chai, and the quiet realization
+                    that our families felt like home."</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-primary/10">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="material-icons text-primary bg-primary/10 p-2 rounded-full">restaurant</span>
+                    <span class="text-primary font-bold text-xs tracking-widest">OCT 18, 2025</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Agreement at Karigari</h3>
+                <p class="text-gray-600 dark:text-gray-400 italic">"Over shared plates and stories at Karigari, our
+                    families gave the formal nod."</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-primary/10">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="material-icons text-primary bg-primary/10 p-2 rounded-full">loyalty</span>
+                    <span class="text-primary font-bold text-xs tracking-widest">JAN 10, 2026</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Finalizing the Roka</h3>
+                <p class="text-gray-600 dark:text-gray-400 italic">"The commitment was sealed. Dates were fixed, hearts
+                    were full."</p>
+            </div>
+        </div>
+
+        <!-- Blessings -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">With Parental Blessings</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Our union is built on the strong
+                foundation of support and love from those who raised us.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="text-center">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuEvyR3B3v_HV-ewgSDEyZsGKOzUmuPAqw_Wacv-QEbQN8jL64bi38vrMdJxhufx_x5XzyPtYhY4CHo3vHDhl6eR3gzmZXlBGoKLaB1paAvaCq6FAXVIuTUekdGEiAC1Zyp1SEVzCmS4M-bwhSiVcqmT2L60YzJCzzo6a7vc1FrMULQztWXbt37CUmtUia4KrfYie3EUMiDzN4WOhzeqgzqyYnZFRyBHbtasBBut6My2TmWlWjCR183ldxtSQcTFVGET355f95wz9l"
+                    class="w-full h-80 object-cover rounded-xl shadow-lg mb-4">
+                <h4 class="font-bold text-lg">The Gupta Family</h4>
+            </div>
+            <div class="text-center">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyB7KBX0EG70fd47YdAJ6Qci45cD1YwDhAdf71Si-wKugc82GerYRpoq86A91oK_LvGS05UL5A3lDppzYLixqT-baIdn4Mpai7RstmpvO8-FcUEbXF8IipQ3Lq0cXdMGR6qvlIsMvyPmzunWeSssQwqBhALh06fKIoOaqvL5R9s9cJl8jG5eQ7iS_clxXAzJtf3CqwieJbjHweLwSsGF4ogsyQLgEVBHdJV0HIFZlOfRfRf-w-ItlwrMPt_T8KNO4ezoBeDUx_eDVV"
+                    class="w-full h-80 object-cover rounded-xl shadow-lg mb-4">
+                <h4 class="font-bold text-lg">The Sharma Family</h4>
+            </div>
+        </div>
+
+    </section>
+
+    {% include 'partials/footer.html' %}
+
+</body>
+
+</html>

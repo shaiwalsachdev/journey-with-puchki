@@ -1,0 +1,455 @@
+[
+    {
+        "id": 1,
+        "title": "Pasta Date",
+        "description": "Valid for one homemade pasta dinner or fancy Italian restaurant visit. Your pick!",
+        "icon": "\ud83c\udf5d",
+        "is_redeemed": true,
+        "type": "standard",
+        "fine_print": "*Garlic breath included",
+        "redeemed_date": "Feb 12, 2026"
+    },
+    {
+        "id": 2,
+        "title": "Unlimited Hugs",
+        "description": "Redeemable anytime, anywhere. Duration: As long as needed.",
+        "icon": "\ud83e\udd17",
+        "is_redeemed": true,
+        "type": "standard",
+        "fine_print": "*Squeezing permitted",
+        "redeemed_date": "Feb 12, 2026"
+    },
+    {
+        "id": 3,
+        "title": "Movie Veto",
+        "description": "One free pass to skip a horror movie.",
+        "icon": "\ud83c\udfac",
+        "is_redeemed": true,
+        "redeemed_date": "Oct 12",
+        "type": "standard",
+        "fine_print": null
+    },
+    {
+        "id": 4,
+        "title": "One Free Kiss",
+        "description": "Good for one (1) passionate kiss. No expiration date.",
+        "icon": "\ud83d\ude18",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "*Lip balm recommended"
+    },
+    {
+        "id": 5,
+        "title": "Road Trip to Mountains",
+        "description": "Pack your bags, we are going to the hills! Maggi and chai included.",
+        "icon": "kh",
+        "is_redeemed": false,
+        "type": "special",
+        "fine_print": "Driver (me) included."
+    },
+    {
+        "id": 6,
+        "title": "Breakfast in Bed",
+        "description": "You stay in bed, I bring the food. Pancakes or Parathas?",
+        "icon": "\ud83e\udd5e",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "Crumbs are inevitable."
+    },
+    {
+        "id": 7,
+        "title": "Back Massage",
+        "description": "15 minutes of relaxation. No complaints.",
+        "icon": "\ud83d\udc86\u200d\u2640\ufe0f",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "Oil optional."
+    },
+    {
+        "id": 8,
+        "title": "Tech Detox Day",
+        "description": "No phones for 24 hours. Just us.",
+        "icon": "\ud83d\udcf5",
+        "is_redeemed": false,
+        "type": "challenge",
+        "fine_print": "Emergency calls only."
+    },
+    {
+        "id": 9,
+        "title": "Foreign Trip: Europe",
+        "description": "One day, we fly to Paris. This coupon is a promise.",
+        "icon": "\u2708\ufe0f",
+        "is_redeemed": false,
+        "type": "dream",
+        "fine_print": "Visa approval pending."
+    },
+    {
+        "id": 10,
+        "title": "Sushi Night",
+        "description": "All you can eat Sushi date.",
+        "icon": "\ud83c\udf63",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "Chopsticks mandatory."
+    },
+    {
+        "id": 11,
+        "title": "Masterchef Shaiwal",
+        "description": "I cook a 3-course meal for you.",
+        "icon": "\ud83d\udc68\u200d\ud83c\udf73",
+        "is_redeemed": false,
+        "type": "special",
+        "fine_print": "Might result in a messy kitchen."
+    },
+    {
+        "id": 12,
+        "title": "Late Night Drive",
+        "description": "Ice cream run at 2 AM.",
+        "icon": "\ud83d\ude97",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "Music volume up."
+    },
+    {
+        "id": 13,
+        "title": "Personal Photographer",
+        "description": "I take 100 photos of you until we get the perfect Instagram shot.",
+        "icon": "\ud83d\udcf8",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "Angles matter."
+    },
+    {
+        "id": 14,
+        "title": "Adventure Day",
+        "description": "Hiking, kayaking, or something crazy.",
+        "icon": "\ud83e\uddd7\u200d\u2642\ufe0f",
+        "is_redeemed": false,
+        "type": "special",
+        "fine_print": "Safety gear provided."
+    },
+    {
+        "id": 15,
+        "title": "Shopping Spree",
+        "description": "I carry all the bags. No questions asked.",
+        "icon": "\ud83d\udecd\ufe0f",
+        "is_redeemed": false,
+        "type": "special",
+        "fine_print": "Credit card limit applies."
+    },
+    {
+        "id": 16,
+        "title": "Board Game Night",
+        "description": "We play Catan or Monopoly. Checkmate.",
+        "icon": "\ud83c\udfb2",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "No flipping the board."
+    },
+    {
+        "id": 17,
+        "title": "Candle Light Dinner (Home)",
+        "description": "Romantic setup at home. Music, wine, and dim lights.",
+        "icon": "\ud83d\udd6f\ufe0f",
+        "is_redeemed": false,
+        "type": "special",
+        "fine_print": "Dress code: Fancy."
+    },
+    {
+        "id": 18,
+        "title": "Yes Day",
+        "description": "I say YES to everything for 12 hours.",
+        "icon": "\u2705",
+        "is_redeemed": false,
+        "type": "challenge",
+        "fine_print": "Within legal limits."
+    },
+    {
+        "id": 19,
+        "title": "Movie Marathon",
+        "description": "We watch an entire trilogy in one go.",
+        "icon": "\ud83c\udf7f",
+        "is_redeemed": false,
+        "type": "standard",
+        "fine_print": "Popcorn refills included."
+    },
+    {
+        "id": 20,
+        "title": "Star Gazing",
+        "description": "Drive away from the city lights to see the stars.",
+        "icon": "\u2728",
+        "is_redeemed": false,
+        "type": "romantic",
+        "fine_print": "Blanket required."
+    },
+    {
+        "id": 21,
+        "title": "Compliment Barrage",
+        "description": "I tell you 10 things I love about you right now.",
+        "icon": "\ud83e\udd70",
+        "is_redeemed": false,
+        "type": "romantic",
+        "fine_print": "Prepare to blush."
+    },
+    {
+        "id": 22,
+        "title": "Dance Party",
+        "description": "Just us dancing in the living room like maniacs.",
+        "icon": "\ud83d\udc83",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "Bad moves encouraged."
+    },
+    {
+        "id": 23,
+        "title": "Pizza Party",
+        "description": "Order the largest pizza available.",
+        "icon": "\ud83c\udf55",
+        "is_redeemed": false,
+        "type": "food",
+        "fine_print": "Extra cheese."
+    },
+    {
+        "id": 24,
+        "title": "Bubble Bath",
+        "description": "I draw a bath with bubbles and candles for you.",
+        "icon": "\ud83d\udec1",
+        "is_redeemed": false,
+        "type": "relax",
+        "fine_print": "Rubber ducky optional."
+    },
+    {
+        "id": 25,
+        "title": "Dessert First",
+        "description": "We eat dessert before dinner.",
+        "icon": "\ud83c\udf70",
+        "is_redeemed": false,
+        "type": "food",
+        "fine_print": "Sugar rush warning."
+    },
+    {
+        "id": 26,
+        "title": "Karaoke Night",
+        "description": "Sing our hearts out (badly).",
+        "icon": "\ud83c\udfa4",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "Earplugs not included."
+    },
+    {
+        "id": 27,
+        "title": "Book Store Date",
+        "description": "We spend hours browsing books.",
+        "icon": "\ud83d\udcda",
+        "is_redeemed": false,
+        "type": "date",
+        "fine_print": "Buying books allowed."
+    },
+    {
+        "id": 28,
+        "title": "Picnic in the Park",
+        "description": "Sandwiches, fruits, and sunshine.",
+        "icon": "\ud83e\uddfa",
+        "is_redeemed": false,
+        "type": "date",
+        "fine_print": "Check weather forecast."
+    },
+    {
+        "id": 29,
+        "title": "Gaming Partner",
+        "description": "I play whatever game you want for 2 hours.",
+        "icon": "\ud83c\udfae",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "No rage quitting."
+    },
+    {
+        "id": 30,
+        "title": "Surprise Date",
+        "description": "I plan everything. You just show up.",
+        "icon": "\ud83c\udf81",
+        "is_redeemed": false,
+        "type": "special",
+        "fine_print": "Wear comfy shoes."
+    },
+    {
+        "id": 31,
+        "title": "Be Lazy Together",
+        "description": "A whole day of doing absolutely nothing.",
+        "icon": "\ud83e\udda5",
+        "is_redeemed": false,
+        "type": "relax",
+        "fine_print": "Pajamas mandatory."
+    },
+    {
+        "id": 32,
+        "title": "Make a Reel",
+        "description": "We make a trending reel together.",
+        "icon": "\ud83c\udfa5",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "Multiple takes expected."
+    },
+    {
+        "id": 33,
+        "title": "Ice Skating",
+        "description": "Let's fall on ice together.",
+        "icon": "\u26f8\ufe0f",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "Hold hands tight."
+    },
+    {
+        "id": 34,
+        "title": "DIY Project",
+        "description": "We build or paint something together.",
+        "icon": "\ud83c\udfa8",
+        "is_redeemed": false,
+        "type": "creative",
+        "fine_print": "Might get messy."
+    },
+    {
+        "id": 35,
+        "title": "Visit the Zoo",
+        "description": "See the animals!",
+        "icon": "\ud83e\udd81",
+        "is_redeemed": false,
+        "type": "date",
+        "fine_print": "Don't feed the lions."
+    },
+    {
+        "id": 36,
+        "title": "Foreign Trip: Japan",
+        "description": "Cherry Blossoms and Ramen.",
+        "icon": "\ud83c\udf38",
+        "is_redeemed": false,
+        "type": "dream",
+        "fine_print": "Anime marathon prep."
+    },
+    {
+        "id": 37,
+        "title": "Foreign Trip: Bali",
+        "description": "Beaches and swings.",
+        "icon": "\ud83c\udfd6\ufe0f",
+        "is_redeemed": false,
+        "type": "dream",
+        "fine_print": "Sunscreen needed."
+    },
+    {
+        "id": 38,
+        "title": "Try New Cuisine",
+        "description": "We eat something we can't pronounce.",
+        "icon": "\ud83c\udf72",
+        "is_redeemed": false,
+        "type": "food",
+        "fine_print": "Be brave."
+    },
+    {
+        "id": 39,
+        "title": "Sunset Watch",
+        "description": "Just sitting and watching the sun go down.",
+        "icon": "\ud83c\udf05",
+        "is_redeemed": false,
+        "type": "romantic",
+        "fine_print": "Peace and quiet."
+    },
+    {
+        "id": 40,
+        "title": "Write a Letter",
+        "description": "I write you a handwritten love letter.",
+        "icon": "\ud83d\udc8c",
+        "is_redeemed": false,
+        "type": "romantic",
+        "fine_print": "Sealed with a kiss."
+    },
+    {
+        "id": 41,
+        "title": "Head Massage",
+        "description": "Champi time!",
+        "icon": "\ud83d\udc86\u200d\u2642\ufe0f",
+        "is_redeemed": false,
+        "type": "relax",
+        "fine_print": "Relax max."
+    },
+    {
+        "id": 42,
+        "title": "Street Food Run",
+        "description": "Golgappe, Momos, and Chaat.",
+        "icon": "\ud83e\udd5f",
+        "is_redeemed": false,
+        "type": "food",
+        "fine_print": "Spicy chutney challenge."
+    },
+    {
+        "id": 43,
+        "title": "Double Date",
+        "description": "We go out with friends.",
+        "icon": "\ud83d\udc6b",
+        "is_redeemed": false,
+        "type": "social",
+        "fine_print": "We are the best couple there."
+    },
+    {
+        "id": 44,
+        "title": "Arcade Night",
+        "description": "Air hockey battle.",
+        "icon": "\ud83d\udd79\ufe0f",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "I will let you win (maybe)."
+    },
+    {
+        "id": 45,
+        "title": "Museum Visit",
+        "description": "Let's be intellectual.",
+        "icon": "\ud83c\udfdb\ufe0f",
+        "is_redeemed": false,
+        "type": "date",
+        "fine_print": "No touching the art."
+    },
+    {
+        "id": 46,
+        "title": "Coffee Date",
+        "description": "Cute cafe and conversation.",
+        "icon": "\u2615",
+        "is_redeemed": false,
+        "type": "date",
+        "fine_print": "Latte art required."
+    },
+    {
+        "id": 47,
+        "title": "Rooftop Dinner",
+        "description": "Dinner under the sky.",
+        "icon": "\ud83c\udf03",
+        "is_redeemed": false,
+        "type": "romantic",
+        "fine_print": "Windy hair alert."
+    },
+    {
+        "id": 48,
+        "title": "Long Walk",
+        "description": "Just walking and talking.",
+        "icon": "\ud83d\udeb6\u200d\u2642\ufe0f",
+        "is_redeemed": false,
+        "type": "romantic",
+        "fine_print": "Hand holding mandatory."
+    },
+    {
+        "id": 49,
+        "title": "Make Cocktails",
+        "description": "We become bartenders for the night.",
+        "icon": "\ud83c\udf78",
+        "is_redeemed": false,
+        "type": "fun",
+        "fine_print": "Drink responsibly."
+    },
+    {
+        "id": 50,
+        "title": "Secret Wish",
+        "description": "Whisper it in my ear and I'll make it happen.",
+        "icon": "\ud83e\uddde\u200d\u2642\ufe0f",
+        "is_redeemed": false,
+        "type": "wildcard",
+        "fine_print": "Within reason."
+    }
+]

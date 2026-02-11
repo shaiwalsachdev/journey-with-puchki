@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Vault - ShaiX2 Forever</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4ab25",
+                        "primary-dark": "#c9860b",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221c10",
+                        "parchment": "#fdfbf7",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"]
+                    },
+                    backgroundImage: {
+                        'parchment-pattern': "url('data:image/svg+xml,%3Csvg width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 100 100\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cfilter id=\\'noise\\' x=\\'0\\' y=\\'0\\'%3E%3CfeTurbulence type=\\'fractalNoise\\' baseFrequency=\\'0.65\\' numOctaves=\\'3\\' stitchTiles=\\'stitch\\'/%3E%3C/filter%3E%3Crect width=\\'100\\' height=\\'100\\' filter=\\'url(%23noise)\\' opacity=\\'0.08\\'/%3E%3C/svg%3E')",
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .wax-seal {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen bg-parchment-pattern">
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="max-w-7xl mx-auto px-4 py-12 flex flex-col items-center">
+        <div class="text-center mb-16 max-w-2xl mx-auto">
+            <h1
+                class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300">
+                Future Love Letters
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300 italic">"Words waiting for their perfect moment."</p>
+        </div>
+
+        <!-- Add Letter Button (Links to new form modal in future) -->
+        <div class="mb-12">
+            <button onclick="alert('Letter writing feature coming soon!')"
+                class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-primary/30 transform transition hover:-translate-y-1 flex items-center gap-2">
+                <span class="material-icons">add_circle</span>
+                Seal a New Letter
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+
+            {% for letter in letters %}
+            <div class="group relative perspective float-animation">
+                <div
+                    class="relative bg-white dark:bg-[#262015] rounded-xl h-full shadow-md border border-gray-200 dark:border-gray-800 overflow-hidden">
+
+                    {% if letter.is_locked %}
+                    <!-- Locked State -->
+                    <div
+                        class="relative z-10 p-6 flex flex-col items-center justify-center h-full text-center space-y-4">
+                        <div
+                            class="wax-seal w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-lg relative group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons text-white drop-shadow-md">lock</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-1">{{ letter.title }}</h3>
+                            <p class="text-sm text-primary font-medium tracking-wide">Opens: {{ letter.open_date }}</p>
+                        </div>
+                        <p class="text-xs text-gray-400">Locked until the perfect time.</p>
+                    </div>
+                    {% else %}
+                    <!-- Unlocked State -->
+                    <div
+                        class="relative h-full border border-dashed border-primary/20 rounded-lg p-6 flex flex-col bg-parchment-pattern">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">Unlocked</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">{{ letter.title }}</h3>
+                        <p class="text-gray-500 text-sm line-clamp-3 italic">"{{ letter.preview }}..."</p>
+                        <div class="mt-6 pt-4 border-t border-primary/10 flex justify-between items-center">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">{{ letter.created_date
+                                }}</span>
+                            <button class="text-primary font-bold text-sm flex items-center gap-1">
+                                Read <span class="material-icons text-sm">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Example Locked Card (If no data) -->
+            {% if not letters %}
+            <div class="group relative perspective float-animation">
+                <div
+                    class="relative bg-white dark:bg-[#262015] rounded-xl h-full shadow-md border border-gray-200 dark:border-gray-800 overflow-hidden p-6 text-center">
+                    <div
+                        class="wax-seal w-16 h-16 rounded-full bg-[#d64045] mx-auto flex items-center justify-center shadow-lg mb-4">
+                        <span class="material-icons text-white">favorite</span>
+                    </div>
+                    <h3 class="text-lg font-bold">1st Anniversary</h3>
+                    <p class="text-sm text-gray-400">Opens: Aug 30, 2026</p>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Journey with Puchki - - Meeting your friend</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Dancing+Script:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+            extend: {
+                colors: {
+                    "primary": "#ee9d2b",
+                    "background-light": "#f8f7f6",
+                    "background-dark": "#221a10",
+                    "neutral-dark": "#362e24", // Derived from primary hue
+                    "neutral-light": "#fffaf2", // Derived from primary hue
+                },
+                fontFamily: {
+                    "display": ["Plus Jakarta Sans", "sans-serif"],
+                    "handwriting": ["Dancing Script", "cursive"],
+                },
+                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "2xl": "4rem", "full": "9999px"},
+                backgroundImage: {
+                    'vignette': 'radial-gradient(circle, transparent 40%, rgba(34, 26, 16, 0.8) 100%)',
+                }
+            },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #221a10; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ee9d2b; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d48b25; 
+        }
+        
+        .fade-mask {
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 antialiased min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Back Navigation -->
+<div class="fixed top-8 left-8 z-50">
+<button class="group flex items-center gap-3 bg-white/10 dark:bg-black/20 backdrop-blur-md px-5 py-3 rounded-full border border-white/10 hover:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-primary/20">
+<span class="material-icons text-white dark:text-gray-200 group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="text-sm font-medium text-white dark:text-gray-200 hidden sm:block">Back to Timeline</span>
+</button>
+</div>
+<!-- Music Player Widget -->
+<div class="fixed bottom-8 right-8 z-50">
+<div class="flex items-center gap-4 bg-background-dark/90 dark:bg-neutral-dark/90 backdrop-blur-lg pr-6 pl-2 py-2 rounded-full border border-primary/20 shadow-2xl shadow-primary/10 animate-fade-in-up">
+<div class="relative w-12 h-12 rounded-full overflow-hidden bg-primary/20 shrink-0 border border-primary/30 flex items-center justify-center group cursor-pointer">
+<img alt="album cover art vinyl" class="w-full h-full object-cover opacity-80 group-hover:opacity-40 transition-opacity absolute inset-0" data-alt="Abstract vinyl record album cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEI1rNCGzCli9oe-Kc-Q1klQfuorOxM-FCcehD38_ZxkAe1cmNl2QivdxAG7iaJUHJxUNXUtKJMWBc6ayh0vbU2gxKPOtL-Uc909yvFEGX-7WAg9-ufSpFN01-RzaNiz7zlNa2rR5DbfxBglpe1CDPiaRAQMLBPnB8YI2ujr5fy0Gt5FO-8Of37qmv5lSt1HBNRvIswpySu2bRcFNFI_WSZ1JCivTbo4S6cmljmwl6IQRDW6z-6cam6e6YiT7zW-BhWH_fe4oZyZfu"/>
+<span class="material-icons text-white z-10 opacity-0 group-hover:opacity-100 transition-opacity">pause</span>
+<!-- Equalizer Animation Simulation -->
+<div class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-100 group-hover:opacity-0 transition-opacity">
+<div class="w-[2px] h-3 bg-white/80 animate-[pulse_1s_ease-in-out_infinite]"></div>
+<div class="w-[2px] h-5 bg-white/80 animate-[pulse_1.2s_ease-in-out_infinite]"></div>
+<div class="w-[2px] h-4 bg-white/80 animate-[pulse_0.8s_ease-in-out_infinite]"></div>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-primary uppercase tracking-wider">Now Playing</span>
+<span class="text-sm font-semibold text-white truncate max-w-[120px]">Perfect - Ed Sheeran</span>
+</div>
+</div>
+</div>
+<!-- Hero Section -->
+<header class="relative w-full h-[70vh] lg:h-[85vh]">
+<!-- Hero Image -->
+<div class="absolute inset-0 w-full h-full">
+<img alt="Candle light dinner setting with warm lights" class="w-full h-full object-cover object-center" data-alt="Atmospheric candle light dinner table setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL3AfcZjIgJVtl_wS9A11OhBjnfMC9Qg8Vk2OftfDaXGzfvzvY9GZT_vJdT3kXHIn0nxLXEsq3uxNGwDWxsB2r8llaMU7SGasShcOjd-K7D6ZqtxxnpldVy7TAhUMfl6X1UtTZgAOFq-TyL2HotV8668TKCUEFh2jl2ZGezmiaWxcKTI--BwKXDeeAzthUgyz8Cwc5n8wGeDPaBOW-aCd89DWMawQ_d6PLTo1ijGvKfw0qugRF0MqGuCi9UZvKYbTI7Xtk2dbB-nJc"/>
+<!-- Gradient Overlay for readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent"></div>
+<div class="absolute inset-0 bg-vignette pointer-events-none"></div>
+</div>
+<!-- Title Block -->
+<div class="absolute bottom-0 left-0 w-full p-8 md:p-16 lg:p-24 flex flex-col items-start gap-4 z-10">
+<div class="flex items-center gap-3 mb-2">
+<span class="px-4 py-1.5 rounded-full bg-primary/20 text-primary border border-primary/30 text-sm font-semibold tracking-wide backdrop-blur-sm">
+                    December 20, 2025
+                </span>
+<span class="flex items-center gap-1 text-gray-300 text-sm font-medium px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+<span class="material-icons text-primary text-sm">location_on</span>
+                    Music &amp; Mountains, GK2
+                </span>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-none drop-shadow-2xl">
+                Candle Light<br/>
+<span class="text-primary/90 italic font-serif">Dinner</span>
+</h1>
+</div>
+</header>
+<!-- Main Content Flow -->
+<main class="relative z-10 -mt-12 md:-mt-20 px-4 md:px-12 lg:px-24 pb-32 max-w-7xl mx-auto">
+<!-- Narrative Card (Sticky Note Style) -->
+<div class="bg-neutral-dark border border-white/5 shadow-2xl rounded-2xl p-8 md:p-12 mb-20 relative overflow-hidden backdrop-blur-sm group hover:border-primary/30 transition-colors duration-500">
+<!-- Decorative Elements -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
+<div class="absolute bottom-0 left-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -ml-10 -mb-10"></div>
+<div class="relative z-10 flex flex-col md:flex-row gap-8 md:gap-16 items-start">
+<div class="md:w-1/3 shrink-0">
+<div class="aspect-[3/4] rounded-xl overflow-hidden rotate-[-2deg] border-4 border-white/10 shadow-lg transform transition-transform group-hover:rotate-0 duration-500">
+<img alt="Two glasses of red wine toasting" class="w-full h-full object-cover" data-alt="Close up of wine glasses clinking" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiXXC5wT0wFlReVHiyY2CkdPsE-kzuNhkV2Qn6RW0AJGLbpzwCStFVulQ2Lzu301-ROqKYZnZC-fAhlxHVeBjfdOpTxzW76JDB63r3EgRp41OofONtvnY6kQvW-Sequbhx0GRRkPdBLhS6ez6YAaloQMAp25tnZ9UIhYbvp_iSy-P50vLjVi_q79Z-Vw6jpsRTjHKBxhof9tphs69dTUljvDNL7Sam15h5MpocxcZObXm1ZHXqCK-w97js40Rlp7epriMzghBTSOGr"/>
+</div>
+</div>
+<div class="md:w-2/3 pt-4">
+<span class="material-icons text-primary text-4xl mb-6 opacity-80">format_quote</span>
+<p class="font-handwriting text-3xl md:text-4xl lg:text-5xl text-gray-200 leading-relaxed mb-6">amazing meeting your friend Sumedha and we had most amazing best asian food at Hichki and one of most memorable days for us. Eldeco Centre cafes Hichki is a gem. </p>
+<div class="flex items-center gap-4 mt-8 pt-8 border-t border-white/10">
+<img alt="User Avatar" class="w-12 h-12 rounded-full border-2 border-primary object-cover" data-alt="Portrait of a young woman smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx37teFdlKCUimi859cu9dLkT9_6DniEaiOFE3naXWqEqQx85Noose5SmdJXJqQkNI6gKmvp8EcieDpz-pXzCQV-hSClWm6M_HrTw2uU3WeLoVLEuTm9FJ9ZFpHOPki3fGX2lnDOXAD--uTa41B5s6lhF_esTQADqCZdRF4cJ_Ryb-8WNTJaROy_RRCuikH_Yl4sKi2xAZRMwAlNu5sT78xPjcoQJUUXgdGK9Zct6G08g_igG3Zeal5ah4Pe0hOC2JaXwPHlehzkJe"/>
+<div class="flex flex-col">
+<span class="text-sm text-gray-400 font-display uppercase tracking-wider">Written by</span>
+<span class="text-base text-white font-medium">Shaiwal</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Curated Photo Grid Title -->
+<div class="flex items-end justify-between mb-10 px-2">
+<div>
+<h2 class="text-3xl font-bold text-white mb-2">The Night in Pictures</h2>
+<p class="text-gray-400">Captured moments from our evening</p>
+</div>
+<div class="h-[1px] flex-grow ml-8 bg-gradient-to-r from-primary/50 to-transparent"></div>
+</div>
+<!-- Masonry Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+<!-- Item 1: Large Vertical -->
+<div class="row-span-2 group rounded-xl overflow-hidden relative cursor-pointer">
+<img alt="Couple holding hands" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close up shot of holding hands" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBee8R6wsgl6kXwNvg1gi9Tn7-vbntuZ8RHSulYuF4HBX67gmV2fx4tSlkvhzTHIKub-Tc_3__9tOaqZ9M1SxTHQ1aLFxZZPd22e3CnNPv6dFA_5b978ezPCRlC4pblrLFJXKaOSRutzGu5ChwHRCfrbqkcr2qlv4uaGv_7THsnInNf21sdk8k9fBpOD4m3fqqK4P8_x-nF8LLGAX8fE-MHM0Xv22y8HUr4nFfLChcxq8OQAfEG04sBBmKiTErJp6bHZ6GtCBWF6-rv"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-primary text-sm font-semibold">Memories</span>
+<span class="text-white text-lg font-medium">Never letting go</span>
+</div>
+</div>
+<!-- Item 2: Square -->
+<div class="group rounded-xl overflow-hidden relative cursor-pointer">
+<img alt="Delicious plate of pasta" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Top down view of gourmet pasta dish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAecDhSaTOxlgVxEMiyJhc2jhsUSvXBziLLpG-SagSMFXvmY8b_K8nf5OC3nvn4MlC_Mz90uMsmsfgeEGa-178Jr_zGFluiAaasgLb0dKqDXXr05Ok8II4HpShSJN7MQSxoSttpaJolU9s5qCYoMsdUnSBMjeQHEuQTR_73C5dHg_w08WV_kFgvgdq-ekmJGAI0Efpt7HDGhaXQXr8s7oFUm2wFQj5YYeR1b3rHvXwrhPscljd7FSx-dJMBC8BOS4d1t3VEeiV5J_Xj"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<span class="material-icons text-white text-3xl">favorite</span>
+</div>
+</div>
+<!-- Item 3: Square -->
+<div class="group rounded-xl overflow-hidden relative cursor-pointer">
+<img alt="Cocktails on table" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Two colorful cocktails on a bar table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI59EX_ZiALVfZ0bhGUwvxg4Nh3KKQ1OnzoEtY6_2AQO0KeoZbF2tZpHRZJPWAib1lLKr1JGpOo4Ft-Ny3nRKS-ZWqxXeEWjKm7hxieQvjSfzyyfXnSjgZCnf1g5W1-UuVja0qjlD4A6Pnuv9_8NgNrq2PetYiEXD7clZesGFYhmXFtNmdQImyEQN3CIWgLOz9cJi83-xGOrN_5nnkW_N0XhJe4eC2ukTR-_v6DY6UfgEdqX1yMZkkSDD2lTuCGmagNuf8EqZkVjk-"/>
+<div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md p-2 rounded-full">
+<span class="material-icons text-primary text-sm">local_bar</span>
+</div>
+</div>
+<!-- Item 4: Wide Horizontal (Spanning 2 cols on tablet+) -->
+<div class="md:col-span-2 group rounded-xl overflow-hidden relative cursor-pointer">
+<img alt="Restaurant ambiance interior" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Cozy restaurant interior with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCVagwhC1Joywv2uW8lhfRZkz402pYmsWJChyEAjbOvgqppaSbLuC5d4UMqrrJyuOtu8Q3TUav7gEo3DKoalyhIpfK8wACdSv-GYHKkvuaNgCs7A-OMtNhe3CDsNw87x1WkZsd5Z1wzg_OTEhlrmrScM30BJ6Syys5duMqHICZbyANDV0Mx1xHUVFjj5Ui5lsP9h6qfm8yNZusd0WYvwWdC5rRTFsY_LCYrKUgoFxYv56XqANGwHRUMJiSIki0Rp3R1tNQDf3-DNMZ"/>
+<div class="absolute bottom-4 left-4 bg-primary/90 text-background-dark px-4 py-2 rounded-lg text-sm font-bold backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300">
+                    Music &amp; Mountains
+                </div>
+</div>
+<!-- Item 5: Vertical -->
+<div class="row-span-1 lg:row-span-1 group rounded-xl overflow-hidden relative cursor-pointer">
+<img alt="Candid laughter shot" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Silhouette of couple laughing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1YnTQk6dSi36AIq4tL9G4bi86_Iyy2eUouGDX2GtKpQ29AJMBuRXhVYBHUyf_SrgzXFESeeyQS4a0D2Z3SIp9UIUp-zBhbtcG4H45ZBtr80zFB19V_ejNqaYMZEhy0DAbrQxVAKNA17N0MPaLrv3FSRIOSYOMGT8DnZnVkzxiYwTMUcBBSm-CG2CF3HmtcLfB8CWg2w4sO3255NxSb7yQt35YAShJSO-kzmhks6Tf2QUN3Y4tSAwgtbjjcdkXi2N_XtjaxLM2TiaA"/>
+</div>
+</div>
+<!-- Location Map Preview (Static) -->
+<div class="mt-20 rounded-2xl overflow-hidden border border-white/5 relative h-64 w-full group">
+<div class="absolute top-6 left-6 z-10 bg-background-dark/90 backdrop-blur-md p-4 rounded-xl shadow-xl border border-white/10 max-w-xs">
+<h3 class="text-white font-bold text-lg">Music &amp; Mountains</h3>
+<p class="text-gray-400 text-sm mt-1">M Block Market, Greater Kailash 2 (GK2), New Delhi</p>
+<button class="mt-3 text-xs font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                    GET DIRECTIONS <span class="material-icons text-xs">arrow_forward</span>
+</button>
+</div>
+<img alt="Map location view" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity" data-alt="Abstract map view" data-location="Greater Kailash 2, New Delhi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJX8TmMLSmLf28A5dYSfW8u9toxqFgL98vnw63fv69hq6ydAF-Wv_TqqZDZuKhWsQuTVScODNs8E9iUGC7oL5vfr_EzhUZLgZOSCowg_N1Lynecs6qn7Id_jTX_f1RH5uNyy7VF5U3N2JSR68z0GxgdFqPk2DaUCFRZFHEzxub0bbLr6OvOHPUgSN9M22nr04yG0wsIqrN_19UzQDehR3h2Im6P5742P38WJaWKK6U6POtbgLff89TAgE4AdcUqnyvmJfXeuP6VCW7"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="material-icons text-primary text-5xl drop-shadow-2xl animate-bounce">location_on</span>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-neutral-dark border-t border-white/5 py-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-center md:text-left">
+<h4 class="text-xl font-handwriting text-primary">Journey with Puchki</h4>
+<p class="text-gray-500 text-sm mt-1">Collecting moments, one date at a time.</p>
+</div>
+<div class="flex gap-4">
+<button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-white/10 transition-colors">
+<span class="material-icons text-sm">share</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-white/10 transition-colors">
+<span class="material-icons text-sm">edit</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-white/10 transition-colors">
+<span class="material-icons text-sm">favorite_border</span>
+</button>
+</div>
+</div>
+</footer>
+</body></html>

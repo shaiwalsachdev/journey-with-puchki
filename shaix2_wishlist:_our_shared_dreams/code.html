@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShaiX2 Wishlist: Our Shared Dreams</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+            extend: {
+                colors: {
+                "primary": "#eb2d5d",
+                "background-light": "#f8f6f6",
+                "background-dark": "#211115",
+                },
+                fontFamily: {
+                "display": ["Plus Jakarta Sans", "sans-serif"],
+                "cursive": ["Great Vibes", "cursive"],
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+            },
+        }
+    </script>
+<style>
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        @media (min-width: 1280px) {
+            .masonry-grid {
+                column-count: 4;
+            }
+        }
+        .break-inside-avoid {
+            break-inside: avoid;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center space-x-2">
+<span class="bg-primary text-white rounded-full p-1">
+<span class="material-icons-round text-xl">favorite</span>
+</span>
+<span class="font-bold text-xl tracking-tight">Shai<span class="text-primary">X2</span></span>
+</div>
+<div class="flex space-x-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+<a class="hover:text-primary transition-colors" href="#">Timeline</a>
+<a class="text-primary" href="#">Wishlist</a>
+<a class="hover:text-primary transition-colors" href="#">Gallery</a>
+</div>
+<div class="flex items-center space-x-3">
+<div class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">SW</div>
+<div class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs -ml-4 border-2 border-background-light dark:border-background-dark">SH</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="text-center mb-12 space-y-4">
+<h1 class="font-cursive text-5xl md:text-6xl text-primary mb-2">Building Our Future, One Save at a Time</h1>
+<p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                A digital collection of our shared dreams for 2024 and beyond. From the places we'll go to the home we'll build.
+            </p>
+</div>
+<!-- Filter Tabs -->
+<div class="flex flex-wrap justify-center gap-3 mb-12">
+<button class="px-6 py-2.5 rounded-full bg-primary text-white font-medium shadow-lg shadow-primary/25 transition-transform hover:scale-105 active:scale-95">
+                All Dreams
+            </button>
+<button class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium border border-gray-100 dark:border-gray-700 hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all active:scale-95 flex items-center gap-2">
+<span>Future Travel</span> ✈️
+            </button>
+<button class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium border border-gray-100 dark:border-gray-700 hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all active:scale-95 flex items-center gap-2">
+<span>Home Decor</span> 🏠
+            </button>
+<button class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 font-medium border border-gray-100 dark:border-gray-700 hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all active:scale-95 flex items-center gap-2">
+<span>Date Ideas</span> 💡
+            </button>
+</div>
+<!-- Masonry Grid -->
+<div class="masonry-grid pb-20">
+<!-- Add New Card -->
+<div class="break-inside-avoid mb-6 group cursor-pointer">
+<div class="h-64 rounded-xl border-2 border-dashed border-primary/30 hover:border-primary bg-primary/5 dark:bg-primary/10 flex flex-col items-center justify-center transition-all duration-300 group-hover:bg-primary/10">
+<div class="h-14 w-14 rounded-full bg-primary text-white flex items-center justify-center mb-3 shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-3xl">add</span>
+</div>
+<span class="font-medium text-primary">Add New Dream</span>
+</div>
+</div>
+<!-- Card 1: Travel -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+<div class="relative overflow-hidden">
+<img alt="Whitewashed buildings of Santorini Greece with blue domes" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Whitewashed buildings of Santorini Greece with blue domes" data-location="Santorini, Greece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxfo_A5-lmpZInvn4Ugxf1B-eHR9bf_cB08Xgo-H96x7N1fFi2DbLbpB02rdeg3NfHXQTAcqL8R7ynfygZXpQ_68St-owegdWoA9vOm8OEZfWEwd2xIlWnmpN-KmaKI1_dIsPMhPBj5xFYib0BiBrP1vHV8NqWNAHrdwqVVeqJ-xO_Y77zKDDyf9Jg9Dery4oCvCHni-1JJsX-PSp5meLRERn-das4zqwYU-1VZ6IF-KGCv-3dDp1jdy0u0PQPmcnbAFN0ZPM1LNi_"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-icons-round text-primary text-xl">bookmark</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">Travel ✈️</span>
+<a class="text-xs text-gray-400 hover:text-primary flex items-center gap-1 transition-colors" href="#">
+<span class="material-icons-round text-[14px]">link</span> Instagram
+                            </a>
+</div>
+<p class="text-gray-800 dark:text-gray-200 font-medium leading-snug">
+                            "This hotel view is unreal! We definitely need to book this for our anniversary trip next year. 😍"
+                        </p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SH</div>
+<span class="text-xs text-gray-500 dark:text-gray-400">Added 2 days ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Home Decor -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+<div class="relative overflow-hidden">
+<img alt="Modern minimalist beige apartment living room interior" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Modern minimalist beige apartment living room interior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdr3-sjUCepa5-lLN4wCCsTyG5WxDkpvNfZ942nfhq1ctObLU0NRqj3NQtcCFWU-E-UrJhUtk_-Bbr7ym318HGZtPhMbNWWZ-2MhOBa-wOX0KviJe00Rc-myQY6WY31jIT1EN0NrD1Om5fjHBekaoFzSYcuA4LEh9WJhb8NCIJ9d9JyJ-NE42qA13HHfP7ds79OY6esh3dLKd3hDM8IYpzS1Wc8vz3_Vo-L6MLhEd3hz-0yTv0-MgGcdu0HLrR2csqUXF4m3irpf7X"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-icons-round text-primary text-xl">bookmark</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Home 🏠</span>
+<a class="text-xs text-gray-400 hover:text-primary flex items-center gap-1 transition-colors" href="#">
+<span class="material-icons-round text-[14px]">link</span> Pinterest
+                            </a>
+</div>
+<p class="text-gray-800 dark:text-gray-200 font-medium leading-snug">
+                            "Thinking about this color palette for the new living room. The neutral tones are so calming."
+                        </p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SW</div>
+<span class="text-xs text-gray-500 dark:text-gray-400">Added 5 days ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Date Idea -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+<div class="relative overflow-hidden">
+<img alt="Hands molding clay on pottery wheel together" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Hands molding clay on pottery wheel together" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-muhiZRf3ffdFW5UGUA4dbUkYNOI_BIjuOj-L3kLyBywJOoT-S7LkOewT3FVJnxq2CGVESrRG5I-3Oi6pPynC6UpDVmrKcEmrwDkbljqGthB9D3BoZ5zIw4jP75dUWIL9VkiC5FJAaXWxjiVQx5vXQ5AnSJUEY4rTnM1vT9zSyV-rymatrQKA4XtHPgw8vaFaDFvY5YqsnQNDMF-QqVkQqlP7EdYy0guiiEZu4WJrfmRiTy0wnbUHyYSB9EoYee-dRgD2Sq1ctuAk"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-icons-round text-primary text-xl">bookmark</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Date 💡</span>
+<a class="text-xs text-gray-400 hover:text-primary flex items-center gap-1 transition-colors" href="#">
+<span class="material-icons-round text-[14px]">link</span> TikTok
+                            </a>
+</div>
+<p class="text-gray-800 dark:text-gray-200 font-medium leading-snug">
+                            "Pottery class this weekend? Looks messy but super fun! 🎨"
+                        </p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SH</div>
+<span class="text-xs text-gray-500 dark:text-gray-400">Added 1 week ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: Food/Date -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+<div class="relative overflow-hidden">
+<img alt="Close up of classic italian tiramisu dessert" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Close up of classic italian tiramisu dessert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4AckzWc3__svYWxVcq2hrZDFe7IyK8TT-ZsSNzH-RE3uvACqxoJx_PRIF1lcewyMbdBN25U-_c3ZdoBYim2iqz7bQEnQUKnbkd9Hpotuu6FMYXXgGbxDm7A7bIvzYu9qASMnSbzf-OewSyHa6-JoJsptMIWoPeqDrtygfb470VByrkdO-b9iyIEIrUME6KgV2KhLw6tyWTryuCmbsFWr_frLTSkHRVun5QdssZyxU0QOEGb5CaqftK2UAHp-VGihlRhoIfS3CQ3Fx"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-icons-round text-primary text-xl">bookmark</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Date 💡</span>
+<a class="text-xs text-gray-400 hover:text-primary flex items-center gap-1 transition-colors" href="#">
+<span class="material-icons-round text-[14px]">link</span> Instagram
+                            </a>
+</div>
+<p class="text-gray-800 dark:text-gray-200 font-medium leading-snug">
+                            "We need to try making this Tiramisu recipe together. Challenge accepted?"
+                        </p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SW</div>
+<span class="text-xs text-gray-500 dark:text-gray-400">Added 1 week ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 5: Travel/Japan -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+<div class="relative overflow-hidden">
+<img alt="Traditional Japanese street in Kyoto with cherry blossoms" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Traditional Japanese street in Kyoto with cherry blossoms" data-location="Kyoto, Japan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0ZsytBXxphahdqFKLtHeyk1I8ljVfeh3-HagzxfWZ0fGzT_2d6GCHfL_CDJb-86FMqNF3jml1urp75N_0Nc5CEP3eo4w6reJbbU_S41LxVIsuNfIJU_Lvw9JofD7s001oIDaojFzddZL_b8e0n8N2bImcoiGySzrgtqSA-vzfpTTrc94J9GoJa_g8roGgV1srj4xRmudnoV0TGeVd5hGcJz_0WMFskzTPnUTXxDtwlzqlCfuMxmomEeXbFhdEzazwTkQKQw3iZTDI"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-icons-round text-primary text-xl">bookmark</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">Travel ✈️</span>
+<a class="text-xs text-gray-400 hover:text-primary flex items-center gap-1 transition-colors" href="#">
+<span class="material-icons-round text-[14px]">link</span> Threads
+                            </a>
+</div>
+<p class="text-gray-800 dark:text-gray-200 font-medium leading-snug">
+                            "Cherry blossom season 2025? Let's start saving now! 🌸"
+                        </p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SH</div>
+<span class="text-xs text-gray-500 dark:text-gray-400">Added 2 weeks ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 6: Home Decor/Plants -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+<div class="relative overflow-hidden">
+<img alt="Cozy reading corner with many indoor plants and monstera" class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Cozy reading corner with many indoor plants and monstera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnjfhR7eNRE3R7d_CbZQRhfQ8rIdJ4eaThdm8csp9oWGry1vhWbswjqGEgLThvR6dUWIHm_JX6vPNC5jV5xESLxi23SQov_rYikJWGpTSnaWOJ48JJM-z_gAt5jSE6qpLzK_4LU0YNBMGGrJtNU0-xPCkrS77RC1_NYiCzEnJoRa1cghBYpv2tQK0M-UpDVRAp_eNleId81R20pr2tWz90PBfxHiBkn1FxLx6tSHYBIqmWs3S7lqx7H5FHrXnvX93ebjKNK8Jn0P3g"/>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-icons-round text-primary text-xl">bookmark</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Home 🏠</span>
+<a class="text-xs text-gray-400 hover:text-primary flex items-center gap-1 transition-colors" href="#">
+<span class="material-icons-round text-[14px]">link</span> Pinterest
+                            </a>
+</div>
+<p class="text-gray-800 dark:text-gray-200 font-medium leading-snug">
+                            "I need this Monstera plant in my life. And that chair!"
+                        </p>
+<div class="mt-3 flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SW</div>
+<span class="text-xs text-gray-500 dark:text-gray-400">Added 3 weeks ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 7: Text only quote -->
+<div class="break-inside-avoid mb-6 relative group">
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-primary/10 p-6 flex flex-col justify-center items-center text-center h-64">
+<span class="material-icons-round text-primary/40 text-4xl mb-4">format_quote</span>
+<p class="text-xl font-cursive text-primary mb-4">
+                        "Let's find some beautiful place to get lost."
+                    </p>
+<div class="flex items-center justify-between w-full mt-auto pt-4 border-t border-primary/10">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">Travel ✈️</span>
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">SH</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="border-t border-gray-200 dark:border-gray-800 pt-8 pb-12 text-center">
+<div class="flex justify-center items-center space-x-2 mb-4">
+<span class="font-bold text-lg tracking-tight text-gray-400">Shai<span class="text-primary">X2</span></span>
+</div>
+<p class="text-sm text-gray-400 dark:text-gray-500">
+                Created with <span class="material-icons-round text-primary text-xs align-middle">favorite</span> for Shaiwal &amp; Shaila.
+            </p>
+</footer>
+</main>
+<!-- Floating Action Button for mobile -->
+<button class="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-primary text-white shadow-xl shadow-primary/30 flex items-center justify-center sm:hidden z-40 transition-transform active:scale-90">
+<span class="material-icons-round text-2xl">add</span>
+</button>
+</body></html>

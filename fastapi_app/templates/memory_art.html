@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Memory: {{ memory.title }} - ShaiX2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f4ab25", "background-light": "#f8f7f5", "background-dark": "#221c10", "neutral-soft": "#e8e6e1" },
+                    fontFamily: { "display": ["Spline Sans", "sans-serif"], "handwriting": ["Nothing You Could Do", "cursive"] },
+                    backgroundImage: { 'watercolor-splash': "url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=2845&auto=format&fit=crop')" }
+                },
+            },
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&family=Nothing+You+Could+Do&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen selection:bg-primary/30">
+    <!-- Navigation -->
+    {% include 'partials/navbar.html' %}
+
+    <main class="relative z-10 pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto space-y-24">
+        <!-- Hero Section -->
+        <header class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-5 space-y-6 lg:pl-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="bg-primary/10 text-primary dark:text-yellow-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">{{
+                        memory.type }}</span>
+                    <span class="text-gray-400 dark:text-gray-500 text-sm font-medium flex items-center gap-1">
+                        <span class="material-icons-round text-base">calendar_today</span>{{ memory.date }}
+                    </span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight">{{ memory.title }}</h1>
+            </div>
+
+            <div class="lg:col-span-7 relative group">
+                <div
+                    class="relative rounded-2xl md:rounded-[3rem] overflow-hidden shadow-2xl shadow-orange-900/10 dark:shadow-black/40 aspect-[4/3] transform transition-transform duration-700 hover:scale-[1.01]">
+                    {% if memory.photos %}
+                    <img class="w-full h-full object-cover"
+                        src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                    {% else %}
+                    <img class="w-full h-full object-cover" src="https://placehold.co/800x600?text=Art+Date" />
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <!-- Canvas Section -->
+        <section class="relative py-12">
+            <div class="max-w-2xl mx-auto text-center mb-16 relative">
+                <p
+                    class="font-handwriting text-3xl md:text-5xl leading-relaxed text-gray-800 dark:text-gray-100 rotate-1">
+                    "{{ memory.description }}"
+                </p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="space-y-10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-bold">Moments Captured</h2>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+                {% for photo in memory.photos %}
+                <div class="group relative rounded-[2rem] overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Guestbook - ShaiX2 Forever</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Great+Vibes&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eb2d5d",
+                        "background-light": "#fdfcf0",
+                        "background-dark": "#211115",
+                        "accent-peach": "#fef2f2",
+                        "accent-sage": "#f0f4f0",
+                        "accent-sky": "#f0f7ff",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "romantic": ["Great Vibes", "cursive"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .scrapbook-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .scrapbook-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .scrapbook-grid {
+                column-count: 3;
+            }
+        }
+
+        .note-card {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .note-card:hover {
+            transform: translateY(-4px) rotate(1deg);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200 min-h-screen relative overflow-x-hidden">
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="max-w-7xl mx-auto px-6 py-12 relative z-10">
+        <header class="text-center mb-16">
+            <h1 class="font-romantic text-6xl md:text-8xl text-primary mb-4">Blessings & Notes</h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8">
+                Leave a note, a memory, or a blessing. Your words will be cherished in our digital scrapbook forever.
+            </p>
+            <button onclick="toggleModal()"
+                class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-opacity-90 transition-all flex items-center gap-2 mx-auto">
+                <span class="material-icons-outlined">edit</span>
+                Write a Blessing
+            </button>
+        </header>
+
+        <div class="scrapbook-grid" id="notesGrid">
+            {% for note in notes %}
+            <div class="note-card p-6 rounded-lg {{ note.color_class }} border-2 border-primary/10 shadow-sm relative">
+                <p class="text-slate-800 dark:text-slate-200 leading-relaxed mb-4 italic">"{{ note.message }}"</p>
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                        {{ note.name[:2].upper() }}
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm">{{ note.name }}</h4>
+                        <p class="text-[10px] uppercase tracking-wider opacity-60">{{ note.date }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Default Welcome Note -->
+            {% if not notes %}
+            <div class="note-card p-6 rounded-lg bg-white dark:bg-slate-800 border-2 border-primary/10 shadow-sm">
+                <p class="text-slate-800 dark:text-slate-200 leading-relaxed mb-4">"Be the first to leave a blessing for
+                    the happy couple!"</p>
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                        S</div>
+                    <div>
+                        <h4 class="font-bold text-sm">System</h4>
+                        <p class="text-[10px] uppercase tracking-wider opacity-60">Today</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="noteModal"
+        class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6 hidden">
+        <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden transform transition-all scale-95 opacity-0"
+            id="modalContent">
+            <form action="/guestbook/sign" method="post" class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">Write a Blessing</h3>
+                    <button type="button" onclick="toggleModal()" class="text-slate-400 hover:text-slate-600">
+                        <span class="material-icons-outlined">close</span>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 opacity-70">Your Name</label>
+                        <input name="name" required
+                            class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 focus:ring-primary focus:border-primary"
+                            placeholder="e.g. Auntie Meera" type="text" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 opacity-70">Your Message</label>
+                        <textarea name="message" required
+                            class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 focus:ring-primary focus:border-primary"
+                            placeholder="Share a memory or a wish..." rows="4"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 opacity-70">Note Color</label>
+                        <select name="color"
+                            class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900">
+                            <option value="bg-white dark:bg-slate-800">Classic White</option>
+                            <option value="bg-accent-peach dark:bg-red-900/20">Soft Peach</option>
+                            <option value="bg-accent-sage dark:bg-green-900/20">Sage Green</option>
+                            <option value="bg-accent-sky dark:bg-blue-900/20">Sky Blue</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6 flex gap-3">
+                    <button type="submit"
+                        class="flex-1 bg-primary text-white py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all">Post
+                        Your Blessing</button>
+                    <button type="button" onclick="toggleModal()"
+                        class="px-6 py-3 rounded-lg font-bold border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition-all text-slate-500">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('noteModal');
+        const modalContent = document.getElementById('modalContent');
+
+        function toggleModal() {
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+    </script>
+</body>
+
+</html>

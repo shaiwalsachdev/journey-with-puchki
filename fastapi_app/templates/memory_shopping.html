@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Memory: {{ memory.title }} - ShaiX2</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4ab25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221c10",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .metro-lines {
+            background-image:
+                linear-gradient(45deg, rgba(244, 171, 37, 0.05) 25%, transparent 25%, transparent 50%, rgba(244, 171, 37, 0.05) 50%, rgba(244, 171, 37, 0.05) 75%, transparent 75%, transparent);
+            background-size: 40px 40px;
+        }
+
+        .scollage-img {
+            transition: transform 0.3s ease;
+        }
+
+        .scollage-img:hover {
+            transform: scale(1.02) rotate(1deg);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen selection:bg-primary selection:text-white overflow-x-hidden">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 metro-lines pointer-events-none z-0"></div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <!-- Navbar -->
+        {% include 'partials/navbar.html' %}
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-16">
+            <!-- Left Column: Story & Ticket -->
+            <div class="lg:col-span-5 flex flex-col gap-8 sticky top-8">
+                <!-- Header Text -->
+                <div class="space-y-4">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                        <span class="material-icons-round text-sm">local_mall</span>
+                        {{ memory.type | title }}
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
+                        {{ memory.title }}
+                    </h1>
+                    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
+                        {{ memory.description }}
+                    </p>
+                </div>
+
+                <!-- Ticket Card -->
+                <div class="group relative w-full transform transition-transform hover:-translate-y-1 duration-300">
+                    <div
+                        class="absolute -left-3 top-1/2 w-6 h-6 bg-background-light dark:bg-background-dark rounded-full z-20">
+                    </div>
+                    <div
+                        class="absolute -right-3 top-1/2 w-6 h-6 bg-background-light dark:bg-background-dark rounded-full z-20">
+                    </div>
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700">
+                        <div class="bg-primary h-2 w-full"></div>
+                        <div class="p-6 sm:p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Date</p>
+                                    <p class="text-2xl font-bold font-display">{{ memory.date }}</p>
+                                </div>
+                            </div>
+                            <!-- Route Visual -->
+                            <div class="relative flex items-center justify-between py-6 my-2">
+                                <div class="absolute left-0 right-0 top-1/2 h-1 bg-slate-100 dark:bg-slate-700 -z-10">
+                                </div>
+                                <div class="absolute left-0 right-0 top-1/2 h-1 bg-primary w-2/3 -z-10 animate-pulse">
+                                </div>
+                                <div class="flex flex-col items-center gap-2 bg-white dark:bg-slate-800 px-2">
+                                    <div class="w-4 h-4 rounded-full border-4 border-primary bg-white"></div>
+                                    <span class="text-xs font-bold text-slate-500 uppercase">Start</span>
+                                </div>
+                                <div
+                                    class="bg-primary text-white p-2 rounded-full shadow-lg shadow-primary/30 transform rotate-12">
+                                    <span class="material-icons-round">shopping_bag</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-2 bg-white dark:bg-slate-800 px-2">
+                                    <div
+                                        class="w-4 h-4 rounded-full border-4 border-slate-300 dark:border-slate-600 bg-white">
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-500 uppercase">Forever</span>
+                                </div>
+                            </div>
+                            <div
+                                class="mt-4 pt-6 border-t border-dashed border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-icons-round text-slate-300">qr_code_2</span>
+                                    <span class="text-xs font-mono text-slate-400">SHAI-X2-TOKEN</span>
+                                </div>
+                                <span class="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded">VALID
+                                    FOREVER</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Photo Collage -->
+            <div class="lg:col-span-7 flex flex-col gap-8">
+                <!-- Main Collage -->
+                <div class="grid grid-cols-2 gap-4 auto-rows-[300px]">
+                    {% for photo in memory.photos %}
+                    <div
+                        class="relative group scollage-img {% if loop.index % 3 == 0 %}col-span-2{% else %}col-span-1{% endif %}">
+                        <img alt="{{ memory.title }}" class="w-full h-full object-cover rounded-lg shadow-md"
+                            src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

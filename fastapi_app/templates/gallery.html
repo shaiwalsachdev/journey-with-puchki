@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Journey with Puchki - Every Little Moment</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Masonry Grid CSS */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .masonry-grid {
+                column-count: 4;
+            }
+        }
+
+        /* Prevent break inside masonry items */
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display transition-colors duration-300 antialiased">
+    <!-- Navbar -->
+    {% include 'partials/navbar.html' %}
+    <!-- Header Section -->
+    <div class="relative pt-16 pb-12 sm:pt-24 sm:pb-16 text-center px-4">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+            Every Little <span class="text-primary">Moment</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300">
+            A curated collection of laughter, love, and life with #ShaiX2. From casual food dates to life's biggest
+            milestones.
+        </p>
+    </div>
+    <!-- Filter Bar -->
+    <div class="sticky top-24 z-40 pb-8 px-4 w-full overflow-x-auto no-scrollbar">
+        <div class="flex justify-center space-x-3 min-w-max mx-auto px-4">
+            <button onclick="filterGallery('all')"
+                class="filter-btn px-6 py-2.5 rounded-full bg-primary text-white shadow-lg shadow-primary/25 font-medium text-sm transition-transform hover:scale-105 active:scale-95 focus:outline-none ring-2 ring-primary ring-offset-2 ring-offset-background-light dark:ring-offset-background-dark">
+                All Memories
+            </button>
+            <button onclick="filterGallery('date')"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
+                Food Dates 🍝
+            </button>
+            <button onclick="filterGallery('movie')"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
+                Movies 🎬
+            </button>
+            <button onclick="filterGallery('milestone')"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
+                Milestones 💍
+            </button>
+            <button onclick="filterGallery('travel')"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
+                Travel ✈️
+            </button>
+        </div>
+    </div>
+    <!-- Masonry Grid Gallery -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div class="masonry-grid" id="gallery-grid">
+            {% for memory in memories %}
+            {% for photo in memory.photos %}
+            <div class="masonry-item group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 cursor-pointer"
+                data-category="{{ memory.type }}">
+                <img alt="{{ memory.title }}"
+                    class="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                    loading="lazy" src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <span
+                        class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold rounded-full w-fit mb-2">{{
+                        memory.type | title }}</span>
+                    <h3 class="text-white font-bold text-lg">{{ memory.title }}</h3>
+                    <p class="text-white/80 text-sm">{{ memory.date }}</p>
+                </div>
+                <div
+                    class="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 text-primary p-2 rounded-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
+                    <span class="material-icons text-xl">favorite</span>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+        <!-- Load More Button -->
+        <div class="flex justify-center mt-12">
+            <button
+                class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-200 font-semibold py-3 px-8 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 transition-all hover:scale-105 active:scale-95">
+                <span>View More Moments</span>
+                <span class="material-icons text-sm">arrow_downward</span>
+            </button>
+        </div>
+    </main>
+    <!-- Footer -->
+    {% include 'partials/footer.html' %}
+    <script>
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.masonry-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Highlight active button logic could be added here
+        }
+    </script>
+</body>
+
+</html>

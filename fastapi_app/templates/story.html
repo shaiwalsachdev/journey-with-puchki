@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ShaiX2: Our Story in Data & Love</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e6194c",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211115",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Newsreader', serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .timeline-line {
+            background: linear-gradient(to bottom, transparent, #e6194c 10%, #e6194c 90%, transparent);
+        }
+
+        .glass-panel {
+            background: rgba(255, 253, 245, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 25, 76, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, #e6194c, #ff8da1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200">
+    <!-- Navigation -->
+    {% include 'partials/navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img class="w-full h-full object-cover opacity-60 dark:opacity-30"
+                data-alt="Romantic couple silhouette at sunset with golden hues"
+                src="/static/images/favourites/IMG_8254.jpg" />
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-background-light/20 via-transparent to-background-light dark:from-background-dark/20 dark:to-background-dark">
+            </div>
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-4xl">
+            <h1 class="text-7xl md:text-9xl font-extrabold mb-4 tracking-tight">ShaiX2.</h1>
+            <p class="text-xl md:text-3xl italic font-light mb-8 text-slate-600 dark:text-slate-400">
+                A statistical probability of love, curated by destiny.
+            </p>
+            <div class="flex justify-center items-center gap-4">
+                <span class="h-px w-12 bg-primary"></span>
+                <span class="uppercase tracking-[0.4em] text-xs font-bold text-primary">Est. 2025</span>
+                <span class="h-px w-12 bg-primary"></span>
+            </div>
+            <!-- Time Together Counter -->
+            <div id="time-together" class="mt-8 text-primary font-bold text-lg tracking-widest uppercase"></div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <span class="material-icons text-primary">keyboard_double_arrow_down</span>
+        </div>
+    </section>
+
+    <!-- The Protagonists -->
+    <section class="py-24 px-6 bg-white dark:bg-slate-900" id="protagonists">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-7xl font-bold mb-4">The <span
+                        class="text-primary italic">Protagonists.</span></h2>
+                <p class="text-xl font-light text-slate-600 dark:text-slate-400">Two distinct timelines, converging into
+                    one.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Shaila -->
+                <div class="relative group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-pink-200 to-rose-200 dark:from-pink-900/20 dark:to-rose-900/20 transform rotate-1 rounded-2xl transition-transform group-hover:rotate-2">
+                    </div>
+                    <div
+                        class="relative bg-white dark:bg-slate-800 p-8 rounded-2xl border border-primary/10 shadow-xl overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-bold text-9xl text-primary">S</div>
+                        <h3 class="text-4xl font-bold mb-2">Shaila Manaktahla</h3>
+                        <p class="text-primary font-bold uppercase tracking-widest text-sm mb-6">FP&A Manager @ Genpact
+                            | MBA</p>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">cake</span>
+                                <span>March 15, 1995</span>
+                            </div>
+                            <div class="bg-primary/5 p-4 rounded-lg">
+                                <p class="text-xs uppercase tracking-bold text-primary mb-1">Level</p>
+                                <div id="age-shaila"
+                                    class="font-mono text-lg font-bold text-slate-700 dark:text-slate-300">
+                                    Calculating...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shaiwal -->
+                <div class="relative group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-blue-200 to-indigo-200 dark:from-blue-900/20 dark:to-indigo-900/20 transform -rotate-1 rounded-2xl transition-transform group-hover:-rotate-2">
+                    </div>
+                    <div
+                        class="relative bg-white dark:bg-slate-800 p-8 rounded-2xl border border-primary/10 shadow-xl overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-bold text-9xl text-primary">S</div>
+                        <h3 class="text-4xl font-bold mb-2">Shaiwal Sachdev</h3>
+                        <p class="text-primary font-bold uppercase tracking-widest text-sm mb-6">Software Engineer | AI
+                            & ML</p>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">cake</span>
+                                <span>July 20, 1994</span>
+                            </div>
+                            <div class="bg-primary/5 p-4 rounded-lg">
+                                <p class="text-xs uppercase tracking-bold text-primary mb-1">Level</p>
+                                <div id="age-shaiwal"
+                                    class="font-mono text-lg font-bold text-slate-700 dark:text-slate-300">
+                                    Calculating...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 1: The Alignment -->
+    <section class="relative py-24 px-6 overflow-hidden" id="alignment">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="relative group">
+                <div
+                    class="absolute -inset-4 bg-primary/5 rounded-xl blur-2xl group-hover:bg-primary/10 transition-all">
+                </div>
+                <!-- Interactive Canvas for Constellations could go here, keeping static image for now -->
+                <img class="relative rounded-xl w-full h-[600px] object-cover shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000"
+                    data-alt="Ethereal stars and constellations over a soft landscape"
+                    src="/static/images/favourites/IMG_7650.jpg" />
+                <div
+                    class="absolute -bottom-8 -right-8 p-12 bg-primary rounded-full text-white shadow-2xl flex flex-col items-center justify-center">
+                    <span class="text-4xl font-bold">32/36</span>
+                    <span class="text-[10px] uppercase tracking-tighter">Match score</span>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <h2 class="text-5xl md:text-7xl font-bold leading-tight">The Perfect <br /><span
+                        class="italic text-primary">Alignment.</span></h2>
+                <p class="text-xl leading-relaxed text-slate-600 dark:text-slate-400 font-light">
+                    In the cosmos of data points and ancient algorithms, Shaiwal and Shaila achieved a rarity.
+                    The Kundli match didn't just suggest compatibility; it mathematically predicted a collision
+                    of two souls destined to resonate at the same frequency.
+                </p>
+                <div class="p-8 border border-primary/20 rounded-lg bg-primary/5 italic">
+                    "When the math matches the magic, you don't question it. You just start the journey."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 2: The Timeline -->
+    <section class="py-24 bg-primary/5 dark:bg-primary/10" id="spark">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-24">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Milestones of Us</h2>
+                <p class="uppercase tracking-widest text-sm text-primary font-bold">Chronology of a Connection</p>
+            </div>
+            <div class="relative">
+                <!-- Timeline Vertical Line -->
+                <div class="absolute left-1/2 -translate-x-1/2 h-full w-px timeline-line opacity-30"></div>
+                <!-- Milestone 1 -->
+                <div class="relative mb-32 flex flex-col md:flex-row items-center justify-between">
+                    <div class="w-full md:w-[45%] mb-8 md:mb-0 text-right pr-12 hidden md:block">
+                        <img class="rounded-lg shadow-xl hover:scale-105 transition-transform"
+                            data-alt="A smartphone screen showing a dating app profile"
+                            src="/static/images/favourites/IMG_7813.jpg" />
+                    </div>
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_15px_rgba(230,25,76,0.5)]">
+                    </div>
+                    <div class="w-full md:w-[45%] pl-12">
+                        <span class="text-primary font-bold text-sm uppercase tracking-widest">August 30, 2025</span>
+                        <h3 class="text-3xl font-bold mt-2 mb-4">The First Swipe</h3>
+                        <p class="text-slate-600 dark:text-slate-400 italic">One intentional movement to the right, and
+                            the servers of fate began their calculation.</p>
+                    </div>
+                </div>
+                <!-- Milestone 2 -->
+                <div class="relative mb-32 flex flex-col md:flex-row-reverse items-center justify-between">
+                    <div class="w-full md:w-[45%] mb-8 md:mb-0 pl-12 hidden md:block">
+                        <img class="rounded-lg shadow-xl hover:scale-105 transition-transform"
+                            data-alt="Abstract visualization of voice waves and connection"
+                            src="/static/images/favourites/IMG_7997.jpg" />
+                    </div>
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_15px_rgba(230,25,76,0.5)]">
+                    </div>
+                    <div class="w-full md:w-[45%] pr-12 md:text-right">
+                        <span class="text-primary font-bold text-sm uppercase tracking-widest">The Marathon</span>
+                        <h3 class="text-3xl font-bold mt-2 mb-4">The 1-Hour Call</h3>
+                        <p class="text-slate-600 dark:text-slate-400 italic">What was meant to be a quick 'Hello'
+                            turned into sixty minutes of uncovering every layer of our worlds.</p>
+                    </div>
+                </div>
+                <!-- Milestone 3 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between">
+                    <div class="w-full md:w-[45%] mb-8 md:mb-0 text-right pr-12 hidden md:block">
+                        <img class="rounded-lg shadow-xl hover:scale-105 transition-transform"
+                            data-alt="Cozy cafe interior with warm lighting"
+                            src="/static/images/favourites/IMG_8895 (1).jpg" />
+                    </div>
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_15px_rgba(230,25,76,0.5)]">
+                    </div>
+                    <div class="w-full md:w-[45%] pl-12">
+                        <span class="text-primary font-bold text-sm uppercase tracking-widest">The Real World</span>
+                        <h3 class="text-3xl font-bold mt-2 mb-4">Pixels to Presence</h3>
+                        <p class="text-slate-600 dark:text-slate-400 italic">Meeting in person for the first time—the
+                            digital connection became a tangible, electric reality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 3: Love by the Numbers -->
+    <section class="py-24 px-6" id="numbers">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="text-5xl md:text-7xl font-bold">Love by the <span class="text-primary">Numbers.</span>
+                    </h2>
+                    <p class="text-xl mt-4 font-light italic">Quantifying the unquantifiable journey of ShaiX2.</p>
+                </div>
+                <div class="flex items-center gap-2 bg-primary/20 px-6 py-3 rounded-full">
+                    <span class="material-icons text-primary">analytics</span>
+                    <span class="text-xs font-bold uppercase tracking-tighter">Live Stats Tracking</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Stat Card 1 -->
+                <div
+                    class="bg-background-light dark:bg-slate-900/50 p-10 rounded-xl border border-primary/10 flex flex-col items-center justify-center text-center group hover:bg-primary hover:text-white transition-all duration-500">
+                    <span
+                        class="text-5xl font-bold mb-2 group-hover:scale-110 transition-transform counter">150</span><span>+</span>
+                    <span class="uppercase text-xs tracking-[0.2em] font-bold opacity-70">Hours on Calls</span>
+                    <div class="mt-4 w-12 h-1 bg-primary group-hover:bg-white transition-colors"></div>
+                </div>
+                <!-- Stat Card 2 -->
+                <div
+                    class="md:mt-12 bg-background-light dark:bg-slate-900/50 p-10 rounded-xl border border-primary/10 flex flex-col items-center justify-center text-center group hover:bg-primary hover:text-white transition-all duration-500">
+                    <span
+                        class="text-5xl font-bold mb-2 group-hover:scale-110 transition-transform counter">2000</span><span>+</span>
+                    <span class="uppercase text-xs tracking-[0.2em] font-bold opacity-70">Miles of Driving</span>
+                    <div class="mt-4 w-12 h-1 bg-primary group-hover:bg-white transition-colors"></div>
+                </div>
+                <!-- Stat Card 3 -->
+                <div
+                    class="bg-background-light dark:bg-slate-900/50 p-10 rounded-xl border border-primary/10 flex flex-col items-center justify-center text-center group hover:bg-primary hover:text-white transition-all duration-500">
+                    <span
+                        class="text-5xl font-bold mb-2 group-hover:scale-110 transition-transform counter">50</span><span>+</span>
+                    <span class="uppercase text-xs tracking-[0.2em] font-bold opacity-70">Pesto Danishes</span>
+                    <div class="mt-4 w-12 h-1 bg-primary group-hover:bg-white transition-colors"></div>
+                </div>
+                <!-- Stat Card 4 -->
+                <div
+                    class="md:mt-12 bg-background-light dark:bg-slate-900/50 p-10 rounded-xl border border-primary/10 flex flex-col items-center justify-center text-center group hover:bg-primary hover:text-white transition-all duration-500">
+                    <span class="text-5xl font-bold mb-2 group-hover:scale-110 transition-transform">∞</span>
+                    <span class="uppercase text-xs tracking-[0.2em] font-bold opacity-70">Inside Jokes</span>
+                    <div class="mt-4 w-12 h-1 bg-primary group-hover:bg-white transition-colors"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Divider / Map -->
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto relative h-[400px] rounded-lg overflow-hidden group">
+            <img class="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000"
+                data-alt="Stylized road map with soft pastel colors" data-location="Road to Love"
+                src="/static/images/IMG_9087.jpg" />
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div
+                    class="text-center bg-white/90 dark:bg-black/80 px-12 py-8 rounded-full shadow-2xl backdrop-blur-md border border-primary/20">
+                    <p class="text-sm uppercase tracking-[0.3em] font-bold text-primary mb-2">Current Coordinates</p>
+                    <h4 class="text-4xl font-bold italic font-display">Two Hearts, One Journey.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Editorial -->
+    <section class="py-24 px-6 bg-slate-50 dark:bg-slate-900/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                <div class="break-inside-avoid">
+                    <img class="rounded-xl shadow-lg w-full" data-alt="Close up of couple hands holding"
+                        src="/static/images/favourites/IMG_8915.jpg" />
+                </div>
+                <div class="break-inside-avoid p-8 bg-primary rounded-xl text-white">
+                    <h5 class="text-3xl font-bold italic mb-4">"The Pesto Chronicles"</h5>
+                    <p class="font-light opacity-90 leading-relaxed">Every bite of those danishes was a testament to our
+                        shared taste and the simple joy of being together.</p>
+                </div>
+                <div class="break-inside-avoid">
+                    <img class="rounded-xl shadow-lg w-full" data-alt="Couple laughing in an urban setting"
+                        src="/static/images/favourites/IMG_9456.jpg" />
+                </div>
+                <div class="break-inside-avoid">
+                    <img class="rounded-xl shadow-lg w-full"
+                        data-alt="Elegant lifestyle photography showing shared moments"
+                        src="/static/images/favourites/IMG_9457.jpg" />
+                </div>
+                <div
+                    class="break-inside-avoid border-2 border-dashed border-primary/20 rounded-xl p-12 flex flex-col items-center justify-center text-center space-y-4">
+                    <span class="material-icons text-5xl text-primary/30">add_photo_alternate</span>
+                    <p class="text-sm italic opacity-60">Reserved for future memories...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA / Future -->
+    <section class="py-32 px-6 relative text-center" id="future">
+        <div class="absolute inset-0 z-0 opacity-10">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-primary rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto">
+            <h2 class="text-5xl md:text-8xl font-bold mb-8">To Be <span class="text-primary italic">Continued...</span>
+            </h2>
+            <p class="text-2xl font-light text-slate-600 dark:text-slate-400 mb-12 italic">
+                Our story isn't just a series of dates; it's a growing database of love, laughter, and limitless
+                potential.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <a href="/guestbook"
+                    class="bg-primary text-white px-10 py-5 rounded-full font-bold text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-xl shadow-primary/20">
+                    Write Our Next Chapter
+                </a>
+                <a href="/timeline"
+                    class="border border-primary/20 hover:bg-primary/5 px-10 py-5 rounded-full font-bold text-sm uppercase tracking-widest transition-colors">
+                    View Data Logs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'partials/footer.html' %}
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+    behavior: 'smooth'
+    });
+    });
+    });
+
+    // Audio Player moved to navbar.html for global access
+
+    // Live Time Together Counter (Starting from Aug 30, 2025)
+    function updateCounter() {
+    const startDate = new Date('2025-08-30T00:00:00');
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const counterElement = document.getElementById('time-together');
+    if (counterElement) {
+    counterElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`; // Fixed template literal
+    }
+    }
+    // Age Counter Logic
+    function calculateAge(birthDate, elementId) {
+    const start = new Date(birthDate);
+    const now = new Date();
+    const diff = now - start;
+
+    const ageDate = new Date(diff);
+    const years = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+    // More precise calculation for display
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const element = document.getElementById(elementId);
+    if (element) {
+    element.innerHTML = `${years} <span class="text-xs font-normal opacity-60">years</span> ${days % 365} <span
+        class="text-xs font-normal opacity-60">days</span> ${hours} <span
+        class="text-xs font-normal opacity-60">hrs</span> ${minutes} <span
+        class="text-xs font-normal opacity-60">min</span> ${seconds} <span
+        class="text-xs font-normal opacity-60">s</span>`;
+    }
+    }
+
+    setInterval(() => {
+    calculateAge('1995-03-15T00:00:00', 'age-shaila');
+    calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
+    updateCounter(); // Existing counter
+    }, 1000);
+
+    // Initial call
+    calculateAge('1995-03-15T00:00:00', 'age-shaila');
+    calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
+
+    // Scroll Animations (Fade In)
+    const observerOptions = {
+    threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+    if (entry.isIntersecting) {
+    entry.target.classList.add('opacity-100', 'translate-y-0');
+    entry.target.classList.remove('opacity-0', 'translate-y-10');
+    }
+    });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+    section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+    observer.observe(section);
+    });
+    </script>
+</body>
+
+</html>

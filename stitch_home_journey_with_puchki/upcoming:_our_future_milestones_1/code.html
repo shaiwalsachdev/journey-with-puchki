@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upcoming: Our Future Milestones - Journey with Puchki</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                        "primary-light": "#fbd0d2", // Tint of primary
+                        "primary-dark": "#8e0b12", // Shade of primary
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "cursive": ["Great Vibes", "cursive"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(34, 16, 17, 0.7);
+            border: 1px solid rgba(236, 19, 30, 0.1);
+        }
+        .pattern-bg {
+            background-color: #f8f6f6;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ec131e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .dark .pattern-bg {
+            background-color: #221011;
+             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ec131e' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark pattern-bg min-h-screen font-display text-gray-800 dark:text-gray-100 flex flex-col overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 transition-all duration-300 glass-card border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<a class="flex items-center space-x-2 group" href="#">
+<span class="material-icons text-primary text-3xl group-hover:animate-pulse">favorite</span>
+<span class="font-cursive text-3xl text-gray-900 dark:text-white pt-1">Journey with Puchki</span>
+</a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Our Story</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Gallery</a>
+<a class="text-sm font-bold text-primary relative" href="#">
+                    Upcoming
+                    <span class="absolute -bottom-2 left-0 w-full h-0.5 bg-primary rounded-full"></span>
+</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Wishes</a>
+</div>
+<button class="md:hidden text-gray-800 dark:text-white">
+<span class="material-icons text-3xl">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto w-full flex flex-col items-center">
+<!-- Header Text -->
+<header class="text-center mb-16 relative">
+<div class="absolute -top-10 -left-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-10 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+<h2 class="font-cursive text-4xl md:text-5xl text-primary mb-2">Our Future</h2>
+<h1 class="font-serif text-5xl md:text-7xl font-bold text-gray-900 dark:text-white tracking-tight">Milestones</h1>
+<p class="mt-4 text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto font-light">
+                Counting down the seconds until our forever begins. Every moment brings us closer to these beautiful days.
+            </p>
+</header>
+<!-- Countdowns Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 w-full mb-24">
+<!-- Roka Countdown -->
+<div class="relative group">
+<!-- Floral Decoration Left -->
+<div class="absolute -top-12 -left-12 w-48 h-48 opacity-20 dark:opacity-10 z-0 pointer-events-none rotate-45 transform transition-transform group-hover:rotate-12 duration-700">
+<img alt="Floral pattern" class="w-full h-full object-contain rounded-full blur-sm" data-alt="Abstract floral soft pink watercolor texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBHs7-XDS3TLQ5HNhhoAQJfOeUIFP6ZJ8QzQd1PacbpS4QBwIW9rld3YsxZ0lR5FAn7ButOVB9tWUiEU5L_xSqMrElwmxr2-SXcMYqBV0nsj3TKFGjff9XI49whfGqDgHzQ0ymqthIaHDvTeMcWVqnS5znb1ULZ71YIVdZ-K5_kcCTp2EmoppfeqN5P4fJpaLApS3zyTFXNQ1IF8dHYXdynzc_qxylicqecHpEIUKree09KKlXKsVu8KJhuOk1jtJRb5ywISfTqkM8"/>
+</div>
+<div class="relative z-10 glass-card rounded-xl p-8 md:p-12 text-center shadow-lg shadow-primary/5 hover:shadow-primary/20 transition-all duration-500 border border-white/50 dark:border-white/5">
+<div class="mb-6">
+<span class="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase mb-3">March 12, 2026</span>
+<h3 class="font-serif text-4xl md:text-5xl text-gray-900 dark:text-white">The Roka</h3>
+</div>
+<div class="flex justify-center items-center gap-4 md:gap-6 text-gray-800 dark:text-gray-200">
+<div class="flex flex-col items-center">
+<span class="text-3xl md:text-5xl font-bold font-serif text-primary">145</span>
+<span class="text-xs uppercase tracking-widest mt-2 text-gray-500">Days</span>
+</div>
+<span class="text-2xl text-gray-300 pb-6">:</span>
+<div class="flex flex-col items-center">
+<span class="text-3xl md:text-5xl font-bold font-serif text-primary">12</span>
+<span class="text-xs uppercase tracking-widest mt-2 text-gray-500">Hours</span>
+</div>
+<span class="text-2xl text-gray-300 pb-6">:</span>
+<div class="flex flex-col items-center">
+<span class="text-3xl md:text-5xl font-bold font-serif text-primary">45</span>
+<span class="text-xs uppercase tracking-widest mt-2 text-gray-500">Mins</span>
+</div>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="bg-primary hover:bg-red-700 text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-lg shadow-primary/30 flex items-center gap-2 group-hover:scale-105 transform duration-300">
+<span class="material-icons text-sm">calendar_today</span>
+                            Add to Calendar
+                        </button>
+</div>
+</div>
+</div>
+<!-- Wedding Countdown -->
+<div class="relative group">
+<!-- Floral Decoration Right -->
+<div class="absolute -bottom-12 -right-12 w-48 h-48 opacity-20 dark:opacity-10 z-0 pointer-events-none -rotate-12 transform transition-transform group-hover:-rotate-45 duration-700">
+<img alt="Floral pattern" class="w-full h-full object-contain rounded-full blur-sm" data-alt="Abstract soft red floral pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClON16IQzh2cukxTZVIBn1CTbZJUfkmo8lBjhFn7mA9SSQ3Ri49Gi1KDmwLFlfknv8Wf6dMaLsAy0EH1bJHgZkLevatTDSsgsaH0jLwWZusrtLpu0fFR34yr9fl0LTXL3BZBc1LMrfAG59jRDbwXL91k6wLEbnJ0whWtHIbneWFDqJ2nGq0iNUiwJ_-anLyFWCAbeBXjjVDuXHp1XuuEbwF8GnbYV__pi5QiFhHnOh84LvPIIHYw35iyIOI6dwYHdGZAeMfw9QL-2c"/>
+</div>
+<div class="relative z-10 bg-white dark:bg-gray-900 rounded-xl p-8 md:p-12 text-center shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all duration-500 ring-1 ring-primary/20">
+<!-- Wedding Ring Icon Decoration -->
+<div class="absolute top-4 right-4 opacity-10">
+<span class="material-icons text-6xl text-primary">diamond</span>
+</div>
+<div class="mb-6">
+<span class="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold tracking-wider uppercase mb-3">Nov 20, 2026</span>
+<h3 class="font-serif text-4xl md:text-5xl text-gray-900 dark:text-white">The Wedding</h3>
+</div>
+<div class="flex justify-center items-center gap-4 md:gap-6 text-gray-800 dark:text-gray-200">
+<div class="flex flex-col items-center">
+<span class="text-3xl md:text-5xl font-bold font-serif text-primary">398</span>
+<span class="text-xs uppercase tracking-widest mt-2 text-gray-500">Days</span>
+</div>
+<span class="text-2xl text-gray-300 pb-6">:</span>
+<div class="flex flex-col items-center">
+<span class="text-3xl md:text-5xl font-bold font-serif text-primary">06</span>
+<span class="text-xs uppercase tracking-widest mt-2 text-gray-500">Hours</span>
+</div>
+<span class="text-2xl text-gray-300 pb-6">:</span>
+<div class="flex flex-col items-center">
+<span class="text-3xl md:text-5xl font-bold font-serif text-primary">22</span>
+<span class="text-xs uppercase tracking-widest mt-2 text-gray-500">Mins</span>
+</div>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="bg-primary hover:bg-red-700 text-white px-8 py-3 rounded-full text-sm font-medium transition-colors shadow-lg shadow-primary/30 flex items-center gap-2 group-hover:scale-105 transform duration-300">
+<span class="material-icons text-sm">calendar_today</span>
+                            Add to Calendar
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="w-full flex justify-center items-center gap-4 mb-16 opacity-50">
+<div class="h-px bg-primary/30 w-16 md:w-32"></div>
+<span class="material-icons text-primary/50 text-xl">favorite</span>
+<div class="h-px bg-primary/30 w-16 md:w-32"></div>
+</div>
+<!-- Locked Gallery Section -->
+<section class="w-full">
+<div class="text-center mb-12">
+<h3 class="font-cursive text-3xl text-primary mb-2">Coming Soon</h3>
+<h4 class="font-serif text-3xl md:text-4xl text-gray-900 dark:text-white font-semibold">Locked Memories</h4>
+<p class="text-gray-500 mt-2">These pages of our story are waiting to be written.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Locked Card 1 -->
+<div class="group relative aspect-[4/5] overflow-hidden rounded-lg cursor-not-allowed">
+<!-- Background Image (Blurred) -->
+<div class="absolute inset-0 bg-cover bg-center filter blur-md grayscale scale-110 transition-transform duration-700" data-alt="Blurred image of couple holding hands" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAIodjG2ke3OttSAeON9kogJkdU2gNTs3Sw2RPtLd8X5dvHr2aWW2n-zvh69k0OP1sFScV4wdaBx8KghD90328SLJx0gYgg4c46xVowpug5aE1x-RPYQgMx3ve0NcerPI-UB9WBA1W-duGCyvFZ5Gv2vhUM1Nzxu5fE2WFcSiPccHm3MBPGUZoZwBWjlLs6ZxmJdtfeSFfROla9MNvbFcttTjw9bcRV1ioO80eR6pMV-MFZK591UXKgIzffb9ezbU8feZ8_MUx0Cm3g');"></div>
+<!-- Overlay -->
+<div class="absolute inset-0 bg-gray-900/60 flex flex-col items-center justify-center text-center p-6 transition-colors group-hover:bg-gray-900/70">
+<div class="bg-white/10 backdrop-blur-md p-4 rounded-full mb-4 border border-white/20 shadow-xl group-hover:scale-110 transition-transform duration-300">
+<span class="material-icons text-white/90 text-4xl">lock</span>
+</div>
+<h5 class="text-2xl font-serif text-white font-medium mb-1">Engagement Party</h5>
+<p class="text-white/70 text-sm font-light">Unlocks in 2026</p>
+</div>
+<!-- Border Decoration -->
+<div class="absolute inset-4 border border-white/20 rounded-lg pointer-events-none"></div>
+</div>
+<!-- Locked Card 2 -->
+<div class="group relative aspect-[4/5] overflow-hidden rounded-lg cursor-not-allowed">
+<!-- Background Image (Blurred) -->
+<div class="absolute inset-0 bg-cover bg-center filter blur-md grayscale scale-110 transition-transform duration-700" data-alt="Blurred image of wedding dress details" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbc2YFi8N5iVsWQZZX55lOhZGQNsnJ8pl4d-KLGVj-qBNVx2GWy5NZT4A7be9i7VFFJ3zhnTdPMeZQ9KmovCNzivYirnllWRnBpM37NJl4fZ1UlHeWAx0WIKF5Mqzuh4adBvxlNkEPACpiP0A32SxVvBuOaY2msfBaV59IkT6tQb1z2uXpmdSrz6f9hakWsuv9kqNLXDCiPbCgJ7MMagGZsBnWluJvyx07CJhf-yrN2k0qkF2NW3_3sD5k202CpjDazPD_2IYQKRG9');"></div>
+<!-- Overlay -->
+<div class="absolute inset-0 bg-primary/40 flex flex-col items-center justify-center text-center p-6 transition-colors group-hover:bg-primary/50">
+<div class="bg-white/10 backdrop-blur-md p-4 rounded-full mb-4 border border-white/20 shadow-xl group-hover:scale-110 transition-transform duration-300">
+<span class="material-icons text-white/90 text-4xl">lock</span>
+</div>
+<h5 class="text-2xl font-serif text-white font-medium mb-1">Pre-Wedding Shoot</h5>
+<p class="text-white/80 text-sm font-light">Unlocks May 2026</p>
+</div>
+<!-- Border Decoration -->
+<div class="absolute inset-4 border border-white/20 rounded-lg pointer-events-none"></div>
+</div>
+<!-- Locked Card 3 -->
+<div class="group relative aspect-[4/5] overflow-hidden rounded-lg cursor-not-allowed">
+<!-- Background Image (Blurred) -->
+<div class="absolute inset-0 bg-cover bg-center filter blur-md grayscale scale-110 transition-transform duration-700" data-alt="Blurred image of wedding venue setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCSfZ040_A5WBuc2PCy2HsDOWvDnODH3x-kT8XghIrvDZBENimowA-YjKjcQyA2H4fFAouluti-aL7VY09hIQ8Nu_lWLcFL7VM5elgyfhVZn7q12quv5YF1hOSSd7Jkw0_rLlugN1PhBWUZiEVNICiI6tN1ogfFyk6g0OsH139ow8G-Uxb8xBOr5o9psL9Qa0PBxsPuNU1BZo5SjgD4Pm18tDMpwONaVkxrwt6GujRlhrrWGUXROQH26pOepZfXw4VvWS2M03t5uns');"></div>
+<!-- Overlay -->
+<div class="absolute inset-0 bg-gray-900/60 flex flex-col items-center justify-center text-center p-6 transition-colors group-hover:bg-gray-900/70">
+<div class="bg-white/10 backdrop-blur-md p-4 rounded-full mb-4 border border-white/20 shadow-xl group-hover:scale-110 transition-transform duration-300">
+<span class="material-icons text-white/90 text-4xl">lock</span>
+</div>
+<h5 class="text-2xl font-serif text-white font-medium mb-1">Honeymoon</h5>
+<p class="text-white/70 text-sm font-light">Unlocks Dec 2026</p>
+</div>
+<!-- Border Decoration -->
+<div class="absolute inset-4 border border-white/20 rounded-lg pointer-events-none"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-black border-t border-gray-100 dark:border-gray-800 py-12 relative z-10">
+<div class="max-w-7xl mx-auto px-6 text-center">
+<span class="material-icons text-primary mb-4 animate-bounce">favorite</span>
+<p class="font-serif text-2xl text-gray-800 dark:text-gray-200 italic mb-4">"The best is yet to come."</p>
+<p class="text-sm text-gray-500 font-light">
+                © 2024 Journey with Puchki. Made with love for Shaiwal &amp; Shaila.
+            </p>
+</div>
+</footer>
+</body></html>

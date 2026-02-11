@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "Honeymoon in Bali",
+        "description": "A romantic getaway to the island of gods. Sunsets, beaches, and us.",
+        "image_url": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
+        "link": "#",
+        "date_added": "Feb 11, 2026"
+    },
+    {
+        "id": 3,
+        "title": "Our Instagram Wishlist",
+        "description": "A collection of shared dreams and saved inspirations from our scroll.",
+        "image_url": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80",
+        "link": "https://www.instagram.com/geeekdonsignals/saved/shaix2-wishlist/17904675006314511/",
+        "date_added": "Feb 11, 2026"
+    },
+    {
+        "id": 2,
+        "title": "Coffee Date in Paris",
+        "description": "Sipping latte by the Eiffel Tower.",
+        "image_url": "https://images.unsplash.com/photo-1493857671505-72967e2e2760",
+        "link": "#",
+        "date_added": "Feb 11, 2026"
+    }
+]

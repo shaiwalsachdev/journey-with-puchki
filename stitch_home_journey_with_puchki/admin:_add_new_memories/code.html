@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin: Add New Memories - Journey with Puchki</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "primary-50": "#fef2f2",
+                        "primary-100": "#fee2e2",
+                        "primary-200": "#fecaca",
+                        "primary-600": "#dc2626",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d1b1c",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display antialiased min-h-screen flex flex-col md:flex-row">
+<!-- Mobile Header -->
+<div class="md:hidden bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 p-4 flex justify-between items-center sticky top-0 z-20">
+<div class="flex items-center gap-2">
+<span class="material-icons text-primary text-2xl">favorite</span>
+<span class="font-bold text-lg">Journey with Puchki</span>
+</div>
+<button class="text-gray-500 hover:text-primary">
+<span class="material-icons">menu</span>
+</button>
+</div>
+<!-- Sidebar Navigation -->
+<aside class="hidden md:flex flex-col w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 h-screen sticky top-0">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons text-xl">favorite</span>
+</div>
+<h1 class="font-bold text-lg tracking-tight">Journey with Puchki</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-primary-50 dark:hover:bg-primary/10 hover:text-primary rounded-xl transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-white shadow-lg shadow-primary/30 rounded-xl transition-colors" href="#">
+<span class="material-icons text-[20px]">add_circle</span>
+<span class="font-medium text-sm">Add New Milestone</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-primary-50 dark:hover:bg-primary/10 hover:text-primary rounded-xl transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">collections</span>
+<span class="font-medium text-sm">Manage Gallery</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-primary-50 dark:hover:bg-primary/10 hover:text-primary rounded-xl transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">favorite_border</span>
+<span class="font-medium text-sm">Wishlist</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-primary-50 dark:hover:bg-primary/10 hover:text-primary rounded-xl transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<img class="w-10 h-10 rounded-full object-cover border-2 border-primary/20" data-alt="Profile photo of a young man smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu7G8FUjW1VDwRhUxbaQiWBJ-8ohpM6jUNBL_mE0uRjzOxZcif0JrvcM5whjTYXQLuHOfKCjeZYrDQCOnbYAHyXKHEzAPw2RJdJsbXBeK76Vko3EdQyQuAYlx9vk0vToXPZ5Ovep1Y6Apzw41nUf2pCHyGv-jR1GxSPM7hAr6ZMcooJo-SlwXH_dgmfwM1Wiubplhi1AchKUiW2hiJ8t17BsJBEuKER39ezYmtY_EagWubqFJNwV3WetY9k_HhQiWn3MTHLne7Ylbx"/>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-semibold truncate">Shaiwal</p>
+<p class="text-xs text-gray-500 truncate">Admin</p>
+</div>
+<button class="text-gray-400 hover:text-primary">
+<span class="material-icons text-lg">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Header -->
+<header class="bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-10 border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
+<div>
+<nav class="flex text-sm text-gray-500 mb-1">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="mx-2">/</span>
+<span class="text-primary font-medium">Add Memory</span>
+</nav>
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Create New Memory</h2>
+</div>
+<div class="flex items-center gap-3">
+<button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition-colors">
+<span class="material-icons text-[20px]">notifications</span>
+</button>
+<button class="hidden sm:flex bg-primary/10 hover:bg-primary/20 text-primary font-medium px-4 py-2 rounded-lg text-sm transition-colors">
+                    Preview Page
+                </button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 pb-24">
+<div class="max-w-4xl mx-auto space-y-8">
+<!-- Intro Section -->
+<div class="bg-gradient-to-r from-primary-50 to-white dark:from-primary/10 dark:to-surface-dark rounded-2xl p-6 border border-primary/10">
+<div class="flex items-start gap-4">
+<div class="p-3 bg-white dark:bg-surface-dark rounded-xl shadow-sm text-primary">
+<span class="material-icons text-2xl">auto_awesome</span>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Capture the moment, Shaiwal!</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                                Add a new milestone to your digital scrapbook. Don't forget to tag it correctly so Puchki can find it easily later!
+                            </p>
+</div>
+</div>
+</div>
+<form class="space-y-8">
+<!-- Section 1: Core Details -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8">
+<div class="flex items-center gap-2 mb-6 border-b border-gray-100 dark:border-gray-800 pb-4">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-xs font-bold">1</span>
+<h4 class="font-semibold text-gray-900 dark:text-white">Milestone Details</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Date Picker -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">When did this happen?</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-gray-400 text-[20px]">calendar_today</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm text-gray-900 dark:text-white placeholder-gray-400" type="date"/>
+</div>
+</div>
+<!-- Location -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Where were you?</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-gray-400 text-[20px]">place</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm text-gray-900 dark:text-white placeholder-gray-400" placeholder="e.g. Cafe Lota, Delhi" type="text"/>
+</div>
+</div>
+<!-- Categories -->
+<div class="md:col-span-2 space-y-3">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">What is this about? <span class="text-xs text-gray-500 font-normal">(Select all that apply)</span></label>
+<div class="flex flex-wrap gap-2">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full border border-primary bg-primary text-white text-sm font-medium transition-all hover:shadow-md">
+                                            ❤️ Date Night
+                                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 text-sm font-medium peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all hover:border-primary/50">
+                                            🍔 Food
+                                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 text-sm font-medium peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all hover:border-primary/50">
+                                            ✈️ Travel
+                                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 text-sm font-medium peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all hover:border-primary/50">
+                                            🎬 Movie
+                                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<div class="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 text-sm font-medium peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white transition-all hover:border-primary/50">
+                                            🎉 Milestone
+                                        </div>
+</label>
+<button class="px-3 py-2 rounded-full border border-dashed border-gray-300 dark:border-gray-600 text-gray-500 hover:text-primary hover:border-primary text-sm flex items-center justify-center transition-colors" type="button">
+<span class="material-icons text-sm mr-1">add</span> New
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Story & Media -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8">
+<div class="flex items-center gap-2 mb-6 border-b border-gray-100 dark:border-gray-800 pb-4">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-xs font-bold">2</span>
+<h4 class="font-semibold text-gray-900 dark:text-white">Story &amp; Visuals</h4>
+</div>
+<div class="space-y-6">
+<!-- Rich Text Area -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Write a Love Note</label>
+<div class="flex space-x-1 bg-gray-50 dark:bg-white/5 rounded-lg p-1">
+<button class="p-1 text-gray-500 hover:text-primary hover:bg-white dark:hover:bg-white/10 rounded" type="button"><span class="material-icons text-sm">format_bold</span></button>
+<button class="p-1 text-gray-500 hover:text-primary hover:bg-white dark:hover:bg-white/10 rounded" type="button"><span class="material-icons text-sm">format_italic</span></button>
+<button class="p-1 text-gray-500 hover:text-primary hover:bg-white dark:hover:bg-white/10 rounded" type="button"><span class="material-icons text-sm">format_list_bulleted</span></button>
+<button class="p-1 text-gray-500 hover:text-primary hover:bg-white dark:hover:bg-white/10 rounded" type="button"><span class="material-icons text-sm">sentiment_satisfied</span></button>
+</div>
+</div>
+<textarea class="block w-full p-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm text-gray-900 dark:text-white placeholder-gray-400" placeholder="Tell the story of this moment... how did you feel? what was funny?" rows="5"></textarea>
+</div>
+<!-- Drag and Drop Zone -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capture the Moment</label>
+<div class="w-full flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl hover:border-primary hover:bg-primary-50 dark:hover:bg-primary/5 transition-all cursor-pointer group">
+<div class="space-y-1 text-center">
+<div class="mx-auto h-12 w-12 text-gray-400 group-hover:text-primary transition-colors">
+<span class="material-icons text-5xl">cloud_upload</span>
+</div>
+<div class="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
+<label class="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary-600 focus-within:outline-none" for="file-upload">
+<span>Upload a file</span>
+<input class="sr-only" id="file-upload" name="file-upload" type="file"/>
+</label>
+<p class="pl-1">or drag and drop</p>
+</div>
+<p class="text-xs text-gray-500">
+                                            PNG, JPG, GIF up to 10MB
+                                        </p>
+</div>
+</div>
+</div>
+<!-- Preview of Uploaded Images (Mock State) -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+<div class="relative group rounded-lg overflow-hidden aspect-square">
+<img class="w-full h-full object-cover" data-alt="A small puppy sitting in grass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUTT8Aagg7Q7SwhiY5QqPY30wAnf1w8kC5E_SCb4pmAWaLjXRs3Q1Goit0I3lAlfb6Vqvmrmhm2UJ3vlkWDJWmPZ4nLDw_sJCTfoy7aGOCuiIhqJUCrWya9kElpLTAV2s53Pbqg1yXeOw7Qe-X1edCjExITvZcOzJtz7xipL7oEp8Jln3-Ei5fVD0-Ug7PXyAFdapMucbs_9DM-tuJv4uYO5QG-C72XXlVbKR6MjDqTbpMHmRPRKHQ8xHT4X5c43OqQuIaM87gtgyl"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="text-white hover:text-red-400" type="button"><span class="material-icons">delete</span></button>
+</div>
+</div>
+<div class="flex items-center justify-center border border-gray-200 dark:border-gray-700 rounded-lg aspect-square bg-gray-50 dark:bg-white/5 text-gray-400">
+<span class="text-xs">Preview</span>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+<!-- Sticky Footer Action Bar -->
+<div class="sticky bottom-0 bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 p-4 md:px-8 md:py-4 z-10 flex justify-end gap-3">
+<button class="px-6 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-gray-50 dark:hover:bg-white/5 transition-colors" type="button">
+                Save Draft
+            </button>
+<button class="px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-600 text-white font-medium text-sm shadow-lg shadow-primary/30 transition-all transform active:scale-95 flex items-center gap-2" type="button">
+<span class="material-icons text-sm">send</span>
+                Publish Memory
+            </button>
+</div>
+</main>
+</body></html>

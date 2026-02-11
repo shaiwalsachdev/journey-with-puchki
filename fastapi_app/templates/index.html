@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ShaiX2 Forever</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "primary-soft": "#fdedee",
+                        "primary-dark": "#b00e16",
+                        "primary-light": "#ffebec",
+                        "background-light": "#fff0f3",
+                        "background-dark": "#221011",
+                        "peach": "#ffe5d9",
+                        "ivory": "#fffff0",
+                        "gold": "#ffd700",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "handwriting": ["Dancing Script", "cursive"],
+                        "cursive": ["Dancing Script", "cursive"],
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'drift': 'drift 10s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slight': 'bounce-slight 2s infinite',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                        'shimmer': 'shimmer 1.5s infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pop-in': 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                    },
+                    keyframes: {
+                        drift: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'bounce-slight': {
+                            '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8,0,1,1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' },
+                        },
+                        'scale-in': {
+                            '0%': { transform: 'scale(0.8)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        shimmer: {
+                            '100%': { transform: 'translateX(100%)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        popIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.5)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        love_fill: {
+                            '0%': { transform: 'scaleX(0)' },
+                            '80%': { transform: 'scaleX(1)' },
+                            '90%': { transform: 'scaleX(1)', opacity: '1' },
+                            '100%': { transform: 'scaleX(0)', opacity: '0' }
+                        },
+                        heart_fly: {
+                            '0%': { transform: 'translateX(0) scale(0.5)', opacity: '0' },
+                            '20%': { opacity: '1' },
+                            '80%': { opacity: '1' },
+                            '100%': { transform: 'translateX(250px) scale(1.5)', opacity: '0' }
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #fff0f3;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ec131e;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b00e16;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(34, 16, 17, 0.4) 0%, rgba(34, 16, 17, 0.2) 50%, rgba(34, 16, 17, 0.7) 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .dark .glass-card {
+            background: rgba(34, 16, 17, 0.7);
+            border: 1px solid rgba(236, 19, 30, 0.2);
+        }
+
+        /* Custom Heart Shape Clip Path */
+        .heart-clip {
+            clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+        }
+
+        .bg-pattern-hearts {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 36.35l-1.45-1.32C23.4 30.36 20 27.28 20 23.5 20 20.42 22.42 18 25.5 18c1.74 0 3.41.81 4.5 2.09C31.09 18.81 32.76 18 34.5 18c3.08 0 5.5 2.42 5.5 5.5 0 3.78-3.4 6.86-8.55 11.54L30 36.35z' fill='%23ec131e' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display selection:bg-primary selection:text-white transition-colors duration-300">
+
+    <!-- Valentine's Modal -->
+    <!-- Valentine's Modal -->
+    <div id="valentineModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+
+        <!-- Proposal Content -->
+        <div id="proposalContent" class="relative z-20 w-full max-w-lg mx-auto p-4 animate-scale-in">
+            <!-- Cute Mascot Decoration -->
+            <div class="absolute -top-16 left-1/2 transform -translate-x-1/2 z-30 w-32 h-32 animate-bounce-slight">
+                <div class="relative w-full h-full">
+                    <img alt="A cute kitten peeking over a ledge"
+                        class="w-32 h-32 rounded-full border-4 border-white dark:border-background-dark shadow-xl object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlz4O6Cid2mFtMgv9k9sw_6ZmG9Es_HBCaLygYLDkZr2Gl0NuEkuSJfdl_PXBGJIZ6dDHqVqZ81MPxKeQ6srRaK9-Kfl5tr8ox7rN93GzimVlglxGYA9v2QoSwaiUbf8-Ltixft60UnfsCHriet25t2h-LiciFDEnSh4BEqs0sII0zXNIsV0AXOWIryvbO_OOLU5Lj5Fm33YCpYuAyGRE7sn2E8ATeHU2-E6n7S2u0c9LdjfDIg41dd8T69aQ4jVf804fbJo2swiKQ" />
+                    <div
+                        class="absolute -bottom-2 -right-2 bg-white dark:bg-background-dark p-2 rounded-full shadow-md">
+                        <span class="text-2xl">🧸</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="glass-card rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(236,19,30,0.3)] dark:shadow-[0_20px_60px_-15px_rgba(236,19,30,0.5)] p-8 pt-20 text-center relative overflow-hidden">
+                <!-- Decorative Heart Background -->
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10">
+                </div>
+
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 text-primary dark:text-red-300 rounded-full text-sm font-bold tracking-wide mb-6">
+                    <span class="material-icons-round text-base">favorite</span>
+                    For My Puchki
+                </div>
+
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+                    Will you be my <br />
+                    <span class="text-primary relative inline-block">
+                        Valentine?
+                        <svg class="absolute w-full h-3 -bottom-1 left-0 text-primary/30" preserveaspectratio="none"
+                            viewbox="0 0 100 10">
+                            <path d="M0 5 Q 50 10 100 5" fill="none" stroke="currentColor" stroke-width="3"></path>
+                        </svg>
+                    </span>
+                    <br />Shaila?
+                </h1>
+
+                <p class="text-gray-600 dark:text-gray-300 text-lg font-medium mb-10 max-w-xs mx-auto">
+                    From your one and only, Shaiwal. <br />
+                    <span class="text-sm opacity-70">(Promise I'll share my pizza and pasta 🍕🍝)</span>
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 relative min-h-[80px]">
+                    <button id="noButton" onmouseover="runAway()"
+                        class="group order-2 sm:order-1 px-6 py-3 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-500 dark:text-gray-400 font-bold transition-all duration-300 transform hover:scale-95 text-sm z-50">
+                        <span class="block group-hover:hidden">No...</span>
+                        <span class="hidden group-hover:block text-xs">Are you sure? 🥺</span>
+                    </button>
+
+                    <button onclick="acceptValentine()"
+                        class="order-1 sm:order-2 relative px-10 py-5 bg-primary text-white text-xl font-bold rounded-full shadow-lg shadow-primary/40 transform hover:scale-110 active:scale-95 transition-all duration-300 animate-pulse group overflow-hidden">
+                        <span class="relative z-10 flex items-center gap-2">
+                            YES!
+                            <span class="material-icons-round animate-bounce">favorite</span>
+                        </span>
+                        <div
+                            class="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent z-0">
+                        </div>
+                    </button>
+                </div>
+
+                <div class="mt-8 text-xs text-gray-400 dark:text-gray-500 font-medium">
+                    Journey with Puchki • Feb 14, 2026
+                </div>
+            </div>
+
+            <!-- Floating Decorations -->
+            <div class="absolute -right-4 top-1/3 animate-float" style="animation-delay: 1s;">
+                <div class="bg-white dark:bg-background-dark p-3 rounded-2xl shadow-lg rotate-12">
+                    <span class="text-2xl">💌</span>
+                </div>
+            </div>
+            <div class="absolute -left-6 bottom-1/4 animate-float" style="animation-delay: 2.5s;">
+                <div class="bg-white dark:bg-background-dark p-3 rounded-2xl shadow-lg -rotate-12">
+                    <span class="text-2xl">🌹</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Content (Initially Hidden) -->
+        <div id="successContent" class="hidden relative z-20 w-full max-w-4xl px-6 py-12 text-center">
+            <div class="relative mb-8 animate-pop-in">
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse-fast">
+                </div>
+                <div
+                    class="relative inline-block bg-white/40 dark:bg-white/5 backdrop-blur-sm p-4 rounded-full border-4 border-white/50 dark:border-white/10 shadow-xl transform hover:scale-105 transition-transform duration-500">
+                    <div
+                        class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden bg-white relative flex items-center justify-center">
+                        <img alt="Two cute teddy bears hugging" class="w-full h-full object-cover transform scale-110"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtk8pNhyQEBSvKQ-aP8CfmsbkYLzFmLnZIAOtGDbXYI2CpaXCWRg056B7drtNuypBhg8jZrLbOurqMuPjFoIjnRenFlvi2MYPCmJV4lq7RbISzK1ZeMgjrCfjZioUnQZOZjR0szQjuTOiqyJcQyVDEpYmomXrIyCFmkJ5YfP5R-qwl-G9EiOHytTD5AoPLAmrUx7XpCwIpPYHj6qfznVFXgNc2vYh66MLDqA7k2F0yXFR-PcuUA_99yFV8E4hr-NiLrGbt9jj4LiP3" />
+                    </div>
+                    <div
+                        class="absolute -bottom-2 -right-2 bg-primary text-white rounded-full p-3 shadow-lg rotate-12 animate-bounce-slow border-4 border-white dark:border-background-dark">
+                        <span class="material-icons text-2xl">favorite</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 text-sm font-bold uppercase tracking-wider border border-green-200 dark:border-green-800 mb-2">
+                    <span class="material-icons text-base">check_circle</span>
+                    It's official!
+                </div>
+
+                <h1 class="font-handwriting text-5xl md:text-7xl leading-tight text-white drop-shadow-sm rotate-1">
+                    Yay! <span
+                        class="text-white font-display font-extrabold tracking-tight text-4xl md:text-5xl block mt-2 transform -rotate-1">Can't
+                        wait, <span
+                            class="text-primary-light underline decoration-wavy decoration-white/30 underline-offset-4">Puchki!</span>
+                        ❤️</span>
+                </h1>
+
+                <p class="text-white/90 text-lg md:text-xl font-medium max-w-lg mx-auto">
+                    Prepare for a day full of surprises, love, and maybe a little too much chocolate.
+                </p>
+            </div>
+
+            <div class="mt-12 animate-fade-in-up" style="animation-delay: 0.6s;">
+                <button onclick="closeModal()"
+                    class="group relative inline-flex items-center justify-center gap-3 bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-bold shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <span class="material-icons">arrow_downward</span>
+                    <span>Continue Exploring</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="material-icons text-primary text-3xl">favorite</span>
+                    <span class="font-handwriting text-2xl font-bold text-gray-900 dark:text-white">ShaiX2
+                        Forever</span>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/">Home</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/timeline">Timeline</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/gallery">Gallery</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/music">Music</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/coupons">Coupons</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/roka">Roka</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/wishlist">Wishlist</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/guestbook">Guestbook</a>
+                    <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                        href="/upcoming">Upcoming</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 dark:text-gray-300 hover:text-primary">
+                        <span class="material-icons text-3xl">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden z-10">
+        <!-- Hero Background Image -->
+        <div class="absolute inset-0 w-full h-full bg-cover bg-[center_25%] bg-no-repeat transition-transform duration-[10s] hover:scale-105"
+            style="background-image: url('/static/images/favourites/IMG_8915.jpg');">
+        </div>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/60"></div>
+
+        <!-- Hero Content -->
+        <div class="relative z-20 text-center px-4 max-w-4xl mx-auto mt-16 animate-float">
+
+            <div class="inline-block bg-primary/20 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-6">
+                <span class="text-white font-medium tracking-wide uppercase text-sm">Made with love for Shaila by
+                    Shaiwal</span>
+            </div>
+            <h1
+                class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-lg tracking-tight">
+                From a swipe on <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-white">Aug 30, 2025</span>
+            </h1>
+            <p class="text-2xl md:text-4xl text-white/90 font-handwriting mb-10 drop-shadow-md">
+                ... to forever 💍
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="openModal()"
+                    class="bg-white text-primary px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl flex items-center gap-2">
+                    Start Exploring <span class="material-icons">arrow_downward</span>
+                </button>
+                <button onclick="triggerValentine()"
+                    class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-dark transition-all transform hover:scale-105 shadow-xl flex items-center gap-2">
+                    Surprise! 🎁
+                </button>
+            </div>
+        </div>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <span class="material-icons text-white/70 text-4xl">keyboard_arrow_down</span>
+        </div>
+    </header>
+
+    <!-- Main Navigation Cards Section -->
+    <section class="relative z-20 -mt-24 pb-20 px-4" id="explore">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Cards -->
+                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
+                    href="/story">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWTdYjGgkTfjiofyV1BZLxkso0iJtYWSemjHgVkdjnv1hAAj9k_6uDxrj524Ir1H6_SAM43wOobj_pqvklbLXVqABQJI1lyEkXCi8WwOSism1CnBCsgRaBOW5s7NzFKujjjj6HiaDzaeYU31RU-7sUVFLs1hy1aljCGVfStZKZUDuJCy0OOZ0pf5zJGcXKLF4F8Nx50lPzXXEVeJfcT8v2lPFsHq-ntVLpsSqNIMAslJshEEWckAYrw8mooDwVw-hU-qKyF6uXH2Qz');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                            <span class="material-icons text-3xl">auto_stories</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Our
+                            Story</h3>
+                        <p
+                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            How we met & fell in love</p>
+                    </div>
+                </a>
+
+                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
+                    href="/timeline">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcpcqvukgxfqK935AXV8tPyVRhZig6HJACbH-QJDQglty6JWdown9YHKbHcKOq0IC8kQ1qAqBT7GhQJ5wHSpBhoGYTAMSdxs5Z5ND7W1Md6FGSAeiKjSgoDyePWb7QehHAjK5d6OfAylCIiDRgQlIQkOx-p-c2x4mcqtuCyEFm54uWSyRYdODHBvB1NGoUXHCLyFlx5dEeGEjZgouRC6tuzSsLWJGstMIweglOthjXqnZcuZ2ilcol_2sgqv2vgHuY_tnOZrPew-oB');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                            <span class="material-icons text-3xl">photo_camera</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">ShaiX2
+                            Moments</h3>
+                        <p
+                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            Every picture tells a story</p>
+                    </div>
+                </a>
+
+                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
+                    href="/upcoming">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACbwNcvJP4ySmIGz4RFUC4okpUwr0ynds_nSOaeALbYtXjjDc35WZTErQBbDBfIv41jMrHhnZqsBBaAqWYqMXJuQmmDv-HgpTQxhVnQq6aybQAfm3Ra6qENGPC598le9IA5knPLRPL6sk6q5oKaENQnre2FXucDJ5yurMtvYMAsQi3kZgFFScODDniKkbhi9HL39iinnrqMYTycSNnZf58Y40BkfB4vshnAAodaxoNlWYJq7LuOyGoG2bGMLbF-Tk0dlrJnmd08JW2');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                            <span class="material-icons text-3xl">event_available</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Future
+                            Milestones</h3>
+                        <p
+                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            Roka & Wedding Countdowns</p>
+                    </div>
+                </a>
+
+                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
+                    href="/coupons">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBeToKQQVcDRFVbgpLm9IKGJkqoeVbUxKHGuhjrmnOLlcgcQ4xYXJVwUadxW72dNrh2_cIikrxXVtpUKcAw7e3zSTRHZm5D3M2rONghsU33uQus_5T6_4KYnqG04qSKmDZayoWCYSZmx94-h6jdqGGwE2_mVnl9suSsJaA4VYZWHl-YJH4MDo0eiYuaPYsgxsoKfbN0hK3fUVc9RxIsBS05iwdgUd8AuPzeR7sMJTVYo_BDcgln80UpmZHP-a6b6h3m-6-iZfMQ2lDC');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                            <span class="material-icons text-3xl">card_giftcard</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Love
+                            Coupons</h3>
+                        <p
+                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            From Shaiwal to Shaila with Love</p>
+                    </div>
+                </a>
+
+                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
+                    href="/gallery">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTd2GMW1r0ae8muaMtFcus37NjLz5fg7NWeD7UhPuU6jtDkyTJ5zYu5MBh87yByqti8Nji1TOyZojAsA5Nf0boRVSCk1_H_NAKIzJ0oqN5qVfS_5tbQYgo-nXm-pk_ZanAF0mfXwayoe5QjoQjtpZU322C9zQlEmgQUtzPTJfRGiMgYYW-9-rtlaXhCw27wNac-oNcyBpmx_XXfwvldPAnlIfeSsOilHX00vr6Qjp4srjiTV2rYErSQtD8Akp7QgqgpnzKXq2ESHer');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                            <span class="material-icons text-3xl">collections</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">
+                            Gallery</h3>
+                        <p
+                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                            Every Little Moment</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Couple Highlight Section -->
+    <section class="py-20 relative z-10 overflow-hidden">
+        <div class="container mx-auto px-4 relative">
+            <div class="glass-card rounded-xl p-8 md:p-12 max-w-5xl mx-auto shadow-sm">
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="w-full md:w-1/2 relative">
+                        <div
+                            class="aspect-[4/5] rounded-lg overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 relative z-10">
+                            <img alt="Portrait of a happy couple smiling at each other"
+                                class="w-full h-full object-cover" src="/static/images/favourites/IMG_9301.jpg" />
+                        </div>
+                        <div class="absolute -top-4 -left-4 w-full h-full border-4 border-primary/20 rounded-lg -z-0">
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+                    </div>
+                    <div class="w-full md:w-1/2 text-center md:text-left">
+                        <span class="text-primary font-bold tracking-widest uppercase text-xs mb-2 block">Together Since
+                            2025</span>
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Building Our <span
+                                class="text-primary">Dream</span> Life</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
+                            "Every love story is beautiful, but ours is my favorite. From that first coffee date to
+                            planning our future home, every moment with you feels like a page from a fairytale."
+                        </p>
+                        <div class="flex items-center justify-center md:justify-start gap-4 mb-8">
+                            <div class="flex -space-x-4">
+                                <img alt="Shaila Avatar"
+                                    class="w-12 h-12 rounded-full border-2 border-white object-cover"
+                                    src="/static/images/IMG_9087.jpg" />
+                            </div>
+                            <div class="text-sm font-medium">
+                                <p class="text-gray-900 dark:text-white">Shaila & Shaiwal</p>
+                                <p class="text-primary">ShaiX2 Forever</p>
+                            </div>
+                        </div>
+                        <a class="inline-flex items-center text-primary font-bold hover:underline underline-offset-4 group"
+                            href="/timeline">
+                            View Timeline <span
+                                class="material-icons ml-1 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Happy Food Dance Video Section -->
+    <section class="py-20 bg-background-light dark:bg-background-dark relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center">
+            <span class="material-icons text-4xl text-primary mb-4 animate-bounce-slight">restaurant_menu</span>
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8">My Favorite View 💃</h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12 italic">
+                "Nothing makes me happier than seeing you do your happy dance when the food arrives. It's the purest joy
+                in the world."
+            </p>
+
+            <div
+                class="max-w-md mx-auto relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-primary/20 bg-black">
+                <video controls autoplay loop muted playsinline class="w-full h-auto">
+                    <source src="/static/images/favourites/Happy_Food_Dance.mov" type="video/quicktime">
+                    <source src="/static/images/favourites/Happy_Food_Dance.mov" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Carousel Section -->
+    <section class="py-10 overflow-hidden bg-white dark:bg-black/20">
+        <div class="container mx-auto px-4 mb-8 text-center">
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Our Best Moments</h3>
+        </div>
+
+        <!-- Infinite Scroll Carousel -->
+        <div class="relative w-full flex gap-4 overflow-x-hidden group">
+            <div class="flex gap-4 animate-drift hover:[animation-play-state:paused] w-max">
+                <!-- Images (Duplicated for infinite effect) -->
+                <img src="/static/images/favourites/IMG_7650.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_7813.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_7997.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_8023 (1).jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_8895 (1).jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_8915.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9150.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9272.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9292.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9318.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9454.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9455.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9456.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_9457.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+
+                <!-- Duplicate for seamless loop -->
+                <img src="/static/images/favourites/IMG_7650.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_7813.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_7997.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_8023 (1).jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_8895 (1).jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+                <img src="/static/images/favourites/IMG_8915.jpg"
+                    class="h-64 w-48 object-cover rounded-xl shadow-md hover:scale-105 transition-transform" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Love Messages Footer -->
+    <section
+        class="bg-gradient-to-br from-primary-soft to-white dark:from-background-dark dark:to-gray-900 py-16 text-center border-t border-primary/10 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <span class="material-icons text-4xl text-primary mb-4 animate-pulse">favorite</span>
+                <h4 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-6">Daily Dose of Love</h4>
+                <div class="h-32 flex items-center justify-center">
+                    <p id="daily-quote"
+                        class="font-handwriting text-2xl md:text-3xl text-gray-800 dark:text-white leading-relaxed transform rotate-1 transition-opacity duration-500">
+                        "You are my greatest adventure."
+                    </p>
+                </div>
+                <!-- <div class="flex justify-center gap-2 mt-8">
+                    <span class="w-2 h-2 rounded-full bg-primary"></span>
+                    <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                    <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                </div> -->
+                <button onclick="newQuote()" class="mt-8 text-xs text-primary font-bold hover:underline">One
+                    more?</button>
+            </div>
+
+            <script>
+                const loveQuotes = [
+                    "You are my greatest adventure.",
+                    "In you, I've found the love of my life and my closest, truest friend.",
+                    "I love you not only for what you are, but for what I am when I am with you.",
+                    "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more.",
+                    "To the world you may be one person, but to one person you are the world.",
+                    "You are the finest, loveliest, tenderest, and most beautiful person I have ever known.",
+                    "I swear I couldn't love you more than I do right now, and yet I know I will tomorrow.",
+                    "If I know what love is, it is because of you.",
+                    "I look at you and see the rest of my life in front of my eyes.",
+                    "You are my sun, my moon, and all my stars.",
+                    "Walking with your hands in mine and mine in yours, that's exactly where I want to be always.",
+                    "I didn't fall in love with you. I walked into love with you, with my eyes wide open.",
+                    "Your love is all I need to feel complete.",
+                    "I love you more than coffee, but please don't make me prove it.",
+                    "You make my dopamine levels go all silly.",
+                    "Every love story is beautiful, but ours is my favorite.",
+                    "You are the peanut butter to my jelly.",
+                    "Together is a beautiful place to be.",
+                    "You stole my heart, but I'll let you keep it.",
+                    "You are my today and all of my tomorrows.",
+                    "My heart is and always will be yours.",
+                    "You are the source of my joy, the center of my world and the whole of my heart.",
+                    "I choose you. And I'll choose you over and over and over. Without pause, without a doubt, in a heartbeat. I'll keep choosing you.",
+                    "When I look into your eyes, I see the mirror of my soul.",
+                    "You're nothing short of my everything.",
+                    "I'm much more me when I'm with you.",
+                    "Being with you and not being with you is the only way I have to measure time.",
+                    "Love is a friendship set to music.",
+                    "You are the poem I never knew how to write and this life is the story I have always wanted to tell.",
+                    "I love you right up to the moon—and back."
+                ];
+
+                function newQuote() {
+                    const quoteElement = document.getElementById('daily-quote');
+                    quoteElement.style.opacity = 0;
+                    setTimeout(() => {
+                        const randomQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+                        quoteElement.innerText = `"${randomQuote}"`;
+                        quoteElement.style.opacity = 1;
+                    }, 500);
+                }
+
+                // Initial Quote logic (e.g. based on day of month)
+                document.addEventListener('DOMContentLoaded', () => {
+                    const day = new Date().getDate();
+                    const quoteIndex = day % loveQuotes.length;
+                    document.getElementById('daily-quote').innerText = `"${loveQuotes[quoteIndex]}"`;
+                });
+            </script>
+        </div>
+        <!-- Footer -->
+        {% include 'partials/footer.html' %}
+    </section>
+
+    <!-- Modal Scripts -->
+    <script>
+        const modal = document.getElementById('valentineModal');
+        const proposalContent = document.getElementById('proposalContent');
+        const successContent = document.getElementById('successContent');
+        const noBtn = document.getElementById('noButton');
+
+        function openModal() {
+            window.location.href = '#explore';
+        }
+
+        function triggerValentine() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                proposalContent.classList.remove('hidden');
+                successContent.classList.add('hidden');
+            }, 300);
+        }
+
+        function acceptValentine() {
+            proposalContent.classList.add('hidden');
+            successContent.classList.remove('hidden');
+
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 200 };
+
+            function random(min, max) { return Math.random() * (max - min) + min; }
+
+            var interval = setInterval(function () {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) { return clearInterval(interval); }
+                var particleCount = 50 * (timeLeft / duration);
+                // since particles fall down, start a bit higher than random
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        function runAway() {
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 200);
+
+            // Ensure button doesn't go off screen
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+            const randomX = Math.max(20, Math.min(x, maxX));
+            const randomY = Math.max(20, Math.min(y, maxY));
+
+            noBtn.style.position = 'fixed'; // Use fixed to break out of layout
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            noBtn.style.zIndex = '1000';
+
+            // Add funny text changes
+            const texts = ["Are you sure?", "Really?", "Think again!", "Puchki please!", "Don't break my heart!", "Wrong button!"];
+            const spans = noBtn.getElementsByTagName('span');
+            if (spans.length > 1) {
+                spans[1].innerText = texts[Math.floor(Math.random() * texts.length)];
+            }
+        }
+    </script>
+</body>
+
+</html>

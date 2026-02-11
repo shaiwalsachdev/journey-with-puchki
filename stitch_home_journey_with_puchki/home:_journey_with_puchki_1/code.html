@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home: Journey with Puchki</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Dancing+Script:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "primary-soft": "#fdedee",
+                        "primary-dark": "#b00e16",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                        "peach": "#ffe5d9",
+                        "ivory": "#fffff0",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "handwriting": ["Dancing Script", "cursive"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'drift': 'drift 10s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        drift: {
+                            '0%': { transform: 'translateX(-10%) rotate(0deg)' },
+                            '100%': { transform: 'translateX(100%) rotate(360deg)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f6f6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ec131e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b00e16;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(34, 16, 17, 0.3) 0%, rgba(34, 16, 17, 0.1) 50%, rgba(34, 16, 17, 0.6) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .dark .glass-card {
+            background: rgba(34, 16, 17, 0.7);
+            border: 1px solid rgba(236, 19, 30, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display selection:bg-primary selection:text-white transition-colors duration-300">
+<!-- Floating Hearts Animation Container (Fixed Background) -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+<div class="absolute top-1/4 left-1/4 animate-float text-primary/20 text-4xl">❤️</div>
+<div class="absolute top-1/3 left-3/4 animate-float text-primary/30 text-2xl" style="animation-delay: 1s;">❤️</div>
+<div class="absolute bottom-1/4 left-1/2 animate-float text-primary/20 text-5xl" style="animation-delay: 2s;">🌸</div>
+<div class="absolute top-20 right-20 animate-float text-primary/10 text-6xl" style="animation-delay: 3s;">🌹</div>
+<div class="absolute bottom-10 left-10 animate-float text-primary/10 text-3xl" style="animation-delay: 1.5s;">✨</div>
+</div>
+<!-- Navigation -->
+<nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex-shrink-0 flex items-center gap-2">
+<span class="material-icons text-primary text-3xl">favorite</span>
+<span class="font-handwriting text-2xl font-bold text-gray-900 dark:text-white">Journey with Puchki</span>
+</div>
+<div class="hidden md:flex space-x-8">
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium" href="#">Home</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium" href="../shaix2:_our_year_in_review/code.html">Our Story</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium" href="../memory_lane:_our_timeline_1/code.html">Memories</a>
+
+</div>
+<!-- Mobile menu button -->
+<div class="md:hidden flex items-center">
+<button class="text-gray-600 dark:text-gray-300 hover:text-primary">
+<span class="material-icons text-3xl">menu</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden z-10">
+<!-- Hero Background Image (Simulated Carousel) -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-[10s] hover:scale-105" data-alt="Couple holding hands walking through a sunlit field" style="background-image: url('../../Favourites/IMG_9272.HEIC');">
+</div>
+<!-- Overlay -->
+<div class="absolute inset-0 hero-overlay"></div>
+<!-- Hero Content -->
+<div class="relative z-20 text-center px-4 max-w-4xl mx-auto mt-16 animate-float">
+<div class="inline-block bg-primary/20 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-6">
+<span class="text-white font-medium tracking-wide uppercase text-sm">Shaiwal &amp; Shaila #ShaiX2</span>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-lg tracking-tight">
+                From a swipe on <br class="hidden md:block"/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-white">Aug 30, 2025</span>
+</h1>
+<p class="text-2xl md:text-4xl text-white/90 font-handwriting mb-10 drop-shadow-md">
+                ... to forever 💍
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<a class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-dark transition-all transform hover:scale-105 shadow-xl shadow-primary/40 flex items-center gap-2" href="#explore">
+                    Start Exploring <span class="material-icons">arrow_downward</span>
+</a>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+<span class="material-icons text-white/70 text-4xl">keyboard_arrow_down</span>
+</div>
+</header>
+<!-- Main Navigation Cards Section -->
+<section class="relative z-20 -mt-24 pb-20 px-4" id="explore">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1: Our Story -->
+<a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700" href="../shaix2:_our_year_in_review/code.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90" data-alt="Vintage book open with rose petals" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWTdYjGgkTfjiofyV1BZLxkso0iJtYWSemjHgVkdjnv1hAAj9k_6uDxrj524Ir1H6_SAM43wOobj_pqvklbLXVqABQJI1lyEkXCi8WwOSism1CnBCsgRaBOW5s7NzFKujjjj6HiaDzaeYU31RU-7sUVFLs1hy1aljCGVfStZKZUDuJCy0OOZ0pf5zJGcXKLF4F8Nx50lPzXXEVeJfcT8v2lPFsHq-ntVLpsSqNIMAslJshEEWckAYrw8mooDwVw-hU-qKyF6uXH2Qz');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-center">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">auto_stories</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Our Story</h3>
+<p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">How we met &amp; fell in love</p>
+</div>
+</a>
+<!-- Card 2: Memory Lane -->
+<a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700" href="../memory_lane:_our_timeline_1/code.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90" data-alt="Wall of polaroid photos hanging on string lights" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcpcqvukgxfqK935AXV8tPyVRhZig6HJACbH-QJDQglty6JWdown9YHKbHcKOq0IC8kQ1qAqBT7GhQJ5wHSpBhoGYTAMSdxs5Z5ND7W1Md6FGSAeiKjSgoDyePWb7QehHAjK5d6OfAylCIiDRgQlIQkOx-p-c2x4mcqtuCyEFm54uWSyRYdODHBvB1NGoUXHCLyFlx5dEeGEjZgouRC6tuzSsLWJGstMIweglOthjXqnZcuZ2ilcol_2sgqv2vgHuY_tnOZrPew-oB');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-center">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">photo_camera</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Memory Lane</h3>
+<p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Every picture tells a story</p>
+</div>
+</a>
+<!-- Card 3: Upcoming Events -->
+<a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700" href="../upcoming:_our_future_milestones_1/code.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90" data-alt="Wedding rings on a calendar with flowers" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACbwNcvJP4ySmIGz4RFUC4okpUwr0ynds_nSOaeALbYtXjjDc35WZTErQBbDBfIv41jMrHhnZqsBBaAqWYqMXJuQmmDv-HgpTQxhVnQq6aybQAfm3Ra6qENGPC598le9IA5knPLRPL6sk6q5oKaENQnre2FXucDJ5yurMtvYMAsQi3kZgFFScODDniKkbhi9HL39iinnrqMYTycSNnZf58Y40BkfB4vshnAAodaxoNlWYJq7LuOyGoG2bGMLbF-Tk0dlrJnmd08JW2');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-center">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">event_available</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Events</h3>
+<p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Countdown to our big day</p>
+</div>
+</a>
+<!-- Card 4: Love Coupons -->
+<a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700" href="../love_coupons:_special_treats_1/code.html">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90" data-alt="Pink gift box with ribbon on wooden table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBeToKQQVcDRFVbgpLm9IKGJkqoeVbUxKHGuhjrmnOLlcgcQ4xYXJVwUadxW72dNrh2_cIikrxXVtpUKcAw7e3zSTRHZm5D3M2rONghsU33uQus_5T6_4KYnqG04qSKmDZayoWCYSZmx94-h6jdqGGwE2_mVnl9suSsJaA4VYZWHl-YJH4MDo0eiYuaPYsgxsoKfbN0hK3fUVc9RxIsBS05iwdgUd8AuPzeR7sMJTVYo_BDcgln80UpmZHP-a6b6h3m-6-iZfMQ2lDC');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full text-center">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">card_giftcard</span>
+</div>
+<h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Love Coupons</h3>
+<p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Special treats just for you</p>
+</div>
+</a>
+</div>
+</div>
+</section>
+<!-- Couple Highlight Section -->
+<section class="py-20 relative z-10 overflow-hidden">
+<div class="container mx-auto px-4 relative">
+<div class="glass-card rounded-xl p-8 md:p-12 max-w-5xl mx-auto shadow-sm">
+<div class="flex flex-col md:flex-row items-center gap-10">
+<div class="w-full md:w-1/2 relative">
+<div class="aspect-[4/5] rounded-lg overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 relative z-10">
+<img alt="Portrait of a happy couple smiling at each other" class="w-full h-full object-cover" data-alt="Portrait of a happy couple smiling at each other" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl-kZnkCV-MOqofUviUYzCbqBWZJMyo2HcWGXIeyExlR-jeEfsxoajGQMXkf_Ue1YdS8aw1aty7KFSaeZDSEIh-lBV-1Vei8APxQXhmPaCqn7glZHL1eSbYEeaPJlkr8LT3x9wJo5slZ-cDimgeHa3xWvjTZzgcOlU1KaLxZJvbIPmiXnG3WsyXr1e4gKs8PFGZrNGJ0vo9HuNDFCuUHcc55KJPdmmhTY6Tj0Hhn1vRladMw35SbUju5iwVENM0W4hb8Y5j6eP94hZ"/>
+</div>
+<div class="absolute -top-4 -left-4 w-full h-full border-4 border-primary/20 rounded-lg -z-0"></div>
+<div class="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+</div>
+<div class="w-full md:w-1/2 text-center md:text-left">
+<span class="text-primary font-bold tracking-widest uppercase text-xs mb-2 block">Together Since 2025</span>
+<h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Building Our <span class="text-primary">Dream</span> Life</h2>
+<p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
+                            "Every love story is beautiful, but ours is my favorite. From that first coffee date to planning our future home, every moment with you feels like a page from a fairytale."
+                        </p>
+<div class="flex items-center justify-center md:justify-start gap-4 mb-8">
+<div class="flex -space-x-4">
+<img alt="Shaila Avatar" class="w-12 h-12 rounded-full border-2 border-white object-cover" data-alt="Small avatar of Shaila" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxzWp6fauk5RoMkzh_G-2Ie5QDW0d3sbmAYWeXfU8Ql8HnQXVK1f5-gAC5ieV0FojK1v3wIn6DtKYcrZK3tZtkMn7x7i3Juic2ZPFk0RsfS1oCWkot6g0_mzBixFZp3Gfx4KslXTatWxujkE-4wWbB15twoZS43TpZWyrpbjWINzpilO7cUYSdHt7p4_6tlARXF6_4JHd6xF5bEY6ChX9m9mFM6e9ZDtOZTE04gHa8OVigw1V8_opoONdpmRijmlD4EJSM-nRbSbMQ"/>
+<img alt="Shaiwal Avatar" class="w-12 h-12 rounded-full border-2 border-white object-cover" data-alt="Small avatar of Shaiwal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Ts-z8W1Moog-l6RoQijIBC1ak7h3kWsMR7VI8UzGd3-z8sWyDnJMpsmy-woE4JNhf5qif_ztt89tyzeIfjLrpU8V5JV3_DV1W9_jbA-mizROA8NSevfo7qi3q1gFYnfcKDh2HvHEqHKMSxfGYh9ObIAeqUcmYLRvxC5UqoVPew7EOt-qEXyldFYy2d63U0-TdsIlMAHF9cQ_b4jlLs7j4II_AwVbwh1ENtZ5fsTB92IIKbJEKWsTfU8RZdBrVlRtYDyZUKB9FKNB"/>
+</div>
+<div class="text-sm font-medium">
+<p class="text-gray-900 dark:text-white">Shaila &amp; Shaiwal</p>
+<p class="text-primary">Partners in Crime</p>
+</div>
+</div>
+<a class="inline-flex items-center text-primary font-bold hover:underline underline-offset-4 group" href="../memory_lane:_our_timeline_1/code.html">
+                            View Timeline <span class="material-icons ml-1 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Dynamic Love Messages Footer -->
+<section class="bg-gradient-to-br from-primary-soft to-white dark:from-background-dark dark:to-gray-900 py-16 text-center border-t border-primary/10 relative z-10">
+<div class="container mx-auto px-4">
+<div class="max-w-2xl mx-auto">
+<span class="material-icons text-4xl text-primary mb-4 animate-pulse">favorite</span>
+<h4 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-6">Daily Dose of Love</h4>
+<div class="h-24 flex items-center justify-center">
+<p class="font-handwriting text-3xl md:text-5xl text-gray-800 dark:text-white leading-relaxed transform rotate-1">
+                        "You are my greatest adventure."
+                    </p>
+</div>
+<div class="flex justify-center gap-2 mt-8">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+<span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+</div>
+</div>
+</div>
+<!-- Bottom copyright/links -->
+<div class="mt-12 text-center text-xs text-gray-400">
+<p>© 2025 Journey with Puchki. Made with ❤️ by Shaiwal.</p>
+</div>
+</section>
+</body></html>

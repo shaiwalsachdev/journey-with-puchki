@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "On Our Wedding Day",
+        "preview": "My dearest, today marks the beginning of our forever...",
+        "open_date": "Dec 15, 2026",
+        "created_date": "Feb 10, 2026",
+        "is_locked": true
+    },
+    {
+        "id": 2,
+        "title": "First Fight Perspective",
+        "preview": "If you're reading this, we probably just had a silly argument...",
+        "open_date": "Anytime",
+        "created_date": "Feb 10, 2026",
+        "is_locked": true
+    },
+    {
+        "id": 3,
+        "title": "One Month In",
+        "preview": "It's been a month since we started this site. Just wanted to say...",
+        "open_date": "Mar 10, 2026",
+        "created_date": "Feb 10, 2026",
+        "is_locked": true
+    }
+]

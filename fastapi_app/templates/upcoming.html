@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Milestones - Journey with Puchki</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "cursive": ["Great Vibes", "cursive"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-cursive {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display">
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="max-w-7xl mx-auto px-4 py-12 md:py-20 flex flex-col items-center">
+
+        <div class="text-center mb-16">
+            <h2 class="font-cursive text-4xl md:text-5xl text-primary mb-2">Our Future</h2>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-gray-900 dark:text-white">Milestones</h1>
+            <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
+                Counting down the seconds until our forever begins.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-5xl mb-24">
+            <!-- Roka -->
+            <div
+                class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl text-center border border-primary/10 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10"><span
+                        class="material-icons text-6xl text-primary">favorite</span></div>
+                <span
+                    class="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-wider mb-4">March
+                    12, 2026</span>
+                <h3 class="font-serif text-4xl mb-8">The Roka</h3>
+
+                <div class="flex justify-center gap-2 md:gap-4 text-center">
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="roka-days">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Days</p>
+                    </div>
+                    <span class="text-xl md:text-2xl text-gray-300 self-start mt-1">:</span>
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="roka-hours">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Hrs</p>
+                    </div>
+                    <span class="text-xl md:text-2xl text-gray-300 self-start mt-1">:</span>
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="roka-minutes">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Mins</p>
+                    </div>
+                    <span class="text-xl md:text-2xl text-gray-300 self-start mt-1">:</span>
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="roka-seconds">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Secs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wedding -->
+            <div
+                class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl text-center border border-primary/10 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10"><span
+                        class="material-icons text-6xl text-primary">diamond</span></div>
+                <span
+                    class="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-wider mb-4">November
+                    20, 2026</span>
+                <h3 class="font-serif text-4xl mb-8">The Wedding</h3>
+
+                <div class="flex justify-center gap-2 md:gap-4 text-center">
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="wedding-days">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Days</p>
+                    </div>
+                    <span class="text-xl md:text-2xl text-gray-300 self-start mt-1">:</span>
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="wedding-hours">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Hrs</p>
+                    </div>
+                    <span class="text-xl md:text-2xl text-gray-300 self-start mt-1">:</span>
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="wedding-minutes">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Mins</p>
+                    </div>
+                    <span class="text-xl md:text-2xl text-gray-300 self-start mt-1">:</span>
+                    <div>
+                        <span class="text-2xl md:text-3xl font-bold text-primary" id="wedding-seconds">00</span>
+                        <p class="text-[10px] uppercase text-gray-500 mt-1">Secs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Future Locked -->
+        <div class="text-center mb-12">
+            <h3 class="font-cursive text-3xl text-primary mb-2">Coming Soon</h3>
+            <h4 class="font-serif text-3xl font-bold">Locked Memories</h4>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+            <div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 group">
+                <div
+                    class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white p-6 text-center">
+                    <span class="material-icons text-4xl mb-2">lock</span>
+                    <h5 class="font-serif text-2xl">Engagement Party</h5>
+                    <p class="text-sm opacity-70">Unlocks 2026</p>
+                </div>
+            </div>
+            <div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 group">
+                <div
+                    class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white p-6 text-center">
+                    <span class="material-icons text-4xl mb-2">lock</span>
+                    <h5 class="font-serif text-2xl">Pre-Wedding Shoot</h5>
+                    <p class="text-sm opacity-70">Unlocks May 2026</p>
+                </div>
+            </div>
+            <div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 group">
+                <div
+                    class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white p-6 text-center">
+                    <span class="material-icons text-4xl mb-2">lock</span>
+                    <h5 class="font-serif text-2xl">Honeymoon</h5>
+                    <p class="text-sm opacity-70">Unlocks Dec 2026</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script>
+        function updateCountdowns() {
+            const now = new Date();
+            const rokaDate = new Date('2026-03-12T00:00:00');
+            const weddingDate = new Date('2026-11-20T00:00:00');
+
+            function setTime(targetDate, dayId, hourId, minId, secId) {
+                const diff = targetDate - now;
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById(dayId).innerText = days < 10 ? '0' + days : days;
+                    document.getElementById(hourId).innerText = hours < 10 ? '0' + hours : hours;
+                    document.getElementById(minId).innerText = minutes < 10 ? '0' + minutes : minutes;
+                    document.getElementById(secId).innerText = seconds < 10 ? '0' + seconds : seconds;
+                }
+            }
+
+            setTime(rokaDate, 'roka-days', 'roka-hours', 'roka-minutes', 'roka-seconds');
+            setTime(weddingDate, 'wedding-days', 'wedding-hours', 'wedding-minutes', 'wedding-seconds');
+        }
+        setInterval(updateCountdowns, 1000);
+        updateCountdowns();
+    </script>
+</body>
+
+</html>

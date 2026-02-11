@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaiX2 Wishlist: Our Shared Dreams</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eb2d5d",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211115",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "cursive": ["Great Vibes", "cursive"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        .break-inside-avoid {
+            break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen">
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="pt-8 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12 space-y-4">
+            <h1 class="font-cursive text-5xl md:text-6xl text-primary mb-2">Building Our Future</h1>
+            <p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                A digital collection of our shared dreams for 2026 and beyond.
+            </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12">
+            <button
+                class="px-6 py-2.5 rounded-full bg-primary text-white font-medium shadow-lg hover:scale-105 transition-transform">All
+                Dreams</button>
+            <button
+                class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-colors">Future
+                Travel ✈️</button>
+            <button
+                class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-colors">Home
+                Decor 🏠</button>
+            <button
+                class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-colors">Date
+                Ideas 💡</button>
+        </div>
+
+        <!-- Add Wish Button -->
+        <div class="fixed bottom-8 right-8 z-50">
+            <button onclick="toggleWishModal()"
+                class="bg-primary text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center">
+                <span class="material-icons text-3xl">add</span>
+            </button>
+        </div>
+
+        <!-- Masonry Grid -->
+        <div class="masonry-grid pb-20">
+            {% for item in items %}
+            <div class="break-inside-avoid mb-6 relative group">
+                <div
+                    class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                    <div class="relative overflow-hidden">
+                        <img src="{{ item.image_url }}"
+                            class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy">
+                        {% if item.link and item.link != '#' %}
+                        <a href="{{ item.link }}" target="_blank"
+                            class="absolute inset-0 bg-black/0 group-hover:bg-black/20 flex items-center justify-center transition-colors">
+                            <span
+                                class="material-icons text-white opacity-0 group-hover:opacity-100 bg-black/50 p-2 rounded-full">open_in_new</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="p-4">
+                        <span
+                            class="text-xs font-semibold px-2.5 py-1 rounded-full bg-pink-100 text-pink-600 mb-2 inline-block">Wish
+                            ✨</span>
+                        <h3 class="font-bold text-lg mb-1 leading-tight">{{ item.title }}</h3>
+                        <p class="font-medium text-slate-600 dark:text-slate-400 text-sm leading-snug">{{
+                            item.description }}</p>
+                        <p class="text-xs text-gray-400 mt-3 text-right">{{ item.date_added }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Wishlist Modal -->
+    <div id="wishModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleWishModal()"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-4">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden relative">
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold font-cursive text-primary">Add to Our Dreams</h3>
+                        <button onclick="toggleWishModal()" class="text-slate-400 hover:text-slate-600">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <form action="/wishlist/add" method="POST" class="space-y-4">
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Title</label>
+                            <input type="text" name="title" required
+                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
+                                placeholder="E.g., Northern Lights Trip">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Image
+                                URL</label>
+                            <input type="url" name="image_url" required
+                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
+                                placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Description</label>
+                            <textarea name="description" rows="3" required
+                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
+                                placeholder="Why is this wish special?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Link
+                                (Optional)</label>
+                            <input type="url" name="link"
+                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
+                                placeholder="https://...">
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-primary text-white font-bold py-3 rounded-xl shadow-lg hover:bg-opacity-90 transition-all mt-2">
+                            Add to Wishlist ✨
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleWishModal() {
+            const modal = document.getElementById('wishModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+
+    {% include 'partials/footer.html' %}
+
+</body>
+
+</html>
