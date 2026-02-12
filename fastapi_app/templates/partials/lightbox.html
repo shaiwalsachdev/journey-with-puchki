@@ -1,0 +1,202 @@
+<!-- Lightbox Modal -->
+<div id="lightbox-modal"
+    class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+
+    <!-- Close Button -->
+    <button id="lightbox-close"
+        class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2 z-50 rounded-full hover:bg-white/10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+
+    <!-- Navigation Buttons -->
+    <button id="lightbox-prev"
+        class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 z-50 hover:bg-white/10 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    <button id="lightbox-next"
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-all p-4 z-50 hover:bg-white/10 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
+
+    <!-- Image Container -->
+    <div class="relative max-w-7xl max-h-screen w-full flex flex-col items-center justify-center pointer-events-none">
+        <img id="lightbox-img" src="" alt="Full screen view"
+            class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl transform transition-transform duration-300 selection:bg-none pointer-events-auto" />
+
+        <!-- Caption -->
+        <div id="lightbox-caption"
+            class="mt-4 text-white/90 text-center font-display text-lg tracking-wide hidden pointer-events-auto"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('lightbox-modal');
+        const modalImg = document.getElementById('lightbox-img');
+        const captionText = document.getElementById('lightbox-caption');
+        const closeBtn = document.getElementById('lightbox-close');
+        const prevBtn = document.getElementById('lightbox-prev');
+        const nextBtn = document.getElementById('lightbox-next');
+
+        let images = [];
+        let currentIndex = 0;
+
+        function refreshImageList() {
+            // Selectors for gallery items, timeline photos, and memory content
+            const selectors = [
+                '.masonry-item img',           // Gallery grid
+                'section img[data-alt]',       // Story/Timeline specific images using data-alt
+                '.memory-content img',         // Generic memory content wrapper if exists
+                'section img.object-cover',    // Broad selector for content images
+                '.grid img',                   // Grid layouts in memory pages
+                '.group img'                   // Common pattern for image wrappers
+            ];
+
+            const allCandidates = document.querySelectorAll(selectors.join(', '));
+            images = Array.from(allCandidates).filter(img => {
+                const isLogo = img.src.includes('logo') || img.classList.contains('icon');
+                const isProfile = img.classList.contains('rounded-full') && img.width < 100;
+                // Removed strict naturalDimension check as it filters out lazy-loaded images (width=0)
+                // We rely on the specific selectors above to target content images
+                const isLightbox = img.id === 'lightbox-img';
+                return !isLogo && !isProfile && !isLightbox;
+            });
+        }
+
+        // Global Click Listener (Event Delegation)
+        document.addEventListener('click', (e) => {
+            // 1. Ignore if lightbox is open and click is inside it (except close/nav handled separately)
+            if (!modal.classList.contains('hidden') && modal.contains(e.target)) return;
+
+            // 2. Find closest image or wrapper
+            let targetImg = null;
+
+            // Direct image click
+            if (e.target.tagName === 'IMG' && images.includes(e.target)) {
+                targetImg = e.target;
+            }
+            // Wrapper/Overlay click
+            else {
+                // 1. First try to find a wrapper that CONTAINS the image
+                const wrapper = e.target.closest('.masonry-item, .group, .grid > div, .relative');
+                if (wrapper) {
+                    const img = wrapper.querySelector('img');
+                    if (img && images.includes(img)) {
+                        // Ensure we didn't click a button/link inside the wrapper
+                        if (!e.target.closest('a:not([href="#"]), button')) {
+                            targetImg = img;
+                        }
+                    }
+                }
+                // 2. If not found, check if the clicked element is a sibling overlay of an image
+                if (!targetImg) {
+                    const clickedElement = e.target;
+                    // Check for common overlay patterns that are siblings to an image
+                    const siblingImg = clickedElement.nextElementSibling && clickedElement.nextElementSibling.tagName === 'IMG' ? clickedElement.nextElementSibling :
+                        clickedElement.previousElementSibling && clickedElement.previousElementSibling.tagName === 'IMG' ? clickedElement.previousElementSibling :
+                            null;
+
+                    if (siblingImg && images.includes(siblingImg)) {
+                        // Ensure we didn't click a button/link inside the overlay
+                        if (!e.target.closest('a:not([href="#"]), button')) {
+                            targetImg = siblingImg;
+                        }
+                    }
+                }
+            }
+
+            if (targetImg) {
+                e.preventDefault();
+                e.stopPropagation();
+                openLightbox(images.indexOf(targetImg));
+            }
+        });
+
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightboxContent();
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        function updateLightboxContent() {
+            const img = images[currentIndex];
+            if (!img) return;
+
+            // Preload next
+            const nextIndex = (currentIndex + 1) % images.length;
+            const nextImg = new Image();
+            nextImg.src = images[nextIndex].src;
+
+            modalImg.style.opacity = '0.5';
+            setTimeout(() => {
+                modalImg.src = img.src;
+                const caption = img.getAttribute('data-alt') || img.alt;
+                if (caption) {
+                    captionText.textContent = caption;
+                    captionText.classList.remove('hidden');
+                } else {
+                    captionText.classList.add('hidden');
+                }
+                modalImg.style.opacity = '1';
+                modalImg.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        function showNext() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateLightboxContent();
+        }
+
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateLightboxContent();
+        }
+
+        // Controls
+        closeBtn.addEventListener('click', closeLightbox);
+        nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+        prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.id === 'lightbox-modal' || e.target.classList.contains('flex')) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (modal.classList.contains('hidden')) return;
+            switch (e.key) {
+                case 'Escape': closeLightbox(); break;
+                case 'ArrowRight': showNext(); break;
+                case 'ArrowLeft': showPrev(); break;
+            }
+        });
+
+        // Initialize
+        refreshImageList();
+        // Re-run on window load to catch lazy-loaded images
+        window.addEventListener('load', refreshImageList);
+    });
+</script>

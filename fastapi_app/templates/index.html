@@ -137,6 +137,41 @@
         .bg-pattern-hearts {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 36.35l-1.45-1.32C23.4 30.36 20 27.28 20 23.5 20 20.42 22.42 18 25.5 18c1.74 0 3.41.81 4.5 2.09C31.09 18.81 32.76 18 34.5 18c3.08 0 5.5 2.42 5.5 5.5 0 3.78-3.4 6.86-8.55 11.54L30 36.35z' fill='%23ec131e' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
+
+        /* --- New Effects for Valentine Surprise --- */
+        .grayscale-mode {
+            filter: grayscale(100%);
+            transition: filter 1s ease;
+        }
+
+        .rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: url('/static/images/rain_overlay.png');
+            /* Fallback or generated CSS rain */
+            animation: rain 0.5s linear infinite;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .rain.active {
+            opacity: 0.5;
+        }
+
+        @keyframes rain {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 20% 100%;
+            }
+        }
     </style>
 </head>
 
@@ -230,6 +265,42 @@
             </div>
         </div>
 
+        <!-- Love Security Check Modal (Initially Hidden) -->
+        <div id="securityModal" class="hidden relative z-20 w-full max-w-lg mx-auto p-4 animate-scale-in">
+            <div class="glass-card rounded-[2rem] p-8 text-center relative overflow-hidden">
+                <div class="w-32 h-32 mx-auto mb-6 relative">
+                    <img src="/static/uploads/6/IMG_7813.jpg" alt="Security Shai"
+                        class="w-full h-full object-cover rounded-full border-4 border-primary/20 shadow-lg"
+                        onerror="this.src='/static/images/assets/goma_peach_security.png'">
+                    <div class="absolute -bottom-2 -right-2 bg-red-100 p-2 rounded-full text-2xl animate-bounce">👮‍♂️
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">⚠️ Love Security Check ⚠️</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm">Halt! Before you proceed to the "Surprise", you
+                    must prove you are the real Puchki.</p>
+
+                <div id="quiz-container">
+                    <div id="question-box" class="mb-8">
+                        <h3 id="quiz-question" class="text-lg font-bold text-primary mb-6">Who is the better driver?
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button onclick="handleQuizAnswer(0)" id="btn-opt-1"
+                                class="quiz-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105">Shaiwal</button>
+                            <button onclick="handleQuizAnswer(1)" id="btn-opt-2"
+                                class="quiz-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105">Shaiwal's
+                                Ghost</button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div id="quiz-dots" class="flex gap-2">
+                            <!-- Dots generated dynamically now -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Success Content (Initially Hidden) -->
         <div id="successContent" class="hidden relative z-20 w-full max-w-4xl px-6 py-12 text-center">
             <div class="relative mb-8 animate-pop-in">
@@ -241,7 +312,7 @@
                     <div
                         class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden bg-white relative flex items-center justify-center">
                         <img alt="Two cute teddy bears hugging" class="w-full h-full object-cover transform scale-110"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtk8pNhyQEBSvKQ-aP8CfmsbkYLzFmLnZIAOtGDbXYI2CpaXCWRg056B7drtNuypBhg8jZrLbOurqMuPjFoIjnRenFlvi2MYPCmJV4lq7RbISzK1ZeMgjrCfjZioUnQZOZjR0szQjuTOiqyJcQyVDEpYmomXrIyCFmkJ5YfP5R-qwl-G9EiOHytTD5AoPLAmrUx7XpCwIpPYHj6qfznVFXgNc2vYh66MLDqA7k2F0yXFR-PcuUA_99yFV8E4hr-NiLrGbt9jj4LiP3" />
+                            src="/static/uploads/6/IMG_7813.jpg" />
                     </div>
                     <div
                         class="absolute -bottom-2 -right-2 bg-primary text-white rounded-full p-3 shadow-lg rotate-12 animate-bounce-slow border-4 border-white dark:border-background-dark">
@@ -343,10 +414,15 @@
             <p class="text-2xl md:text-4xl text-white/90 font-handwriting mb-10 drop-shadow-md">
                 ... to forever 💍
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
                 <button onclick="openModal()"
                     class="bg-white text-primary px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl flex items-center gap-2">
                     Start Exploring <span class="material-icons">arrow_downward</span>
+                </button>
+                <button id="hero-play-btn"
+                    class="bg-rose-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-rose-600 transition-all transform hover:scale-105 shadow-xl flex items-center gap-2 group">
+                    <span>Play Our Song</span>
+                    <span class="material-icons group-hover:animate-spin">music_note</span>
                 </button>
                 <button onclick="triggerValentine()"
                     class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-dark transition-all transform hover:scale-105 shadow-xl flex items-center gap-2">
@@ -597,6 +673,45 @@
         </div>
     </section>
 
+    <!-- Home Page Specific Music -->
+    <audio id="home-audio" src="/static/home_song.mp3" loop></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const homeAudio = document.getElementById('home-audio');
+            const heroBtn = document.getElementById('hero-play-btn');
+
+            if (!homeAudio || !heroBtn) return;
+
+            function updateHeroButton(isPlaying) {
+                const textSpan = heroBtn.querySelector('span:first-child');
+                const iconSpan = heroBtn.querySelector('span:last-child');
+
+                if (isPlaying) {
+                    textSpan.textContent = 'Pause Our Song';
+                    iconSpan.textContent = 'pause';
+                    iconSpan.classList.remove('group-hover:animate-spin');
+                    heroBtn.classList.add('bg-rose-600', 'ring-4', 'ring-rose-300');
+                } else {
+                    textSpan.textContent = 'Play Our Song';
+                    iconSpan.textContent = 'music_note';
+                    iconSpan.classList.add('group-hover:animate-spin');
+                    heroBtn.classList.remove('bg-rose-600', 'ring-4', 'ring-rose-300');
+                }
+            }
+
+            heroBtn.addEventListener('click', () => {
+                if (homeAudio.paused) {
+                    homeAudio.play();
+                    updateHeroButton(true);
+                } else {
+                    homeAudio.pause();
+                    updateHeroButton(false);
+                }
+            });
+        });
+    </script>
+
     <!-- Dynamic Love Messages Footer -->
     <section
         class="bg-gradient-to-br from-primary-soft to-white dark:from-background-dark dark:to-gray-900 py-16 text-center border-t border-primary/10 relative z-10">
@@ -675,12 +790,33 @@
         {% include 'partials/footer.html' %}
     </section>
 
+    <!-- Rain Container -->
+    <div class="rain"></div>
+
+    <!-- Move Generated Assets to Static Folder -->
+    <!-- Ideally I would run a command, but assuming they are in place or using local references -->
+
     <!-- Modal Scripts -->
     <script>
         const modal = document.getElementById('valentineModal');
         const proposalContent = document.getElementById('proposalContent');
+        const securityModal = document.getElementById('securityModal');
         const successContent = document.getElementById('successContent');
         const noBtn = document.getElementById('noButton');
+        const rainContainer = document.querySelector('.rain');
+
+        // Quiz Data
+        const quizQuestions = [
+            { q: "Who is the better driver? 🚗", opts: ["Shaiwal", "Shaiwal's Ghost"], correct: 0 },
+            { q: "Who is the grumpiest in the morning? 😴", opts: ["You (Shaila)", "Definitely You"], correct: 0 },
+            { q: "Do you promise to share your fries? 🍟", opts: ["Only if I'm full", "ALWAYS!"], correct: 1 },
+            { q: "Who loves more? ❤️", opts: ["Shaiwal", "Shaila"], correct: 0 },
+            { q: "Who takes longer to get ready? 💄", opts: ["Shaiwal (Hair)", "Shaila (Outfit)"], correct: 1 },
+            { q: "What is the official currency of our love? 💰", opts: ["Kisses & Hugs", "Cold Hard Cash"], correct: 0 },
+            { q: "Who is the cutest? (Trick Question) 🥺", opts: ["Shaiwal", "Shaiwal x 2"], correct: 0 },
+            { q: "Will you love me even if I'm old and grumpy? 👴", opts: ["Yes", "Maybe... (Yes)"], correct: 0 }
+        ];
+        let currentQ = 0;
 
         function openModal() {
             window.location.href = '#explore';
@@ -688,13 +824,83 @@
 
         function triggerValentine() {
             modal.classList.remove('opacity-0', 'pointer-events-none');
+            // Start with Security Check instead of Proposal
+            startQuiz();
+        }
+
+        function startQuiz() {
+            currentQ = 0;
+            proposalContent.classList.add('hidden');
+            securityModal.classList.remove('hidden');
+
+            // Generate dots dynamically
+            const dotsContainer = document.getElementById('quiz-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                quizQuestions.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.id = `dot-${i}`;
+                    dot.className = "w-2 h-2 rounded-full bg-gray-300 transition-all";
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            loadQuestion(0);
+        }
+
+        function loadQuestion(index) {
+            const q = quizQuestions[index];
+            document.getElementById('quiz-question').innerText = q.q;
+            document.getElementById('btn-opt-1').innerText = q.opts[0];
+            document.getElementById('btn-opt-2').innerText = q.opts[1];
+
+            // Update dots
+            for (let i = 0; i < quizQuestions.length; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (!dot) continue;
+
+                if (i === index) {
+                    dot.className = "w-3 h-3 rounded-full bg-primary animate-pulse";
+                } else if (i < index) {
+                    dot.className = "w-2 h-2 rounded-full bg-primary/40";
+                } else {
+                    dot.className = "w-2 h-2 rounded-full bg-gray-300";
+                }
+            }
+        }
+
+        function handleQuizAnswer(choiceIndex) {
+            // Whatever they choose, we advance (it's rhetorical/funny)
+            // Can add specific alerts for "Wrong" answers if desired, but keeping flow smooth
+
+            if (currentQ < quizQuestions.length - 1) {
+                currentQ++;
+                // Slight delay for transition
+                const btns = document.querySelectorAll('.quiz-btn');
+                btns[choiceIndex].classList.add('bg-green-200');
+                setTimeout(() => {
+                    btns[choiceIndex].classList.remove('bg-green-200');
+                    loadQuestion(currentQ);
+                }, 300);
+            } else {
+                // Quiz Finished -> Show Proposal
+                securityModal.classList.add('hidden');
+                proposalContent.classList.remove('hidden');
+
+                // Enhance Proposal HTML dynamically if needed
+                // e.g. reset state
+            }
         }
 
         function closeModal() {
             modal.classList.add('opacity-0', 'pointer-events-none');
+            // Reset state
             setTimeout(() => {
                 proposalContent.classList.remove('hidden');
+                securityModal.classList.add('hidden');
                 successContent.classList.add('hidden');
+                // Remove Sad Effects
+                toggleSadMode(false);
             }, 300);
         }
 
@@ -702,6 +908,10 @@
             proposalContent.classList.add('hidden');
             successContent.classList.remove('hidden');
 
+            // Image is already set in HTML to /static/uploads/6/IMG_7813.jpg
+
+
+            // 1. Confetti Explosion
             var duration = 5 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 200 };
@@ -712,29 +922,92 @@
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) { return clearInterval(interval); }
                 var particleCount = 50 * (timeLeft / duration);
-                // since particles fall down, start a bit higher than random
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
+
+            // 2. Heart Rain Effect 🌧️❤️
+            startHeartRain();
         }
 
+        function startHeartRain() {
+            // Use confetti to simulate heart rain by sourcing from top
+            var heartDefaults = {
+                shapes: ['heart'],
+                colors: ['#FF0000', '#FF69B4', '#FFC0CB', '#e6194c'],
+                scalar: 2,
+                drift: 0,
+                gravity: 0.5
+            };
+
+            var heartInterval = setInterval(function () {
+                var duration = 5000; // Run for 5 seconds
+                var now = Date.now();
+
+                confetti({
+                    ...heartDefaults,
+                    particleCount: 3,
+                    origin: { x: Math.random(), y: -0.1 }, // Start above screen
+                    startVelocity: 15,
+                    ticks: 200 // Last longer
+                });
+            }, 100);
+
+            // Stop hearts after 8 seconds
+            setTimeout(() => clearInterval(heartInterval), 8000);
+        }
+
+        let isSad = false;
+        function toggleSadMode(active) {
+            isSad = active;
+            if (active) {
+                document.body.classList.add('grayscale-mode');
+                rainContainer.classList.add('active');
+
+                // Change Mascot to Crying Bear
+                const mascotImg = proposalContent.querySelector('.absolute.-top-16 img');
+                if (mascotImg) mascotImg.src = "/static/images/assets/crying_cute_bear_cartoon.png";
+
+                // Change Title
+                proposalContent.querySelector('h1').innerHTML = "Why... Puchki? 💔<br/><span class='text-sm text-gray-500'>(I bought chocolates...)</span>";
+            } else {
+                document.body.classList.remove('grayscale-mode');
+                rainContainer.classList.remove('active');
+
+                // Reset Mascot
+                const mascotImg = proposalContent.querySelector('.absolute.-top-16 img');
+                if (mascotImg) mascotImg.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuDlz4O6Cid2mFtMgv9k9sw_6ZmG9Es_HBCaLygYLDkZr2Gl0NuEkuSJfdl_PXBGJIZ6dDHqVqZ81MPxKeQ6srRaK9-Kfl5tr8ox7rN93GzimVlglxGYA9v2QoSwaiUbf8-Ltixft60UnfsCHriet25t2h-LiciFDEnSh4BEqs0sII0zXNIsV0AXOWIryvbO_OOLU5Lj5Fm33YCpYuAyGRE7sn2E8ATeHU2-E6n7S2u0c9LdjfDIg41dd8T69aQ4jVf804fbJo2swiKQ";
+
+                // Reset Title
+                proposalContent.querySelector('h1').innerHTML = "Will you be my <br /> <span class='text-primary relative inline-block'> Valentine? ... </span>";
+            }
+        }
+
+        // Counter for "No" attempts
+        let noAttempts = 0;
+
         function runAway() {
+            noAttempts++;
+            if (noAttempts > 3 && !isSad) {
+                // Trigger Sad Mode if she keeps trying to click No
+                toggleSadMode(true);
+                return;
+            }
+
             const x = Math.random() * (window.innerWidth - 200);
             const y = Math.random() * (window.innerHeight - 200);
 
-            // Ensure button doesn't go off screen
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
             const randomX = Math.max(20, Math.min(x, maxX));
             const randomY = Math.max(20, Math.min(y, maxY));
 
-            noBtn.style.position = 'fixed'; // Use fixed to break out of layout
+            noBtn.style.position = 'fixed';
             noBtn.style.left = `${randomX}px`;
             noBtn.style.top = `${randomY}px`;
             noBtn.style.zIndex = '1000';
 
-            // Add funny text changes
             const texts = ["Are you sure?", "Really?", "Think again!", "Puchki please!", "Don't break my heart!", "Wrong button!"];
             const spans = noBtn.getElementsByTagName('span');
             if (spans.length > 1) {

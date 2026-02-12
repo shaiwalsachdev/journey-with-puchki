@@ -29,6 +29,10 @@
 
     <!-- Navbar -->
     {% include 'partials/navbar.html' %}
+    {% include 'partials/back_button.html' %}
+
+    <!-- Lightbox Partial -->
+    {% include 'partials/lightbox.html' %}
 
     <!-- Hero Section -->
     <header class="relative w-full h-[70vh] lg:h-[85vh]">
@@ -68,9 +72,16 @@
                     <p class="font-handwriting text-3xl md:text-4xl lg:text-5xl text-gray-200 leading-relaxed mb-6">
                         {{ memory.description }}
                     </p>
+                    <div class="mt-4 text-right border-t border-white/10 pt-4">
+                        <span class="font-handwriting text-3xl text-primary transform -rotate-2 inline-block">-
+                            Shaiwal</span>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Smart Highlights Injection -->
+        {% include 'partials/smart_highlights.html' %}
 
         <!-- Photo Grid -->
         <div class="flex items-end justify-between mb-10 px-2">
@@ -91,6 +102,8 @@
             {% endfor %}
         </div>
     </main>
+    {% include 'partials/comments.html' %}
+
 </body>
 
 </html>

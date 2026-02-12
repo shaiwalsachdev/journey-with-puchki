@@ -1,4 +1,5 @@
-<nav class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+    {% include 'partials/lightbox_css.html' %}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             <a href="/" class="flex items-center gap-2">
@@ -69,7 +70,7 @@
     </div>
     <!-- Global Music Player (Hidden Logic) -->
     <audio id="global-theme-audio" loop>
-        <source src="/static/music/theme.mp3" type="audio/mpeg">
+        <source src="/static/theme_new.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -86,25 +87,54 @@
         // --- Global Music Player Logic ---
         document.addEventListener('DOMContentLoaded', () => {
             const audio = document.getElementById('global-theme-audio');
-            const playBtn = document.getElementById('play-theme-btn');
+            // Select both buttons if they exist
+            const navbarBtn = document.getElementById('play-theme-btn');
+            const heroBtn = document.getElementById('hero-play-btn');
 
-            // Function to update button UI
+            const buttons = [navbarBtn, heroBtn].filter(btn => btn !== null);
+
+            // Function to update ALL buttons
             function updateButtonState(isPlaying) {
-                if (!playBtn) return;
-                const playIcon = playBtn.querySelector('.material-icons');
-                const playText = playBtn.querySelector('span:last-child');
+                buttons.forEach(btn => {
+                    // Start by finding the text and icon elements regardless of specific structure
+                    // Navbar button structure: icon first, then text span
+                    // Hero button structure: text span first, then icon
 
-                if (isPlaying) {
-                    playIcon.textContent = 'pause';
-                    playText.textContent = 'Pause Theme';
-                    playIcon.classList.remove('group-hover:animate-pulse');
-                    playBtn.classList.add('bg-primary/20');
-                } else {
-                    playIcon.textContent = 'music_note';
-                    playText.textContent = 'Play Theme';
-                    playIcon.classList.add('group-hover:animate-pulse');
-                    playBtn.classList.remove('bg-primary/20');
-                }
+                    const spans = btn.getElementsByTagName('span');
+                    let textSpan, iconSpan;
+
+                    // Simple heuristic: Material Icons usually have 'material-icons' class or content length is small/specific
+                    for (let span of spans) {
+                        if (span.classList.contains('material-icons') || span.classList.contains('material-icons-round')) {
+                            iconSpan = span;
+                        } else {
+                            textSpan = span;
+                        }
+                    }
+
+                    if (isPlaying) {
+                        if (iconSpan) {
+                            iconSpan.textContent = 'pause';
+                            iconSpan.classList.remove('group-hover:animate-pulse', 'group-hover:animate-spin');
+                        }
+                        if (textSpan) {
+                            // Keep original label context if possible, but standardizing for now
+                            textSpan.textContent = btn.id === 'hero-play-btn' ? 'Pause Our Song' : 'Pause Theme';
+                        }
+                        btn.classList.add('bg-primary/20', 'ring-2', 'ring-primary'); // Visual active state
+                    } else {
+                        if (iconSpan) {
+                            iconSpan.textContent = 'music_note';
+                            // Restore animations based on button type
+                            if (btn.id === 'hero-play-btn') iconSpan.classList.add('group-hover:animate-spin');
+                            else iconSpan.classList.add('group-hover:animate-pulse');
+                        }
+                        if (textSpan) {
+                            textSpan.textContent = btn.id === 'hero-play-btn' ? 'Play Our Song' : 'Play Theme';
+                        }
+                        btn.classList.remove('bg-primary/20', 'ring-2', 'ring-primary');
+                    }
+                });
             }
 
             // Check localStorage for saved state
@@ -115,15 +145,13 @@
                 audio.currentTime = parseFloat(savedTime);
             }
 
-            // Auto-play if it was playing (might be blocked by browser policy)
+            // Auto-play if it was playing
             if (wasPlaying) {
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        updateButtonState(true);
-                    })
+                    playPromise.then(_ => updateButtonState(true))
                         .catch(error => {
-                            console.log("Auto-play prevented by browser policy");
+                            console.log("Auto-play prevented");
                             updateButtonState(false);
                             localStorage.setItem('themeAudioPlaying', 'false');
                         });
@@ -132,11 +160,11 @@
                 updateButtonState(false);
             }
 
-            // Toggle Logic
-            if (playBtn) {
-                playBtn.classList.remove('hidden'); // Ensure visible everywhere
-
-                playBtn.addEventListener('click', () => {
+            // Toggle Logic for ALL buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('hidden');
+                btn.addEventListener('click', (e) => {
+                    // Prevent bubbling if needed, though usually fine
                     if (audio.paused) {
                         audio.play();
                         updateButtonState(true);
@@ -147,9 +175,9 @@
                         localStorage.setItem('themeAudioPlaying', 'false');
                     }
                 });
-            }
-
-            // Save time periodically
+            });
+            updateButtonState(false);
+            localStorage.setItem('themeAudioPlaying', 'false');
             audio.addEventListener('timeupdate', () => {
                 localStorage.setItem('themeAudioTime', audio.currentTime);
             });
@@ -158,6 +186,21 @@
             window.addEventListener('beforeunload', () => {
                 localStorage.setItem('themeAudioTime', audio.currentTime);
                 localStorage.setItem('themeAudioPlaying', !audio.paused);
+            });
+
+            // Cross-tab Synchronization
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'themeAudioPlaying') {
+                    const shouldPlay = event.newValue === 'true';
+                    if (shouldPlay && audio.paused) {
+                        audio.play()
+                            .then(() => updateButtonState(true))
+                            .catch(e => console.log("Cross-tab play block:", e));
+                    } else if (!shouldPlay && !audio.paused) {
+                        audio.pause();
+                        updateButtonState(false);
+                    }
+                }
             });
         });
     </script>

@@ -4,22 +4,78 @@
         "date": "August 30, 2025",
         "title": "Matched on Hinge",
         "description": "Loved the energy fun positive dancer vibes talented foodie. After a lot of discussions on life and relationships and kundli matching being on point 32/36.",
-        "photos_folder": "Hinge",
+        "photos_folder": "1",
         "type": "milestone",
         "photos": [
             "Hinge.jpg"
-        ]
+        ],
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Loved the energy fun positive dancer vibes talented foodie.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "After a lot of discussions on life and relationships and kundli matching being on point 32/36.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [],
+                "places": []
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        }
     },
     {
         "id": 2,
         "date": "September - October 2025",
         "title": "The Beginning: Connected to Family Meet",
         "description": "It all started when we connected on Jeevansathi, followed by endless chats where we realized our kundlis (and vibes!) matched perfectly (32/36!). We spent weekends sharing life stories, seeking comfort in each other's voices, and me impressing you with my pasta and cheela skills. Then came the big step\u2014our first family meeting on October 11th. I walked into your home with my parents, nervous but hopeful, and it instantly felt like family. Warm tea, snacks, and a feeling that this was meant to be.",
-        "photos_folder": "TheBeginning",
+        "photos_folder": "2",
         "type": "milestone",
         "photos": [
             "arranged_marriage_meeting.png"
-        ]
+        ],
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "It all started when we connected on jeevansathi, followed by endless chats where we realized our kundlis (and vibes!) matched perfectly (32/36!).",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Spent weekends sharing life stories, seeking comfort in each other's voices, and me impressing you with my pasta and cheela skills.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Then came the big step\u2014our first family meeting on october 11th.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "I walked into your home with my parents, nervous but hopeful, and it instantly felt like family.",
+                    "icon": "directions_walk",
+                    "highlight": false
+                },
+                {
+                    "item": "Warm tea, snacks, and a feeling that this was meant to be.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Pasta",
+                    "Cheela"
+                ],
+                "places": []
+            },
+            "vibe": "Family Time \ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66"
+        }
     },
     {
         "id": 5,
@@ -32,7 +88,31 @@
             "advant_tower.png",
             "karigari_food.png"
         ],
-        "template": "memory_family.html"
+        "template": "memory_family.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "In advant tower for tasty dahi kebabs and palak patta chat at karigari, where finally our families agreed to move ahead.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "The modern vibe of advant and the delicious food made it a perfect setting for this big decision.",
+                    "icon": "restaurant",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Kebab"
+                ],
+                "places": [
+                    "Karigari",
+                    "Advant"
+                ]
+            },
+            "vibe": "Foodie Heaven \ud83d\ude0b"
+        }
     },
     {
         "id": 6,
@@ -47,7 +127,43 @@
             "October 25_3.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/October 25, 2025",
-        "template": "memory_candle.html"
+        "template": "memory_candle.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Met at eldeco manam chocolate and had first date at arts cafe.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Bought flowers and chocolates for you.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "Although pasta was sooo healthy to be tasty, but comfort and love and best talking about memories and talking about future and my heart was full of love for you.",
+                    "icon": "restaurant",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Pasta"
+                ],
+                "places": [
+                    "Eldeco"
+                ]
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        },
+        "shaila_rating": {
+            "fun": 8,
+            "food": 7,
+            "vibe": 7,
+            "romance": 4,
+            "comment": "joking",
+            "timestamp": "Feb 13, 2026"
+        }
     },
     {
         "id": 7,
@@ -60,7 +176,51 @@
             "November8.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/November 8, 2025",
-        "template": "memory_shopping.html"
+        "template": "memory_shopping.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Your family came to bhaiya home in gurgaon.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "First went to worldmark for our first ever shopping together where you bought body shop body butter and we ate berry drink and dessert at starbucks.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "This day is special because this was our first quick hug.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Wore matching outfits, blue black on that day.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Yaay! after that day, comfort just kept on increasing, missed your hugs and love and care you show me.",
+                    "icon": "directions_car",
+                    "highlight": false
+                },
+                {
+                    "item": "Sending your ootds daily going to office and listening to your sweet voice was my favorite part of the day.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Dessert"
+                ],
+                "places": [
+                    "Starbucks",
+                    "Worldmark"
+                ]
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        }
     },
     {
         "id": 8,
@@ -79,7 +239,36 @@
             "Novemeber 22_7.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/November 22, 2025",
-        "template": "memory_candle.html"
+        "template": "memory_candle.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "One of the most memorable days for us.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Had our first candle light dinner and lot of healthy pasta and pizza.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Candle light dinner was just amazing with holding hands and cheek pecks, amazing music and atmosphere at music and mountains, greater kailash 2.",
+                    "icon": "restaurant",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Pizza",
+                    "Pasta"
+                ],
+                "places": [
+                    "Music and Mountains"
+                ]
+            },
+            "vibe": "Fun & Memorable"
+        }
     },
     {
         "id": 9,
@@ -106,7 +295,54 @@
             "IMG_7688.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/November 29, 2025",
-        "template": "memory_movie.html"
+        "template": "memory_movie.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Amazing our first movie date at pvr director's cut, 'tere ishk mein' we watched and our first close interaction.",
+                    "icon": "movie",
+                    "highlight": true
+                },
+                {
+                    "item": "Had so much fun watching the movie and eating pasta.",
+                    "icon": "movie",
+                    "highlight": true
+                },
+                {
+                    "item": "After that we another one of our favourite restaurants at burma burma - khao suey and lots of sushi at pf changs.",
+                    "icon": "restaurant",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Sushi",
+                    "Pasta"
+                ],
+                "places": [
+                    "PVR",
+                    "Burma Burma",
+                    "PF Changs"
+                ]
+            },
+            "vibe": "Fun & Crazy \ud83e\udd2a"
+        },
+        "comments": [
+            {
+                "name": "Shai",
+                "message": "Love",
+                "date": "Feb 12, 2026",
+                "color": "bg-blue-100"
+            }
+        ],
+        "shaila_rating": {
+            "fun": 8,
+            "food": 7,
+            "vibe": 7,
+            "romance": 6,
+            "comment": "",
+            "timestamp": "Feb 13, 2026"
+        }
     },
     {
         "id": 10,
@@ -130,7 +366,31 @@
             "IMG_7826.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/December 2, 2025",
-        "template": "memory_gaming.html"
+        "template": "memory_gaming.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Loved playing the games with you, you were so competitive and funny.",
+                    "icon": "sports_esports",
+                    "highlight": true
+                },
+                {
+                    "item": "Also the food at noor by khubani, which had great ambience but food was not that great.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Bowling and arcade games.",
+                    "icon": "sports_esports",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [],
+                "places": []
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        }
     },
     {
         "id": 11,
@@ -152,7 +412,42 @@
             "IMG_8026.PNG"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/December 7, 2025",
-        "template": "memory_movie.html"
+        "template": "memory_movie.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Best animation fun movie zootopia 2 we at pvr.",
+                    "icon": "movie",
+                    "highlight": true
+                },
+                {
+                    "item": "After that we had dinner at one8 commune, noida.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Best pasta which was live counter made and dimsum and all other dishes were so good.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Clicked such amazing photos.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Pasta",
+                    "Dimsum"
+                ],
+                "places": [
+                    "PVR",
+                    "One8 Commune"
+                ]
+            },
+            "vibe": "Crazy Fun \ud83e\udd2a"
+        }
     },
     {
         "id": 12,
@@ -182,7 +477,39 @@
             "IMG_8352.jpg",
             "IMG_8355.jpg"
         ],
-        "source_folder": "/Users/geekdon/Documents/Journey with Puchki/December 13, 2025"
+        "source_folder": "/Users/geekdon/Documents/Journey with Puchki/December 13, 2025",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Best date ever where we handpainted small house and painting together, best way to bond and share our love stronger with house and painting.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "Palette cafe, they had the best food and so much fun in painting.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "After that we also clicked so many photos at fiaba which was okay at food but amazing for photos.",
+                    "icon": "restaurant",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [],
+                "places": []
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        },
+        "shaila_rating": {
+            "fun": 5,
+            "food": 5,
+            "vibe": 5,
+            "romance": 5,
+            "comment": "",
+            "timestamp": "Feb 12, 2026"
+        }
     },
     {
         "id": 13,
@@ -208,7 +535,29 @@
             "IMG_8916.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/December 20, 2025",
-        "template": "memory_friend.html"
+        "template": "memory_friend.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Amazing meeting your friend sumedha and we had most amazing best asian food at hichki and one of most memorable days for us.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Eldeco centre cafes hichki is a gem.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [],
+                "places": [
+                    "Hichki",
+                    "Eldeco"
+                ]
+            },
+            "vibe": "Foodie Heaven \ud83d\ude0b"
+        }
     },
     {
         "id": 14,
@@ -245,7 +594,53 @@
             "IMG_9230.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/December 28, 2025",
-        "template": "memory_movie.html"
+        "template": "memory_movie.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Enjoyed avatar fire and ash at pvr director's cut and we ate so much at saule - so much sushi, bao, dimsum and what not.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "And of course your favorite danish pesto at theos bakery.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Tres leches and dahi kebab at saule.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Baos they had were amazing, one of the most tasty ones.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Sushi",
+                    "Dimsum",
+                    "Bao",
+                    "Kebab"
+                ],
+                "places": [
+                    "PVR",
+                    "Theos",
+                    "Saule"
+                ]
+            },
+            "vibe": "Memorable Fun"
+        },
+        "shaila_rating": {
+            "fun": 9,
+            "food": 8,
+            "vibe": 8,
+            "romance": 8,
+            "comment": "Great movie!",
+            "timestamp": "Feb 13, 2026"
+        }
     },
     {
         "id": 15,
@@ -289,7 +684,59 @@
             "IMG_9338.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/January 1, 2026",
-        "template": "memory_newyear.html"
+        "template": "memory_newyear.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "One of the best new years to start journey with you.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Started our day with gurdwara best feeling and with blessings of god.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Best places to eat - house of migo - best pasta and sandwiches.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "You looked extra cute and beautiful in that dress and with flowers and background we had the best photos clicked on that day.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Thank you so much for the cute santa night lamp and mug.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Pasta"
+                ],
+                "places": []
+            },
+            "vibe": "Fun & Memorable"
+        },
+        "shaila_rating": {
+            "fun": 10,
+            "food": 9,
+            "vibe": 10,
+            "romance": 10,
+            "comment": "This was absolutely magical!",
+            "timestamp": "Feb 12, 2026"
+        },
+        "comments": [
+            {
+                "name": "Tester",
+                "message": "Loving the new update!",
+                "date": "Feb 12, 2026",
+                "color": "bg-blue-100"
+            }
+        ]
     },
     {
         "id": 16,
@@ -303,7 +750,34 @@
             "IMG_9429.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/January 10, 2026",
-        "template": "memory_family.html"
+        "template": "memory_family.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Important day in our life, our families finally agreed, met and decided to take things forward and finalize on the roka date.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Loved meeting with you and your family that day, felt so happy vibes with family around and loved spending time with everyone.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "The food at havmore restaurant in dlf cyber hub.",
+                    "icon": "restaurant",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [],
+                "places": [
+                    "DlF",
+                    "Cyber Hub"
+                ]
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        }
     },
     {
         "id": 17,
@@ -344,7 +818,63 @@
             "IMG_9569.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/January 17, 2026",
-        "template": "memory_asian.html"
+        "template": "memory_asian.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Started our day with movie date at pvr director's cut - happy patel movie.",
+                    "icon": "movie",
+                    "highlight": true
+                },
+                {
+                    "item": "So flop boring movie but it was so comfortable watching with you with the comfort of director's cut.",
+                    "icon": "movie",
+                    "highlight": true
+                },
+                {
+                    "item": "Then we the theos famous - danish pesto one your favourite and chinese roll.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Then for dessert it was brownie pastry.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Best part of the day was soulful saule date where we ate pizza, pasta, sushi, dimsum and endless food.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Clicked so many beautiful photos, lovely evening with you lots of hugs and love.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Matching flowers white chrysanthemum and whole truth chocolates.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Sushi",
+                    "Pizza",
+                    "Pasta",
+                    "Dimsum",
+                    "Dessert",
+                    "Brownie",
+                    "Pastry"
+                ],
+                "places": [
+                    "PVR",
+                    "Theos",
+                    "Saule"
+                ]
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        }
     },
     {
         "id": 18,
@@ -363,7 +893,47 @@
             "IMG_9641.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/January 25, 2026",
-        "template": "memory_asian.html"
+        "template": "memory_asian.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Best asian sushi and bao eaten till date, hehe thanks for the cute penguin gift from miniso and lot of cute hair clips for you.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "You were so happy and happy dance on eating sushi and bao.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "So juicy and tasty.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Felt so good to see you happy.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Also romantic movie and lots of home cooked meals - dal cheela.",
+                    "icon": "movie",
+                    "highlight": true
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Sushi",
+                    "Bao",
+                    "Cheela"
+                ],
+                "places": [
+                    "Miniso"
+                ]
+            },
+            "vibe": "Romantic \u2764\ufe0f"
+        }
     },
     {
         "id": 19,
@@ -374,10 +944,48 @@
         "type": "shopping",
         "photos": [
             "IMG_9737.jpg",
-            "IMG_9738.jpg"
+            "IMG_9738.jpg",
+            "delhi_metro.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/February 1, 2026",
-        "template": "memory_shopping.html"
+        "template": "memory_shopping.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Our first metro date and shopping date.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "One of the best days spent so much joking cracking jokes and craziness through the streets of karol bagh looking for suits and lehengas and what not.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "You bought so tasty home cooked food for me and walking was so tiring and fun with you, felt so much comfortable.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Also went to lajpat nagar for shopping, damn we were so tired as hell, legs were not feeling like moving hehe.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "Bestest day to remember.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [],
+                "places": [
+                    "Karol Bagh",
+                    "Lajpat Nagar"
+                ]
+            },
+            "vibe": "Fun & Crazy \ud83e\udd2a"
+        }
     },
     {
         "id": 20,
@@ -399,20 +1007,59 @@
             "IMG_9775.jpg"
         ],
         "source_folder": "/Users/geekdon/Documents/Journey with Puchki/February 8, 2026",
-        "template": "memory_shopping.html"
-    },
-    {
-        "id": 21,
-        "date": "2025 - 2026",
-        "title": "Foodie Partner: Our Tasty Journey",
-        "description": "From spicy Burma Burma to aesthetic House of Migo and comforting Saule. We explored flavors, shared plates (mostly me eating your leftovers), and made every meal a memory.",
-        "photos_folder": "Foodie",
-        "type": "date",
-        "template": "memory_candle.html",
-        "photos": [
-            "IMG_9301.jpg",
-            "IMG_7683.jpg",
-            "IMG_9134.jpg"
-        ]
+        "template": "memory_shopping.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Best shopping date, walking through the streets of lajpat nagar, buying shoes, suits, clothes.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "It is so much fun shopping with you, both bought so many gifts for our parents and family.",
+                    "icon": "shopping_bag",
+                    "highlight": false
+                },
+                {
+                    "item": "Started the day with not so good coffee and amazing your favorite pesto cheese danish and mushroom danish at theos bakery.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Had amazing sushi at sticky rice and okay okay dimsum and baos.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Ended the day with burger at kent's in defence colony.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Hope you liked my gift for mugs and red rose.",
+                    "icon": "event",
+                    "highlight": false
+                },
+                {
+                    "item": "Thanks for the popepye gift puchki.",
+                    "icon": "event",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Sushi",
+                    "Burger",
+                    "Dimsum",
+                    "Bao",
+                    "Coffee"
+                ],
+                "places": [
+                    "Theos",
+                    "Lajpat Nagar"
+                ]
+            },
+            "vibe": "Fun & Crazy \ud83e\udd2a"
+        }
     }
 ]

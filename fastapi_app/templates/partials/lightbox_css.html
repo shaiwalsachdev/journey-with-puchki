@@ -1,0 +1,26 @@
+<style>
+    #lightbox-modal {
+        transition: opacity 0.3s ease-in-out;
+        will-change: opacity;
+    }
+
+    #lightbox-modal.hidden {
+        display: none !important;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Ensure images have cursor pointer to indicate clickability */
+    .masonry-item img,
+    .memory-content img,
+    section img[data-alt],
+    .lightbox-trigger {
+        cursor: zoom-in;
+        transition: transform 0.3s ease;
+    }
+
+    /* Prevent body scroll when modal is open */
+    body.lightbox-open {
+        overflow: hidden;
+    }
+</style>

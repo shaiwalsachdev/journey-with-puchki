@@ -31,6 +31,10 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100">
 
     {% include 'partials/navbar.html' %}
+    {% include 'partials/back_button.html' %}
+
+    <!-- Lightbox Partial -->
+    {% include 'partials/lightbox.html' %}
 
     <!-- Hero -->
     <section class="relative h-[60vh] md:h-[80vh] w-full overflow-hidden">
@@ -43,6 +47,10 @@
                 12, 2026</span>
             <h1 class="text-4xl md:text-6xl font-bold mb-4">The Grand Roka</h1>
             <p class="text-xl italic opacity-90">"Where two families become one."</p>
+            <div class="mt-2 text-right">
+                <span class="font-handwriting text-3xl text-yellow-300 transform -rotate-2 inline-block">-
+                    Shaiwal</span>
+            </div>
         </div>
 
         <!-- Kundli Seal -->
@@ -93,6 +101,9 @@
             </div>
         </div>
 
+        <!-- Smart Highlights Injection -->
+        {% include 'partials/smart_highlights.html' %}
+
         <!-- Blessings -->
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">With Parental Blessings</h2>
@@ -114,6 +125,8 @@
         </div>
 
     </section>
+
+    {% include 'partials/comments.html' %}
 
     {% include 'partials/footer.html' %}
 

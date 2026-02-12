@@ -389,87 +389,91 @@
     <!-- Footer -->
     {% include 'partials/footer.html' %}
 
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-    behavior: 'smooth'
-    });
-    });
-    });
+    <!-- Lightbox Partial -->
+    {% include 'partials/lightbox.html' %}
 
-    // Audio Player moved to navbar.html for global access
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-    // Live Time Together Counter (Starting from Aug 30, 2025)
-    function updateCounter() {
-    const startDate = new Date('2025-08-30T00:00:00');
-    const now = new Date();
-    const diff = now - startDate;
+        // Audio Player moved to navbar.html for global access
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        // Live Time Together Counter (Starting from Aug 30, 2025)
+        function updateCounter() {
+            const startDate = new Date('2025-08-30T00:00:00');
+            const now = new Date();
+            const diff = now - startDate;
 
-    const counterElement = document.getElementById('time-together');
-    if (counterElement) {
-    counterElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`; // Fixed template literal
-    }
-    }
-    // Age Counter Logic
-    function calculateAge(birthDate, elementId) {
-    const start = new Date(birthDate);
-    const now = new Date();
-    const diff = now - start;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    const ageDate = new Date(diff);
-    const years = Math.abs(ageDate.getUTCFullYear() - 1970);
+            const counterElement = document.getElementById('time-together');
+            if (counterElement) {
+                counterElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`; // Fixed template literal
+            }
+        }
+        // Age Counter Logic
+        function calculateAge(birthDate, elementId) {
+            const start = new Date(birthDate);
+            const now = new Date();
+            const diff = now - start;
 
-    // More precise calculation for display
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            const ageDate = new Date(diff);
+            const years = Math.abs(ageDate.getUTCFullYear() - 1970);
 
-    const element = document.getElementById(elementId);
-    if (element) {
-    element.innerHTML = `${years} <span class="text-xs font-normal opacity-60">years</span> ${days % 365} <span
+            // More precise calculation for display
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `${years} <span class="text-xs font-normal opacity-60">years</span> ${days % 365} <span
         class="text-xs font-normal opacity-60">days</span> ${hours} <span
         class="text-xs font-normal opacity-60">hrs</span> ${minutes} <span
         class="text-xs font-normal opacity-60">min</span> ${seconds} <span
         class="text-xs font-normal opacity-60">s</span>`;
-    }
-    }
+            }
+        }
 
-    setInterval(() => {
-    calculateAge('1995-03-15T00:00:00', 'age-shaila');
-    calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
-    updateCounter(); // Existing counter
-    }, 1000);
+        setInterval(() => {
+            calculateAge('1995-03-15T00:00:00', 'age-shaila');
+            calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
+            updateCounter(); // Existing counter
+        }, 1000);
 
-    // Initial call
-    calculateAge('1995-03-15T00:00:00', 'age-shaila');
-    calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
+        // Initial call
+        calculateAge('1995-03-15T00:00:00', 'age-shaila');
+        calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
 
-    // Scroll Animations (Fade In)
-    const observerOptions = {
-    threshold: 0.1
-    };
+        // Scroll Animations (Fade In)
+        const observerOptions = {
+            threshold: 0.1
+        };
 
-    const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-    if (entry.isIntersecting) {
-    entry.target.classList.add('opacity-100', 'translate-y-0');
-    entry.target.classList.remove('opacity-0', 'translate-y-10');
-    }
-    });
-    }, observerOptions);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
 
-    document.querySelectorAll('section').forEach(section => {
-    section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
-    observer.observe(section);
-    });
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
     </script>
 </body>
 

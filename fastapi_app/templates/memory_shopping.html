@@ -1,146 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Memory: {{ memory.title }} - ShaiX2</title>
+    <title>Journey with Puchki - {{ memory.title }}</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
     <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
-                    colors: {
-                        "primary": "#f4ab25",
-                        "background-light": "#f8f7f5",
-                        "background-dark": "#221c10",
-                    },
-                    fontFamily: {
-                        "display": ["Be Vietnam Pro", "sans-serif"]
-                    },
-                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                    colors: { "primary": "#ee9d2b", "background-light": "#f8f7f6", "background-dark": "#221a10", "neutral-dark": "#362e24" },
+                    fontFamily: { "display": ["Plus Jakarta Sans", "sans-serif"], "handwriting": ["Dancing Script", "cursive"] },
+                    backgroundImage: { 'vignette': 'radial-gradient(circle, transparent 40%, rgba(34, 26, 16, 0.8) 100%)' }
                 },
             },
         }
     </script>
-    <style>
-        .metro-lines {
-            background-image:
-                linear-gradient(45deg, rgba(244, 171, 37, 0.05) 25%, transparent 25%, transparent 50%, rgba(244, 171, 37, 0.05) 50%, rgba(244, 171, 37, 0.05) 75%, transparent 75%, transparent);
-            background-size: 40px 40px;
-        }
-
-        .scollage-img {
-            transition: transform 0.3s ease;
-        }
-
-        .scollage-img:hover {
-            transform: scale(1.02) rotate(1deg);
-        }
-    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen selection:bg-primary selection:text-white overflow-x-hidden">
-    <!-- Background Pattern -->
-    <div class="fixed inset-0 metro-lines pointer-events-none z-0"></div>
+    class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 antialiased min-h-screen relative overflow-x-hidden">
 
-    <!-- Main Container -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <!-- Navbar -->
-        {% include 'partials/navbar.html' %}
+    <!-- Navbar -->
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/back_button.html' %}
 
-        <!-- Main Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-16">
-            <!-- Left Column: Story & Ticket -->
-            <div class="lg:col-span-5 flex flex-col gap-8 sticky top-8">
-                <!-- Header Text -->
-                <div class="space-y-4">
-                    <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
-                        <span class="material-icons-round text-sm">local_mall</span>
-                        {{ memory.type | title }}
-                    </div>
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
-                        {{ memory.title }}
-                    </h1>
-                    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
+    <!-- Lightbox Partial -->
+    {% include 'partials/lightbox.html' %}
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-[70vh] lg:h-[85vh]">
+        <div class="absolute inset-0 w-full h-full">
+            {% if memory.photos %}
+            <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
+                src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+            {% else %}
+            <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
+                src="https://placehold.co/1920x1080?text=No+Photo" />
+            {% endif %}
+            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent">
+            </div>
+            <div class="absolute inset-0 bg-vignette pointer-events-none"></div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full p-8 md:p-16 lg:p-24 flex flex-col items-start gap-4 z-10">
+            <div class="flex items-center gap-3 mb-2">
+                <span
+                    class="px-4 py-1.5 rounded-full bg-primary/20 text-primary border border-primary/30 text-sm font-semibold tracking-wide backdrop-blur-sm">{{
+                    memory.date }}</span>
+                <span
+                    class="flex items-center gap-1 text-gray-300 text-sm font-medium px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                    <span class="material-icons text-primary text-sm">local_mall</span>
+                    {{ memory.type | title }}
+                </span>
+            </div>
+            <h1
+                class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-none drop-shadow-2xl">
+                {{ memory.title }}
+            </h1>
+        </div>
+    </header>
+
+    <!-- Main Content Flow -->
+    <main class="relative z-10 -mt-12 md:-mt-20 px-4 md:px-12 lg:px-24 pb-32 max-w-7xl mx-auto">
+        <div
+            class="bg-neutral-dark border border-white/5 shadow-2xl rounded-2xl p-8 md:p-12 mb-20 relative overflow-hidden backdrop-blur-sm group hover:border-primary/30 transition-colors duration-500">
+            <div class="relative z-10 flex flex-col md:flex-row gap-8 md:gap-16 items-start">
+                <div class="md:w-2/3 pt-4">
+                    <span class="material-icons text-primary text-4xl mb-6 opacity-80">format_quote</span>
+                    <p class="font-handwriting text-3xl md:text-4xl lg:text-5xl text-gray-200 leading-relaxed mb-6">
                         {{ memory.description }}
                     </p>
-                </div>
-
-                <!-- Ticket Card -->
-                <div class="group relative w-full transform transition-transform hover:-translate-y-1 duration-300">
-                    <div
-                        class="absolute -left-3 top-1/2 w-6 h-6 bg-background-light dark:bg-background-dark rounded-full z-20">
+                    <div class="mt-4 text-right border-t border-white/10 pt-4">
+                        <span class="font-handwriting text-3xl text-primary transform -rotate-2 inline-block">-
+                            Shaiwal</span>
                     </div>
-                    <div
-                        class="absolute -right-3 top-1/2 w-6 h-6 bg-background-light dark:bg-background-dark rounded-full z-20">
-                    </div>
-                    <div
-                        class="bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700">
-                        <div class="bg-primary h-2 w-full"></div>
-                        <div class="p-6 sm:p-8">
-                            <div class="flex justify-between items-start mb-6">
-                                <div>
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Date</p>
-                                    <p class="text-2xl font-bold font-display">{{ memory.date }}</p>
-                                </div>
-                            </div>
-                            <!-- Route Visual -->
-                            <div class="relative flex items-center justify-between py-6 my-2">
-                                <div class="absolute left-0 right-0 top-1/2 h-1 bg-slate-100 dark:bg-slate-700 -z-10">
-                                </div>
-                                <div class="absolute left-0 right-0 top-1/2 h-1 bg-primary w-2/3 -z-10 animate-pulse">
-                                </div>
-                                <div class="flex flex-col items-center gap-2 bg-white dark:bg-slate-800 px-2">
-                                    <div class="w-4 h-4 rounded-full border-4 border-primary bg-white"></div>
-                                    <span class="text-xs font-bold text-slate-500 uppercase">Start</span>
-                                </div>
-                                <div
-                                    class="bg-primary text-white p-2 rounded-full shadow-lg shadow-primary/30 transform rotate-12">
-                                    <span class="material-icons-round">shopping_bag</span>
-                                </div>
-                                <div class="flex flex-col items-center gap-2 bg-white dark:bg-slate-800 px-2">
-                                    <div
-                                        class="w-4 h-4 rounded-full border-4 border-slate-300 dark:border-slate-600 bg-white">
-                                    </div>
-                                    <span class="text-xs font-bold text-slate-500 uppercase">Forever</span>
-                                </div>
-                            </div>
-                            <div
-                                class="mt-4 pt-6 border-t border-dashed border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                                <div class="flex items-center gap-2">
-                                    <span class="material-icons-round text-slate-300">qr_code_2</span>
-                                    <span class="text-xs font-mono text-slate-400">SHAI-X2-TOKEN</span>
-                                </div>
-                                <span class="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded">VALID
-                                    FOREVER</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column: Photo Collage -->
-            <div class="lg:col-span-7 flex flex-col gap-8">
-                <!-- Main Collage -->
-                <div class="grid grid-cols-2 gap-4 auto-rows-[300px]">
-                    {% for photo in memory.photos %}
-                    <div
-                        class="relative group scollage-img {% if loop.index % 3 == 0 %}col-span-2{% else %}col-span-1{% endif %}">
-                        <img alt="{{ memory.title }}" class="w-full h-full object-cover rounded-lg shadow-md"
-                            src="/static/uploads/{{ memory.id }}/{{ photo }}" />
-                    </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Smart Highlights Injection -->
+        {% include 'partials/smart_highlights.html' %}
+
+        <!-- Photo Grid -->
+        <div class="flex items-end justify-between mb-10 px-2">
+            <div>
+                <h2 class="text-3xl font-bold text-white mb-2">The Day in Pictures</h2>
+                <p class="text-gray-400">Captured moments from our shopping spree</p>
+            </div>
+            <div class="h-[1px] flex-grow ml-8 bg-gradient-to-r from-primary/50 to-transparent"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+            {% for photo in memory.photos %}
+            <div class="group rounded-xl overflow-hidden relative cursor-pointer">
+                <img alt="{{ memory.title }}"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    {% include 'partials/comments.html' %}
+
 </body>
 
 </html>

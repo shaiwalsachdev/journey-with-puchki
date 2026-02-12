@@ -61,6 +61,10 @@
 
     <!-- Navigation -->
     {% include 'partials/navbar.html' %}
+    {% include 'partials/back_button.html' %}
+
+    <!-- Lightbox Partial -->
+    {% include 'partials/lightbox.html' %}
 
     <main class="relative z-10 max-w-5xl mx-auto px-4 pb-24 space-y-20">
         <!-- Hero: The Ticket -->
@@ -146,11 +150,20 @@
                     <span class="material-icons text-sm">favorite</span> Movie Date
                 </div>
                 <h2 class="text-4xl font-bold leading-tight">More than just a movie.</h2>
-                <div class="space-y-4 text-neutral-300 text-lg leading-relaxed">
-                    <p>{{ memory.description }}</p>
+                <div class="prose prose-invert prose-lg max-w-none">
+                    <p class="text-xl text-white/80 leading-relaxed font-light">
+                        {{ memory.description }}
+                    </p>
+                    <div class="mt-6 text-right">
+                        <span class="font-handwriting text-3xl text-primary transform -rotate-2 inline-block">-
+                            Shaiwal</span>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Smart Highlights Injection -->
+        {% include 'partials/smart_highlights.html' %}
 
         <!-- Photo Grid -->
         <section class="relative py-8">
@@ -173,6 +186,9 @@
             <p class="text-sm text-neutral-500 uppercase tracking-widest">Shaiwal & Shaila • ShaiX2</p>
         </footer>
     </main>
+
+    {% include 'partials/comments.html' %}
+
 </body>
 
 </html>

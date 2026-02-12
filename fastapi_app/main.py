@@ -223,7 +223,21 @@ async def read_vault(request: Request):
 
 @app.get("/roka", response_class=HTMLResponse)
 async def read_roka(request: Request):
-    return templates.TemplateResponse("memory_roka.html", {"request": request})
+    # Dummy memory object to satisfy partials (smart_highlights, comments)
+    dummy_memory = {
+        "id": "roka",
+        "title": "The Grand Roka",
+        "description": "Where two families become one.",
+        "date": "March 12, 2026",
+        "photos": [],
+        "comments": [],
+        "smart_data": {
+            "itinerary": [],
+            "vibe": "Blessed & Happy",
+             "entities": {"food": [], "places": []}
+        }
+    }
+    return templates.TemplateResponse("memory_roka.html", {"request": request, "memory": dummy_memory})
 
 # --- Wishlist Routes ---
 WISHLIST_FILE = "fastapi_app/data/wishlist.json"
@@ -264,5 +278,55 @@ async def add_wish(
         "date_added": datetime.now().strftime("%b %d, %Y")
     }
     items.append(new_item)
-    save_wishlist(items)
-    return RedirectResponse(url="/wishlist", status_code=303)
+@app.post("/rate_date/{memory_id}")
+async def rate_date(
+    memory_id: int,
+    fun: int = Form(...),
+    food: int = Form(...),
+    vibe: int = Form(...),
+    romance: int = Form(...),
+    comment: str = Form("")
+):
+    memories = load_memories()
+    memory = next((m for m in memories if m["id"] == memory_id), None)
+    
+    if memory:
+        from datetime import datetime
+        memory["shaila_rating"] = {
+            "fun": fun,
+            "food": food,
+            "vibe": vibe,
+            "romance": romance,
+            "comment": comment,
+            "timestamp": datetime.now().strftime("%b %d, %Y")
+        }
+        save_memories(memories)
+        
+    return RedirectResponse(url=f"/memory/{memory_id}", status_code=303)
+
+@app.post("/add_comment/{memory_id}")
+async def add_comment(
+    memory_id: int,
+    name: str = Form(...),
+    message: str = Form(...),
+    color: str = Form("bg-blue-100") 
+):
+    memories = load_memories()
+    memory = next((m for m in memories if m["id"] == memory_id), None)
+    
+    if memory:
+        if "comments" not in memory:
+            memory["comments"] = []
+            
+        from datetime import datetime
+        new_comment = {
+            "name": name,
+            "message": message,
+            "date": datetime.now().strftime("%b %d, %Y"),
+            "color": color
+        }
+        # Add to top
+        memory["comments"].insert(0, new_comment)
+        save_memories(memories)
+        
+    return RedirectResponse(url=f"/memory/{memory_id}", status_code=303)
