@@ -54,5 +54,13 @@
         "context": "Merry Kishmish! The season of lights and gifts.",
         "date": "Feb 14, 2026",
         "icon": "card_giftcard"
+    },
+    {
+        "id": 8,
+        "word": "chaperi",
+        "meaning": "Slap",
+        "context": "One chaperi and you'll be straight.",
+        "date": "Feb 14, 2026",
+        "icon": "pan_tool"
     }
 ]
