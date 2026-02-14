@@ -13,16 +13,17 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
+    <script src="/static/js/theme.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#ec131e",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#221011",
-                        "paper-texture": "#fdfbf7", // Custom warm ivory for the scrapbook feel while keeping base bg
+                        "primary": "var(--color-primary)",
+                        "background-light": "var(--color-bg-light)",
+                        "background-dark": "var(--color-bg-dark)",
+                        "paper-texture": "var(--color-bg-light)", // Map paper texture to light bg for now to adapt to themes
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"]
@@ -77,6 +78,7 @@
 
 <body
     class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 overflow-hidden h-screen flex flex-col paper-texture">
+    <script>initTheme('{{ settings.theme }}');</script>
     <!-- Navbar -->
     {% include 'partials/navbar.html' %}
     <!-- Main Timeline Area -->

@@ -209,6 +209,7 @@
                 <!-- Timeline Vertical Line -->
                 <div class="absolute left-1/2 -translate-x-1/2 h-full w-px timeline-line opacity-30"></div>
                 <!-- Milestone 1 -->
+                {% if not settings.private_mode %}
                 <div class="relative mb-32 flex flex-col md:flex-row items-center justify-between">
                     <div class="w-full md:w-[45%] mb-8 md:mb-0 text-right pr-12 hidden md:block">
                         <img class="rounded-lg shadow-xl hover:scale-105 transition-transform"
@@ -225,6 +226,7 @@
                             the servers of fate began their calculation.</p>
                     </div>
                 </div>
+                {% endif %}
                 <!-- Milestone 2 -->
                 <div class="relative mb-32 flex flex-col md:flex-row-reverse items-center justify-between">
                     <div class="w-full md:w-[45%] mb-8 md:mb-0 pl-12 hidden md:block">

@@ -9,6 +9,7 @@ import shutil
 from typing import List
 import base64
 import requests
+import re
 
 app = FastAPI()
 
@@ -79,22 +80,146 @@ def save_memories(memories):
     except Exception as e:
         print(f"GitHub Sync Error: {e}")
 
+SETTINGS_FILE = "fastapi_app/data/settings.json"
+
+def load_settings():
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, 'r') as f:
+            return json.load(f)
+    return {"private_mode": False, "theme": "light"}
+
+def save_settings(settings):
+    with open(SETTINGS_FILE, 'w') as f:
+        json.dump(settings, f, indent=4)
+    try:
+        push_to_github(SETTINGS_FILE, json.dumps(settings, indent=4))
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
+
+def redact_text(text: str, is_private_mode: bool) -> str:
+    if is_private_mode and text:
+        # Redact sensitive words
+        sensitive_words = ["kiss", "hugs", "hinge", "cheek pecks", "lips", "cuddle", "snuggle"]
+        redacted_text = text
+        for word in sensitive_words:
+            pattern = re.compile(re.escape(word), re.IGNORECASE)
+            redacted_text = pattern.sub("✨" * len(word), redacted_text)
+        return redacted_text
+    return text
+
+@app.middleware("http")
+async def add_settings_to_request(request: Request, call_next):
+    request.state.settings = load_settings()
+    response = await call_next(request)
+    return response
+
+# --- Admin Routes ---
+@app.get("/admin", response_class=HTMLResponse)
+async def admin_panel(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        return RedirectResponse(url="/login?next=/admin")
+    settings = request.state.settings
+    return templates.TemplateResponse("admin.html", {"request": request, "page": "admin", "settings": settings})
+
+@app.post("/api/settings")
+async def update_settings(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+    
+    data = await request.json()
+    current_settings = load_settings()
+    
+    if "private_mode" in data:
+        current_settings["private_mode"] = data["private_mode"]
+    if "theme" in data:
+        current_settings["theme"] = data["theme"]
+        
+    save_settings(current_settings)
+    return {"status": "success", "settings": current_settings}
+
+def load_settings():
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, 'r') as f:
+            return json.load(f)
+    return {"private_mode": False, "theme": "light"} # Default settings
+
+def save_settings(settings):
+    with open(SETTINGS_FILE, 'w') as f:
+        json_content = json.dumps(settings, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(SETTINGS_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
+
+def redact_text(text: str, is_private_mode: bool) -> str:
+    if is_private_mode and text:
+        # Redact sensitive words
+        sensitive_words = ["quick hug", "kiss", "hugs", "hinge", "cheek pecks", "lips", "cuddle", "snuggle"]
+        redacted_text = text
+        for word in sensitive_words:
+            pattern = re.compile(re.escape(word), re.IGNORECASE)
+            redacted_text = pattern.sub("✨" * len(word), redacted_text)
+        return redacted_text
+    return text
+
+@app.middleware("http")
+async def add_settings_to_request(request: Request, call_next):
+    request.state.settings = load_settings()
+    response = await call_next(request)
+    return response
+
+# ... (Admin Routes omitted for brevity as they shouldn't change) ...
+
+# --- Public Routes ---
+
 @app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def home(request: Request):
+    settings = request.state.settings
+    return templates.TemplateResponse("index.html", {"request": request, "page": "home", "settings": settings})
 
 @app.get("/timeline", response_class=HTMLResponse)
 async def timeline(request: Request):
-    with open("fastapi_app/data/memories.json", "r") as f:
-        memories = json.load(f)
-    return templates.TemplateResponse("timeline.html", {"request": request, "memories": memories})
+    memories = load_memories()
+    settings = request.state.settings
+    
+    # Filter out Memory ID 1 (Hinge) if Private Mode is ON
+    if settings.get("private_mode"):
+        memories = [m for m in memories if m["id"] != 1]
+        # Apply redaction to visible memories
+        for m in memories:
+            m["description"] = redact_text(m.get("description", ""), True)
+            m["title"] = redact_text(m.get("title", ""), True)
+            if "smart_data" in m and "itinerary" in m["smart_data"]:
+                for item in m["smart_data"]["itinerary"]:
+                    item["item"] = redact_text(item.get("item", ""), True)
+
+    return templates.TemplateResponse("timeline.html", {
+        "request": request, 
+        "memories": memories,
+        "page": "timeline",
+        "settings": settings
+    })
 
 @app.get("/memory/{memory_id}", response_class=HTMLResponse)
 async def memory_detail(request: Request, memory_id: int):
-    with open("fastapi_app/data/memories.json", "r") as f:
-        memories = json.load(f)
+    memories = load_memories()
+    settings = request.state.settings
     
     memory = next((m for m in memories if m["id"] == memory_id), None)
+
+    if settings.get("private_mode") and memory:
+        # If accessing Hinge memory (ID 1) in private mode, block it
+        if memory["id"] == 1:
+             return RedirectResponse(url="/timeline")
+        
+        # Redact content
+        memory["description"] = redact_text(memory.get("description", ""), True)
+        memory["title"] = redact_text(memory.get("title", ""), True)
+        if "smart_data" in memory and "itinerary" in memory["smart_data"]:
+             for item in memory["smart_data"]["itinerary"]:
+                  item["item"] = redact_text(item.get("item", ""), True)
+
     if not memory:
         # handle 404 cleanly or redirect
         return templates.TemplateResponse("timeline.html", {"request": request, "memories": memories})
@@ -111,7 +236,8 @@ async def read_gallery(request: Request):
 
 @app.get("/story", response_class=HTMLResponse)
 async def read_story(request: Request):
-    return templates.TemplateResponse("story.html", {"request": request})
+    settings = request.state.settings
+    return templates.TemplateResponse("story.html", {"request": request, "settings": settings})
 
 COUPONS_FILE = "fastapi_app/data/coupons.json"
 
@@ -167,9 +293,18 @@ async def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
 @app.post("/login")
-async def login(request: Request, username: str = Form(...), password: str = Form(...)):
-    if username == "puchki" and password == "puchki123": # Updated credentials
-        response = RedirectResponse(url="/add", status_code=303)
+async def login(request: Request, username: str = Form(...), password: str = Form(...), next: str = "/add"):
+    if username == "puchki" and password == "puchki123":
+        # Check query param 'next' from the referer or form if we decide to pass it
+        # For now, simple logic: if referer usually has it, but let's stick to default /add or /admin if came from there
+        
+        # Determine redirect url
+        redirect_url = "/add"
+        referer = request.headers.get("referer")
+        if referer and "next=/admin" in referer:
+             redirect_url = "/admin"
+        
+        response = RedirectResponse(url=redirect_url, status_code=303)
         response.set_cookie(key="session", value="admin_logged_in")
         return response
     return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid Credentials"})
