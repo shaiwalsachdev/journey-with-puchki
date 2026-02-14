@@ -82,68 +82,88 @@
             milestones.
         </p>
     </div>
-    <!-- Filter Bar -->
-    <div class="sticky top-24 z-40 pb-8 px-4 w-full overflow-x-auto no-scrollbar">
-        <div class="flex justify-center space-x-3 min-w-max mx-auto px-4">
-            <button onclick="filterGallery('all')"
-                class="filter-btn px-6 py-2.5 rounded-full bg-primary text-white shadow-lg shadow-primary/25 font-medium text-sm transition-transform hover:scale-105 active:scale-95 focus:outline-none ring-2 ring-primary ring-offset-2 ring-offset-background-light dark:ring-offset-background-dark">
-                All Memories
-            </button>
-            <button onclick="filterGallery('date')"
-                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
-                Food Dates 🍝
-            </button>
-            <button onclick="filterGallery('movie')"
-                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
-                Movies 🎬
-            </button>
-            <button onclick="filterGallery('milestone')"
-                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
-                Milestones 💍
-            </button>
-            <button onclick="filterGallery('travel')"
-                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary dark:hover:border-primary dark:hover:text-primary font-medium text-sm transition-all hover:-translate-y-0.5 shadow-sm">
-                Travel ✈️
+    <!-- Controls Bar -->
+    <div class="sticky top-24 z-40 pb-8 px-4 w-full">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <!-- Filter Beans -->
+            <div class="overflow-x-auto no-scrollbar w-full sm:w-auto">
+                <div class="flex space-x-3 min-w-max px-2">
+                    <button onclick="setCategory('all')"
+                        class="filter-btn active px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        data-category="all">
+                        All Memories
+                    </button>
+                    <button onclick="setCategory('date')"
+                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        data-category="date">
+                        Food Dates 🍝
+                    </button>
+                    <button onclick="setCategory('movie')"
+                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        data-category="movie">
+                        Movies 🎬
+                    </button>
+                    <button onclick="setCategory('milestone')"
+                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        data-category="milestone">
+                        Milestones 💍
+                    </button>
+                    <button onclick="setCategory('travel')"
+                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        data-category="travel">
+                        Travel ✈️
+                    </button>
+                </div>
+            </div>
+
+            <!-- Shuffle Button -->
+            <button onclick="shuffleGallery()"
+                class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95 font-medium whitespace-nowrap">
+                <span class="material-icons text-sm">shuffle</span>
+                Shuffle & Refresh
             </button>
         </div>
     </div>
+
     <!-- Masonry Grid Gallery -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div class="masonry-grid" id="gallery-grid">
-            {% for memory in memories %}
-            {% if memory.photos %}
-            {% for photo in memory.photos %}
+            {% for item in items %}
             <div class="masonry-item group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 cursor-pointer"
-                data-category="{{ memory.type }}">
-                <img alt="{{ memory.title }}"
+                onclick="openLightboxFromEl(this)">
+                <img alt="{{ item.title }}"
                     class="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
-                    loading="lazy" src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                    loading="lazy" src="/static/uploads/{{ item.id }}/{{ item.photo }}" />
                 <div
                     class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                     <span
                         class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold rounded-full w-fit mb-2">{{
-                        memory.type | title }}</span>
-                    <h3 class="text-white font-bold text-lg">{{ memory.title }}</h3>
-                    <p class="text-white/80 text-sm">{{ memory.date }}</p>
+                        item.type | title }}</span>
+                    <h3 class="text-white font-bold text-lg">{{ item.title }}</h3>
+                    <p class="text-white/80 text-sm">{{ item.date }}</p>
                 </div>
-                <div
-                    class="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 text-primary p-2 rounded-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
-                    <span class="material-icons text-xl">favorite</span>
-                </div>
+                <!-- Hidden data for lightbox logic if needed -->
             </div>
             {% endfor %}
-            {% endif %}
-            {% endfor %}
         </div>
-        <!-- Load More Button -->
-        <div class="flex justify-center mt-12">
-            <button
+
+        <!-- Load More State -->
+        <div class="flex flex-col items-center justify-center mt-12 gap-4">
+            <div id="loading-spinner" class="hidden">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+            </div>
+
+            {% if has_more %}
+            <button id="load-more-btn" onclick="loadMore()"
                 class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-200 font-semibold py-3 px-8 rounded-full shadow-sm border border-slate-200 dark:border-slate-700 transition-all hover:scale-105 active:scale-95">
                 <span>View More Moments</span>
                 <span class="material-icons text-sm">arrow_downward</span>
             </button>
+            {% else %}
+            <p class="text-slate-400 dark:text-slate-500 italic">You've reached the end of the journey... for now! ❤️
+            </p>
+            {% endif %}
         </div>
-    </main>
     </main>
 
     <!-- Lightbox Partial -->
@@ -151,20 +171,130 @@
 
     <!-- Footer -->
     {% include 'partials/footer.html' %}
-    <script>
-        function filterGallery(category) {
-            const items = document.querySelectorAll('.masonry-item');
-            const buttons = document.querySelectorAll('.filter-btn');
 
-            items.forEach(item => {
-                if (category === 'all' || item.dataset.category === category) {
-                    item.style.display = 'block';
+    <script>
+        // State
+        let currentPage = {{ page }};
+        let currentSeed = {{ seed if seed is not none else 'null' }};
+        let currentCategory = '{{ category }}';
+        let isLoading = false;
+
+        // Init UI
+        updateActiveFilter(currentCategory);
+
+        function updateActiveFilter(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/25', 'ring-2', 'ring-primary', 'ring-offset-2');
+                    btn.classList.remove('bg-white', 'text-slate-600', 'hover:border-primary', 'hover:text-primary');
                 } else {
-                    item.style.display = 'none';
+                    btn.classList.remove('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/25', 'ring-2', 'ring-primary', 'ring-offset-2');
+                    btn.classList.add('bg-white', 'text-slate-600', 'hover:border-primary', 'hover:text-primary');
                 }
             });
+        }
 
-            // Highlight active button logic could be added here
+        function setCategory(category) {
+            // Reload page with new category, resetting page and keeping seed (or resetting seed? Let's reset seed to keep it fresh or keep it?)
+            // User probably wants to see specific category, so layout changes anyway.
+            // Let's reset seed to None (default sort) for clean category view, OR keep random if already shuffled.
+            // Simplest: just reload url.
+            const url = new URL(window.location);
+            url.searchParams.set('category', category);
+            url.searchParams.set('page', 1);
+            window.location.href = url.toString();
+        }
+
+        function shuffleGallery() {
+            // Generate random seed
+            const newSeed = Math.floor(Math.random() * 100000);
+            const url = new URL(window.location);
+            url.searchParams.set('seed', newSeed);
+            url.searchParams.set('page', 1);
+            window.location.href = url.toString();
+        }
+
+        async function loadMore() {
+            if (isLoading) return;
+            isLoading = true;
+
+            const btn = document.getElementById('load-more-btn');
+            const spinner = document.getElementById('loading-spinner');
+
+            if (btn) btn.classList.add('hidden');
+            spinner.classList.remove('hidden');
+
+            try {
+                const nextPage = currentPage + 1;
+                let apiUrl = `/api/memories?page=${nextPage}&limit=12&category=${currentCategory}`;
+                if (currentSeed !== null) apiUrl += `&seed=${currentSeed}`;
+
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.items.length > 0) {
+                    const grid = document.getElementById('gallery-grid');
+
+                    data.items.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = "masonry-item group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 cursor-pointer";
+                        div.onclick = function () { openLightboxFromEl(this); }; // Helper needed or rely on global delegation
+
+                        div.innerHTML = `
+                           <img alt="${item.title}"
+                                class="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                                loading="lazy" src="/static/uploads/${item.id}/${item.photo}" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                                <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold rounded-full w-fit mb-2">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
+                                <h3 class="text-white font-bold text-lg">${item.title}</h3>
+                                <p class="text-white/80 text-sm">${item.date}</p>
+                            </div>
+                        `;
+                        grid.appendChild(div);
+                    });
+
+                    currentPage = nextPage;
+
+                    // Dispatch event to re-init lightbox listener if needed, but our lightbox uses global delegation!
+                    // So we just need to refresh the image list for it to know about new images.
+                    // Assuming lightbox.html exposes a refresh function?
+                    // It does: refreshImageList(). We need to expose it to window or trigger event.
+                    // Let's modify lightbox.html slightly or trigger a load event? 
+                    // Better: just call refreshImageList() if it's substantial global.
+                    // Actually lightbox script is inside partial. Let's make it listen for a custom event.
+                    window.dispatchEvent(new Event('gallery-updated'));
+
+                }
+
+                if (data.has_more) {
+                    if (btn) btn.classList.remove('hidden');
+                } else {
+                    // Show "End" message, remove button
+                    if (btn) btn.remove();
+                    const endMsg = document.createElement('p');
+                    endMsg.className = "text-slate-400 dark:text-slate-500 italic text-center";
+                    endMsg.innerText = "You've reached the end of the journey... for now! ❤️";
+                    spinner.parentNode.appendChild(endMsg);
+                }
+
+            } catch (error) {
+                console.error("Failed to load more:", error);
+                if (btn) btn.classList.remove('hidden');
+            } finally {
+                spinner.classList.add('hidden');
+                isLoading = false;
+            }
+        }
+
+        // Helper to integrate with global lightbox delegation
+        // Since the lightbox script uses 'images' array computed on load/refresh, we need to trigger update.
+        // We will do this by dispatching 'gallery-updated' and listening in lightbox partial.
+
+        function openLightboxFromEl(el) {
+            // This is just a fallback if click delegation fails or for explicit usage
+            // The global listener in lightbox.html checks clicks.
+            // So empty function here or remove onclick.
+            // Let's leave onclick empty/remove it to rely on delegation.
         }
     </script>
 </body>

@@ -11,6 +11,9 @@ import base64
 import requests
 import re
 
+import random
+import math
+
 app = FastAPI()
 
 # Mount Static Files
@@ -228,11 +231,102 @@ async def memory_detail(request: Request, memory_id: int):
     template_name = memory.get("template", "memory.html")
     return templates.TemplateResponse(template_name, {"request": request, "memory": memory})
 
-@app.get("/gallery", response_class=HTMLResponse)
-async def read_gallery(request: Request):
+# --- Helper for Gallery Logic ---
+def get_filtered_memories(settings, seed=None):
     memories = load_memories()
-    # Pass 'memories' directly as the template expects it
-    return templates.TemplateResponse("gallery.html", {"request": request, "memories": memories})
+    
+    # Filter out Memory ID 1 (Hinge) if Private Mode is ON
+    if settings.get("private_mode"):
+        memories = [m for m in memories if m["id"] != 1]
+    
+    # Flatten memories to list of (memory, photo) tuples for the gallery
+    # This makes pagination easier across photos
+    gallery_items = []
+    for m in memories:
+        if m.get("photos"):
+            for p in m["photos"]:
+                 gallery_items.append({
+                     "id": m["id"],
+                     "title": redact_text(m["title"], settings.get("private_mode")),
+                     "date": m["date"],
+                     "type": m["type"],
+                     "photo": p
+                 })
+
+    # Shuffle if seed provided
+    if seed is not None:
+        random.seed(seed)
+        random.shuffle(gallery_items)
+    else:
+        # Default: Sort by ID descending (newest first) -> effectively newest memories top
+        # But since we flattened, maybe just keep order? 
+        # Actually standard gallery usually is newest first.
+        # Let's assume memories.json is ordered 1..N
+        # We want N..1
+        gallery_items.reverse()
+
+    return gallery_items
+
+@app.get("/gallery", response_class=HTMLResponse)
+async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: int = None, category: str = "all"):
+    settings = request.state.settings
+    
+    # If no seed provided, generate one for this session to keep pagination consistent
+    # unless user explicitly wants "recent" (no shuffle)
+    # Actually, let's make "Shuffle" an explicit action. 
+    # Default view: Newest First (seed=None).
+    
+    all_items = get_filtered_memories(settings, seed=seed)
+    
+    # Category Filter
+    if category != "all":
+        all_items = [item for item in all_items if item["type"] == category]
+
+    # Pagination
+    total_items = len(all_items)
+    start = (page - 1) * limit
+    end = start + limit
+    paginated_items = all_items[start:end]
+    
+    has_more = end < total_items
+    
+    return templates.TemplateResponse("gallery.html", {
+        "request": request, 
+        "items": paginated_items, 
+        "page": page,
+        "limit": limit,
+        "seed": seed,
+        "category": category,
+        "has_more": has_more
+    })
+
+@app.get("/api/memories")
+async def get_memories_api(request: Request, page: int = 1, limit: int = 12, seed: int = None, category: str = "all"):
+    settings = load_settings() # settings middleware might not trigger for API? It does if http middleware.
+    # But let's be safe or just use request.state if available. 
+    # Middleware runs for all routes.
+    if hasattr(request.state, "settings"):
+        settings = request.state.settings
+    else:
+        settings = load_settings()
+        
+    all_items = get_filtered_memories(settings, seed=seed)
+    
+    if category != "all":
+        all_items = [item for item in all_items if item["type"] == category]
+        
+    total_items = len(all_items)
+    start = (page - 1) * limit
+    end = start + limit
+    paginated_items = all_items[start:end]
+    
+    has_more = end < total_items
+    
+    return {
+        "items": paginated_items,
+        "has_more": has_more,
+        "next_page": page + 1 if has_more else None
+    }
 
 @app.get("/story", response_class=HTMLResponse)
 async def read_story(request: Request):
