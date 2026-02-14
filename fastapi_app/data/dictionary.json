@@ -46,5 +46,13 @@
         "context": "I need to shleep for 5 more minutes... or hours.",
         "date": "Feb 14, 2026",
         "icon": "nightlight"
+    },
+    {
+        "id": 7,
+        "word": "kishmish",
+        "meaning": "Christmas",
+        "context": "Merry Kishmish! The season of lights and gifts.",
+        "date": "Feb 14, 2026",
+        "icon": "card_giftcard"
     }
 ]
