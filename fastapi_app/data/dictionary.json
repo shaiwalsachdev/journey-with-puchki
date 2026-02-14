@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "word": "offish",
+        "meaning": "Office",
+        "context": "I'm heading to the offish now, don't miss me too much!",
+        "date": "Feb 14, 2026",
+        "icon": "format_quote"
+    },
+    {
+        "id": 2,
+        "word": "sukhoon",
+        "meaning": "Peace / Soulmate",
+        "context": "The feeling of being home. Usually used when referring to Shaiwal.",
+        "date": "Feb 14, 2026",
+        "icon": "favorite_border"
+    },
+    {
+        "id": 3,
+        "word": "pesto",
+        "meaning": "The only Danish that matters",
+        "context": "Anything else is just bread. Pesto is the lifestyle.",
+        "date": "Feb 14, 2026",
+        "icon": "restaurant"
+    },
+    {
+        "id": 4,
+        "word": "bobo",
+        "meaning": "Angry/Cute Pout",
+        "context": "Watch out when the bobo face comes out. Requires immediate snacks.",
+        "date": "Feb 14, 2026",
+        "icon": "pets"
+    },
+    {
+        "id": 5,
+        "word": "puchki",
+        "meaning": "Ultimate Endearment",
+        "context": "The source of all energy and cuteness in the ShaiX2 ecosystem.",
+        "date": "Feb 14, 2026",
+        "icon": "auto_fix_high"
+    },
+    {
+        "id": 6,
+        "word": "shleep",
+        "meaning": "Sleep (but better)",
+        "context": "I need to shleep for 5 more minutes... or hours.",
+        "date": "Feb 14, 2026",
+        "icon": "nightlight"
+    }
+]

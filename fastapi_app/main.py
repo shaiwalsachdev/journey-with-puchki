@@ -404,3 +404,50 @@ async def add_comment(
         save_memories(memories)
         
     return RedirectResponse(url=f"/memory/{memory_id}", status_code=303)
+
+# --- Dictionary Routes ---
+DICTIONARY_FILE = "fastapi_app/data/dictionary.json"
+
+def load_dictionary():
+    if os.path.exists(DICTIONARY_FILE):
+        with open(DICTIONARY_FILE, 'r') as f:
+            return json.load(f)
+    return []
+
+def save_dictionary(words):
+    with open(DICTIONARY_FILE, 'w') as f:
+        json_content = json.dumps(words, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(DICTIONARY_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
+
+@app.get("/dictionary", response_class=HTMLResponse)
+async def read_dictionary(request: Request):
+    words = load_dictionary()
+    # Sort by ID desc (newest first)
+    words.sort(key=lambda x: x['id'], reverse=True)
+    return templates.TemplateResponse("dictionary.html", {"request": request, "words": words})
+
+@app.post("/dictionary/add")
+async def add_word(
+    request: Request,
+    word: str = Form(...),
+    meaning: str = Form(...),
+    context: str = Form(...),
+    icon: str = Form("format_quote")
+):
+    words = load_dictionary()
+    from datetime import datetime
+    new_word = {
+        "id": len(words) + 1,
+        "word": word,
+        "meaning": meaning,
+        "context": context,
+        "date": datetime.now().strftime("%b %d, %Y"),
+        "icon": icon
+    }
+    words.insert(0, new_word) # Add to top
+    save_dictionary(words)
+    return RedirectResponse(url="/dictionary", status_code=303)
