@@ -220,6 +220,14 @@
                 ]
             },
             "vibe": "Romantic \u2764\ufe0f"
+        },
+        "shaila_rating": {
+            "fun": 9,
+            "food": 9,
+            "vibe": 9,
+            "romance": 9,
+            "comment": "Testing",
+            "timestamp": "Feb 14, 2026"
         }
     },
     {
