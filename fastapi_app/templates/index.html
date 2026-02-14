@@ -384,12 +384,53 @@
                         href="/dictionary">Dictionary</a>
                 </div>
                 <div class="md:hidden flex items-center">
-                    <button class="text-gray-600 dark:text-gray-300 hover:text-primary">
+                    <button class="text-gray-600 dark:text-gray-300 hover:text-primary mobile-menu-button">
                         <span class="material-icons text-3xl">menu</span>
                     </button>
                 </div>
             </div>
         </div>
+        <!-- Mobile Menu -->
+        <div
+            class="md:hidden hidden mobile-menu bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-primary/10 absolute w-full left-0 top-20 shadow-lg">
+            <a href="/" class="block py-4 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 font-medium">Home</a>
+            <a href="/timeline"
+                class="block py-4 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 font-medium">Timeline</a>
+            <a href="/gallery"
+                class="block py-4 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 font-medium">Gallery</a>
+            <div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
+            <a href="/music"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">music_note</span> Music</a>
+            <a href="/coupons"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">card_giftcard</span> Coupons</a>
+            <a href="/roka"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">favorite</span> Roka</a>
+            <a href="/wishlist"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">stars</span> Wishlist</a>
+            <a href="/guestbook"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">import_contacts</span> Guestbook</a>
+            <a href="/upcoming"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">event</span> Upcoming</a>
+            <a href="/dictionary"
+                class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">book</span> Dictionary</a>
+        </div>
+        <script>
+            const btn = document.querySelector("button.mobile-menu-button");
+            const menu = document.querySelector(".mobile-menu");
+
+            if (btn && menu) {
+                btn.addEventListener("click", () => {
+                    menu.classList.toggle("hidden");
+                });
+            }
+        </script>
     </nav>
 
     <!-- Hero Section -->
