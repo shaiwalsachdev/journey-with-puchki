@@ -198,12 +198,24 @@
                 if (event.key === 'themeAudioPlaying') {
                     const shouldPlay = event.newValue === 'true';
                     if (shouldPlay && audio.paused) {
+                        // Sync time before playing if available
+                        const savedTime = localStorage.getItem('themeAudioTime');
+                        if (savedTime) audio.currentTime = parseFloat(savedTime);
+
                         audio.play()
                             .then(() => updateButtonState(true))
                             .catch(e => console.log("Cross-tab play block:", e));
                     } else if (!shouldPlay && !audio.paused) {
                         audio.pause();
                         updateButtonState(false);
+                    }
+                }
+
+                // Sync time if significantly drifted (e.g. > 2 seconds)
+                if (event.key === 'themeAudioTime') {
+                    const newTime = parseFloat(event.newValue);
+                    if (Math.abs(audio.currentTime - newTime) > 2) {
+                        audio.currentTime = newTime;
                     }
                 }
             });
