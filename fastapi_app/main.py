@@ -7,6 +7,8 @@ import json
 import os
 import shutil
 from typing import List
+import base64
+import requests
 
 app = FastAPI()
 
@@ -25,9 +27,57 @@ def load_memories():
             return json.load(f)
     return []
 
+def push_to_github(file_path, content_str):
+    """
+    Pushes updates to GitHub directly using the API.
+    Required Env Var: GITHUB_TOKEN
+    """
+    token = os.getenv("GITHUB_TOKEN")
+    if not token:
+        print("Skipping GitHub sync: GITHUB_TOKEN not found.")
+        return
+
+    repo_slug = "shaiwalsachdev/journey-with-puchki"
+    url = f"https://api.github.com/repos/{repo_slug}/contents/{file_path}"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+
+    # 1. Get current SHA
+    try:
+        r = requests.get(url, headers=headers)
+        if r.status_code != 200:
+            print(f"Failed to get file SHA from GitHub: {r.text}")
+            return
+        sha = r.json().get("sha")
+
+        # 2. Update File
+        data = {
+            "message": "feat(data): update memories.json via app (user action)",
+            "content": base64.b64encode(content_str.encode("utf-8")).decode("utf-8"),
+            "sha": sha
+        }
+
+        r = requests.put(url, headers=headers, json=data)
+        if r.status_code in [200, 201]:
+            print("Successfully synced data to GitHub.")
+        else:
+            print(f"Failed to push to GitHub: {r.text}")
+    except Exception as e:
+        print(f"GitHub Sync Exception: {e}")
+
 def save_memories(memories):
+    # 1. Save locally
     with open(DATA_FILE, 'w') as f:
-        json.dump(memories, f, indent=4)
+        json_content = json.dumps(memories, indent=4)
+        f.write(json_content)
+    
+    # 2. Sync to GitHub (Background-ish)
+    try:
+        push_to_github(DATA_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):

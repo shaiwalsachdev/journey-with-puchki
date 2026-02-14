@@ -8,3 +8,4 @@ pydantic-core
 starlette
 typing-extensions
 gunicorn
+requests
