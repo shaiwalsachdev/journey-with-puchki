@@ -123,7 +123,12 @@ def load_coupons():
 
 def save_coupons(coupons):
     with open(COUPONS_FILE, 'w') as f:
-        json.dump(coupons, f, indent=4)
+        json_content = json.dumps(coupons, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(COUPONS_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
 
 @app.get("/coupons", response_class=HTMLResponse)
 async def read_coupons(request: Request):
@@ -228,7 +233,12 @@ def load_guestbook():
 
 def save_guestbook(notes):
     with open(GUESTBOOK_FILE, 'w') as f:
-        json.dump(notes, f, indent=4)
+        json_content = json.dumps(notes, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(GUESTBOOK_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
 
 @app.get("/guestbook", response_class=HTMLResponse)
 async def read_guestbook(request: Request):
@@ -263,6 +273,15 @@ def load_vault():
         with open(VAULT_FILE, 'r') as f:
             return json.load(f)
     return []
+
+def save_vault(letters):
+    with open(VAULT_FILE, 'w') as f:
+        json_content = json.dumps(letters, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(VAULT_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
 
 @app.get("/vault", response_class=HTMLResponse)
 async def read_vault(request: Request):
@@ -300,7 +319,12 @@ def load_wishlist():
 
 def save_wishlist(items):
     with open(WISHLIST_FILE, 'w') as f:
-        json.dump(items, f, indent=4)
+        json_content = json.dumps(items, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(WISHLIST_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
 
 @app.get("/wishlist", response_class=HTMLResponse)
 async def read_wishlist(request: Request):
