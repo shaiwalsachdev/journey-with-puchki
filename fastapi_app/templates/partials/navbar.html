@@ -14,8 +14,10 @@
                     href="/gallery">Gallery</a>
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="/music">Music</a>
+                {% if not settings.private_mode %}
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="/coupons">Coupons</a>
+                {% endif %}
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="/roka">Roka</a>
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
@@ -55,9 +57,11 @@
         <div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
         <a href="/music" class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">music_note</span> Music</a>
+        {% if not settings.private_mode %}
         <a href="/coupons"
             class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">card_giftcard</span> Coupons</a>
+        {% endif %}
         <a href="/roka" class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">favorite</span> Roka</a>
         <a href="/wishlist"

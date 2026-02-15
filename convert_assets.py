@@ -22,4 +22,4 @@ def convert_heic_to_jpg(root_dir):
                     print(f"Error converting {heic_path}: {e}")
 
 if __name__ == "__main__":
-    convert_heic_to_jpg("fastapi_app/static")
+    convert_heic_to_jpg("fastapi_app/static/uploads/21")

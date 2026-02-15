@@ -17,13 +17,13 @@ import math
 app = FastAPI()
 
 # Mount Static Files
-app.mount("/static", StaticFiles(directory="fastapi_app/static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Templates
-templates = Jinja2Templates(directory="fastapi_app/templates")
+templates = Jinja2Templates(directory="templates")
 
 # Data File
-DATA_FILE = "fastapi_app/data/memories.json"
+DATA_FILE = "data/memories.json"
 
 def load_memories():
     if os.path.exists(DATA_FILE):
@@ -42,7 +42,9 @@ def push_to_github(file_path, content_str):
         return
 
     repo_slug = "shaiwalsachdev/journey-with-puchki"
-    url = f"https://api.github.com/repos/{repo_slug}/contents/{file_path}"
+    # Ensure remote path includes fastapi_app/ prefix since we are running inside it
+    remote_path = f"fastapi_app/{file_path}" if not file_path.startswith("fastapi_app/") else file_path
+    url = f"https://api.github.com/repos/{repo_slug}/contents/{remote_path}"
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json"
@@ -83,7 +85,7 @@ def save_memories(memories):
     except Exception as e:
         print(f"GitHub Sync Error: {e}")
 
-SETTINGS_FILE = "fastapi_app/data/settings.json"
+SETTINGS_FILE = "data/settings.json"
 
 def load_settings():
     if os.path.exists(SETTINGS_FILE):
@@ -102,13 +104,69 @@ def save_settings(settings):
 def redact_text(text: str, is_private_mode: bool) -> str:
     if is_private_mode and text:
         # Redact sensitive words
-        sensitive_words = ["kiss", "hugs", "hinge", "cheek pecks", "lips", "cuddle", "snuggle"]
+        sensitive_words = ["kiss", "hugs", "hinge", "cheek pecks", "cuddle", "snuggle"]
         redacted_text = text
         for word in sensitive_words:
-            pattern = re.compile(re.escape(word), re.IGNORECASE)
+            pattern = re.compile(r'\b' + re.escape(word) + r'\b', re.IGNORECASE)
             redacted_text = pattern.sub("✨" * len(word), redacted_text)
+        
         return redacted_text
     return text
+
+def process_memories_for_display(memories: List[dict], settings: dict) -> List[dict]:
+    """
+    Processes memories for display:
+    1. Filters out blocked memories (e.g. ID 1 in private mode)
+    2. Swaps content with 'safe' versions if in private mode
+    3. Redacts remaining content if in private mode
+    """
+    processed_memories = []
+    is_private = settings.get("private_mode", False)
+    
+    for m in memories:
+        # 1. Block ID 1 (Hinge) in Private Mode
+        if is_private and m["id"] == 1:
+            continue
+            
+        # Create a copy to avoid mutating global state if cached (though we load fresh JSON each time currently)
+        m_copy = m.copy()
+        
+        if is_private:
+            # 2. Swap with Safe Content if available
+            if "title_safe" in m_copy:
+                m_copy["title"] = m_copy["title_safe"]
+            if "description_safe" in m_copy:
+                m_copy["description"] = m_copy["description_safe"]
+                
+            # 3. Redact (Fallback) - applies to swapped content too if it still has keywords, 
+            # but usually safe content is already clean.
+            m_copy["description"] = redact_text(m_copy.get("description", ""), True)
+            m_copy["title"] = redact_text(m_copy.get("title", ""), True)
+            
+            # Sub-items in smart_data
+            if "smart_data" in m_copy and "itinerary" in m_copy["smart_data"]:
+                # We need to deep copy smart_data to avoid mutation issues if we were caching
+                import copy
+                m_copy["smart_data"] = copy.deepcopy(m_copy["smart_data"])
+                for item in m_copy["smart_data"]["itinerary"]:
+                     if "item_safe" in item:
+                         item["item"] = item["item_safe"]
+                     item["item"] = redact_text(item.get("item", ""), True)
+
+        # 4. Hide Photos Logic
+        # Apply to all modes (Admin might want to see them? No, admin sees raw data in admin panel. 
+        # Public site (including timeline/memory pages) should hide them.)
+        # Actually, if we are in Admin mode (e.g. valid session), maybe we SHOULD show them?
+        # But this function is for "display" on public pages. Admin page uses raw load_memories().
+        
+        if "hide_all_photos" in m_copy and m_copy["hide_all_photos"]:
+             m_copy["photos"] = []
+        elif "hidden_photos" in m_copy and m_copy["hidden_photos"]:
+             m_copy["photos"] = [p for p in m_copy["photos"] if p not in m_copy["hidden_photos"]]
+             
+        processed_memories.append(m_copy)
+        
+    return processed_memories
 
 @app.middleware("http")
 async def add_settings_to_request(request: Request, call_next):
@@ -186,20 +244,12 @@ async def timeline(request: Request):
     memories = load_memories()
     settings = request.state.settings
     
-    # Filter out Memory ID 1 (Hinge) if Private Mode is ON
-    if settings.get("private_mode"):
-        memories = [m for m in memories if m["id"] != 1]
-        # Apply redaction to visible memories
-        for m in memories:
-            m["description"] = redact_text(m.get("description", ""), True)
-            m["title"] = redact_text(m.get("title", ""), True)
-            if "smart_data" in m and "itinerary" in m["smart_data"]:
-                for item in m["smart_data"]["itinerary"]:
-                    item["item"] = redact_text(item.get("item", ""), True)
+    # Process memories for privacy/safety
+    visible_memories = process_memories_for_display(memories, settings)
 
     return templates.TemplateResponse("timeline.html", {
         "request": request, 
-        "memories": memories,
+        "memories": visible_memories,
         "page": "timeline",
         "settings": settings
     })
@@ -209,40 +259,31 @@ async def memory_detail(request: Request, memory_id: int):
     memories = load_memories()
     settings = request.state.settings
     
-    memory = next((m for m in memories if m["id"] == memory_id), None)
-
-    if settings.get("private_mode") and memory:
-        # If accessing Hinge memory (ID 1) in private mode, block it
-        if memory["id"] == 1:
-             return RedirectResponse(url="/timeline")
-        
-        # Redact content
-        memory["description"] = redact_text(memory.get("description", ""), True)
-        memory["title"] = redact_text(memory.get("title", ""), True)
-        if "smart_data" in memory and "itinerary" in memory["smart_data"]:
-             for item in memory["smart_data"]["itinerary"]:
-                  item["item"] = redact_text(item.get("item", ""), True)
-
-    if not memory:
-        # handle 404 cleanly or redirect
-        return templates.TemplateResponse("timeline.html", {"request": request, "memories": memories})
+    # Process all memories first to handle safe content logic consistently
+    processed_memories = process_memories_for_display(memories, settings)
     
+    # Find the specific memory in the processed list
+    memory = next((m for m in processed_memories if m["id"] == memory_id), None)
+    
+    # If not found (e.g. it was filtered out by private mode), redirect
+    if not memory:
+         return RedirectResponse(url="/timeline")
+
     # Dynamic Template Selection
     template_name = memory.get("template", "memory.html")
-    return templates.TemplateResponse(template_name, {"request": request, "memory": memory})
+    return templates.TemplateResponse(template_name, {"request": request, "memory": memory, "settings": settings})
 
 # --- Helper for Gallery Logic ---
 def get_filtered_memories(settings, seed=None):
     memories = load_memories()
     
-    # Filter out Memory ID 1 (Hinge) if Private Mode is ON
-    if settings.get("private_mode"):
-        memories = [m for m in memories if m["id"] != 1]
+    # Use centralized processing for private mode/safe content
+    processed_memories = process_memories_for_display(memories, settings)
     
     # Flatten memories to list of (memory, photo) tuples for the gallery
     # This makes pagination easier across photos
     gallery_items = []
-    for m in memories:
+    for m in processed_memories:
         if m.get("photos"):
             for p in m["photos"]:
                  gallery_items.append({
@@ -297,7 +338,8 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
         "limit": limit,
         "seed": seed,
         "category": category,
-        "has_more": has_more
+        "has_more": has_more,
+        "settings": settings
     })
 
 @app.get("/api/memories")
@@ -328,12 +370,18 @@ async def get_memories_api(request: Request, page: int = 1, limit: int = 12, see
         "next_page": page + 1 if has_more else None
     }
 
+@app.get("/api/admin/memories")
+async def get_admin_memories(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+         raise HTTPException(status_code=403, detail="Unauthorized")
+    return load_memories()
+
 @app.get("/story", response_class=HTMLResponse)
 async def read_story(request: Request):
     settings = request.state.settings
     return templates.TemplateResponse("story.html", {"request": request, "settings": settings})
 
-COUPONS_FILE = "fastapi_app/data/coupons.json"
+COUPONS_FILE = "data/coupons.json"
 
 def load_coupons():
     if os.path.exists(COUPONS_FILE):
@@ -352,23 +400,30 @@ def save_coupons(coupons):
 
 @app.get("/coupons", response_class=HTMLResponse)
 async def read_coupons(request: Request):
+    settings = request.state.settings
+    if settings.get("private_mode"):
+        return RedirectResponse("/")
     coupons = load_coupons()
     redeemed_count = sum(1 for c in coupons if c.get('is_redeemed'))
     available_count = len(coupons) - redeemed_count
+    settings = request.state.settings
     return templates.TemplateResponse("coupons.html", {
         "request": request, 
         "coupons": coupons,
         "available_count": available_count,
-        "redeemed_count": redeemed_count
+        "redeemed_count": redeemed_count,
+        "settings": settings
     })
 
 @app.get("/upcoming", response_class=HTMLResponse)
 async def read_upcoming(request: Request):
-    return templates.TemplateResponse("upcoming.html", {"request": request})
+    settings = request.state.settings
+    return templates.TemplateResponse("upcoming.html", {"request": request, "settings": settings})
 
 @app.get("/review", response_class=HTMLResponse)
 async def read_review(request: Request):
-    return templates.TemplateResponse("year_in_review.html", {"request": request})
+    settings = request.state.settings
+    return templates.TemplateResponse("year_in_review.html", {"request": request, "settings": settings})
 
 @app.post("/redeem/{coupon_id}")
 async def redeem_coupon(coupon_id: int):
@@ -384,7 +439,8 @@ async def redeem_coupon(coupon_id: int):
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    settings = request.state.settings
+    return templates.TemplateResponse("login.html", {"request": request, "settings": settings})
 
 @app.post("/login")
 async def login(request: Request, username: str = Form(...), password: str = Form(...), next: str = "/add"):
@@ -407,7 +463,8 @@ async def login(request: Request, username: str = Form(...), password: str = For
 async def add_memory_page(request: Request):
     if request.cookies.get("session") != "admin_logged_in":
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse("add_memory.html", {"request": request})
+    settings = request.state.settings
+    return templates.TemplateResponse("add_memory.html", {"request": request, "settings": settings})
 
 @app.post("/add")
 async def add_memory(
@@ -418,6 +475,9 @@ async def add_memory(
     type: str = Form(...),
     photos: List[UploadFile] = File(...)
 ):
+    if request.cookies.get("session") != "admin_logged_in":
+        return RedirectResponse(url="/login")
+        
     memories = load_memories()
     new_id = len(memories) + 1
     
@@ -449,10 +509,11 @@ async def add_memory(
 # --- Music Route ---
 @app.get("/music", response_class=HTMLResponse)
 async def read_music(request: Request):
-    return templates.TemplateResponse("music.html", {"request": request})
+    settings = request.state.settings
+    return templates.TemplateResponse("music.html", {"request": request, "settings": settings})
 
 # --- Guestbook Routes ---
-GUESTBOOK_FILE = "fastapi_app/data/guestbook.json"
+GUESTBOOK_FILE = "data/guestbook.json"
 
 def load_guestbook():
     if os.path.exists(GUESTBOOK_FILE):
@@ -472,7 +533,8 @@ def save_guestbook(notes):
 @app.get("/guestbook", response_class=HTMLResponse)
 async def read_guestbook(request: Request):
     notes = load_guestbook()
-    return templates.TemplateResponse("guestbook.html", {"request": request, "notes": notes})
+    settings = request.state.settings
+    return templates.TemplateResponse("guestbook.html", {"request": request, "notes": notes, "settings": settings})
 
 @app.post("/guestbook/sign")
 async def sign_guestbook(
@@ -495,7 +557,7 @@ async def sign_guestbook(
     return RedirectResponse(url="/guestbook", status_code=303)
 
 # --- Vault Routes ---
-VAULT_FILE = "fastapi_app/data/vault.json"
+VAULT_FILE = "data/vault.json"
 
 def load_vault():
     if os.path.exists(VAULT_FILE):
@@ -515,7 +577,8 @@ def save_vault(letters):
 @app.get("/vault", response_class=HTMLResponse)
 async def read_vault(request: Request):
     letters = load_vault()
-    return templates.TemplateResponse("vault.html", {"request": request, "letters": letters})
+    settings = request.state.settings
+    return templates.TemplateResponse("vault.html", {"request": request, "letters": letters, "settings": settings})
 
 
 
@@ -535,10 +598,11 @@ async def read_roka(request: Request):
              "entities": {"food": [], "places": []}
         }
     }
-    return templates.TemplateResponse("memory_roka.html", {"request": request, "memory": dummy_memory})
+    settings = request.state.settings
+    return templates.TemplateResponse("memory_roka.html", {"request": request, "memory": dummy_memory, "settings": settings})
 
 # --- Wishlist Routes ---
-WISHLIST_FILE = "fastapi_app/data/wishlist.json"
+WISHLIST_FILE = "data/wishlist.json"
 
 def load_wishlist():
     if os.path.exists(WISHLIST_FILE):
@@ -558,9 +622,15 @@ def save_wishlist(items):
 @app.get("/wishlist", response_class=HTMLResponse)
 async def read_wishlist(request: Request):
     items = load_wishlist()
+    
+    # Private Mode Filter
+    settings = request.state.settings
+    if settings.get("private_mode", False):
+        items = [i for i in items if "honeymoon" not in i["title"].lower()]
+
     # Sort by ID desc (newest first)
     items.sort(key=lambda x: x['id'], reverse=True)
-    return templates.TemplateResponse("wishlist.html", {"request": request, "items": items})
+    return templates.TemplateResponse("wishlist.html", {"request": request, "items": items, "settings": settings})
 
 @app.post("/wishlist/add")
 async def add_wish(
@@ -580,7 +650,30 @@ async def add_wish(
         "link": link if link else "#",
         "date_added": datetime.now().strftime("%b %d, %Y")
     }
+
     items.append(new_item)
+    save_wishlist(items)
+    return RedirectResponse(url="/wishlist", status_code=303)
+
+from pydantic import BaseModel
+
+class PhotoPrivacyUpdate(BaseModel):
+    hide_all_photos: bool
+    hidden_photos: List[str]
+
+@app.post("/api/memory/{memory_id}/photos_privacy")
+async def update_photo_privacy(memory_id: int, update: PhotoPrivacyUpdate):
+    memories = load_memories()
+    memory = next((m for m in memories if m["id"] == memory_id), None)
+    
+    if memory:
+        memory["hide_all_photos"] = update.hide_all_photos
+        memory["hidden_photos"] = update.hidden_photos
+        save_memories(memories)
+        return {"status": "success", "message": "Privacy settings updated"}
+    
+    return {"status": "error", "message": "Memory not found"}
+
 @app.post("/rate_date/{memory_id}")
 async def rate_date(
     memory_id: int,
@@ -628,14 +721,13 @@ async def add_comment(
             "date": datetime.now().strftime("%b %d, %Y"),
             "color": color
         }
-        # Add to top
-        memory["comments"].insert(0, new_comment)
+        memory["comments"].append(new_comment)
         save_memories(memories)
         
     return RedirectResponse(url=f"/memory/{memory_id}", status_code=303)
 
 # --- Dictionary Routes ---
-DICTIONARY_FILE = "fastapi_app/data/dictionary.json"
+DICTIONARY_FILE = "data/dictionary.json"
 
 def load_dictionary():
     if os.path.exists(DICTIONARY_FILE):
@@ -643,21 +735,14 @@ def load_dictionary():
             return json.load(f)
     return []
 
-def save_dictionary(words):
-    with open(DICTIONARY_FILE, 'w') as f:
-        json_content = json.dumps(words, indent=4)
-        f.write(json_content)
-    try:
-        push_to_github(DICTIONARY_FILE, json_content)
-    except Exception as e:
-        print(f"GitHub Sync Error: {e}")
-
 @app.get("/dictionary", response_class=HTMLResponse)
 async def read_dictionary(request: Request):
     words = load_dictionary()
-    # Sort by ID desc (newest first)
-    words.sort(key=lambda x: x['id'], reverse=True)
-    return templates.TemplateResponse("dictionary.html", {"request": request, "words": words})
+    # Sort alphabetically by word
+    words.sort(key=lambda x: x['word'].lower())
+    settings = request.state.settings
+    return templates.TemplateResponse("dictionary.html", {"request": request, "words": words, "settings": settings})
+
 
 @app.post("/dictionary/add")
 async def add_word(

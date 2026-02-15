@@ -22,7 +22,9 @@
             <div>
                 <h4 class="font-bold text-gray-900 dark:text-white mb-4">Special</h4>
                 <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    {% if not settings.private_mode %}
                     <li><a href="/coupons" class="hover:text-primary transition-colors">Love Coupons</a></li>
+                    {% endif %}
                     <li><a href="/guestbook" class="hover:text-primary transition-colors">Guestbook</a></li>
                     <li><a href="/vault" class="hover:text-primary transition-colors">The Vault</a></li>
                 </ul>

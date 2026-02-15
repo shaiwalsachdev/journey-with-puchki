@@ -1,33 +1,5 @@
 [
     {
-        "id": 5,
-        "name": "Shaiwal and shaila",
-        "message": "Always stay happy and love each other",
-        "date": "Feb 14, 2026",
-        "color_class": "bg-white dark:bg-slate-800"
-    },
-    {
-        "id": 4,
-        "name": "Shaiwal",
-        "message": "1234",
-        "date": "Feb 14, 2026",
-        "color_class": "bg-accent-sage dark:bg-green-900/20"
-    },
-    {
-        "id": 3,
-        "name": "Shaiwal",
-        "message": "Love you ",
-        "date": "Feb 13, 2026",
-        "color_class": "bg-white dark:bg-slate-800"
-    },
-    {
-        "id": 2,
-        "name": "Auntie Test",
-        "message": "May your life be filled with joy and pesto danishes!",
-        "date": "Feb 11, 2026",
-        "color_class": "bg-accent-sage dark:bg-green-900/20"
-    },
-    {
         "id": 1,
         "name": "Shaiwal",
         "message": "Welcome to our digital journey! Can't wait to fill this with memories.",

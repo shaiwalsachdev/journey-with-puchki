@@ -92,12 +92,29 @@
             <div class="h-[1px] flex-grow ml-8 bg-gradient-to-r from-primary/50 to-transparent"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             {% for photo in memory.photos %}
-            <div class="group rounded-xl overflow-hidden relative cursor-pointer">
-                <img alt="{{ memory.title }}"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+            <div class="break-inside-avoid mb-6">
+                {% if photo.lower().endswith('.mov') or photo.lower().endswith('.mp4') %}
+                <div
+                    class="group rounded-xl overflow-hidden relative cursor-pointer shadow-lg hover:shadow-xl transition-shadow bg-black">
+                    <video controls playsinline class="w-full h-auto object-contain">
+                        <source src="/static/uploads/{{ memory.id }}/{{ photo }}" type="video/quicktime">
+                        <source src="/static/uploads/{{ memory.id }}/{{ photo }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                {% else %}
+                <div
+                    class="group rounded-xl overflow-hidden relative cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 masonry-item">
+                    <img alt="{{ memory.title }}" loading="lazy"
+                        class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
+                        src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                    <div
+                        class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none">
+                    </div>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

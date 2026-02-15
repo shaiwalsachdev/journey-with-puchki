@@ -27,13 +27,18 @@
                 "places": []
             },
             "vibe": "Romantic \u2764\ufe0f"
-        }
+        },
+        "hide_all_photos": true,
+        "hidden_photos": [
+            "Hinge.jpg"
+        ]
     },
     {
         "id": 2,
         "date": "September - October 2025",
         "title": "The Beginning: Connected to Family Meet",
         "description": "It all started when we connected on Jeevansathi, followed by endless chats where we realized our kundlis (and vibes!) matched perfectly (32/36!). We spent weekends sharing life stories, seeking comfort in each other's voices, and me impressing you with my pasta and cheela skills. Then came the big step\u2014our first family meeting on October 11th. I walked into your home with my parents, nervous but hopeful, and it instantly felt like family. Warm tea, snacks, and a feeling that this was meant to be.",
+        "description_safe": "It all started when we connected on Jeevansathi, followed by endless chats where we realized our kundlis (and vibes!) matched perfectly (32/36!). Then came the big step\u2014our first family meeting on October 11th. I walked into your home with my parents, nervous but hopeful, and it instantly felt like family. Warm tea, snacks, and a feeling that this was meant to be.",
         "photos_folder": "2",
         "type": "milestone",
         "photos": [
@@ -48,6 +53,7 @@
                 },
                 {
                     "item": "Spent weekends sharing life stories, seeking comfort in each other's voices, and me impressing you with my pasta and cheela skills.",
+                    "item_safe": "",
                     "icon": "restaurant",
                     "highlight": true
                 },
@@ -83,7 +89,9 @@
             "romance": 8,
             "comment": "",
             "timestamp": "Feb 15, 2026"
-        }
+        },
+        "hide_all_photos": false,
+        "hidden_photos": []
     },
     {
         "id": 5,
@@ -177,7 +185,9 @@
         "id": 7,
         "date": "November 8, 2025",
         "title": "First Shopping & Quick Hug",
+        "title_safe": "First Shopping Together",
         "description": "Your family came to bhaiya home in Gurgaon. We first went to Worldmark for our first ever shopping together where you bought Body Shop body butter and we ate berry drink and dessert at Starbucks. This day is special because this was our first quick hug. We wore matching outfits, blue black on that day. Yaay! After that day, comfort just kept on increasing, missed your hugs and love and care you show me. Sending your OOTDs daily going to office and listening to your sweet voice was my favorite part of the day.",
+        "description_safe": "Your family came to bhaiya home in Gurgaon. We first went to Worldmark for our first ever shopping together where you bought Body Shop body butter and we ate berry drink and dessert at Starbucks. This day is special because we spent so much quality time together. We wore matching outfits, blue black on that day. Yaay! Sending your OOTDs daily going to office and listening to your sweet voice was my favorite part of the day.",
         "photos_folder": "November 8, 2025",
         "type": "shopping",
         "photos": [
@@ -198,7 +208,7 @@
                     "highlight": false
                 },
                 {
-                    "item": "This day is special because this was our first quick hug.",
+                    "item": "This day is special because we spent so much quality time together.",
                     "icon": "event",
                     "highlight": false
                 },
@@ -209,6 +219,7 @@
                 },
                 {
                     "item": "Yaay! after that day, comfort just kept on increasing, missed your hugs and love and care you show me.",
+                    "item_safe": "",
                     "icon": "directions_car",
                     "highlight": false
                 },
@@ -243,6 +254,7 @@
         "date": "November 22, 2025",
         "title": "First Candle Light Dinner",
         "description": "One of the most memorable days for us. We had our first candle light dinner and lot of healthy pasta and pizza. Candle light dinner was just amazing with holding hands and cheek pecks, amazing music and atmosphere at Music and Mountains, Greater Kailash 2.",
+        "description_safe": "One of the most memorable days for us. We had our first candle light dinner and lot of healthy pasta and pizza. Candle light dinner was just amazing with amazing music and atmosphere at Music and Mountains, Greater Kailash 2.",
         "photos_folder": "November 22, 2025",
         "type": "dinner",
         "photos": [
@@ -269,7 +281,7 @@
                     "highlight": true
                 },
                 {
-                    "item": "Candle light dinner was just amazing with holding hands and cheek pecks, amazing music and atmosphere at music and mountains, greater kailash 2.",
+                    "item": "Candle light dinner was just amazing with amazing music and atmosphere at music and mountains, greater kailash 2.",
                     "icon": "restaurant",
                     "highlight": true
                 }
@@ -284,13 +296,18 @@
                 ]
             },
             "vibe": "Fun & Memorable"
-        }
+        },
+        "hide_all_photos": false,
+        "hidden_photos": [
+            "Novemeber 22_6.jpg"
+        ]
     },
     {
         "id": 9,
         "date": "November 29, 2025",
         "title": "First Movie Date",
         "description": "Amazing our first movie date at PVR Director's Cut, 'Tere Ishk Mein' we watched and our first close interaction. We had so much fun watching the movie and eating pasta. After that we enjoyed another one of our favourite restaurants at Burma Burma - Khao Suey and lots of Sushi at PF Changs.",
+        "description_safe": "Amazing our first movie date at PVR Director's Cut, 'Tere Ishk Mein' we watched. We had so much fun watching the movie and eating pasta. After that we enjoyed another one of our favourite restaurants at Burma Burma - Khao Suey and lots of Sushi at PF Changs.",
         "photos_folder": "November 29, 2025",
         "type": "movie",
         "photos": [
@@ -315,7 +332,7 @@
         "smart_data": {
             "itinerary": [
                 {
-                    "item": "Amazing our first movie date at pvr director's cut, 'tere ishk mein' we watched and our first close interaction.",
+                    "item": "Amazing our first movie date at pvr director's cut, 'tere ishk mein' we watched.",
                     "icon": "movie",
                     "highlight": true
                 },
@@ -358,7 +375,9 @@
             "romance": 6,
             "comment": "",
             "timestamp": "Feb 13, 2026"
-        }
+        },
+        "hide_all_photos": false,
+        "hidden_photos": []
     },
     {
         "id": 10,
@@ -525,7 +544,11 @@
             "romance": 5,
             "comment": "",
             "timestamp": "Feb 12, 2026"
-        }
+        },
+        "hide_all_photos": false,
+        "hidden_photos": [
+            "IMG_8352.jpg"
+        ]
     },
     {
         "id": 13,
@@ -656,7 +679,12 @@
             "romance": 10,
             "comment": "Great movie!",
             "timestamp": "Feb 14, 2026"
-        }
+        },
+        "hide_all_photos": false,
+        "hidden_photos": [
+            "IMG_9087.JPG",
+            "IMG_9109.jpg"
+        ]
     },
     {
         "id": 15,
@@ -800,6 +828,7 @@
         "date": "January 17, 2026",
         "title": "Happy Patel & Saule Date",
         "description": "Started our day with movie date at PVR Director's Cut - Happy Patel Movie. So flop boring movie but it was so comfortable watching with you with the comfort of director's cut. Then we enjoyed the Theos famous - Danish Pesto one your favourite and Chinese roll. Then for dessert it was Brownie pastry. Best part of the day was Soulful Saule date where we ate pizza, pasta, sushi, dimsum and endless food. Clicked so many beautiful photos, lovely evening with you lots of hugs and love. Matching flowers white chrysanthemum and whole truth chocolates.",
+        "description_safe": "Started our day with movie date at PVR Director's Cut - Happy Patel Movie. So flop boring movie but it was so comfortable watching with you with the comfort of director's cut. Then we enjoyed the Theos famous - Danish Pesto one your favourite and Chinese roll. Then for dessert it was Brownie pastry. Best part of the day was Soulful Saule date where we ate pizza, pasta, sushi, dimsum and endless food. Clicked so many beautiful photos, lovely evening with you. Matching flowers white chrysanthemum and whole truth chocolates.",
         "photos_folder": "January 17, 2026",
         "type": "movie",
         "photos": [
@@ -864,8 +893,9 @@
                 },
                 {
                     "item": "Clicked so many beautiful photos, lovely evening with you lots of hugs and love.",
-                    "icon": "event",
-                    "highlight": false
+                    "item_safe": "Clicked so many beautiful photos, lovely evening with you.",
+                    "icon": "camera_alt",
+                    "highlight": true
                 },
                 {
                     "item": "Matching flowers white chrysanthemum and whole truth chocolates.",
@@ -896,7 +926,8 @@
         "id": 18,
         "date": "January 25, 2026",
         "title": "Asian YouMee & Penguin Gift",
-        "description": "Best asian Sushi and Bao eaten till date, hehe thanks for the cute penguin gift from Miniso and Lot of cute hair clips for you. You were so happy and happy dance on eating sushi and bao. So juicy and tasty. Felt so good to see you happy. We also enjoyed Romantic Movie and lots of home cooked meals - Dal Cheela.",
+        "description": "Best asian Sushi and Bao eaten till date, hehe thanks for the cute penguin gift from Miniso and Lots of cute hair bands for you. You were so happy and happy dance on eating sushi and bao. So juicy and tasty. Felt so good to see you happy. We also enjoyed Romantic Movie and lots of home cooked meals - Dal Cheela.",
+        "description_safe": "Best asian Sushi and Bao eaten till date, hehe thanks for the cute penguin gift from Miniso and Lots of cute hair bands for you. You were so happy and happy dance on eating sushi and bao. So juicy and tasty. Felt so good to see you happy.",
         "photos_folder": "January 25, 2026",
         "type": "dinner",
         "photos": [
@@ -913,7 +944,7 @@
         "smart_data": {
             "itinerary": [
                 {
-                    "item": "Best asian sushi and bao eaten till date, hehe thanks for the cute penguin gift from miniso and lot of cute hair clips for you.",
+                    "item": "Best asian sushi and bao eaten till date, hehe thanks for the cute penguin gift from miniso and lots of cute hair bands for you.",
                     "icon": "restaurant",
                     "highlight": true
                 },
@@ -934,6 +965,7 @@
                 },
                 {
                     "item": "Also romantic movie and lots of home cooked meals - dal cheela.",
+                    "item_safe": "",
                     "icon": "movie",
                     "highlight": true
                 }
@@ -1077,5 +1109,123 @@
             },
             "vibe": "Fun & Crazy \ud83e\udd2a"
         }
+    },
+    {
+        "id": 21,
+        "date": "February 14, 2026",
+        "title": "Our First Valentine's Day",
+        "description": "Our very first Valentine's Day together! We celebrated at Uncultured Cafe in Kailash Colony\u2014such a dreamy, lovable spot with amazing food and happy vibes. I was blushing receiving so many gifts: a panda, penguin, tie, buttons, and a beautiful red rose. You were so happy (and even shed a few happy tears!) seeing this website. I hope you loved the flowers and the cute heart ring. It was truly the best evening spent together. Later, we even hopped over to Big Chill Cafe for some delicious pasta.",
+        "description_safe": "Our very first Valentine's Day together! We celebrated at Uncultured Cafe in Kailash Colony\u2014such a dreamy, lovable spot with amazing food and happy vibes. I hope you loved the flowers and the cute heart ring. It was truly the best evening spent together. Later, we even hopped over to Big Chill Cafe for some delicious pasta.",
+        "photos_folder": "21",
+        "type": "milestone",
+        "photos": [
+            "IMG_9817.jpg",
+            "IMG_9819.jpg",
+            "IMG_9824.MOV",
+            "IMG_9825.jpg",
+            "IMG_9832.jpg",
+            "IMG_9840.jpg",
+            "IMG_9842.jpg",
+            "IMG_9844.jpg",
+            "IMG_9845.jpg",
+            "IMG_9846.jpg",
+            "IMG_9847.jpg",
+            "IMG_9848.jpg",
+            "IMG_9849.jpg",
+            "IMG_9851.jpg",
+            "IMG_9852.jpg",
+            "IMG_9854.jpg",
+            "IMG_9855.jpg",
+            "IMG_9856.jpg",
+            "IMG_9857.jpg",
+            "IMG_9858.jpg",
+            "IMG_9859.jpg",
+            "IMG_9860.jpg",
+            "IMG_9861.jpg",
+            "IMG_9862.jpg",
+            "IMG_9864.jpg",
+            "IMG_9865.jpg",
+            "IMG_9870.MOV",
+            "IMG_9871.jpg",
+            "IMG_9872.jpg",
+            "IMG_9875.jpg",
+            "IMG_9876.jpg",
+            "IMG_9877.jpg",
+            "IMG_9878.jpg",
+            "IMG_9879.jpg",
+            "IMG_9881.jpg",
+            "IMG_9882.jpg",
+            "IMG_9884.jpg",
+            "IMG_9885.jpg",
+            "IMG_9886.jpg",
+            "IMG_9887.jpg",
+            "IMG_9888.jpg",
+            "IMG_9889.jpg",
+            "IMG_9890.jpg",
+            "IMG_9896.jpg",
+            "IMG_9899.jpg",
+            "IMG_9900.jpg",
+            "IMG_9903.jpg",
+            "IMG_9904.jpg",
+            "IMG_9906.jpg",
+            "IMG_9907.jpg",
+            "IMG_9909.jpg",
+            "IMG_9910.jpg",
+            "IMG_9911.jpg",
+            "IMG_9912.jpg",
+            "IMG_9913.jpg",
+            "IMG_9915.jpg",
+            "IMG_9917.jpg",
+            "IMG_9919.jpg",
+            "IMG_9920.jpg",
+            "IMG_9921.jpg",
+            "IMG_9922.jpg",
+            "IMG_9927.jpg",
+            "IMG_9928.jpg",
+            "IMG_9929.jpg",
+            "IMG_9930.jpg"
+        ],
+        "source_folder": "/Users/geekdon/Documents/Journey with Puchki/Valentine's Day",
+        "template": "memory_candle.html",
+        "smart_data": {
+            "itinerary": [
+                {
+                    "item": "Uncultured Cafe, Kailash Colony - Dreamy vibes & tasty food.",
+                    "icon": "restaurant",
+                    "highlight": true
+                },
+                {
+                    "item": "Exchanged gifts: Panda, Penguin, rose, flowers, ring!",
+                    "icon": "card_giftcard",
+                    "highlight": true
+                },
+                {
+                    "item": "Revealed this website! (Happy tears confirmed).",
+                    "icon": "computer",
+                    "highlight": true
+                },
+                {
+                    "item": "Big Chill Cafe for Pasta.",
+                    "icon": "restaurant",
+                    "highlight": false
+                }
+            ],
+            "entities": {
+                "food": [
+                    "Pasta",
+                    "Tasty Food"
+                ],
+                "places": [
+                    "Uncultured Cafe",
+                    "Kailash Colony",
+                    "Big Chill Cafe"
+                ]
+            },
+            "vibe": "Romantic & Emotional \u2764\ufe0f"
+        },
+        "hide_all_photos": false,
+        "hidden_photos": [
+            "IMG_9913.jpg"
+        ]
     }
 ]

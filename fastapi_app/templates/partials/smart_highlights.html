@@ -262,6 +262,7 @@
 
                 <div class="relative pl-4 border-l-2 border-slate-200 dark:border-white/10 space-y-8 ml-2">
                     {% for item in memory.smart_data.itinerary %}
+                    {% if item.item %}
                     <div class="relative group/item">
                         <!-- Timeline Dot -->
                         <div
@@ -281,6 +282,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
