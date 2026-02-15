@@ -16,14 +16,17 @@ import math
 
 app = FastAPI()
 
+# Get base directory of the current file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Mount Static Files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 # Templates
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 # Data File
-DATA_FILE = "data/memories.json"
+DATA_FILE = os.path.join(BASE_DIR, "data/memories.json")
 
 def load_memories():
     if os.path.exists(DATA_FILE):
