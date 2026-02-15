@@ -45,8 +45,17 @@ def push_to_github(file_path, content_str):
         return
 
     repo_slug = "shaiwalsachdev/journey-with-puchki"
-    # Ensure remote path includes fastapi_app/ prefix since we are running inside it
-    remote_path = f"fastapi_app/{file_path}" if not file_path.startswith("fastapi_app/") else file_path
+    # Extract relative path from absolute path if needed
+    if os.path.isabs(file_path):
+        # Convert absolute path to relative path within repo
+        # e.g. /Users/.../fastapi_app/data/memories.json -> fastapi_app/data/memories.json
+        try:
+            idx = file_path.index("fastapi_app/")
+            remote_path = file_path[idx:]
+        except ValueError:
+            remote_path = f"fastapi_app/{os.path.basename(file_path)}"
+    else:
+        remote_path = f"fastapi_app/{file_path}" if not file_path.startswith("fastapi_app/") else file_path
     url = f"https://api.github.com/repos/{repo_slug}/contents/{remote_path}"
     headers = {
         "Authorization": f"token {token}",
@@ -201,37 +210,7 @@ async def update_settings(request: Request):
     save_settings(current_settings)
     return {"status": "success", "settings": current_settings}
 
-def load_settings():
-    if os.path.exists(SETTINGS_FILE):
-        with open(SETTINGS_FILE, 'r') as f:
-            return json.load(f)
-    return {"private_mode": False, "theme": "light"} # Default settings
-
-def save_settings(settings):
-    with open(SETTINGS_FILE, 'w') as f:
-        json_content = json.dumps(settings, indent=4)
-        f.write(json_content)
-    try:
-        push_to_github(SETTINGS_FILE, json_content)
-    except Exception as e:
-        print(f"GitHub Sync Error: {e}")
-
-def redact_text(text: str, is_private_mode: bool) -> str:
-    if is_private_mode and text:
-        # Redact sensitive words
-        sensitive_words = ["quick hug", "kiss", "hugs", "hinge", "cheek pecks", "lips", "cuddle", "snuggle"]
-        redacted_text = text
-        for word in sensitive_words:
-            pattern = re.compile(re.escape(word), re.IGNORECASE)
-            redacted_text = pattern.sub("✨" * len(word), redacted_text)
-        return redacted_text
-    return text
-
-@app.middleware("http")
-async def add_settings_to_request(request: Request, call_next):
-    request.state.settings = load_settings()
-    response = await call_next(request)
-    return response
+# (Duplicate definitions removed - load_settings, save_settings, redact_text, middleware are defined above)
 
 # ... (Admin Routes omitted for brevity as they shouldn't change) ...
 
@@ -384,7 +363,7 @@ async def read_story(request: Request):
     settings = request.state.settings
     return templates.TemplateResponse("story.html", {"request": request, "settings": settings})
 
-COUPONS_FILE = "data/coupons.json"
+COUPONS_FILE = os.path.join(BASE_DIR, "data/coupons.json")
 
 def load_coupons():
     if os.path.exists(COUPONS_FILE):
@@ -486,7 +465,7 @@ async def add_memory(
     
     # Save Photos
     photo_filenames = []
-    upload_dir = f"fastapi_app/static/uploads/{new_id}"
+    upload_dir = os.path.join(BASE_DIR, f"static/uploads/{new_id}")
     os.makedirs(upload_dir, exist_ok=True)
     
     for photo in photos:
@@ -737,6 +716,15 @@ def load_dictionary():
         with open(DICTIONARY_FILE, 'r') as f:
             return json.load(f)
     return []
+
+def save_dictionary(words):
+    with open(DICTIONARY_FILE, 'w') as f:
+        json_content = json.dumps(words, indent=4)
+        f.write(json_content)
+    try:
+        push_to_github(DICTIONARY_FILE, json_content)
+    except Exception as e:
+        print(f"GitHub Sync Error: {e}")
 
 @app.get("/dictionary", response_class=HTMLResponse)
 async def read_dictionary(request: Request):
