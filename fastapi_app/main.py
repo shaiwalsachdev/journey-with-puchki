@@ -88,7 +88,7 @@ def save_memories(memories):
     except Exception as e:
         print(f"GitHub Sync Error: {e}")
 
-SETTINGS_FILE = "data/settings.json"
+SETTINGS_FILE = os.path.join(BASE_DIR, "data/settings.json")
 
 def load_settings():
     if os.path.exists(SETTINGS_FILE):
@@ -516,7 +516,7 @@ async def read_music(request: Request):
     return templates.TemplateResponse("music.html", {"request": request, "settings": settings})
 
 # --- Guestbook Routes ---
-GUESTBOOK_FILE = "data/guestbook.json"
+GUESTBOOK_FILE = os.path.join(BASE_DIR, "data/guestbook.json")
 
 def load_guestbook():
     if os.path.exists(GUESTBOOK_FILE):
@@ -560,7 +560,7 @@ async def sign_guestbook(
     return RedirectResponse(url="/guestbook", status_code=303)
 
 # --- Vault Routes ---
-VAULT_FILE = "data/vault.json"
+VAULT_FILE = os.path.join(BASE_DIR, "data/vault.json")
 
 def load_vault():
     if os.path.exists(VAULT_FILE):
@@ -605,7 +605,7 @@ async def read_roka(request: Request):
     return templates.TemplateResponse("memory_roka.html", {"request": request, "memory": dummy_memory, "settings": settings})
 
 # --- Wishlist Routes ---
-WISHLIST_FILE = "data/wishlist.json"
+WISHLIST_FILE = os.path.join(BASE_DIR, "data/wishlist.json")
 
 def load_wishlist():
     if os.path.exists(WISHLIST_FILE):
@@ -730,7 +730,7 @@ async def add_comment(
     return RedirectResponse(url=f"/memory/{memory_id}", status_code=303)
 
 # --- Dictionary Routes ---
-DICTIONARY_FILE = "data/dictionary.json"
+DICTIONARY_FILE = os.path.join(BASE_DIR, "data/dictionary.json")
 
 def load_dictionary():
     if os.path.exists(DICTIONARY_FILE):
