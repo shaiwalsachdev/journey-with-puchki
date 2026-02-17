@@ -1,5 +1,13 @@
 [
     {
+        "id": 9,
+        "word": "Summi",
+        "meaning": "Summer",
+        "context": "Summer",
+        "date": "Feb 17, 2026",
+        "icon": "auto_fix_high"
+    },
+    {
         "id": 1,
         "word": "offish",
         "meaning": "Office",
