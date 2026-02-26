@@ -84,18 +84,18 @@
     </div>
     <!-- Controls Bar -->
     <div class="sticky top-24 z-40 pb-8 px-4 w-full">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <!-- Filter Beans -->
-            <div class="overflow-x-auto no-scrollbar w-full sm:w-auto">
-                <div class="flex space-x-3 min-w-max px-2">
+        <div class="max-w-7xl mx-auto flex flex-col items-center gap-4">
+            <!-- Filter Tags -->
+            <div class="w-full overflow-x-auto no-scrollbar">
+                <div class="flex flex-wrap justify-center gap-2 px-2">
                     <button onclick="setCategory('all')"
-                        class="filter-btn active px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        class="filter-btn active px-5 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm text-sm"
                         data-category="all">
                         All Memories
                     </button>
                     {% for cat in categories %}
                     <button onclick="setCategory('{{ cat.value }}')"
-                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
+                        class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm text-sm"
                         data-category="{{ cat.value }}">
                         {{ cat.label }}
                     </button>
@@ -107,7 +107,7 @@
             <button onclick="shuffleGallery()"
                 class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95 font-medium whitespace-nowrap">
                 <span class="material-icons text-sm">shuffle</span>
-                Shuffle & Refresh
+                Shuffle &amp; Refresh
             </button>
         </div>
     </div>
