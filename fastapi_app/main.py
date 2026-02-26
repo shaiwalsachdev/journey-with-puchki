@@ -174,10 +174,14 @@ async def get_filtered_memories(settings, seed=None):
     memories = await get_all_memories()
     processed_memories = process_memories_for_display(memories, settings)
 
+    VIDEO_EXTS = {'.mov', '.mp4', '.avi', '.mkv', '.webm'}
     gallery_items = []
     for m in processed_memories:
         if m.get("photos"):
             for p in m["photos"]:
+                # Skip video files — gallery only shows images
+                if any(p.lower().endswith(ext) for ext in VIDEO_EXTS):
+                    continue
                 gallery_items.append({
                     "id": m["id"],
                     "title": redact_text(m["title"], settings.get("private_mode")),
@@ -198,6 +202,7 @@ async def get_filtered_memories(settings, seed=None):
 @app.get("/gallery", response_class=HTMLResponse)
 async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: int = None, category: str = "all"):
     settings = request.state.settings
+    memories = await get_all_memories()
     all_items = await get_filtered_memories(settings, seed=seed)
 
     if category != "all":
@@ -209,6 +214,20 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
     paginated_items = all_items[start:end]
     has_more = end < total_items
 
+    # Build dynamic category filters
+    EMOJI_MAP = {
+        "date": "🍕", "dinner": "🍝", "milestone": "💍", "trip": "✈️",
+        "food": "🍜", "movie": "🎬", "shopping": "🛍️", "family": "👨‍👩‍👧",
+        "art": "🎨", "celebration": "🎉",
+    }
+    type_set = set()
+    for m in memories:
+        if m.get("type"):
+            type_set.add(m["type"])
+    categories = []
+    for t in sorted(type_set):
+        categories.append({"value": t, "label": f"{t.title()} {EMOJI_MAP.get(t, '')}"})
+
     return templates.TemplateResponse("gallery.html", {
         "request": request,
         "items": paginated_items,
@@ -217,7 +236,8 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
         "seed": seed,
         "category": category,
         "has_more": has_more,
-        "settings": settings
+        "settings": settings,
+        "categories": categories
     })
 
 
@@ -341,6 +361,8 @@ async def add_memory(
     template: str = Form("memory.html"),
     title_safe: str = Form(None),
     description_safe: str = Form(None),
+    timeline_note: str = Form(None),
+    thumbnail_index: int = Form(0),
     smart_data: str = Form(None),
     hide_all_photos: str = Form("false"),
     photos: List[UploadFile] = File(None)
@@ -350,15 +372,56 @@ async def add_memory(
 
     new_id = await get_next_memory_id()
 
-    # Upload photos/videos to R2
+    # Format date from YYYY-MM-DD to "Month DD, YYYY"
+    from datetime import datetime as dt
+    try:
+        parsed_date = dt.strptime(date, "%Y-%m-%d")
+        date = parsed_date.strftime("%B %d, %Y")
+    except ValueError:
+        pass  # Keep original if already in text format
+
+    # Upload photos/videos to R2 (with file format validation + parallel upload)
+    ALLOWED_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp", "image/heic",
+                     "video/mp4", "video/quicktime", "video/mov"}
     photo_filenames = []
+    upload_tasks = []  # (r2_key, content_bytes, content_type)
+
     if photos:
         for photo in photos:
             if photo.filename and photo.size > 0:
-                r2_key = f"uploads/{new_id}/{photo.filename}"
+                if photo.content_type and photo.content_type.split(";")[0].strip() not in ALLOWED_TYPES:
+                    raise HTTPException(status_code=400, detail=f"Invalid file type: {photo.filename} ({photo.content_type}). Only images and videos are allowed.")
                 content = await photo.read()
-                upload_file(io.BytesIO(content), r2_key, photo.content_type)
-                photo_filenames.append(photo.filename)
+                filename = photo.filename
+                content_type = photo.content_type
+
+                # Convert HEIC → JPEG (browsers can't display HEIC)
+                if filename.lower().endswith(('.heic', '.heif')):
+                    try:
+                        from PIL import Image
+                        from pillow_heif import register_heif_opener
+                        register_heif_opener()
+                        img = Image.open(io.BytesIO(content))
+                        buf = io.BytesIO()
+                        img.convert("RGB").save(buf, format="JPEG", quality=90)
+                        content = buf.getvalue()
+                        filename = os.path.splitext(filename)[0] + ".jpg"
+                        content_type = "image/jpeg"
+                    except Exception as e:
+                        print(f"HEIC conversion failed for {filename}: {e}")
+
+                r2_key = f"uploads/{new_id}/{filename}"
+                upload_tasks.append((r2_key, content, content_type))
+                photo_filenames.append(filename)
+
+    # Parallel upload using threads (4 concurrent uploads)
+    if upload_tasks:
+        import concurrent.futures
+        def _upload(args):
+            key, data, ct = args
+            upload_file(io.BytesIO(data), key, ct)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(_upload, upload_tasks)
 
     new_memory = {
         "id": new_id,
@@ -378,6 +441,14 @@ async def add_memory(
         new_memory["title_safe"] = title_safe
     if description_safe:
         new_memory["description_safe"] = description_safe
+    if timeline_note:
+        new_memory["timeline_note"] = timeline_note
+
+    # Reorder photos so thumbnail is first (timeline uses first photo)
+    if thumbnail_index > 0 and thumbnail_index < len(photo_filenames):
+        thumb = photo_filenames.pop(thumbnail_index)
+        photo_filenames.insert(0, thumb)
+        new_memory["photos"] = photo_filenames
 
     # Smart data (JSON string from frontend)
     if smart_data:

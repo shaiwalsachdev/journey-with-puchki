@@ -11,3 +11,6 @@ gunicorn
 requests
 motor
 boto3
+certifi
+pillow
+pillow-heif

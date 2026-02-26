@@ -150,7 +150,7 @@
                             </div>
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed line-clamp-3">
-                                {{ memory.description }}
+                                {{ memory.timeline_note if memory.timeline_note else memory.description }}
                             </p>
                         </div>
                     </div>

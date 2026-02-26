@@ -93,26 +93,13 @@
                         data-category="all">
                         All Memories
                     </button>
-                    <button onclick="setCategory('date')"
+                    {% for cat in categories %}
+                    <button onclick="setCategory('{{ cat.value }}')"
                         class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
-                        data-category="date">
-                        Food Dates 🍝
+                        data-category="{{ cat.value }}">
+                        {{ cat.label }}
                     </button>
-                    <button onclick="setCategory('movie')"
-                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
-                        data-category="movie">
-                        Movies 🎬
-                    </button>
-                    <button onclick="setCategory('milestone')"
-                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
-                        data-category="milestone">
-                        Milestones 💍
-                    </button>
-                    <button onclick="setCategory('travel')"
-                        class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary transition-all shadow-sm"
-                        data-category="travel">
-                        Travel ✈️
-                    </button>
+                    {% endfor %}
                 </div>
             </div>
 
