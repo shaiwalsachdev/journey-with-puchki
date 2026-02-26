@@ -53,7 +53,14 @@ async def add_memory(memory: dict):
 async def get_settings():
     db = get_db()
     settings = await db.settings.find_one({}, {"_id": 0})
-    return settings or {"private_mode": False, "theme": "classic"}
+    defaults = {"private_mode": False, "theme": "classic", "birthday_mode": False}
+    if settings:
+        # Ensure all default keys exist
+        for key, val in defaults.items():
+            if key not in settings:
+                settings[key] = val
+        return settings
+    return defaults
 
 async def save_settings(settings: dict):
     db = get_db()
@@ -70,9 +77,17 @@ async def save_all_coupons(coupons: list):
     if coupons:
         await db.coupons.insert_many(coupons)
 
-async def update_coupon(coupon_id: int, update_data: dict):
+async def add_coupon(coupon: dict):
     db = get_db()
-    await db.coupons.update_one({"id": coupon_id}, {"$set": update_data})
+    await db.coupons.insert_one(coupon)
+
+async def update_coupon(coupon_id: str, update_data: dict):
+    db = get_db()
+    await db.coupons.update_one(_build_id_query(coupon_id), {"$set": update_data})
+
+async def delete_coupon_item(coupon_id: str):
+    db = get_db()
+    await db.coupons.delete_one(_build_id_query(coupon_id))
 
 # --- Guestbook ---
 async def get_all_guestbook():
@@ -129,3 +144,45 @@ async def save_all_dictionary(words: list):
 async def add_dictionary_word(word: dict):
     db = get_db()
     await db.dictionary.insert_one(word)
+
+# --- Delete Operations ---
+async def delete_memory(memory_id: int):
+    db = get_db()
+    await db.memories.delete_one({"id": memory_id})
+
+def _build_id_query(item_id: str):
+    from bson.objectid import ObjectId
+    from bson.errors import InvalidId
+    query = [{"id": item_id}]
+    if str(item_id).isdigit():
+        query.append({"id": int(item_id)})
+    try:
+        query.append({"_id": ObjectId(item_id)})
+    except InvalidId:
+        pass
+    return {"$or": query}
+
+async def delete_guestbook_entry(note_id: str):
+    db = get_db()
+    await db.guestbook.delete_one(_build_id_query(note_id))
+
+async def delete_wishlist_item(item_id: str):
+    db = get_db()
+    await db.wishlist.delete_one(_build_id_query(item_id))
+
+async def delete_dictionary_word(word_id: str):
+    db = get_db()
+    await db.dictionary.delete_one(_build_id_query(word_id))
+
+# --- Update Operations ---
+async def update_wishlist_item(item_id: str, data: dict):
+    db = get_db()
+    await db.wishlist.update_one(_build_id_query(item_id), {"$set": data})
+
+async def update_guestbook_entry(note_id: str, data: dict):
+    db = get_db()
+    await db.guestbook.update_one(_build_id_query(note_id), {"$set": data})
+
+async def update_dictionary_word(word_id: str, data: dict):
+    db = get_db()
+    await db.dictionary.update_one(_build_id_query(word_id), {"$set": data})

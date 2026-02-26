@@ -72,55 +72,38 @@
             <span
                 class="ml-2 text-xs uppercase tracking-widest text-primary/60 font-semibold border border-primary/20 px-1.5 py-0.5 rounded">Admin</span>
         </div>
-        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-8">
-            <!-- Privacy Control -->
-            <div class="space-y-3">
-                <h3 class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Privacy Control</h3>
-                <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3 border border-gray-100 dark:border-gray-700">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm font-medium text-gray-900 dark:text-white">Private Mode</span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input class="sr-only peer" id="sidebar-privacy-toggle" type="checkbox" {% if
-                                settings.private_mode %}checked{% endif %}>
-                            <div
-                                class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/30 dark:peer-focus:ring-primary/80 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
-                            </div>
-                        </label>
-                    </div>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Hides Hinge references & sensitive words.</p>
-                </div>
-            </div>
-
-            <!-- Theme Control -->
-            <div class="space-y-3">
-                <h3 class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Theme Selection</h3>
-                <div class="space-y-2">
-                    <!-- Classic -->
-                    <label
-                        class="flex items-center p-3 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-                        <input name="sidebar-theme" type="radio" value="classic"
-                            class="w-4 h-4 text-primary border-gray-300 focus:ring-primary" {% if
-                            settings.theme=='classic' %}checked{% endif %}>
-                        <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-200">Classic Romantic</span>
-                    </label>
-                    <!-- Midnight -->
-                    <label
-                        class="flex items-center p-3 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-                        <input name="sidebar-theme" type="radio" value="midnight"
-                            class="w-4 h-4 text-primary border-gray-300 focus:ring-primary" {% if
-                            settings.theme=='midnight' %}checked{% endif %}>
-                        <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-200">Midnight Movie</span>
-                    </label>
-                    <!-- Roka -->
-                    <label
-                        class="flex items-center p-3 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-                        <input name="sidebar-theme" type="radio" value="roka"
-                            class="w-4 h-4 text-primary border-gray-300 focus:ring-primary" {% if settings.theme=='roka'
-                            %}checked{% endif %}>
-                        <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-200">Golden Roka</span>
-                    </label>
-                </div>
-            </div>
+        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+            <h3 class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Navigation</h3>
+            <a href="#" onclick="switchTab('settings')" id="nav-settings"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors bg-gray-100 dark:bg-gray-800">
+                <span class="material-icons text-primary/70 text-lg">settings</span>
+                <span class="font-medium text-sm">Global Settings</span>
+            </a>
+            <a href="#" onclick="switchTab('memories')" id="nav-memories"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">photo_library</span>
+                <span class="font-medium text-sm">Memories</span>
+            </a>
+            <a href="#" onclick="switchTab('wishlist')" id="nav-wishlist"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">favorite</span>
+                <span class="font-medium text-sm">Wishlist</span>
+            </a>
+            <a href="#" onclick="switchTab('blessings')" id="nav-blessings"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">auto_awesome</span>
+                <span class="font-medium text-sm">Blessings</span>
+            </a>
+            <a href="#" onclick="switchTab('dictionary')" id="nav-dictionary"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">menu_book</span>
+                <span class="font-medium text-sm">Dictionary</span>
+            </a>
+            <a href="#" onclick="switchTab('coupons')" id="nav-coupons"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">local_activity</span>
+                <span class="font-medium text-sm">Coupons</span>
+            </a>
         </nav>
         <div class="p-4 border-t border-gray-200 dark:border-primary/10 bg-gray-50 dark:bg-surface-lighter/30">
             <div class="flex items-center gap-3">
@@ -147,6 +130,12 @@
                 </nav>
             </div>
             <div class="flex items-center gap-4">
+                {% if settings.birthday_mode %}
+                <a href="/birthday"
+                    class="flex items-center gap-2 px-4 py-2 rounded-lg border border-pink-500/30 bg-pink-500/10 text-pink-500 hover:bg-pink-500/20 transition-colors text-sm font-medium">
+                    <span class="material-icons text-lg">cake</span> Birthday 🎂
+                </a>
+                {% endif %}
                 <a href="/"
                     class="flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-transparent text-primary hover:bg-primary/5 transition-colors text-sm font-medium">
                     <span class="material-icons text-lg">visibility</span> View Site
@@ -160,61 +149,99 @@
                     <p class="text-gray-500 dark:text-gray-400">Manage privacy, themes, and memories for Shaila.</p>
                 </div>
             </div>
-            <!-- Global Privacy Mode -->
-            <section class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden group">
-                <div
-                    class="absolute top-0 right-0 p-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
-                </div>
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-                    <div class="flex items-start gap-4 max-w-2xl">
-                        <div class="p-3 bg-primary/10 rounded-xl text-primary">
-                            <span class="material-icons text-3xl">lock_person</span>
-                        </div>
-                        <div>
-                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                                Global Private Mode
-                                <span
-                                    class="px-2 py-0.5 text-xs rounded-full bg-primary/20 text-primary font-bold tracking-wide uppercase">Love
-                                    Locked</span>
-                            </h2>
-                            <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm leading-relaxed">
-                                When activated, secrets are hidden. Memory 1 (Hinge) disappears. Words like "kiss",
-                                "hugs" become stars. Homepage text changes.
-                            </p>
-                        </div>
+            <!-- Global Settings (Privacy & Theme) -->
+            <div id="section-settings" class="scroll-mt-24">
+                <section class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden group mb-8">
+                    <div
+                        class="absolute top-0 right-0 p-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
                     </div>
-                    <div class="flex items-center gap-4 bg-surface-dark/50 p-2 rounded-xl border border-primary/10">
-                        <span class="text-xs font-medium uppercase tracking-wider text-gray-500 pl-2">Status:</span>
-                        <label class="flex items-center cursor-pointer relative" for="global-privacy-toggle">
-                            <input class="sr-only peer" id="global-privacy-toggle" type="checkbox" {% if
-                                settings.private_mode %}checked{% endif %}>
-                            <div
-                                class="w-14 h-7 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/50 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                        <div class="flex items-start gap-4 max-w-2xl">
+                            <div class="p-3 bg-primary/10 rounded-xl text-primary">
+                                <span class="material-icons text-3xl">lock_person</span>
                             </div>
-                            <span
-                                class="ml-3 text-sm font-medium text-gray-300 peer-checked:text-primary transition-colors"
-                                id="toggle-text">{% if settings.private_mode %}Active{% else %}Inactive{% endif
-                                %}</span>
-                        </label>
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    Global Private Mode
+                                    <span
+                                        class="px-2 py-0.5 text-xs rounded-full bg-primary/20 text-primary font-bold tracking-wide uppercase">Love
+                                        Locked</span>
+                                </h2>
+                                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm leading-relaxed">
+                                    When activated, secrets are hidden. Memory 1 (Hinge) disappears. Words like "kiss",
+                                    "hugs" become stars. Homepage text changes.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 bg-surface-dark/50 p-2 rounded-xl border border-primary/10">
+                            <span class="text-xs font-medium uppercase tracking-wider text-gray-500 pl-2">Status:</span>
+                            <label class="flex items-center cursor-pointer relative" for="global-privacy-toggle">
+                                <input class="sr-only peer" id="global-privacy-toggle" type="checkbox" {% if
+                                    settings.private_mode %}checked{% endif %}>
+                                <div
+                                    class="w-14 h-7 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/50 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                                </div>
+                                <span
+                                    class="ml-3 text-sm font-medium text-gray-300 peer-checked:text-primary transition-colors"
+                                    id="toggle-text">{% if settings.private_mode %}Active{% else %}Inactive{% endif
+                                    %}</span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Layout: Grid for Theme & Memories -->
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                <!-- Theming Engine (1 col) -->
-                <section class="xl:col-span-1 space-y-6">
+                <section class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden group mb-8">
+                    <div
+                        class="absolute top-0 right-0 p-32 bg-pink-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                        <div class="flex items-start gap-4 max-w-2xl">
+                            <div class="p-3 bg-pink-500/10 rounded-xl text-pink-500">
+                                <span class="material-icons text-3xl">cake</span>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    Birthday Mode ✨
+                                    <span
+                                        class="px-2 py-0.5 text-xs rounded-full bg-pink-500/20 text-pink-500 font-bold tracking-wide uppercase">Special</span>
+                                </h2>
+                                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm leading-relaxed">
+                                    When activated, the entire site transforms into a pink Birthday theme. A new
+                                    "Birthday" section appears, and special animations are enabled.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-4 bg-surface-dark/50 p-2 rounded-xl border border-pink-500/10">
+                            <span class="text-xs font-medium uppercase tracking-wider text-gray-500 pl-2">Status:</span>
+                            <label class="flex items-center cursor-pointer relative" for="global-birthday-toggle">
+                                <input class="sr-only peer" id="global-birthday-toggle" type="checkbox" {% if
+                                    settings.birthday_mode %}checked{% endif %}>
+                                <div
+                                    class="w-14 h-7 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-pink-500/50 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-pink-500">
+                                </div>
+                                <span
+                                    class="ml-3 text-sm font-medium text-gray-300 peer-checked:text-pink-500 transition-colors"
+                                    id="birthday-toggle-text">{% if settings.birthday_mode %}Active{% else %}Inactive{%
+                                    endif
+                                    %}</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Layout: Theme Customizer -->
+                <section class="space-y-6">
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Theme Customizer</h3>
-                        <span class="text-xs text-primary cursor-pointer hover:underline">Edit Presets</span>
                     </div>
-                    <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <!-- Theme Card 1 (Active) -->
                         <div class="relative group cursor-pointer">
                             <input class="peer sr-only" id="theme-classic" name="theme" type="radio" value="classic" {%
                                 if settings.theme=='classic' %}checked{% endif %}>
                             <label
-                                class="block p-4 rounded-xl border-2 border-primary bg-surface-dark transition-all peer-checked:ring-2 peer-checked:ring-primary/30 peer-checked:shadow-lg peer-checked:shadow-primary/10"
+                                class="block p-4 rounded-xl border border-gray-700 bg-surface-dark hover:border-gray-500 transition-all peer-checked:border-2 peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/30 peer-checked:shadow-lg peer-checked:shadow-primary/10 h-full"
                                 for="theme-classic">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center gap-2">
@@ -224,7 +251,8 @@
                                     <span class="material-icons text-primary text-sm">check_circle</span>
                                 </div>
                                 <div class="h-24 w-full rounded-lg bg-gray-800 overflow-hidden relative mb-3">
-                                    <div class="absolute inset-0 bg-gradient-to-br from-rose-900/50 to-gray-900"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-br from-rose-900/50 to-gray-900">
+                                    </div>
                                     <div class="absolute bottom-2 left-2 right-2 flex gap-2">
                                         <div class="h-2 w-full bg-white/10 rounded"></div>
                                         <div class="h-2 w-1/3 bg-primary rounded"></div>
@@ -245,10 +273,11 @@
                             <input class="peer sr-only" id="theme-midnight" name="theme" type="radio" value="midnight"
                                 {% if settings.theme=='midnight' %}checked{% endif %}>
                             <label
-                                class="block p-4 rounded-xl border border-gray-700 bg-surface-dark hover:border-gray-500 transition-all"
+                                class="block p-4 rounded-xl border border-gray-700 bg-surface-dark hover:border-gray-500 transition-all peer-checked:border-2 peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/30 peer-checked:shadow-lg peer-checked:shadow-primary/10 h-full"
                                 for="theme-midnight">
                                 <div class="flex items-center justify-between mb-3">
-                                    <span class="font-medium text-gray-300 group-hover:text-white">Midnight Movie</span>
+                                    <span class="font-medium text-gray-300 group-hover:text-white">Midnight
+                                        Movie</span>
                                     <span
                                         class="material-icons text-gray-600 text-sm peer-checked:text-primary">circle</span>
                                 </div>
@@ -274,15 +303,15 @@
                             <input class="peer sr-only" id="theme-roka" name="theme" type="radio" value="roka" {% if
                                 settings.theme=='roka' %}checked{% endif %}>
                             <label
-                                class="block p-4 rounded-xl border border-gray-700 bg-surface-dark hover:border-gray-500 transition-all"
+                                class="block p-4 rounded-xl border border-gray-700 bg-surface-dark hover:border-gray-500 transition-all peer-checked:border-2 peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/30 peer-checked:shadow-lg peer-checked:shadow-primary/10 h-full"
                                 for="theme-roka">
                                 <div class="flex items-center justify-between mb-3">
-                                    <span class="font-medium text-gray-300 group-hover:text-white">Golden Roka</span>
+                                    <span class="font-medium text-gray-300 group-hover:text-white">Golden Hour</span>
                                     <span
                                         class="material-icons text-gray-600 text-sm peer-checked:text-primary">circle</span>
                                 </div>
-                                <div class="h-24 w-full rounded-lg bg-[#2a1a0f] overflow-hidden relative mb-3">
-                                    <div class="absolute inset-0 bg-gradient-to-br from-yellow-700/20 to-[#1a1005]">
+                                <div class="h-24 w-full rounded-lg bg-gray-800 overflow-hidden relative mb-3">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-yellow-900/40 to-black">
                                     </div>
                                     <div class="absolute bottom-2 left-2 right-2 flex gap-2">
                                         <div class="h-2 w-full bg-white/5 rounded"></div>
@@ -291,7 +320,7 @@
                                     <img alt="Gold glitter texture"
                                         class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay"
                                         data-alt="Gold dust texture abstract"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwccduW9zg8fAlqHsXUrprxJM5IN61hrLZwq37MKqbMHtCfDCc65MdRjkG0RWsETsA9VSiLbuy96Fi-JpgPIxm1n727RAe5rlrgvs71ilFNq66vn8lLM-U3UkUBRNjegKBIfg3140IJNntBp4cDRnwpNygphSNIGtytOHBI-huE2yz4dltEVkwoLk5VUulUYM86gu64DKvUGWDv7DU35BE9SLUk8nO0Mn8SI9unTuzCUrUfUgbch1eel1cJJ7vRV2lNxs7gUPDnmWv" />
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwccduW9zg8fAlqHsXUrprxJM5IN61hrLZwq37MKqbMHtCfDCc65MdRjkG0RWsETsA9VSiLbuy96Fi-JpgPIxm1n727RAe5rlrgvs71ilFNq66vn8lLM-U3UkUBRNjegKBIfg3140IJNntBp4cDRnwpNygphSNIGtytOHBI-huE2yz4dltEVkwoLk5VUULUYM86gu64DKvUGWDv7DU35BE9SLUk8nO0Mn8SI9unTuzCUrUfUgbch1eel1cJJ7vRV2lNxs7gUPDnmWv" />
                                 </div>
                                 <div class="flex justify-between items-center text-xs text-gray-500">
                                     <span>Font: Elegant Sans</span>
@@ -299,15 +328,51 @@
                                 </div>
                             </label>
                         </div>
+                        <!-- Theme Card 4 -->
+                        <div class="relative group cursor-pointer">
+                            <input class="peer sr-only" id="theme-birthday" name="theme" type="radio" value="birthday"
+                                {% if settings.theme=='birthday' %}checked{% endif %}>
+                            <label
+                                class="block p-4 rounded-xl border border-gray-700 bg-surface-dark hover:border-gray-500 transition-all peer-checked:border-2 peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/30 peer-checked:shadow-lg peer-checked:shadow-primary/10 h-full"
+                                for="theme-birthday">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span
+                                        class="font-medium text-gray-300 group-hover:text-white flex items-center gap-1">Birthday
+                                        <span class="material-icons text-sm text-pink-400">cake</span></span>
+                                    <span
+                                        class="material-icons text-gray-600 text-sm peer-checked:text-primary">circle</span>
+                                </div>
+                                <div class="h-24 w-full rounded-lg bg-pink-900 overflow-hidden relative mb-3">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-pink-500/40 to-rose-900">
+                                    </div>
+                                    <div class="absolute bottom-2 left-2 right-2 flex gap-2">
+                                        <div class="h-2 w-full bg-white/10 rounded"></div>
+                                        <div class="h-2 w-1/3 bg-pink-400/50 rounded"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Font: Plus Jakarta</span>
+                                    <span>Base: #f42559</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </section>
+            </div>
 
-                <!-- Memory Photo Manager (2 cols) -->
-                <section class="xl:col-span-2 space-y-6">
+            <!-- Memory Photo Manager -->
+            <div id="section-memories" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Memory Photo Manager</h3>
-                        <input type="text" placeholder="Search memories..."
-                            class="text-sm px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Memories Manager</h3>
+                        <div class="flex gap-4 items-center">
+                            <input type="text" placeholder="Search memories..."
+                                class="text-sm px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            <button onclick="openAddModal('memory')"
+                                class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                <span class="material-icons text-sm">add</span> Add Memory
+                            </button>
+                        </div>
                     </div>
                     <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm"
                         id="memory-list-container">
@@ -315,68 +380,202 @@
                     </div>
                 </section>
             </div>
-        </div>
 
-        <!-- Photo Management Modal -->
-        <div id="photo-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
-            aria-modal="true">
-            <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" onclick="closePhotoModal()">
+            <!-- Wishlist Manager -->
+            <div id="section-wishlist" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Wishlist Manager</h3>
+                        <button onclick="openAddModal('wishlist')"
+                            class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <span class="material-icons text-sm">add</span> Add Item
+                        </button>
+                    </div>
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm"
+                        id="wishlist-list-container">
+                        <div class="p-8 text-center text-gray-500 dark:text-gray-400">Loading wishlist...</div>
+                    </div>
+                </section>
             </div>
-            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <div
-                        class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-surface-dark text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl border border-gray-200 dark:border-gray-700">
-                        <div class="bg-white dark:bg-surface-dark px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                            <div class="sm:flex sm:items-start">
-                                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-                                    <h3 class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
-                                        id="modal-title">Manage Photos</h3>
-                                    <div class="mt-2">
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                                            Select photos to hide from the public site. <span
-                                                class="text-primary">Selected = Hidden</span>.
-                                        </p>
-                                        <div class="mt-4 flex items-center gap-3 mb-6">
-                                            <label class="flex items-center cursor-pointer">
-                                                <input type="checkbox" id="modal-hide-all"
-                                                    class="rounded border-gray-300 text-primary focus:ring-primary bg-gray-100 dark:bg-gray-700 dark:border-gray-600">
-                                                <span
-                                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-200">Hide
-                                                    ALL Photos for this Memory</span>
-                                            </label>
-                                        </div>
 
-                                        <!-- Photos Grid -->
-                                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[60vh] overflow-y-auto p-2"
-                                            id="modal-photos-grid">
-                                            <!-- JS will populate -->
+            <!-- Blessings Manager -->
+            <div id="section-blessings" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Blessings Manager</h3>
+                        <button onclick="openAddModal('blessing')"
+                            class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <span class="material-icons text-sm">add</span> Add Blessing
+                        </button>
+                    </div>
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm"
+                        id="blessings-list-container">
+                        <div class="p-8 text-center text-gray-500 dark:text-gray-400">Loading blessings...</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Dictionary Manager -->
+            <div id="section-dictionary" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Dictionary Manager</h3>
+                        <button onclick="openAddModal('dictionary')"
+                            class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <span class="material-icons text-sm">add</span> Add Word
+                        </button>
+                    </div>
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm"
+                        id="dictionary-list-container">
+                        <div class="p-8 text-center text-gray-500 dark:text-gray-400">Loading dictionary...</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Coupons Manager -->
+            <div id="section-coupons" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Coupons Manager</h3>
+                        <button onclick="openAddModal('coupon')"
+                            class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <span class="material-icons text-sm">add</span> Add Coupon
+                        </button>
+                    </div>
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm"
+                        id="coupons-list-container">
+                        <div class="p-8 text-center text-gray-500 dark:text-gray-400">Loading coupons...</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Generic Edit Modal -->
+            <div id="edit-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
+                aria-modal="true">
+                <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity"
+                    onclick="closeEditModal()">
+                </div>
+                <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div
+                            class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-surface-dark text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl border border-gray-200 dark:border-gray-700">
+                            <form id="edit-form" onsubmit="handleEditSubmit(event)">
+                                <div class="bg-white dark:bg-surface-dark px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start w-full">
+                                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                            <h3 class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
+                                                id="edit-modal-title">Edit Item</h3>
+                                            <div class="mt-6 space-y-4" id="edit-modal-fields">
+                                                <!-- Dynamic fields injected here by JS -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div
-                            class="bg-gray-50 dark:bg-surface-lighter/30 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                            <button type="button"
-                                class="inline-flex w-full justify-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 sm:ml-3 sm:w-auto transition-colors"
-                                onclick="saveHiddenPhotos()">
-                                Save Changes
-                            </button>
-                            <button type="button"
-                                class="mt-3 inline-flex w-full justify-center rounded-lg bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto transition-colors"
-                                onclick="closePhotoModal()">
-                                Cancel
-                            </button>
+                                <div
+                                    class="bg-gray-50 dark:bg-surface-lighter/30 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <button type="submit"
+                                        class="inline-flex w-full justify-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 sm:ml-3 sm:w-auto transition-colors">
+                                        Save Changes
+                                    </button>
+                                    <button type="button"
+                                        class="mt-3 inline-flex w-full justify-center rounded-lg bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto transition-colors"
+                                        onclick="closeEditModal()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Photo Management Modal -->
+            <div id="photo-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
+                aria-modal="true">
+                <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity"
+                    onclick="closePhotoModal()">
+                </div>
+                <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div
+                            class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-surface-dark text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl border border-gray-200 dark:border-gray-700">
+                            <div class="bg-white dark:bg-surface-dark px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                        <h3 class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
+                                            id="modal-title">Manage Photos</h3>
+                                        <div class="mt-2">
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                Select photos to hide from the public site. <span
+                                                    class="text-primary">Selected = Hidden</span>.
+                                            </p>
+                                            <div class="mt-4 flex items-center gap-3 mb-6">
+                                                <label class="flex items-center cursor-pointer">
+                                                    <input type="checkbox" id="modal-hide-all"
+                                                        class="rounded border-gray-300 text-primary focus:ring-primary bg-gray-100 dark:bg-gray-700 dark:border-gray-600">
+                                                    <span
+                                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-200">Hide
+                                                        ALL Photos for this Memory</span>
+                                                </label>
+                                            </div>
+
+                                            <!-- Photos Grid -->
+                                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[60vh] overflow-y-auto p-2"
+                                                id="modal-photos-grid">
+                                                <!-- JS will populate -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-gray-50 dark:bg-surface-lighter/30 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                <button type="button"
+                                    class="inline-flex w-full justify-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 sm:ml-3 sm:w-auto transition-colors"
+                                    onclick="saveHiddenPhotos()">
+                                    Save Changes
+                                </button>
+                                <button type="button"
+                                    class="mt-3 inline-flex w-full justify-center rounded-lg bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 sm:mt-0 sm:w-auto transition-colors"
+                                    onclick="closePhotoModal()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </main>
     <script>
+        // --- Tab Navigation Logic ---
+        function switchTab(tabId) {
+            // Hide all sections
+            document.getElementById('section-settings').classList.add('hidden');
+            document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
+
+            // Show selected section
+            document.getElementById('section-' + tabId).classList.remove('hidden');
+
+            // Update nav styling
+            document.querySelectorAll('.admin-nav-link').forEach(el => {
+                el.classList.remove('bg-gray-100', 'dark:bg-gray-800');
+            });
+            document.getElementById('nav-' + tabId).classList.add('bg-gray-100', 'dark:bg-gray-800');
+        }
+
         // --- Memory & Photo Logic ---
         let currentMemoryId = null;
         let allMemories = [];
+
+        async function fetchInitialData() {
+            fetchMemories();
+            fetchWishlist();
+            fetchBlessings();
+            fetchDictionary();
+            fetchCoupons();
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchInitialData);
 
         async function fetchMemories() {
             try {
@@ -415,7 +614,6 @@
                 } else {
                     statusBadge = '<span class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">Visible</span>';
                 }
-
                 html += `
                     <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                         <div class="flex items-center gap-4">
@@ -432,7 +630,11 @@
                         </div>
                         <div class="flex items-center gap-4">
                             ${statusBadge}
-                            <button onclick="openPhotoModal(${m.id})" class="text-sm font-medium text-primary hover:text-primary/80">Manage</button>
+                            <div class="flex gap-2">
+                                <button onclick="openEditModal('memory', '${m.id}')" class="text-sm font-medium text-blue-500 hover:text-blue-600">Edit</button>
+                                <button onclick="openPhotoModal(${m.id})" class="text-sm font-medium text-primary hover:text-primary/80">Manage Photos</button>
+                                <button onclick="deleteMemory(${m.id})" class="text-sm font-medium text-red-500 hover:text-red-600">Delete</button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -455,25 +657,32 @@
             if (!memory.photos || memory.photos.length === 0) {
                 grid.innerHTML = '<p class="text-gray-500 col-span-full text-center py-8">No photos in this memory.</p>';
             } else {
-                const hiddenSet = new Set(memory.hidden_photos || []);
                 memory.photos.forEach(photo => {
-                    const isHidden = hiddenSet.has(photo);
-                    const div = document.createElement('div');
-                    div.className = `relative group rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${isHidden ? 'border-primary ring-2 ring-primary/50' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'}`;
-                    div.onclick = (e) => togglePhotoSelection(div, photo);
-                    div.dataset.filename = photo;
-                    div.dataset.hidden = isHidden;
+                    const isHidden = (memory.hidden_photos || []).includes(photo);
+                    const isVideo = photo.toLowerCase().endsWith('.mp4') || photo.toLowerCase().endsWith('.mov') || photo.toLowerCase().endsWith('.webm');
 
-                    div.innerHTML = `
-                        <img src="{{ r2_url }}/uploads/${memory.id}/${photo}" class="aspect-square w-full object-cover ${isHidden ? 'opacity-40 grayscale' : ''}">
-                        <div class="absolute inset-0 flex items-center justify-center ${isHidden ? '' : 'hidden'} group-hover:flex">
-                             <div class="bg-primary/90 text-white rounded-full p-1 shadow-sm ${isHidden ? '' : 'opacity-0 group-hover:opacity-100'} transition-opacity">
-                                <span class="material-icons text-lg">${isHidden ? 'visibility_off' : 'visibility_off'}</span>
-                             </div>
+                    let mediaElement = '';
+                    if (isVideo) {
+                        mediaElement = `<video src="{{ r2_url }}/uploads/${memory.id}/${photo}" class="w-full h-full object-cover transition-all duration-200 ${isHidden ? 'grayscale opacity-50' : ''}" preload="metadata"></video>
+                                        <div class="absolute inset-0 flex items-center justify-center bg-black/20 pointer-events-none">
+                                            <span class="material-icons text-white text-3xl opacity-80 backdrop-blur-sm rounded-full bg-black/30 p-1 group-hover:bg-primary/50 transition-colors">play_circle</span>
+                                        </div>`;
+                    } else {
+                        mediaElement = `<img src="{{ r2_url }}/uploads/${memory.id}/${photo}" class="w-full h-full object-cover transition-all duration-200 ${isHidden ? 'grayscale opacity-50' : ''}">`;
+                    }
+
+                    grid.innerHTML += `
+                        <div class="relative aspect-square rounded-lg overflow-hidden cursor-pointer group shadow-sm hover:shadow-md transition-shadow" onclick="togglePhotoSelection(this, '${photo}')">
+                            ${mediaElement}
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="material-icons text-white text-3xl">${isHidden ? 'visibility' : 'visibility_off'}</span>
+                            </div>
+                            <div class="absolute top-2 right-2 ${isHidden ? 'bg-primary' : 'bg-gray-900/50'} text-white text-xs px-2 py-1 rounded shadow-sm flex items-center gap-1">
+                                <span class="material-icons text-[14px] leading-none select-icon">${isHidden ? 'visibility_off' : 'visibility'}</span>
+                                <span class="font-medium select-text">${isHidden ? 'HIDDEN' : 'VISIBLE'}</span>
+                            </div>
                         </div>
-                        ${isHidden ? '<div class="absolute top-1 right-1 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded">HIDDEN</div>' : ''}
                     `;
-                    grid.appendChild(div);
                 });
             }
 
@@ -485,49 +694,56 @@
             currentMemoryId = null;
         }
 
-        function togglePhotoSelection(el, filename) {
-            const isHidden = el.dataset.hidden === 'true';
-            const newState = !isHidden;
-            el.dataset.hidden = newState;
+        function togglePhotoSelection(el, photo) {
+            const isHidden = el.querySelector('.select-text').innerText === 'HIDDEN';
+            const img = el.querySelector('img') || el.querySelector('video');
+            const bg = el.querySelector('.absolute.top-2');
+            const text = el.querySelector('.select-text');
+            const icon = el.querySelector('.select-icon');
+            const hoverIcon = el.querySelector('.group-hover\\:opacity-100 .material-icons');
 
-            // Update visual state
-            const img = el.querySelector('img');
-            const iconContainer = el.querySelector('.absolute.inset-0 div');
-
-            if (newState) {
-                el.classList.add('border-primary', 'ring-2', 'ring-primary/50');
-                el.classList.remove('border-transparent');
-                img.classList.add('opacity-40', 'grayscale');
-                // Add badge if not exists
-                if (!el.querySelector('.absolute.top-1')) {
-                    el.insertAdjacentHTML('beforeend', '<div class="absolute top-1 right-1 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded">HIDDEN</div>');
+            if (isHidden) {
+                // Make visible
+                if (img) {
+                    img.classList.remove('grayscale', 'opacity-50');
                 }
+                bg.classList.remove('bg-primary');
+                bg.classList.add('bg-gray-900/50');
+                text.innerText = 'VISIBLE';
+                icon.innerText = 'visibility';
+                hoverIcon.innerText = 'visibility_off';
             } else {
-                el.classList.remove('border-primary', 'ring-2', 'ring-primary/50');
-                el.classList.add('border-transparent');
-                img.classList.remove('opacity-40', 'grayscale');
-                const badge = el.querySelector('.absolute.top-1');
-                if (badge) badge.remove();
+                // Make hidden
+                if (img) {
+                    img.classList.add('grayscale', 'opacity-50');
+                }
+                bg.classList.add('bg-primary');
+                bg.classList.remove('bg-gray-900/50');
+                text.innerText = 'HIDDEN';
+                icon.innerText = 'visibility_off';
+                hoverIcon.innerText = 'visibility';
             }
         }
 
         async function saveHiddenPhotos() {
-            if (!currentMemoryId) return;
-
             const hideAll = document.getElementById('modal-hide-all').checked;
-            const photoEls = document.querySelectorAll('#modal-photos-grid > div');
             const hiddenPhotos = [];
+            const grid = document.getElementById('modal-photos-grid');
+            const elements = grid.querySelectorAll('.relative');
 
-            photoEls.forEach(el => {
-                if (el.dataset.hidden === 'true') {
-                    hiddenPhotos.push(el.dataset.filename);
+            elements.forEach((el, index) => {
+                if (el.querySelector('.select-text').innerText === 'HIDDEN') {
+                    // We need a stable way to map back to the photo filename.
+                    // We passed it in togglePhotoSelection, but we need it here.
+                    // Let's rely on finding the memory and getting the photo by index.
+                    const memory = allMemories.find(m => m.id === currentMemoryId);
+                    if (memory && memory.photos[index]) {
+                        hiddenPhotos.push(memory.photos[index]);
+                    }
                 }
             });
 
             try {
-                // Call API to update memory
-                // We need a route for this: POST /api/memory/{id}/privacy ? Or just re-use specific logical update.
-                // Let's assume we implement POST /api/memory/{id}/photos_privacy
                 const res = await fetch(`/api/memory/${currentMemoryId}/photos_privacy`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -550,25 +766,596 @@
             }
         }
 
-        // Load memories on start
+        async function deleteMemory(id) {
+            if (!confirm(`Are you sure you want to delete this memory? This action cannot be undone.`)) return;
+
+            try {
+                const res = await fetch(`/api/admin/memory/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (res.ok) {
+                    // Refetch memories to update the list
+                    fetchMemories();
+                } else {
+                    alert('Failed to delete memory. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error deleting memory:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+
+        // Load all data on start
         fetchMemories();
+        fetchWishlist();
+        fetchBlessings();
+        fetchDictionary();
+        // upcoming fetches for blessings, dictionary...
 
         const privacyToggles = {
-            main: document.getElementById('global-privacy-toggle'),
-            sidebar: document.getElementById('sidebar-privacy-toggle')
+            main: document.getElementById('global-privacy-toggle')
         };
-        const toggleText = document.getElementById('toggle-text'); // Only present in main
+        const toggleText = document.getElementById('toggle-text');
+
+        // --- Wishlist Logic ---
+        let allWishlist = [];
+
+        async function fetchWishlist() {
+            try {
+                // We'll use the existing /api/wishlist route
+                const res = await fetch('/api/wishlist');
+                const data = await res.json();
+                allWishlist = data.items || [];
+                renderWishlistList(allWishlist);
+            } catch (e) {
+                console.error("Failed to load wishlist", e);
+                document.getElementById('wishlist-list-container').innerHTML = '<div class="p-8 text-center text-red-500">Error loading wishlist</div>';
+            }
+        }
+
+        function renderWishlistList(items) {
+            const container = document.getElementById('wishlist-list-container');
+            if (items.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-gray-500">No wishlist items found.</div>';
+                return;
+            }
+
+            let html = '<div class="divide-y divide-gray-100 dark:divide-gray-800">';
+            items.forEach(item => {
+                // Since MongoDB uses _id, and we might not have exposed it in standard models yet, 
+                // we'll rely on the backend passing a string `id` or `_id`. Let's assume `_id` or `id`.
+                const itemId = item.id || item._id;
+
+                html += `
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 flex-shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                                <span class="material-icons text-lg">${item.icon || 'card_giftcard'}</span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">${item.title}</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium truncate max-w-[200px] md:max-w-md">${item.description || ''}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openEditModal('wishlist', '${itemId}')" class="p-1.5 text-blue-400 hover:text-blue-500 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg" title="Edit Item"><span class="material-icons text-[20px]">edit</span></button>
+                            <button onclick="deleteWishlist('${itemId}')" class="p-1.5 text-red-400 hover:text-red-500 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg" title="Delete Item"><span class="material-icons text-[20px]">delete</span></button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function deleteWishlist(id) {
+            if (!id || id === 'undefined') { alert("Cannot delete: ID missing. Please ensure the backend sends IDs."); return; }
+            if (!confirm(`Are you sure you want to delete this wishlist item?`)) return;
+            try {
+                const res = await fetch(`/api/admin/wishlist/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    fetchWishlist();
+                } else {
+                    alert('Failed to delete item.');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Error deleting item.');
+            }
+        }
+
+        // --- Blessings Logic ---
+        let allBlessings = [];
+
+        async function fetchBlessings() {
+            try {
+                // For guestbook (blessings), we'll fetch them from a standard GET endpoint if available
+                const res = await fetch('/api/guestbook');
+                const data = await res.json();
+                allBlessings = data.notes || [];
+                renderBlessingsList(allBlessings);
+            } catch (e) {
+                console.error("Failed to load blessings", e);
+                document.getElementById('blessings-list-container').innerHTML = '<div class="p-8 text-center text-red-500">Error loading blessings</div>';
+            }
+        }
+
+        function renderBlessingsList(items) {
+            const container = document.getElementById('blessings-list-container');
+            if (items.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-gray-500">No blessings found.</div>';
+                return;
+            }
+
+            let html = '<div class="divide-y divide-gray-100 dark:divide-gray-800">';
+            items.forEach(item => {
+                const itemId = item.id || item._id;
+
+                html += `
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 flex-shrink-0 rounded-lg bg-pink-50 text-pink-500 flex items-center justify-center">
+                                <span class="material-icons text-lg">favorite</span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">${item.name}</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium truncate max-w-[200px] md:max-w-md">${item.message}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openEditModal('blessing', '${itemId}')" class="p-1.5 text-blue-400 hover:text-blue-500 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg" title="Edit Item"><span class="material-icons text-[20px]">edit</span></button>
+                            <button onclick="deleteBlessing('${itemId}')" class="p-1.5 text-red-400 hover:text-red-500 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg" title="Delete Blessing"><span class="material-icons text-[20px]">delete</span></button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function deleteBlessing(id) {
+            if (!id || id === 'undefined') { alert("Cannot delete: ID missing from DB response."); return; }
+            if (!confirm(`Are you sure you want to delete this blessing?`)) return;
+            try {
+                const res = await fetch(`/api/admin/blessing/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    fetchBlessings();
+                } else {
+                    alert('Failed to delete blessing.');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Error deleting blessing.');
+            }
+        }
+
+        // --- Dictionary Logic ---
+        let allDictionary = [];
+
+        async function fetchDictionary() {
+            try {
+                const res = await fetch('/api/dictionary');
+                const data = await res.json();
+                allDictionary = data.words || [];
+                renderDictionaryList(allDictionary);
+            } catch (e) {
+                console.error("Failed to load dictionary", e);
+                document.getElementById('dictionary-list-container').innerHTML = '<div class="p-8 text-center text-red-500">Error loading dictionary</div>';
+            }
+        }
+
+        function renderDictionaryList(items) {
+            const container = document.getElementById('dictionary-list-container');
+            if (items.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-gray-500">No dictionary words found.</div>';
+                return;
+            }
+
+            let html = '<div class="divide-y divide-gray-100 dark:divide-gray-800">';
+            items.forEach(item => {
+                const itemId = item.id || item._id;
+
+                html += `
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                        <div class="flex flex-col max-w-[70%]">
+                            <h4 class="text-sm font-semibold text-primary dark:text-primary/90">${item.word}</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 italic mb-1">${item.context || ''}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium truncate">${item.meaning || ''}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openEditModal('dictionary', '${itemId}')" class="p-1.5 text-blue-400 hover:text-blue-500 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg" title="Edit Item"><span class="material-icons text-[20px]">edit</span></button>
+                            <button onclick="deleteDictionaryWord('${itemId}')" class="p-1.5 text-red-400 hover:text-red-500 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg" title="Delete Word"><span class="material-icons text-[20px]">delete</span></button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function deleteDictionaryWord(id) {
+            if (!id || id === 'undefined') { alert("Cannot delete: ID missing from DB response."); return; }
+            if (!confirm(`Are you sure you want to delete this dictionary entry?`)) return;
+            try {
+                const res = await fetch(`/api/admin/dictionary/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    fetchDictionary();
+                } else {
+                    alert('Failed to delete dictionary word.');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Error deleting dictionary word.');
+            }
+        }
+
+        // --- Coupons Logic ---
+        let allCoupons = [];
+
+        async function fetchCoupons() {
+            try {
+                const res = await fetch('/api/admin/coupons');
+                const data = await res.json();
+                allCoupons = data;
+                renderCouponsList(allCoupons);
+            } catch (e) {
+                console.error("Failed to load coupons", e);
+                document.getElementById('coupons-list-container').innerHTML = '<div class="p-8 text-center text-red-500">Error loading coupons</div>';
+            }
+        }
+
+        function renderCouponsList(items) {
+            const container = document.getElementById('coupons-list-container');
+            if (!items || items.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-gray-500">No coupons found.</div>';
+                return;
+            }
+
+            let html = '<div class="divide-y divide-gray-100 dark:divide-gray-800">';
+            items.forEach(item => {
+                const itemId = item.id || item._id;
+                const statusBadge = item.is_redeemed
+                    ? '<span class="inline-flex items-center rounded-md bg-gray-50 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400 ring-1 ring-inset ring-gray-500/10">Disabled / Hidden</span>'
+                    : '<span class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">Active</span>';
+
+                html += `
+                    <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 flex-shrink-0 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-500 flex items-center justify-center">
+                                <span class="material-icons text-lg">${item.icon || 'local_activity'}</span>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">${item.title}</h4>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium truncate max-w-[200px] md:max-w-md">${item.description || ''}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            ${statusBadge}
+                            <div class="flex gap-2">
+                                <button onclick="openEditModal('coupon', '${itemId}')" class="p-1.5 text-blue-400 hover:text-blue-500 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg" title="Edit Coupon"><span class="material-icons text-[20px]">edit</span></button>
+                                <button onclick="deleteCoupon('${itemId}')" class="p-1.5 text-red-400 hover:text-red-500 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg" title="Delete Coupon"><span class="material-icons text-[20px]">delete</span></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function deleteCoupon(id) {
+            if (!id || id === 'undefined') { alert("Cannot delete: ID missing from DB response."); return; }
+            if (!confirm(`Are you sure you want to delete this coupon?`)) return;
+            try {
+                const res = await fetch(`/api/admin/coupon/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    fetchCoupons();
+                } else {
+                    alert('Failed to delete coupon.');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Error deleting coupon.');
+            }
+        }
+
+        // --- Generic Edit Modal Logic ---
+        let editType = null;
+        let editId = null;
+
+        function openEditModal(type, id) {
+            editType = type;
+            editId = id;
+            const titleEl = document.getElementById('edit-modal-title');
+            const fieldsEl = document.getElementById('edit-modal-fields');
+            fieldsEl.innerHTML = '';
+
+            let data = null;
+
+            if (type === 'memory') {
+                data = allMemories.find(m => m.id == id);
+                titleEl.textContent = 'Edit Memory';
+                fieldsEl.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+                        <input type="text" id="edit-title" value="${data.title || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title (Safe Mode)</label>
+                        <input type="text" id="edit-title_safe" value="${data.title_safe || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Date (e.g. Feb 04, 2026)</label>
+                        <input type="text" id="edit-date" value="${data.date || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Location</label>
+                        <input type="text" id="edit-location" value="${data.location || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    </div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Category Tag</label>
+                    <input type="text" id="edit-category" value="${data.category || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+                    <textarea id="edit-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.description || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Safe Description</label>
+                    <textarea id="edit-description_safe" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.description_safe || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Timeline Note</label>
+                    <input type="text" id="edit-timeline_note" value="${data.timeline_note || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    
+                    <div class="mt-4 mb-2"><h4 class="text-sm font-semibold text-primary">Smart Data Elements</h4></div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Vibe / Mood</label>
+                        <input type="text" id="edit-vibe" value="${(data.smart_data && data.smart_data.vibe) || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="e.g. Romantic ❤️"></div>
+                        
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Food Tags (Comma separated)</label>
+                        <input type="text" id="edit-food" value="${(data.smart_data && data.smart_data.entities && data.smart_data.entities.food) ? data.smart_data.entities.food.join(', ') : ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                        
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Places Tags (Comma separated)</label>
+                        <input type="text" id="edit-places" value="${(data.smart_data && data.smart_data.entities && data.smart_data.entities.places) ? data.smart_data.entities.places.join(', ') : ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <input type="checkbox" id="edit-hide_timeline" ${data.hide_timeline ? 'checked' : ''} class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-900 dark:text-white">Hide from Timeline Map</label>
+                    </div>
+                `;
+            } else if (type === 'wishlist') {
+                data = allWishlist.find(w => (w.id == id || w._id == id));
+                titleEl.textContent = 'Edit Wishlist Item';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+                    <input type="text" id="edit-title" value="${data.title || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+                    <textarea id="edit-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.description || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Image URL</label>
+                    <input type="text" id="edit-image_url" value="${data.image_url || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Link URL</label>
+                    <input type="text" id="edit-link" value="${data.link || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            } else if (type === 'blessing') {
+                data = allBlessings.find(b => (b.id == id || b._id == id));
+                titleEl.textContent = 'Edit Blessing';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Name</label>
+                    <input type="text" id="edit-name" value="${data.name || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Message</label>
+                    <textarea id="edit-message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.message || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Date (Optional)</label>
+                    <input type="text" id="edit-date" value="${data.date || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            } else if (type === 'dictionary') {
+                data = allDictionary.find(d => (d.id == id || d._id == id));
+                titleEl.textContent = 'Edit Dictionary Word';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Word</label>
+                    <input type="text" id="edit-word" value="${data.word || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Meaning</label>
+                    <textarea id="edit-meaning" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.meaning || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Context (Optional Example)</label>
+                    <textarea id="edit-context" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.context || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Icon (Material Icon Name)</label>
+                    <input type="text" id="edit-icon" value="${data.icon || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            } else if (type === 'coupon') {
+                data = allCoupons.find(c => (c.id == id || c._id == id));
+                titleEl.textContent = 'Edit Coupon';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+                    <input type="text" id="edit-title" value="${data.title || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description / Terms</label>
+                    <textarea id="edit-description" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white">${data.description || ''}</textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Icon (Material Icon Name)</label>
+                    <input type="text" id="edit-icon" value="${data.icon || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div class="flex items-center mt-2">
+                        <input type="checkbox" id="edit-is_redeemed" ${data.is_redeemed ? 'checked' : ''} class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-900 dark:text-white">Disable / Hide</label>
+                    </div>
+                `;
+            }
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        // --- Add Modals Generic Logic ---
+        function openAddModal(type) {
+            editType = type;
+            editId = 'new';
+            const titleEl = document.getElementById('edit-modal-title');
+            const fieldsEl = document.getElementById('edit-modal-fields');
+
+            if (type === 'memory') {
+                titleEl.textContent = 'Add New Memory';
+                fieldsEl.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+                        <input type="text" id="edit-title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title (Safe Mode)</label>
+                        <input type="text" id="edit-title_safe" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Date</label>
+                        <input type="text" id="edit-date" placeholder="e.g. Feb 04, 2026" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Location</label>
+                        <input type="text" id="edit-location" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    </div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Category Tag</label>
+                    <input type="text" id="edit-category" placeholder="e.g. celebration" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+                    <textarea id="edit-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Safe Description</label>
+                    <textarea id="edit-description_safe" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Timeline Note</label>
+                    <input type="text" id="edit-timeline_note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    
+                    <div class="mt-4 mb-2"><h4 class="text-sm font-semibold text-primary">Smart Data Elements</h4></div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Vibe / Mood</label>
+                        <input type="text" id="edit-vibe" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="e.g. Romantic ❤️"></div>
+                        
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Food Tags (Comma separated)</label>
+                        <input type="text" id="edit-food" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                        
+                        <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Places Tags (Comma separated)</label>
+                        <input type="text" id="edit-places" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    </div>
+                `;
+            } else if (type === 'wishlist') {
+                titleEl.textContent = 'Add Wishlist Item';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+                    <input type="text" id="edit-title" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+                    <textarea id="edit-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Image URL</label>
+                    <input type="text" id="edit-image_url" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Link URL</label>
+                    <input type="text" id="edit-link" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            } else if (type === 'blessing') {
+                titleEl.textContent = 'Add Blessing';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Name</label>
+                    <input type="text" id="edit-name" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Message</label>
+                    <textarea id="edit-message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Date (Optional)</label>
+                    <input type="text" id="edit-date" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            } else if (type === 'dictionary') {
+                titleEl.textContent = 'Add Dictionary Word';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Word</label>
+                    <input type="text" id="edit-word" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Meaning</label>
+                    <textarea id="edit-meaning" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Context (Optional Example)</label>
+                    <textarea id="edit-context" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Icon (Material Icon Name)</label>
+                    <input type="text" id="edit-icon" value="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            } else if (type === 'coupon') {
+                titleEl.textContent = 'Add New Coupon';
+                fieldsEl.innerHTML = `
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Title</label>
+                    <input type="text" id="edit-title" value="" placeholder="e.g. Free Massage" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description / Terms</label>
+                    <textarea id="edit-description" rows="2" placeholder="Redeemable anytime..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea></div>
+                    <div><label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Icon (Material Icon Name)</label>
+                    <input type="text" id="edit-icon" value="local_activity" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"></div>
+                `;
+            }
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+            editType = null;
+            editId = null;
+        }
+
+        async function handleEditSubmit(e) {
+            e.preventDefault();
+            let payload = {};
+
+            if (editType === 'memory') {
+                const oldData = allMemories.find(m => m.id == editId) || {};
+                const oldSmartData = oldData.smart_data || {};
+                const oldItinerary = oldSmartData.itinerary || [];
+
+                payload = {
+                    title: document.getElementById('edit-title').value,
+                    title_safe: document.getElementById('edit-title_safe').value,
+                    date: document.getElementById('edit-date').value,
+                    location: document.getElementById('edit-location').value,
+                    category: document.getElementById('edit-category').value,
+                    description: document.getElementById('edit-description').value,
+                    description_safe: document.getElementById('edit-description_safe').value,
+                    timeline_note: document.getElementById('edit-timeline_note').value,
+                    hide_timeline: document.getElementById('edit-hide_timeline').checked,
+                    smart_data: {
+                        vibe: document.getElementById('edit-vibe').value,
+                        itinerary: oldItinerary,
+                        entities: {
+                            food: document.getElementById('edit-food').value.split(',').map(s => s.trim()).filter(s => s),
+                            places: document.getElementById('edit-places').value.split(',').map(s => s.trim()).filter(s => s)
+                        }
+                    }
+                };
+            } else if (editType === 'wishlist') {
+                payload = {
+                    title: document.getElementById('edit-title').value,
+                    description: document.getElementById('edit-description').value,
+                    image_url: document.getElementById('edit-image_url').value,
+                    link: document.getElementById('edit-link').value
+                };
+            } else if (editType === 'blessing') {
+                payload = {
+                    name: document.getElementById('edit-name').value,
+                    message: document.getElementById('edit-message').value,
+                    date: document.getElementById('edit-date').value
+                };
+            } else if (editType === 'dictionary') {
+                payload = {
+                    word: document.getElementById('edit-word').value,
+                    meaning: document.getElementById('edit-meaning').value,
+                    context: document.getElementById('edit-context').value,
+                    icon: document.getElementById('edit-icon').value
+                };
+            } else if (editType === 'coupon') {
+                payload = {
+                    title: document.getElementById('edit-title').value,
+                    description: document.getElementById('edit-description').value,
+                    icon: document.getElementById('edit-icon').value,
+                    is_redeemed: document.getElementById('edit-is_redeemed').checked
+                };
+            }
+
+            try {
+                const method = editId === 'new' ? 'POST' : 'PUT';
+                const endpoint = editId === 'new' ? `/ api / admin / new_${editType} /new` : `/api / admin / ${editType}/${editId}`;
+
+                const res = await fetch(endpoint, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    closeEditModal();
+                    // Refetch the appropriate list
+                    if (editType === 'memory') fetchMemories();
+                    if (editType === 'wishlist') fetchWishlist();
+                    if (editType === 'blessing') fetchBlessings();
+                    if (editType === 'dictionary') fetchDictionary();
+                    if (editType === 'coupon') fetchCoupons();
+                } else {
+                    alert(`Failed to save ${editType}.`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert(`Error saving ${editType}.`);
+            }
+        }
 
         async function updatePrivacy(isPrivate, sourceElement) {
-            // Optimistic UI update
+            const toggleText = document.getElementById('toggle-text');
             if (toggleText) toggleText.textContent = isPrivate ? 'Active' : 'Inactive';
-
-            // Sync other toggle if it exists
-            if (sourceElement === privacyToggles.main && privacyToggles.sidebar) {
-                privacyToggles.sidebar.checked = isPrivate;
-            } else if (sourceElement === privacyToggles.sidebar && privacyToggles.main) {
-                privacyToggles.main.checked = isPrivate;
-            }
 
             try {
                 const response = await fetch('/api/settings', {
@@ -580,32 +1367,51 @@
                 console.log('Privacy settings updated:', data);
             } catch (error) {
                 console.error('Error updating settings:', error);
-                // Revert on failure
                 if (sourceElement) sourceElement.checked = !isPrivate;
-                // Sync revert
-                if (sourceElement === privacyToggles.main && privacyToggles.sidebar) privacyToggles.sidebar.checked = !isPrivate;
-                if (sourceElement === privacyToggles.sidebar && privacyToggles.main) privacyToggles.main.checked = !isPrivate;
                 alert('Failed to update privacy settings');
             }
         }
 
-        // Bind listeners
-        if (privacyToggles.main) {
-            privacyToggles.main.addEventListener('change', (e) => updatePrivacy(e.target.checked, privacyToggles.main));
-        }
-        if (privacyToggles.sidebar) {
-            privacyToggles.sidebar.addEventListener('change', (e) => updatePrivacy(e.target.checked, privacyToggles.sidebar));
+        async function updateBirthdayMode(isBirthday, sourceElement) {
+            const toggleText = document.getElementById('birthday-toggle-text');
+            if (toggleText) toggleText.textContent = isBirthday ? 'Active' : 'Inactive';
+
+            // Select theme birthday explicitly if turned ON
+            if (isBirthday) {
+                updateTheme('birthday');
+            }
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ birthday_mode: isBirthday })
+                });
+                const data = await response.json();
+                console.log('Birthday mode updated:', data);
+            } catch (error) {
+                console.error('Error updating settings:', error);
+                if (sourceElement) sourceElement.checked = !isBirthday;
+                alert('Failed to update birthday mode');
+            }
         }
 
+        const privacyToggle = document.getElementById('global-privacy-toggle');
+        if (privacyToggle) {
+            privacyToggle.addEventListener('change', (e) => updatePrivacy(e.target.checked, privacyToggle));
+        }
+
+        const birthdayToggle = document.getElementById('global-birthday-toggle');
+        if (birthdayToggle) {
+            birthdayToggle.addEventListener('change', (e) => updateBirthdayMode(e.target.checked, birthdayToggle));
+        }
 
         // --- Theme Switcher Logic ---
         const themeRadios = document.querySelectorAll('input[name="theme"], input[name="sidebar-theme"]');
 
         async function updateTheme(newTheme) {
-            // Apply immediately to current page
             initTheme(newTheme);
 
-            // Sync all radio buttons visually
             themeRadios.forEach(radio => {
                 if (radio.value === newTheme) radio.checked = true;
             });
@@ -626,9 +1432,7 @@
 
         themeRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    updateTheme(e.target.value);
-                }
+                if (e.target.checked) updateTheme(e.target.value);
             });
         });
     </script>

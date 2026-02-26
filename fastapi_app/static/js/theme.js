@@ -22,6 +22,14 @@ const themes = {
         '--color-primary-light': '#f9f1d0',
         '--color-bg-light': '#faf9f6', // Off white
         '--color-bg-dark': '#2a1a0f'   // Dark brown
+    },
+    birthday: {
+        '--color-primary': '#f42559', // Hot Pink
+        '--color-primary-soft': '#fff5f6',
+        '--color-primary-dark': '#d01b46',
+        '--color-primary-light': '#fecdd6',
+        '--color-bg-light': '#fff0f3',
+        '--color-bg-dark': '#221014'
     }
 };
 
@@ -31,6 +39,12 @@ function applyTheme(themeName) {
 
     for (const [property, value] of Object.entries(theme)) {
         root.style.setProperty(property, value);
+    }
+
+    if (themeName === 'birthday') {
+        document.documentElement.classList.add('birthday-mode');
+    } else {
+        document.documentElement.classList.remove('birthday-mode');
     }
 
     // Also save to localStorage for client-side persistence if needed

@@ -173,6 +173,90 @@
                 background-position: 20% 100%;
             }
         }
+
+        /* ========== Birthday Mode ========== */
+        .birthday-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9990;
+            background: linear-gradient(90deg, #f42559, #ff69b4, #f42559, #ff69b4);
+            background-size: 300% 100%;
+            animation: banner-shimmer 4s linear infinite;
+            color: white;
+            text-align: center;
+            padding: 6px 0;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 10px rgba(244, 37, 89, 0.3);
+        }
+
+        @keyframes banner-shimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 300% 50%;
+            }
+        }
+
+        .has-birthday-banner nav {
+            top: 30px !important;
+        }
+
+        .birthday-mode {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe0e6 50%, #fff5f7 100%) !important;
+        }
+
+        .birthday-mode .glass-card {
+            border-color: rgba(244, 37, 89, 0.15) !important;
+            background: rgba(255, 240, 243, 0.8) !important;
+        }
+
+        .birthday-mode h1,
+        .birthday-mode h2,
+        .birthday-mode h3 {
+            color: #d6163e !important;
+        }
+
+        .birthday-mode nav {
+            background: rgba(255, 240, 243, 0.95) !important;
+            border-bottom: 2px solid rgba(244, 37, 89, 0.15) !important;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+                transform: translateY(-10vh) rotate(15deg) scale(1);
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-105vh) rotate(-15deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        .birthday-float-emoji {
+            position: fixed;
+            bottom: -60px;
+            pointer-events: none;
+            z-index: 1;
+            font-size: 28px;
+            animation: float-up linear infinite;
+        }
     </style>
 </head>
 
@@ -396,6 +480,10 @@
                     <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                         href="/coupons">Coupons</a>
                     {% endif %}
+                    {% if settings.birthday_mode %}
+                    <a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+                        href="/birthday">🎂 Birthday ✨</a>
+                    {% endif %}
                     <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                         href="/roka">Roka</a>
                     <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
@@ -430,6 +518,11 @@
             <a href="/coupons"
                 class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                     class="material-icons text-sm mr-3 text-primary">card_giftcard</span> Coupons</a>
+            {% endif %}
+            {% if settings.birthday_mode %}
+            <a href="/birthday"
+                class="block py-3 px-6 text-primary font-medium hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-primary">cake</span> 🎂 Birthday ✨</a>
             {% endif %}
             <a href="/roka"
                 class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
@@ -1115,6 +1208,35 @@
             }
         }
     </script>
+
+    {% if settings.birthday_mode %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('birthday-mode');
+            document.documentElement.classList.add('has-birthday-banner');
+
+            const banner = document.createElement('div');
+            banner.className = 'birthday-banner';
+            banner.innerHTML = '🎂 Happy Birthday Puchki! 🎉 • March 15, 2026 • 💖 With all my love, Shai 💖 • 🎂 Happy Birthday Puchki! 🎉';
+            document.body.prepend(banner);
+
+            const emojis = ['🎂', '🍰', '🎈', '🎁', '💖', '🎉', '✨', '🌸', '💝', '🧁'];
+            function spawnEmoji() {
+                const el = document.createElement('div');
+                el.className = 'birthday-float-emoji';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (20 + Math.random() * 20) + 'px';
+                el.style.animationDuration = (8 + Math.random() * 12) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 20000);
+            }
+            for (let i = 0; i < 8; i++) setTimeout(() => spawnEmoji(), i * 500);
+            setInterval(spawnEmoji, 2500);
+        });
+    </script>
+    {% endif %}
+
 </body>
 
 </html>

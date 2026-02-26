@@ -15,13 +15,13 @@ import io
 # --- Database & Storage imports ---
 from fastapi_app.database import (
     get_db, get_all_memories, save_all_memories, update_memory, get_memory_by_id,
-    get_next_memory_id, add_memory as db_add_memory,
+    get_next_memory_id, add_memory as db_add_memory, delete_memory,
     get_settings, save_settings,
-    get_all_coupons, save_all_coupons, update_coupon,
-    get_all_guestbook, add_guestbook_entry,
+    get_all_coupons, save_all_coupons, update_coupon, delete_coupon_item, add_coupon,
+    get_all_guestbook, add_guestbook_entry, delete_guestbook_entry, update_guestbook_entry,
     get_all_vault,
-    get_all_wishlist, add_wishlist_item,
-    get_all_dictionary, add_dictionary_word, save_all_dictionary,
+    get_all_wishlist, add_wishlist_item, delete_wishlist_item, update_wishlist_item,
+    get_all_dictionary, add_dictionary_word, save_all_dictionary, delete_dictionary_word, update_dictionary_word
 )
 from fastapi_app.storage import upload_file, get_photo_url, R2_PUBLIC_URL
 
@@ -126,6 +126,8 @@ async def update_settings_route(request: Request):
 
     if "private_mode" in data:
         current_settings["private_mode"] = data["private_mode"]
+    if "birthday_mode" in data:
+        current_settings["birthday_mode"] = data["birthday_mode"]
     if "theme" in data:
         current_settings["theme"] = data["theme"]
 
@@ -139,6 +141,22 @@ async def update_settings_route(request: Request):
 async def home(request: Request):
     settings = request.state.settings
     return templates.TemplateResponse("index.html", {"request": request, "page": "home", "settings": settings})
+
+
+@app.get("/birthday", response_class=HTMLResponse)
+async def birthday(request: Request):
+    settings = request.state.settings
+    memories = await get_all_memories()
+    
+    # Optional logic to pick "hot" tagged memories to pass to the template
+    hot_memories = [m for m in memories if m.get("type") == "hot"]
+    
+    return templates.TemplateResponse("birthday.html", {
+        "request": request, 
+        "page": "birthday", 
+        "settings": settings,
+        "hot_memories": hot_memories
+    })
 
 
 @app.get("/timeline", response_class=HTMLResponse)
@@ -205,6 +223,11 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
     memories = await get_all_memories()
     all_items = await get_filtered_memories(settings, seed=seed)
 
+    # Block hidden categories in private mode
+    if settings.get("private_mode") and category in {"start", "hot"}:
+        from starlette.responses import RedirectResponse
+        return RedirectResponse(url="/gallery?category=all&page=1", status_code=302)
+
     if category != "all":
         all_items = [item for item in all_items if item["type"] == category]
 
@@ -218,14 +241,17 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
     EMOJI_MAP = {
         "date": "🍕", "dinner": "🍝", "milestone": "💍", "trip": "✈️",
         "food": "🍜", "movie": "🎬", "shopping": "🛍️", "family": "👨‍👩‍👧",
-        "art": "🎨", "celebration": "🎉",
+        "art": "🎨", "celebration": "🎉", "hot": "❤️",
     }
+    PRIVATE_HIDDEN_CATEGORIES = {"start", "hot"}
     type_set = set()
     for m in memories:
         if m.get("type"):
             type_set.add(m["type"])
     categories = []
     for t in sorted(type_set):
+        if settings.get("private_mode") and t in PRIVATE_HIDDEN_CATEGORIES:
+            continue
         categories.append({"value": t, "label": f"{t.title()} {EMOJI_MAP.get(t, '')}"})
 
     return templates.TemplateResponse("gallery.html", {
@@ -292,6 +318,16 @@ async def read_coupons(request: Request):
         "redeemed_count": redeemed_count,
         "settings": settings
     })
+
+@app.get("/api/admin/coupons")
+async def get_admin_coupons(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        raise HTTPException(status_code=403, detail="Unauthorized")
+    coupons = await get_all_coupons()
+    for c in coupons:
+        if '_id' in c:
+            c['_id'] = str(c['_id'])
+    return coupons
 
 
 @app.get("/upcoming", response_class=HTMLResponse)
@@ -529,15 +565,23 @@ async def read_roka(request: Request):
 
 # --- Wishlist ---
 
+@app.get("/api/wishlist")
+async def api_get_wishlist():
+    items = await get_all_wishlist()
+    items.sort(key=lambda x: str(x.get('id', '')), reverse=True)
+    for item in items:
+        if '_id' in item:
+            item['_id'] = str(item['_id'])
+    return {"items": items}
+
 @app.get("/wishlist", response_class=HTMLResponse)
 async def read_wishlist(request: Request):
     items = await get_all_wishlist()
     settings = request.state.settings
     if settings.get("private_mode", False):
-        items = [i for i in items if "honeymoon" not in i["title"].lower()]
-    items.sort(key=lambda x: x['id'], reverse=True)
+        items = [i for i in items if "honeymoon" not in i.get("title", "").lower()]
+    items.sort(key=lambda x: str(x.get('id', '')), reverse=True)
     return templates.TemplateResponse("wishlist.html", {"request": request, "items": items, "settings": settings})
-
 
 @app.post("/wishlist/add")
 async def add_wish(
@@ -560,6 +604,42 @@ async def add_wish(
     await add_wishlist_item(new_item)
     return RedirectResponse(url="/wishlist", status_code=303)
 
+
+# --- Guestbook ---
+
+@app.get("/api/guestbook")
+async def api_get_guestbook():
+    notes = await get_all_guestbook()
+    for note in notes:
+        if '_id' in note:
+            note['_id'] = str(note['_id'])
+    return {"notes": notes}
+
+@app.get("/guestbook", response_class=HTMLResponse)
+async def read_guestbook(request: Request):
+    notes = await get_all_guestbook()
+    settings = request.state.settings
+    return templates.TemplateResponse("guestbook.html", {"request": request, "notes": notes, "settings": settings})
+
+
+@app.post("/guestbook/add")
+async def add_guest(
+    request: Request,
+    name: str = Form(...),
+    message: str = Form(...)
+):
+    from datetime import datetime
+    new_entry = {
+        "name": name,
+        "message": message,
+        "date": datetime.now().strftime("%b %d, %Y")
+    }
+    await add_guestbook_entry(new_entry)
+    return RedirectResponse(url="/guestbook", status_code=303)
+
+
+# --- Comments ...
+# (We preserve the existing Comments & Rate Date routes here)
 
 # --- Photo Privacy ---
 
@@ -629,6 +709,15 @@ async def add_comment(
 
 # --- Dictionary ---
 
+@app.get("/api/dictionary")
+async def api_get_dictionary():
+    words = await get_all_dictionary()
+    words.sort(key=lambda x: x['word'].lower())
+    for word in words:
+        if '_id' in word:
+            word['_id'] = str(word['_id'])
+    return {"words": words}
+
 @app.get("/dictionary", response_class=HTMLResponse)
 async def read_dictionary(request: Request):
     words = await get_all_dictionary()
@@ -657,3 +746,108 @@ async def add_word(
     }
     await add_dictionary_word(new_word)
     return RedirectResponse(url="/dictionary", status_code=303)
+
+# --- Admin Delete Routes ---
+
+@app.delete("/api/admin/memory/{memory_id}")
+async def api_delete_memory(memory_id: int):
+    try:
+        await delete_memory(memory_id)
+        return {"status": "success", "message": "Memory deleted"}
+    except Exception as e:
+        import traceback
+        return {"status": "error", "message": str(e), "trace": traceback.format_exc()}
+
+@app.delete("/api/admin/wishlist/{item_id}")
+async def api_delete_wishlist(item_id: str):
+    await delete_wishlist_item(item_id)
+    return {"status": "success", "message": "Wishlist item deleted"}
+
+@app.delete("/api/admin/blessing/{note_id}")
+async def api_delete_blessing(note_id: str):
+    await delete_guestbook_entry(note_id)
+    return {"status": "success", "message": "Blessing deleted"}
+
+@app.delete("/api/admin/dictionary/{word_id}")
+async def api_delete_dictionary(word_id: str):
+    await delete_dictionary_word(word_id)
+    return {"status": "success", "message": "Dictionary word deleted"}
+
+@app.delete("/api/admin/coupon/{coupon_id}")
+async def api_delete_coupon(coupon_id: str):
+    await delete_coupon_item(coupon_id)
+    return {"status": "success", "message": "Coupon deleted"}
+
+# --- Admin Edit Routes ---
+
+@app.put("/api/admin/memory/{memory_id}")
+async def api_edit_memory(memory_id: int, request: Request):
+    data = await request.json()
+    await update_memory(memory_id, data)
+    return {"status": "success", "message": "Memory updated"}
+
+@app.put("/api/admin/wishlist/{item_id}")
+async def api_edit_wishlist(item_id: str, request: Request):
+    data = await request.json()
+    await update_wishlist_item(item_id, data)
+    return {"status": "success", "message": "Wishlist item updated"}
+
+@app.put("/api/admin/blessing/{note_id}")
+async def api_edit_blessing(note_id: str, request: Request):
+    data = await request.json()
+    await update_guestbook_entry(note_id, data)
+    return {"status": "success", "message": "Blessing updated"}
+
+@app.put("/api/admin/dictionary/{word_id}")
+async def api_edit_dictionary(word_id: str, request: Request):
+    data = await request.json()
+    await update_dictionary_word(word_id, data)
+    return {"status": "success", "message": "Dictionary word updated"}
+
+@app.put("/api/admin/coupon/{coupon_id}")
+async def api_edit_coupon(coupon_id: str, request: Request):
+    data = await request.json()
+    await update_coupon(coupon_id, data)
+    return {"status": "success", "message": "Coupon updated"}
+
+@app.post("/api/admin/new_coupon/new")
+async def api_add_coupon(request: Request):
+    data = await request.json()
+    
+    coupons = await get_all_coupons()
+    new_id = len(coupons) + 1
+    
+    new_coupon = {
+        "id": new_id,
+        "title": data.get("title", ""),
+        "description": data.get("description", ""),
+        "icon": data.get("icon", "local_activity"),
+        "is_redeemed": data.get("is_redeemed", False)
+    }
+    
+    await add_coupon(new_coupon)
+    return {"status": "success", "message": "Coupon added successfully"}
+
+@app.post("/api/admin/new_memory/new")
+async def api_add_new_memory(request: Request):
+    data = await request.json()
+    await db_add_memory(data)
+    return {"status": "success", "message": "Memory added successfully"}
+
+@app.post("/api/admin/new_wishlist/new")
+async def api_add_new_wishlist(request: Request):
+    data = await request.json()
+    await add_wishlist_item(data)
+    return {"status": "success", "message": "Wishlist item added successfully"}
+
+@app.post("/api/admin/new_blessing/new")
+async def api_add_new_blessing(request: Request):
+    data = await request.json()
+    await add_guestbook_entry(data)
+    return {"status": "success", "message": "Blessing added successfully"}
+
+@app.post("/api/admin/new_dictionary/new")
+async def api_add_new_dictionary(request: Request):
+    data = await request.json()
+    await add_dictionary_word(data)
+    return {"status": "success", "message": "Dictionary word added successfully"}
