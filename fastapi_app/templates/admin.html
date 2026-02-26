@@ -1328,7 +1328,7 @@
 
             try {
                 const method = editId === 'new' ? 'POST' : 'PUT';
-                const endpoint = editId === 'new' ? `/ api / admin / new_${editType} /new` : `/api / admin / ${editType}/${editId}`;
+                const endpoint = editId === 'new' ? `/api/admin/new_${editType}/new` : `/api/admin/${editType}/${editId}`;
 
                 const res = await fetch(endpoint, {
                     method: method,

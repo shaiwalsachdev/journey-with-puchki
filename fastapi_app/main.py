@@ -62,9 +62,14 @@ def process_memories_for_display(memories: List[dict], settings: dict) -> List[d
     """
     processed_memories = []
     is_private = settings.get("private_mode", False)
+    is_birthday = settings.get("birthday_mode", False)
 
     for m in memories:
         if is_private and m["id"] == 1:
+            continue
+        
+        # Hide 'hot' tagged memories globally unless birthday mode is active
+        if not is_birthday and m.get("type") == "hot":
             continue
 
         m_copy = m.copy()
@@ -164,6 +169,8 @@ async def timeline(request: Request):
     memories = await get_all_memories()
     settings = request.state.settings
     visible_memories = process_memories_for_display(memories, settings)
+    # Filter out memories specifically hidden from timeline
+    visible_memories = [m for m in visible_memories if not m.get("hide_timeline")]
     return templates.TemplateResponse("timeline.html", {
         "request": request,
         "memories": visible_memories,
@@ -223,13 +230,20 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
     memories = await get_all_memories()
     all_items = await get_filtered_memories(settings, seed=seed)
 
-    # Block hidden categories in private mode
-    if settings.get("private_mode") and category in {"start", "hot"}:
+    # Block hidden categories
+    # 'start' hidden when private mode is on; 'hot' hidden when birthday mode is off
+    if settings.get("private_mode") and category == "start":
+        from starlette.responses import RedirectResponse
+        return RedirectResponse(url="/gallery?category=all&page=1", status_code=302)
+    if not settings.get("birthday_mode") and category == "hot":
         from starlette.responses import RedirectResponse
         return RedirectResponse(url="/gallery?category=all&page=1", status_code=302)
 
     if category != "all":
         all_items = [item for item in all_items if item["type"] == category]
+    elif not settings.get("birthday_mode"):
+        # When viewing 'all' and birthday mode is off, exclude hot items
+        all_items = [item for item in all_items if item.get("type") != "hot"]
 
     total_items = len(all_items)
     start = (page - 1) * limit
@@ -243,17 +257,20 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
         "food": "🍜", "movie": "🎬", "shopping": "🛍️", "family": "👨‍👩‍👧",
         "art": "🎨", "celebration": "🎉", "hot": "❤️",
     }
-    PRIVATE_HIDDEN_CATEGORIES = {"start", "hot"}
+    PRIVATE_HIDDEN_CATEGORIES = {"start"}
     type_set = set()
     for m in memories:
         if m.get("type"):
             type_set.add(m["type"])
     categories = []
     for t in sorted(type_set):
+        # Hide 'start' in private mode
         if settings.get("private_mode") and t in PRIVATE_HIDDEN_CATEGORIES:
             continue
+        # Hide 'hot' when birthday mode is off
+        if t == "hot" and not settings.get("birthday_mode"):
+            continue
         categories.append({"value": t, "label": f"{t.title()} {EMOJI_MAP.get(t, '')}"})
-
     return templates.TemplateResponse("gallery.html", {
         "request": request,
         "items": paginated_items,
