@@ -134,7 +134,7 @@
                             class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded mb-4 overflow-hidden relative">
                             {% if memory.photos %}
                             <img alt="{{ memory.title }}" class="w-full h-full object-cover"
-                                src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
                             {% else %}
                             <img alt="{{ memory.title }}" class="w-full h-full object-cover"
                                 src="https://placehold.co/400x300?text=No+Photo" />

@@ -9,3 +9,5 @@ starlette
 typing-extensions
 gunicorn
 requests
+motor
+boto3

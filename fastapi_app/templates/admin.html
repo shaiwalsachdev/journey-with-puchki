@@ -421,7 +421,7 @@
                         <div class="flex items-center gap-4">
                             <div class="h-10 w-10 flex-shrink-0 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden">
                                 ${m.photos && m.photos.length > 0
-                        ? `<img src="/static/uploads/${m.id}/${m.photos[0]}" class="h-full w-full object-cover">`
+                        ? `<img src="{{ r2_url }}/uploads/${m.id}/${m.photos[0]}" class="h-full w-full object-cover">`
                         : '<div class="h-full w-full flex items-center justify-center text-gray-400"><span class="material-icons text-sm">image_not_supported</span></div>'
                     }
                             </div>
@@ -465,7 +465,7 @@
                     div.dataset.hidden = isHidden;
 
                     div.innerHTML = `
-                        <img src="/static/uploads/${memory.id}/${photo}" class="aspect-square w-full object-cover ${isHidden ? 'opacity-40 grayscale' : ''}">
+                        <img src="{{ r2_url }}/uploads/${memory.id}/${photo}" class="aspect-square w-full object-cover ${isHidden ? 'opacity-40 grayscale' : ''}">
                         <div class="absolute inset-0 flex items-center justify-center ${isHidden ? '' : 'hidden'} group-hover:flex">
                              <div class="bg-primary/90 text-white rounded-full p-1 shadow-sm ${isHidden ? '' : 'opacity-0 group-hover:opacity-100'} transition-opacity">
                                 <span class="material-icons text-lg">${isHidden ? 'visibility_off' : 'visibility_off'}</span>

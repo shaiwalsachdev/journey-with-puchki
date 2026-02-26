@@ -79,7 +79,7 @@
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos and memory.photos|length > 0 %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
             {% else %}
             <div class="w-full h-full bg-neutral-dark flex items-center justify-center">
                 <span class="material-icons text-white/20 text-9xl">image</span>
@@ -122,10 +122,10 @@
                         class="aspect-[3/4] rounded-xl overflow-hidden rotate-[-2deg] border-4 border-white/10 shadow-lg transform transition-transform group-hover:rotate-0 duration-500">
                         {% if memory.photos and memory.photos|length > 1 %}
                         <img alt="Detail" class="w-full h-full object-cover"
-                            src="/static/uploads/{{ memory.id }}/{{ memory.photos[1] }}" />
+                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[1] }}" />
                         {% elif memory.photos and memory.photos|length > 0 %}
                         <img alt="Detail" class="w-full h-full object-cover"
-                            src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
                         {% endif %}
                     </div>
                 </div>
@@ -172,7 +172,7 @@
             <div class="group rounded-xl overflow-hidden relative cursor-pointer">
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
             </div>
             {% endfor %}
         </div>

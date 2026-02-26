@@ -131,7 +131,7 @@
                     {% if memory.photos %}
                     <img alt="{{ memory.title }}"
                         class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500"
-                        src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
                     {% else %}
                     <img alt="Cinema Placeholder" class="w-full h-full object-cover opacity-80"
                         src="https://placehold.co/800x600?text=Movie+Date" />
@@ -174,7 +174,7 @@
                     class="relative group overflow-hidden rounded-xl border-2 border-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 {% if loop.index % 3 == 0 %}md:col-span-2{% endif %}">
                     <img alt="{{ memory.title }}"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
-                        src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
                 </div>
                 {% endfor %}

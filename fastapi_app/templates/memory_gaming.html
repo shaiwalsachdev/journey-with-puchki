@@ -76,7 +76,7 @@
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
             {% else %}
             <img alt="Hero Image" class="w-full h-full object-cover object-center"
                 src="https://placehold.co/1920x1080?text=Gaming+Date" />
@@ -118,7 +118,7 @@
                         class="aspect-[3/4] rounded-xl overflow-hidden rotate-[-2deg] border-4 border-white/10 shadow-lg transform transition-transform group-hover:rotate-0 duration-500">
                         {% if memory.photos|length > 1 %}
                         <img alt="Detail" class="w-full h-full object-cover"
-                            src="/static/uploads/{{ memory.id }}/{{ memory.photos[1] }}" />
+                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[1] }}" />
                         {% else %}
                         <img alt="Detail placeholder" class="w-full h-full object-cover"
                             src="https://placehold.co/600x800?text=Detail" />
@@ -162,7 +162,7 @@
                 class="group rounded-xl overflow-hidden relative cursor-pointer {% if loop.index % 5 == 1 or loop.index % 5 == 4 %}row-span-2{% endif %} {% if loop.index % 5 == 3 %}md:col-span-2{% endif %}">
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
                 <div
                     class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                     <span class="text-white text-lg font-medium">{{ memory.date }}</span>

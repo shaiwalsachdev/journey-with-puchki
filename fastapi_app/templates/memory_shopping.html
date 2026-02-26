@@ -39,7 +39,7 @@
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="/static/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
             {% else %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
                 src="https://placehold.co/1920x1080?text=No+Photo" />
@@ -102,7 +102,7 @@
             <div class="group rounded-xl overflow-hidden relative cursor-pointer">
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/static/uploads/{{ memory.id }}/{{ photo }}" />
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
             </div>
             {% endfor %}
         </div>
