@@ -606,13 +606,22 @@
                 const hiddenCount = (m.hidden_photos || []).length;
                 const isAllHidden = m.hide_all_photos;
                 let statusBadge = '';
-
                 if (isAllHidden) {
-                    statusBadge = '<span class="inline-flex items-center rounded-md bg-red-50 dark:bg-red-900/30 px-2 py-1 text-xs font-medium text-red-700 dark:text-red-400 ring-1 ring-inset ring-red-600/10">All Hidden</span>';
+                    statusBadge += '<span class="inline-flex items-center rounded-md bg-red-50 dark:bg-red-900/30 px-2 py-1 text-xs font-medium text-red-700 dark:text-red-400 ring-1 ring-inset ring-red-600/10 mr-2">All Hidden</span>';
                 } else if (hiddenCount > 0) {
-                    statusBadge = `<span class="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 text-xs font-medium text-yellow-800 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20">${hiddenCount} Hidden</span>`;
+                    statusBadge += `<span class="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 text-xs font-medium text-yellow-800 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20 mr-2">${hiddenCount} Photos Hidden</span>`;
                 } else {
-                    statusBadge = '<span class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">Visible</span>';
+                    statusBadge += '<span class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20 mr-2">Photos Visible</span>';
+                }
+
+                if (m.hide_timeline) {
+                    statusBadge += '<span class="inline-flex items-center rounded-md bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400 ring-1 ring-inset ring-gray-500/10">Timeline: Hidden</span>';
+                } else {
+                    statusBadge += '<span class="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-400 ring-1 ring-inset ring-blue-600/10">Timeline: Visible</span>';
+                }
+
+                if (m.type === 'hot') {
+                    statusBadge += '<span class="ml-2 inline-flex items-center rounded-md bg-pink-50 dark:bg-pink-900/30 px-2 py-1 text-xs font-medium text-pink-700 dark:text-pink-400 ring-1 ring-inset ring-pink-600/10">Birthday ❤️</span>';
                 }
                 html += `
                     <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
