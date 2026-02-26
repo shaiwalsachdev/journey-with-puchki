@@ -338,21 +338,27 @@ async def add_memory(
     title: str = Form(...),
     description: str = Form(...),
     type: str = Form(...),
-    photos: List[UploadFile] = File(...)
+    template: str = Form("memory.html"),
+    title_safe: str = Form(None),
+    description_safe: str = Form(None),
+    smart_data: str = Form(None),
+    hide_all_photos: str = Form("false"),
+    photos: List[UploadFile] = File(None)
 ):
     if request.cookies.get("session") != "admin_logged_in":
         return RedirectResponse(url="/login")
 
     new_id = await get_next_memory_id()
 
-    # Upload photos to R2
+    # Upload photos/videos to R2
     photo_filenames = []
-    for photo in photos:
-        if photo.filename:
-            r2_key = f"uploads/{new_id}/{photo.filename}"
-            content = await photo.read()
-            upload_file(io.BytesIO(content), r2_key, photo.content_type)
-            photo_filenames.append(photo.filename)
+    if photos:
+        for photo in photos:
+            if photo.filename and photo.size > 0:
+                r2_key = f"uploads/{new_id}/{photo.filename}"
+                content = await photo.read()
+                upload_file(io.BytesIO(content), r2_key, photo.content_type)
+                photo_filenames.append(photo.filename)
 
     new_memory = {
         "id": new_id,
@@ -360,11 +366,28 @@ async def add_memory(
         "title": title,
         "description": description,
         "type": type,
-        "photos": photo_filenames
+        "template": template,
+        "photos": photo_filenames,
+        "comments": [],
+        "hide_all_photos": hide_all_photos.lower() == "true",
+        "hidden_photos": [],
     }
 
+    # Optional safe versions
+    if title_safe:
+        new_memory["title_safe"] = title_safe
+    if description_safe:
+        new_memory["description_safe"] = description_safe
+
+    # Smart data (JSON string from frontend)
+    if smart_data:
+        try:
+            new_memory["smart_data"] = json.loads(smart_data)
+        except json.JSONDecodeError:
+            pass
+
     await db_add_memory(new_memory)
-    return RedirectResponse(url="/timeline", status_code=303)
+    return RedirectResponse(url=f"/memory/{new_id}", status_code=303)
 
 
 # --- Music ---
