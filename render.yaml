@@ -1,0 +1,31 @@
+# Exported from Render on 2026-03-03T20:48:21Z
+version: "1"
+projects:
+- name: My project
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: journey-with-puchki
+      runtime: python
+      repo: https://github.com/shaiwalsachdev/journey-with-puchki
+      plan: starter
+      envVars:
+      - key: R2_PUBLIC_URL
+        sync: false
+      - key: R2_BUCKET_NAME
+        sync: false
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      region: singapore
+      buildCommand: pip install -r fastapi_app/requirements.txt
+      startCommand: gunicorn fastapi_app.main:app -w 4 -k uvicorn.workers.UvicornWorker
+      autoDeployTrigger: "off"
