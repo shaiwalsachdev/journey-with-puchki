@@ -38,8 +38,14 @@
     <header class="relative w-full h-[70vh] lg:h-[85vh]">
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos %}
+            {% if memory.photos[0].lower().endswith('.mov') or memory.photos[0].lower().endswith('.mp4') or
+            memory.photos[0].lower().endswith('.webm') %}
+            <video class="w-full h-full object-cover object-center"
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" controls preload="metadata"></video>
+            {% else %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
                 src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+            {% endif %}
             {% else %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
                 src="https://placehold.co/1920x1080?text=No+Photo" />
@@ -100,9 +106,15 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
             {% for photo in memory.photos %}
             <div class="group rounded-xl overflow-hidden relative cursor-pointer">
+                {% if photo.lower().endswith('.mov') or photo.lower().endswith('.mp4') or
+                photo.lower().endswith('.webm') %}
+                <video class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" controls preload="metadata"></video>
+                {% else %}
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                {% endif %}
             </div>
             {% endfor %}
         </div>

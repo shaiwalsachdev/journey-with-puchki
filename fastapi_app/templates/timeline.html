@@ -146,7 +146,8 @@
                                 <span class="font-display font-bold text-lg text-gray-900 dark:text-white">{{
                                     memory.title }}</span>
                                 <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full">{{
-                                    memory.date }}</span>
+                                    memory.date }}{% if memory.days_journey %} • {{ memory.days_journey }}{% endif
+                                    %}</span>
                             </div>
                             <p
                                 class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed line-clamp-3">

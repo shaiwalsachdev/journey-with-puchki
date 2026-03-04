@@ -114,6 +114,11 @@
                                 class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary">
                         </div>
                         <div class="space-y-2">
+                            <label class="block text-sm font-medium">Day's Journey</label>
+                            <input type="text" id="days_journey" placeholder="e.g. Day 1, Day 2..."
+                                class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary">
+                        </div>
+                        <div class="space-y-2">
                             <label class="block text-sm font-medium">Category</label>
                             <select id="type"
                                 class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 focus:ring-primary focus:border-primary">
@@ -581,6 +586,10 @@
 
             // Privacy
             formData.append('hide_all_photos', document.getElementById('hide_all_photos').checked);
+
+            // Day's Journey
+            const daysJourney = document.getElementById('days_journey').value.trim();
+            if (daysJourney) formData.append('days_journey', daysJourney);
 
             // Smart Data
             const smartData = {};

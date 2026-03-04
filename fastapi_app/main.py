@@ -418,6 +418,7 @@ async def add_memory(
     thumbnail_index: int = Form(0),
     smart_data: str = Form(None),
     hide_all_photos: str = Form("false"),
+    days_journey: str = Form(None),
     photos: List[UploadFile] = File(None)
 ):
     if request.cookies.get("session") != "admin_logged_in":
@@ -487,6 +488,7 @@ async def add_memory(
         "comments": [],
         "hide_all_photos": hide_all_photos.lower() == "true",
         "hidden_photos": [],
+        "days_journey": days_journey,
     }
 
     # Optional safe versions
@@ -844,6 +846,63 @@ async def api_add_coupon(request: Request):
     
     await add_coupon(new_coupon)
     return {"status": "success", "message": "Coupon added successfully"}
+
+@app.delete("/api/admin/memory/{memory_id}/photos/{filename}")
+async def api_delete_memory_photo(memory_id: int, filename: str):
+    try:
+        memory = await get_memory_by_id(memory_id)
+        if not memory:
+            return {"status": "error", "message": "Memory not found"}
+        
+        # Remove from R2
+        key = f"uploads/{memory_id}/{filename}"
+        delete_file(key)
+        
+        # Update MongoDB
+        photos = memory.get("photos", [])
+        if filename in photos:
+            photos.remove(filename)
+            
+        hidden_photos = memory.get("hidden_photos", [])
+        if filename in hidden_photos:
+            hidden_photos.remove(filename)
+            
+        await update_memory(memory_id, {"photos": photos, "hidden_photos": hidden_photos})
+        
+        return {"status": "success", "message": "Photo deleted successfully"}
+    except Exception as e:
+        import traceback
+        return {"status": "error", "message": str(e), "trace": traceback.format_exc()}
+
+@app.post("/api/admin/memory/{memory_id}/photos/add")
+async def api_add_memory_photos(memory_id: int, files: List[UploadFile] = File(...)):
+    try:
+        memory = await get_memory_by_id(memory_id)
+        if not memory:
+            return {"status": "error", "message": "Memory not found"}
+            
+        new_photos = []
+        for file in files:
+            if not file.filename:
+                continue
+            # Upload to R2
+            key = f"uploads/{memory_id}/{file.filename}"
+            upload_file(file.file, key, file.content_type)
+            new_photos.append(file.filename)
+            
+        # Update MongoDB
+        photos = memory.get("photos", [])
+        # Ensure no duplicates in the array just in case
+        for p in new_photos:
+            if p not in photos:
+                photos.append(p)
+                
+        await update_memory(memory_id, {"photos": photos})
+        
+        return {"status": "success", "message": f"{len(new_photos)} photos uploaded successfully"}
+    except Exception as e:
+        import traceback
+        return {"status": "error", "message": str(e), "trace": traceback.format_exc()}
 
 @app.post("/api/admin/new_memory/new")
 async def api_add_new_memory(request: Request):
