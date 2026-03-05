@@ -209,9 +209,9 @@ async def get_filtered_memories(settings, seed=None):
                     continue
                 gallery_items.append({
                     "id": m["id"],
-                    "title": redact_text(m["title"], settings.get("private_mode")),
-                    "date": m["date"],
-                    "type": m["type"],
+                    "title": redact_text(m.get("title", ""), settings.get("private_mode")),
+                    "date": m.get("date", ""),
+                    "type": m.get("type", ""),
                     "photo": p
                 })
 
