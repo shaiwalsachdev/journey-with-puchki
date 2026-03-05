@@ -797,6 +797,85 @@ async def api_delete_coupon(coupon_id: str):
     await delete_coupon_item(coupon_id)
     return {"status": "success", "message": "Coupon deleted"}
 
+@app.delete("/api/admin/memory/{memory_id}/photos/{photo_filename:path}")
+async def api_delete_memory_photo(memory_id: int, photo_filename: str):
+    """Permanently remove a single photo from a memory (DB + R2)."""
+    memory = await get_memory_by_id(memory_id)
+    if not memory:
+        raise HTTPException(status_code=404, detail="Memory not found")
+
+    photos = memory.get("photos", [])
+    if photo_filename not in photos:
+        raise HTTPException(status_code=404, detail="Photo not found in memory")
+
+    # Remove from photos list and hidden_photos if present
+    photos.remove(photo_filename)
+    hidden_photos = [p for p in memory.get("hidden_photos", []) if p != photo_filename]
+
+    await update_memory(memory_id, {"photos": photos, "hidden_photos": hidden_photos})
+
+    # Delete from R2
+    try:
+        from fastapi_app.storage import delete_file
+        delete_file(f"uploads/{memory_id}/{photo_filename}")
+    except Exception as e:
+        print(f"Warning: could not delete from R2: {e}")
+
+    return {"status": "success", "message": f"Photo {photo_filename} deleted"}
+
+@app.post("/api/admin/memory/{memory_id}/photos/add")
+async def api_add_memory_photos(memory_id: int, request: Request, files: List[UploadFile] = File(...)):
+    """Upload new photos/videos and append them to an existing memory."""
+    if request.cookies.get("session") != "admin_logged_in":
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    memory = await get_memory_by_id(memory_id)
+    if not memory:
+        raise HTTPException(status_code=404, detail="Memory not found")
+
+    ALLOWED_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp", "image/heic",
+                     "video/mp4", "video/quicktime", "video/mov"}
+    new_filenames = []
+    upload_tasks = []
+
+    for photo in files:
+        if photo.filename and photo.size > 0:
+            content = await photo.read()
+            filename = photo.filename
+            content_type = photo.content_type or "application/octet-stream"
+
+            # Convert HEIC → JPEG
+            if filename.lower().endswith(('.heic', '.heif')):
+                try:
+                    from PIL import Image
+                    from pillow_heif import register_heif_opener
+                    register_heif_opener()
+                    img = Image.open(io.BytesIO(content))
+                    buf = io.BytesIO()
+                    img.convert("RGB").save(buf, format="JPEG", quality=90)
+                    content = buf.getvalue()
+                    filename = os.path.splitext(filename)[0] + ".jpg"
+                    content_type = "image/jpeg"
+                except Exception as e:
+                    print(f"HEIC conversion failed: {e}")
+
+            r2_key = f"uploads/{memory_id}/{filename}"
+            upload_tasks.append((r2_key, content, content_type))
+            new_filenames.append(filename)
+
+    if upload_tasks:
+        import concurrent.futures
+        def _upload(args):
+            key, data, ct = args
+            upload_file(io.BytesIO(data), key, ct)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(_upload, upload_tasks)
+
+    updated_photos = memory.get("photos", []) + new_filenames
+    await update_memory(memory_id, {"photos": updated_photos})
+
+    return {"status": "success", "added": new_filenames}
+
 # --- Admin Edit Routes ---
 
 @app.put("/api/admin/memory/{memory_id}")

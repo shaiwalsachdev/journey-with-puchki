@@ -204,8 +204,15 @@
                 {% for photo in memory.photos %}
                 <div
                     class="relative group overflow-hidden rounded-xl border-2 border-white/5 shadow-lg transition duration-300 hover:scale-105">
+                    {% set photo_lower = photo.lower() %}
+                    {% if photo_lower.endswith('.mov') or photo_lower.endswith('.mp4') or photo_lower.endswith('.webm')
+                    or photo_lower.endswith('.avi') or photo_lower.endswith('.mkv') %}
+                    <video class="w-full h-full object-cover" controls playsinline preload="metadata"
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}"></video>
+                    {% else %}
                     <img alt="Memory" class="w-full h-full object-cover"
                         src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

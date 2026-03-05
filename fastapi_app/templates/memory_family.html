@@ -167,9 +167,16 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
             {% for photo in memory.photos %}
             <div class="group rounded-xl overflow-hidden relative cursor-pointer">
+                {% set photo_lower = photo.lower() %}
+                {% if photo_lower.endswith('.mov') or photo_lower.endswith('.mp4') or photo_lower.endswith('.webm') or
+                photo_lower.endswith('.avi') or photo_lower.endswith('.mkv') %}
+                <video class="w-full h-full object-cover" controls playsinline preload="metadata"
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}"></video>
+                {% else %}
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                {% endif %}
             </div>
             {% endfor %}
         </div>
