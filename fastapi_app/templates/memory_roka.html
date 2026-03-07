@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Roka & Blessings - Journey with Puchki</title>
+    <title>Roka Ceremony Invitation — ShaiX2</title>
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
+    <!-- Material Icons (navbar + back_button partials) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Material Symbols Outlined (this page) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <!-- Typefaces -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -16,119 +24,394 @@
                 extend: {
                     colors: {
                         "primary": "#c91352",
+                        "gold": "#d4af37",
                         "background-light": "#f8f6f6",
                         "background-dark": "#211116",
                     },
                     fontFamily: {
-                        "display": ["Noto Serif", "serif"]
-                    }
-                }
-            }
+                        "display": ["Manrope", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                },
+            },
         }
     </script>
+
+    <style>
+        /* ── Gold text ── */
+        .gold-gradient {
+            background: linear-gradient(45deg, #d4af37, #fcf6ba, #d4af37, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Card shell ── */
+        .luxury-border {
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+
+        .card-shimmer {
+            background: linear-gradient(135deg,
+                    rgba(201, 19, 82, 0.06) 0%,
+                    rgba(212, 175, 55, 0.04) 50%,
+                    rgba(201, 19, 82, 0.06) 100%);
+        }
+
+        /* ── Ornamental divider ── */
+        .ornament-line {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(212, 175, 55, 0.6);
+            font-size: 1.1rem;
+        }
+
+        .ornament-line::before,
+        .ornament-line::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+        }
+
+        /* ── Entrance animations ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.93);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .anim-fade-down {
+            animation: fadeDown 0.7s ease both;
+        }
+
+        .anim-fade-up {
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .anim-fade-in {
+            animation: fadeIn 0.8s ease both;
+        }
+
+        .anim-scale-in {
+            animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .d-100 {
+            animation-delay: 0.10s;
+        }
+
+        .d-200 {
+            animation-delay: 0.20s;
+        }
+
+        .d-350 {
+            animation-delay: 0.35s;
+        }
+
+        .d-500 {
+            animation-delay: 0.50s;
+        }
+
+        .d-650 {
+            animation-delay: 0.65s;
+        }
+
+        .d-800 {
+            animation-delay: 0.80s;
+        }
+
+        .d-1000 {
+            animation-delay: 1.00s;
+        }
+
+        /* ── Ken Burns on hero photo ── */
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1.08) translate(0%, 0%);
+            }
+
+            33% {
+                transform: scale(1.13) translate(-1.5%, -1%);
+            }
+
+            66% {
+                transform: scale(1.10) translate(1.5%, 0.5%);
+            }
+
+            100% {
+                transform: scale(1.08) translate(0%, 0%);
+            }
+        }
+
+        .ken-burns {
+            animation: kenBurns 16s ease-in-out infinite;
+            transform-origin: center center;
+        }
+
+        /* ── Petals / confetti ── */
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-60px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.85;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .petal {
+            position: fixed;
+            top: -60px;
+            pointer-events: none;
+            z-index: 0;
+            animation: petalFall linear infinite;
+            font-size: 18px;
+            will-change: transform;
+        }
+
+        /* ── Glow pulse on date block ── */
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 19, 82, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 22px 6px rgba(201, 19, 82, 0.18);
+            }
+        }
+
+        .glow-pulse {
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        /* ── Ribbon scroll-reveal for items ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100">
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
 
     {% include 'partials/navbar.html' %}
     {% include 'partials/back_button.html' %}
-
-    <!-- Lightbox Partial -->
     {% include 'partials/lightbox.html' %}
 
-    <!-- Hero -->
-    <section class="relative h-[60vh] md:h-[80vh] w-full overflow-hidden">
-        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4A4CsdbKpO907xqS2mkzsb8sHC2wyqD2GSjI8N_A1A6K2Hbgs6gMp7SQjh0K6ml9Zjtp-78dQN3DVBB4Ns6Mudj43lw20GPSKefIGGjkBqbjynigS4x27DHYaF8v_GMna3Sv5_W-cyeNBSHWvAcE4Ng1KNWkESAEWD7dIXRrKPywR0UqfTLISuXjmCxCWcM4qw2skbDj6ceSqb4gSK4wPLQ6ahTRypguSkylO5-Bc0PgdhHIE-A9ENfrEi55f4t9NU27P-NwHveCq"
-            class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-        <div class="absolute bottom-12 left-8 md:left-12 text-white">
-            <span
-                class="bg-primary px-4 py-1 rounded-full text-sm font-bold uppercase tracking-widest mb-4 inline-block">March
-                12, 2026</span>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">The Grand Roka</h1>
-            <p class="text-xl italic opacity-90">"Where two families become one."</p>
-            <div class="mt-2 text-right">
-                <span class="font-handwriting text-3xl text-yellow-300 transform -rotate-2 inline-block">-
-                    Shaiwal</span>
-            </div>
-        </div>
+    <!-- Falling petals (spawned by JS) -->
+    <div id="petal-container" aria-hidden="true"></div>
 
-        <!-- Kundli Seal -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--                    INVITATION CARD                        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="w-full pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         <div
-            class="absolute bottom-12 right-8 md:right-12 w-32 h-32 bg-primary/90 rounded-full flex flex-col items-center justify-center text-white border-4 border-yellow-200 animate-pulse hidden md:flex">
-            <span class="text-3xl font-bold">32/36</span>
-            <span class="text-[10px] uppercase font-bold">Kundli Match</span>
-        </div>
-    </section>
+            class="max-w-3xl mx-auto relative rounded-3xl overflow-hidden luxury-border shadow-2xl shadow-primary/10 card-shimmer bg-background-light dark:bg-background-dark anim-scale-in">
 
-    <!-- Content -->
-    <section class="max-w-7xl mx-auto px-6 py-16">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold italic text-primary">Milestones of Union</h2>
-            <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
-        </div>
+            <!-- Top accent bar -->
+            <div class="h-1.5 w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            <!-- Card 1 -->
-            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-primary/10">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="material-icons text-primary bg-primary/10 p-2 rounded-full">home</span>
-                    <span class="text-primary font-bold text-xs tracking-widest">OCT 11, 2025</span>
+            <!-- ─── Hero Photo ─────────────────────────────────── -->
+            <div class="relative w-full overflow-hidden" style="height:clamp(260px,38vw,460px);">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/images/favourites/IMG_8895%20(1).jpg"
+                    alt="Roka Ceremony" class="w-full h-full object-cover object-center ken-burns">
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-background-dark/95 via-background-dark/25 to-transparent">
                 </div>
-                <h3 class="text-xl font-bold mb-2">First Meet at Home</h3>
-                <p class="text-gray-600 dark:text-gray-400 italic">"Nervous smiles, warm chai, and the quiet realization
-                    that our families felt like home."</p>
-            </div>
-            <!-- Card 2 -->
-            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-primary/10">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="material-icons text-primary bg-primary/10 p-2 rounded-full">restaurant</span>
-                    <span class="text-primary font-bold text-xs tracking-widest">OCT 18, 2025</span>
+
+                <!-- Hero text overlay -->
+                <div class="absolute bottom-0 left-0 right-0 px-6 sm:px-10 pb-8 text-center">
+                    <h1
+                        class="anim-fade-up d-200 text-white text-4xl sm:text-5xl font-serif font-bold leading-tight drop-shadow-2xl">
+                        Roka Ceremony
+                    </h1>
+                    <p class="anim-fade-in d-350 text-white/70 text-sm sm:text-base italic mt-2">
+                        "Where two families become one."
+                    </p>
                 </div>
-                <h3 class="text-xl font-bold mb-2">Agreement at Karigari</h3>
-                <p class="text-gray-600 dark:text-gray-400 italic">"Over shared plates and stories at Karigari, our
-                    families gave the formal nod."</p>
             </div>
-            <!-- Card 3 -->
-            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-primary/10">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="material-icons text-primary bg-primary/10 p-2 rounded-full">loyalty</span>
-                    <span class="text-primary font-bold text-xs tracking-widest">JAN 10, 2026</span>
+
+            <!-- ─── Body ─────────────────────────────────────────── -->
+            <div class="px-6 sm:px-10 py-10 space-y-10 relative z-10">
+
+                <!-- INVITATION headline -->
+                <div class="text-center space-y-2 reveal">
+                    <p class="text-primary text-[11px] font-extrabold uppercase tracking-[0.45em]">— You Are Cordially
+                        Invited To —</p>
+                    <h2 class="gold-gradient text-5xl sm:text-6xl font-serif font-bold py-1 leading-tight">
+                        Roka Ceremony
+                    </h2>
+                    <div class="ornament-line mt-3">❧</div>
+                    <p
+                        class="text-slate-600 dark:text-slate-300 text-base leading-relaxed italic max-w-lg mx-auto pt-1">
+                        With joyful hearts and the blessings of our families, we invite you to witness the beginning of
+                        our forever.
+                    </p>
                 </div>
-                <h3 class="text-xl font-bold mb-2">Finalizing the Roka</h3>
-                <p class="text-gray-600 dark:text-gray-400 italic">"The commitment was sealed. Dates were fixed, hearts
-                    were full."</p>
+
+                <!-- Date / Time / Day strip -->
+                <div class="reveal">
+                    <div class="glow-pulse bg-primary/10 dark:bg-primary/15 rounded-2xl p-6 sm:p-8 border border-primary/20
+                                flex flex-wrap items-center justify-center gap-8 sm:gap-14">
+                        <div class="text-center">
+                            <span
+                                class="block text-primary text-[11px] font-bold uppercase tracking-widest">March</span>
+                            <span class="block text-6xl font-serif font-extrabold leading-none">12</span>
+                            <span class="block text-primary text-[11px] font-bold uppercase tracking-widest">2026</span>
+                        </div>
+                        <div class="h-14 w-px bg-primary/25 hidden sm:block"></div>
+                        <div class="text-center">
+                            <span
+                                class="block text-slate-500 dark:text-slate-400 text-[11px] font-bold uppercase tracking-widest">Time</span>
+                            <span class="block text-3xl font-serif font-bold leading-none mt-1">07:30 PM</span>
+                        </div>
+                        <div class="h-14 w-px bg-primary/25 hidden sm:block"></div>
+                        <div class="text-center">
+                            <span
+                                class="block text-slate-500 dark:text-slate-400 text-[11px] font-bold uppercase tracking-widest">Day</span>
+                            <span class="block text-xl font-serif font-bold leading-tight mt-1">Thursday</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Venue -->
+                <div class="reveal flex items-start gap-4">
+                    <div class="bg-primary/10 p-2.5 rounded-full text-primary shrink-0 mt-0.5">
+                        <span class="material-symbols-outlined">location_on</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Venue</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-0.5">
+                            Private Dining Room, Empress of China<br>
+                            Eros Hotel, Nehru Place, New Delhi<br>
+                            Delhi — 110019
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="reveal w-full rounded-2xl overflow-hidden shadow-lg border border-primary/20">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.6603597384324!2d77.24652837630735!3d28.54992677570998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3cf1dfeece7%3A0xee690c3f5b362567!2sEros%20Hotel%20New%20Delhi%20Nehru%20Place!5e0!3m2!1sen!2sin!4v1772871569675!5m2!1sen!2sin"
+                        width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <!-- Closing line -->
+                <div class="reveal text-center space-y-3 pt-2">
+                    <div class="ornament-line">✦</div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm italic">
+                        We look forward to your presence and blessings.
+                    </p>
+                    <p class="text-primary font-bold font-serif text-xl">ShaiX2</p>
+                </div>
+
             </div>
+
+            <!-- Bottom accent bar -->
+            <div class="h-1.5 w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"></div>
         </div>
-
-        <!-- Smart Highlights Injection -->
-        {% include 'partials/smart_highlights.html' %}
-
-        <!-- Blessings -->
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">With Parental Blessings</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Our union is built on the strong
-                foundation of support and love from those who raised us.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div class="text-center">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuEvyR3B3v_HV-ewgSDEyZsGKOzUmuPAqw_Wacv-QEbQN8jL64bi38vrMdJxhufx_x5XzyPtYhY4CHo3vHDhl6eR3gzmZXlBGoKLaB1paAvaCq6FAXVIuTUekdGEiAC1Zyp1SEVzCmS4M-bwhSiVcqmT2L60YzJCzzo6a7vc1FrMULQztWXbt37CUmtUia4KrfYie3EUMiDzN4WOhzeqgzqyYnZFRyBHbtasBBut6My2TmWlWjCR183ldxtSQcTFVGET355f95wz9l"
-                    class="w-full h-80 object-cover rounded-xl shadow-lg mb-4">
-                <h4 class="font-bold text-lg">The Gupta Family</h4>
-            </div>
-            <div class="text-center">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyB7KBX0EG70fd47YdAJ6Qci45cD1YwDhAdf71Si-wKugc82GerYRpoq86A91oK_LvGS05UL5A3lDppzYLixqT-baIdn4Mpai7RstmpvO8-FcUEbXF8IipQ3Lq0cXdMGR6qvlIsMvyPmzunWeSssQwqBhALh06fKIoOaqvL5R9s9cJl8jG5eQ7iS_clxXAzJtf3CqwieJbjHweLwSsGF4ogsyQLgEVBHdJV0HIFZlOfRfRf-w-ItlwrMPt_T8KNO4ezoBeDUx_eDVV"
-                    class="w-full h-80 object-cover rounded-xl shadow-lg mb-4">
-                <h4 class="font-bold text-lg">The Sharma Family</h4>
-            </div>
-        </div>
-
-    </section>
-
-    {% include 'partials/comments.html' %}
+    </div>
+    <!-- ═══════════════════════════════════════════════════════════ -->
 
     {% include 'partials/footer.html' %}
+
+    <script>
+        // ── Falling rose petals ───────────────────────────────────
+        const petalSymbols = ['🌸', '🌺', '✨', '💮', '🌹', '💐'];
+        const container = document.getElementById('petal-container');
+
+        function spawnPetal() {
+            const el = document.createElement('div');
+            el.className = 'petal';
+            el.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (12 + Math.random() * 14) + 'px';
+            el.style.animationDuration = (9 + Math.random() * 10) + 's';
+            el.style.animationDelay = (Math.random() * 3) + 's';
+            el.style.opacity = (0.4 + Math.random() * 0.5).toString();
+            container.appendChild(el);
+            const dur = parseFloat(el.style.animationDuration) * 1000 + 4000;
+            setTimeout(() => el.remove(), dur);
+        }
+
+        // Stagger initial burst then keep trickling
+        for (let i = 0; i < 10; i++) setTimeout(spawnPetal, i * 350);
+        setInterval(spawnPetal, 1800);
+
+        // ── Scroll reveal ─────────────────────────────────────────
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 
 </body>
 
