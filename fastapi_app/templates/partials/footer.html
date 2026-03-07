@@ -15,6 +15,10 @@
                     <li><a href="/timeline" class="hover:text-primary transition-colors">Timeline</a></li>
                     <li><a href="/gallery" class="hover:text-primary transition-colors">Gallery</a></li>
                     <li><a href="/music" class="hover:text-primary transition-colors">Music Lounge</a></li>
+                    {% if settings.birthday_mode %}
+                    <li><a href="/birthday" class="hover:text-primary font-bold text-primary transition-colors">Birthday
+                            Special ✨</a></li>
+                    {% endif %}
                 </ul>
             </div>
 
@@ -25,8 +29,8 @@
                     {% if not settings.private_mode %}
                     <li><a href="/coupons" class="hover:text-primary transition-colors">Love Coupons</a></li>
                     {% endif %}
+                    <li><a href="/roka" class="hover:text-primary transition-colors">Roka</a></li>
                     <li><a href="/guestbook" class="hover:text-primary transition-colors">Guestbook</a></li>
-                    <li><a href="/vault" class="hover:text-primary transition-colors">The Vault</a></li>
                 </ul>
             </div>
 
@@ -36,6 +40,7 @@
                 <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                     <li><a href="/upcoming" class="hover:text-primary transition-colors">Milestones</a></li>
                     <li><a href="/wishlist" class="hover:text-primary transition-colors">Wishlist</a></li>
+                    <li><a href="/dictionary" class="hover:text-primary transition-colors">Dictionary</a></li>
                 </ul>
             </div>
         </div>

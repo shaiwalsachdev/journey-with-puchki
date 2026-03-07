@@ -104,6 +104,11 @@
                 <span class="material-icons text-primary/70 text-lg">local_activity</span>
                 <span class="font-medium text-sm">Coupons</span>
             </a>
+            <a href="#" onclick="switchTab('hero-images')" id="nav-hero-images"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">wallpaper</span>
+                <span class="font-medium text-sm">Hero Images</span>
+            </a>
         </nav>
         <div class="p-4 border-t border-gray-200 dark:border-primary/10 bg-gray-50 dark:bg-surface-lighter/30">
             <div class="flex items-center gap-3">
@@ -449,6 +454,26 @@
                 </section>
             </div>
 
+            <!-- Hero Images Manager -->
+            <div id="section-hero-images" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Home Hero Pool</h3>
+                        <div class="flex items-center gap-2">
+                            <input type="file" id="upload-hero-input" accept="image/*" class="hidden"
+                                onchange="uploadHeroImage()">
+                            <button onclick="document.getElementById('upload-hero-input').click()"
+                                class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                <span class="material-icons text-sm">upload</span> Add Hero Image
+                            </button>
+                        </div>
+                    </div>
+                    <div id="hero-images-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Hero images injected here -->
+                    </div>
+                </section>
+            </div>
+
             <!-- Generic Edit Modal -->
             <div id="edit-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
                 aria-modal="true">
@@ -591,6 +616,7 @@
             fetchBlessings();
             fetchDictionary();
             fetchCoupons();
+            fetchHeroImages();
         }
 
         document.addEventListener('DOMContentLoaded', fetchInitialData);
@@ -804,6 +830,80 @@
 
         let pendingDeleteMemoryId = null;
         let pendingDeleteFilename = null;
+
+        // --- Hero Images Logic ---
+        let allHeroImages = {{ settings.hero_images | tojson if settings.hero_images is defined else '[]' }};
+
+        async function fetchHeroImages() {
+            // Initially use the server-rendered ones
+            renderHeroImagesGrid(allHeroImages);
+        }
+
+        function renderHeroImagesGrid(urls) {
+            const grid = document.getElementById('hero-images-grid');
+            if (!urls || urls.length === 0) {
+                grid.innerHTML = '<div class="p-8 text-center text-gray-500 col-span-full">No hero images configured. Using defaults.</div>';
+                return;
+            }
+
+            grid.innerHTML = urls.map(url => `
+                <div class="relative aspect-video rounded-xl overflow-hidden group shadow-md bg-gray-100 dark:bg-gray-800">
+                    <img src="${url}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <button onclick="removeHeroImage('${url}')" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transform hover:scale-110 transition-all">
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function uploadHeroImage() {
+            const input = document.getElementById('upload-hero-input');
+            if (!input.files || input.files.length === 0) return;
+
+            const formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            try {
+                const res = await fetch('/api/hero-images/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    allHeroImages = data.hero_images;
+                    renderHeroImagesGrid(allHeroImages);
+                    input.value = '';
+                } else {
+                    alert("Upload failed");
+                }
+            } catch (e) {
+                console.error("Upload error", e);
+            }
+        }
+
+        async function removeHeroImage(url) {
+            if (!confirm("Are you sure you want to remove this hero image?")) return;
+
+            try {
+                const res = await fetch('/api/hero-images', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    allHeroImages = data.hero_images;
+                    renderHeroImagesGrid(allHeroImages);
+                } else {
+                    alert("Failed to delete");
+                }
+            } catch (e) {
+                console.error("Delete error", e);
+            }
+        }
+
 
         function pendingDeletePhoto(memoryId, photoFilename) {
             pendingDeleteMemoryId = memoryId;

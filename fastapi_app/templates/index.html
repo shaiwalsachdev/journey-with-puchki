@@ -555,11 +555,19 @@
     <!-- Hero Section -->
     <header class="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden z-10">
         <!-- Hero Background Image -->
-        <div class="absolute inset-0 w-full h-full bg-cover bg-[center_25%] bg-no-repeat transition-transform duration-[10s] hover:scale-105"
+        <div id="hero-bg-container"
+            class="absolute inset-0 w-full h-full bg-cover bg-[center_25%] bg-no-repeat transition-transform duration-[10s] hover:scale-105"
             style="background-image: url('{{ r2_url }}/images/favourites/IMG_8915.jpg');">
         </div>
         <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="absolute inset-0 bg-black/60 z-10"></div>
+
+        <!-- Flip Image Button -->
+        <button onclick="flipHeroImage()"
+            class="absolute top-[100px] right-4 md:right-8 z-30 bg-white/20 hover:bg-white/40 backdrop-blur-md border border-white/30 text-white rounded-full px-4 py-2 flex items-center gap-2 transition-all shadow-lg text-sm font-medium">
+            <span class="material-icons text-lg">autorenew</span>
+            <span class="hidden md:inline">Flip Image</span>
+        </button>
 
         <!-- Hero Content -->
         <div class="relative z-20 text-center px-4 max-w-4xl mx-auto mt-16 animate-float">
@@ -599,10 +607,51 @@
             </div>
         </div>
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
             <span class="material-icons text-white/70 text-4xl">keyboard_arrow_down</span>
         </div>
     </header>
+
+    <script>
+        const fallbackHeroImages = [
+            "{{ r2_url }}/images/favourites/IMG_8895%20(1).jpg",
+            "{{ r2_url }}/images/favourites/IMG_8915.jpg",
+            "{{ r2_url }}/images/favourites/IMG_9292.jpg",
+            "{{ r2_url }}/images/favourites/IMG_7813.jpg",
+            "{{ r2_url }}/uploads/21/IMG_9888.jpg",
+            "{{ r2_url }}/uploads/21/IMG_9903.jpg",
+            "{{ r2_url }}/uploads/12/IMG_8254.jpg",
+            "{{ r2_url }}/uploads/9/IMG_7651.jpg"
+        ];
+        // Use settings.hero_images if not empty, otherwise fallback
+        const settingsHeroImages = {{ settings.hero_images | tojson }};
+        const heroImages = (settingsHeroImages && settingsHeroImages.length > 0) ? settingsHeroImages : fallbackHeroImages;
+
+        let currentHeroImageIndex = -1;
+
+        function setRandomHeroImage() {
+            let newIndex = Math.floor(Math.random() * heroImages.length);
+            // Avoid picking the exact same image twice in a row, unless there's only one element
+            if (heroImages.length > 1 && newIndex === currentHeroImageIndex) {
+                newIndex = (newIndex + 1) % heroImages.length;
+            }
+            currentHeroImageIndex = newIndex;
+            const bgContainer = document.getElementById('hero-bg-container');
+            if (bgContainer) {
+                // Remove the transition locally to avoid it lagging when changing images, 
+                // or keep the transition to make it a crossfade? Better stick to direct set.
+                bgContainer.style.backgroundImage = `url('${heroImages[newIndex]}')`;
+            }
+        }
+
+        function flipHeroImage() {
+            setRandomHeroImage();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setRandomHeroImage();
+        });
+    </script>
 
     <!-- Main Navigation Cards Section -->
     <section class="relative z-20 -mt-24 pb-20 px-4" id="explore">

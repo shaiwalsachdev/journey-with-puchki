@@ -135,9 +135,69 @@ async def update_settings_route(request: Request):
         current_settings["birthday_mode"] = data["birthday_mode"]
     if "theme" in data:
         current_settings["theme"] = data["theme"]
+    if "hero_images" in data:
+        current_settings["hero_images"] = data["hero_images"]
 
     await save_settings(current_settings)
     return {"status": "success", "settings": current_settings}
+
+
+@app.post("/api/hero-images/upload")
+async def upload_hero_image(request: Request, file: UploadFile = File(...)):
+    """Upload an image file to R2 under images/hero/ and add its URL to hero_images settings."""
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    import mimetypes
+    content_type = file.content_type or mimetypes.guess_type(file.filename)[0] or "image/jpeg"
+
+    # Build a unique key to avoid name collisions
+    import time
+    safe_name = file.filename.replace(" ", "_")
+    key = f"images/hero/{int(time.time())}_{safe_name}"
+
+    file_data = await file.read()
+    file_obj = io.BytesIO(file_data)
+    public_url = upload_file(file_obj, key, content_type)
+
+    # Persist URL to settings
+    current_settings = await get_settings()
+    hero_images = current_settings.get("hero_images", [])
+    hero_images.append(public_url)
+    current_settings["hero_images"] = hero_images
+    await save_settings(current_settings)
+
+    return {"status": "success", "url": public_url, "hero_images": hero_images}
+
+
+@app.delete("/api/hero-images")
+async def delete_hero_image(request: Request):
+    """Remove a URL from hero_images settings (and delete from R2 if managed)."""
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    from fastapi_app.storage import delete_file, R2_PUBLIC_URL as R2_BASE
+    data = await request.json()
+    url_to_remove = data.get("url", "")
+
+    current_settings = await get_settings()
+    hero_images = current_settings.get("hero_images", [])
+
+    if url_to_remove in hero_images:
+        hero_images.remove(url_to_remove)
+        current_settings["hero_images"] = hero_images
+        await save_settings(current_settings)
+
+        # If this file lives under images/hero/ in R2, delete the actual file
+        if url_to_remove.startswith(R2_BASE):
+            key = url_to_remove[len(R2_BASE):].lstrip("/")
+            if key.startswith("images/hero/"):
+                try:
+                    delete_file(key)
+                except Exception:
+                    pass  # Don't fail if the file is already gone
+
+    return {"status": "success", "hero_images": hero_images}
 
 
 # --- Public Routes ---
@@ -171,9 +231,20 @@ async def timeline(request: Request):
     visible_memories = process_memories_for_display(memories, settings)
     # Filter out memories specifically hidden from timeline
     visible_memories = [m for m in visible_memories if not m.get("hide_timeline")]
+
+    # Build category pills (mirrors gallery logic)
+    EMOJI_MAP = {
+        "date": "🍕", "dinner": "🍝", "milestone": "💍", "trip": "✈️",
+        "food": "🍜", "movie": "🎬", "shopping": "🛍️", "family": "👨‍👩‍👧",
+        "art": "🎨", "celebration": "🎉", "hot": "❤️",
+    }
+    type_set = set(m.get("type", "") for m in visible_memories if m.get("type"))
+    categories = [{"value": t, "label": f"{EMOJI_MAP.get(t, '')} {t.title()}"} for t in sorted(type_set)]
+
     return templates.TemplateResponse("timeline.html", {
         "request": request,
         "memories": visible_memories,
+        "categories": categories,
         "page": "timeline",
         "settings": settings
     })

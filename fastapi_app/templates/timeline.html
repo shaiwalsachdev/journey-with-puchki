@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Memory Lane: Our Timeline - ShaiX2 Forever</title>
+    <title>Memory Lane: Our Timeline — ShaiX2</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;600;700&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script src="/static/js/theme.js"></script>
     <script id="tailwind-config">
@@ -23,160 +22,686 @@
                         "primary": "var(--color-primary)",
                         "background-light": "var(--color-bg-light)",
                         "background-dark": "var(--color-bg-dark)",
-                        "paper-texture": "var(--color-bg-light)", // Map paper texture to light bg for now to adapt to themes
                     },
-                    fontFamily: {
-                        "display": ["Plus Jakarta Sans", "sans-serif"]
-                    },
-                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
-                    backgroundImage: {
-                        'tape-pattern': "url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cpath d=\\'M0 0h20v20H0z\\' fill=\\'%23ffffff\\' fill-opacity=\\'0.4\\'/%3E%3C/svg%3E')",
-                    }
+                    fontFamily: { "display": ["Plus Jakarta Sans", "sans-serif"] },
                 },
             },
         }
     </script>
     <style>
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar {
+        /* ─── scrollbar ──────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(201, 19, 82, .3);
+            border-radius: 3px;
+        }
+
+        /* ─── Ambient background ─────────────────────────────────── */
+        body {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Kraft paper grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity: .028;
+            background-size: 200px 200px;
+        }
+
+        .dark body::before {
+            opacity: .04;
+        }
+
+        /* ─── Scrapbook floating quotes ──────────────────────────── */
+        .scrapbook-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .float-quote {
+            position: absolute;
+            font-family: 'Caveat', cursive;
+            font-size: clamp(15px, 1.6vw, 22px);
+            font-weight: 600;
+            color: rgba(180, 60, 90, 0.13);
+            line-height: 1.35;
+            white-space: nowrap;
+            user-select: none;
+            transition: opacity 1s ease;
+        }
+
+        .dark .float-quote {
+            color: rgba(220, 100, 130, 0.12);
+        }
+
+        /* Washi tape strips */
+        .washi {
+            position: absolute;
+            height: 22px;
+            border-radius: 2px;
+            opacity: 0.28;
+            pointer-events: none;
+        }
+
+        /* Corner doodle SVGs */
+        .corner-doodle {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.12;
+        }
+
+        .dark .corner-doodle {
+            opacity: 0.08;
+        }
+
+        /* Bokeh blobs */
+        .bokeh {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: .55;
+            mix-blend-mode: screen;
+        }
+
+        .dark .bokeh {
+            opacity: .18;
+            mix-blend-mode: normal;
+        }
+
+        @keyframes drift1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, -40px) scale(1.12);
+            }
+        }
+
+        @keyframes drift2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(-50px, 30px) scale(0.92);
+            }
+        }
+
+        @keyframes drift3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 50px) scale(1.08);
+            }
+        }
+
+        /* Particle canvas sits behind everything */
+        #particle-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Scrapbook layer above canvas but below UI */
+        #scrapbook-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* ─── filter bar ─────────────────────────────────────────── */
+        .filter-bar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* ─── pill buttons ───────────────────────────────────────── */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: .78rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all .18s ease;
+            white-space: nowrap;
+        }
+
+        .pill-inactive {
+            background: rgba(201, 19, 82, .07);
+            color: #666;
+            border-color: rgba(201, 19, 82, .18);
+        }
+
+        .dark .pill-inactive {
+            color: #aaa;
+            background: rgba(201, 19, 82, .1);
+        }
+
+        .pill-inactive:hover {
+            background: rgba(201, 19, 82, .16);
+            color: var(--color-primary, #c91352);
+        }
+
+        .pill-active {
+            background: var(--color-primary, #c91352);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(201, 19, 82, .4);
+        }
+
+        .pill-year-active {
+            background: var(--color-primary, #c91352);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(201, 19, 82, .4);
+            outline: 2px solid rgba(201, 19, 82, .4);
+        }
+
+        /* ─── custom month picker ────────────────────────────────── */
+        .month-picker-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .month-picker-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: .78rem;
+            font-weight: 600;
+            border: 1px solid rgba(201, 19, 82, .25);
+            background: rgba(201, 19, 82, .07);
+            color: #666;
+            cursor: pointer;
+            transition: all .18s ease;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .hide-scrollbars::-webkit-scrollbar {
             display: none;
         }
 
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar {
+        .hide-scrollbars {
             -ms-overflow-style: none;
-            /* IE and Edge */
             scrollbar-width: none;
-            /* Firefox */
         }
 
-        .paper-texture {
-            background-color: #f8f6f6;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        .dark .month-picker-display {
+            color: #ccc;
+            background: rgba(201, 19, 82, .1);
         }
 
-        .polaroid-shadow {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+        .month-picker-display:hover {
+            background: rgba(201, 19, 82, .15);
+            color: var(--color-primary, #c91352);
+        }
+
+        .month-picker-display.has-value {
+            background: rgba(201, 19, 82, .18);
+            color: var(--color-primary, #c91352);
+        }
+
+        .month-picker-popup {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 200;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .18), 0 4px 16px rgba(0, 0, 0, .1);
+            padding: 16px;
+            min-width: 240px;
+            border: 1px solid rgba(201, 19, 82, .15);
+            display: none;
+        }
+
+        .dark .month-picker-popup {
+            background: #1e1e2e;
+            border-color: rgba(201, 19, 82, .2);
+        }
+
+        .month-picker-popup.open {
+            display: block;
+            animation: popIn .18s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .mp-year-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .mp-year-nav button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(201, 19, 82, .08);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s;
+        }
+
+        .mp-year-nav button:hover {
+            background: rgba(201, 19, 82, .2);
+        }
+
+        .mp-year-label {
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--color-primary, #c91352);
+        }
+
+        .mp-months {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .mp-month-btn {
+            padding: 7px 4px;
+            border-radius: 8px;
+            font-size: .75rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all .15s;
+            color: #555;
+        }
+
+        .dark .mp-month-btn {
+            color: #ccc;
+        }
+
+        .mp-month-btn:hover {
+            background: rgba(201, 19, 82, .12);
+            color: var(--color-primary, #c91352);
+        }
+
+        .mp-month-btn.selected {
+            background: var(--color-primary, #c91352);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .mp-month-btn.in-range {
+            background: rgba(201, 19, 82, .1);
+        }
+
+        /* ─── grid timeline ──────────────────────────────────── */
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 640px) {
+            .month-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .month-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .month-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* ─── cards ──────────────────────────────────────────────── */
+        .memory-card {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .5s ease, transform .5s ease;
+        }
+
+        .memory-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .polaroid {
+            background: rgba(255, 255, 255, .92);
+            padding: 12px 12px 28px;
+            border-radius: 4px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .1), 0 1px 4px rgba(0, 0, 0, .05);
+            transition: transform .25s ease, box-shadow .25s ease;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, .8);
+        }
+
+        .dark .polaroid {
+            background: rgba(30, 30, 46, .92);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, .45);
+            border-color: rgba(255, 255, 255, .06);
+        }
+
+        .polaroid:hover {
+            transform: translateY(-5px) rotate(.5deg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .15);
+        }
+
+        .dark .polaroid:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .55);
         }
 
         .tape {
-            background-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(2px);
-            transform: rotate(-2deg);
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1.5deg);
+            width: 76px;
+            height: 20px;
+            background: rgba(201, 19, 82, .14);
+            border-radius: 2px;
         }
 
-        /* Horizontal scroll logic visualizer */
-        .timeline-container {
-            overflow-x: auto;
-            scroll-behavior: smooth;
+        /* ─── month section header ───────────────────────────────── */
+        .month-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 48px 0 28px;
+        }
+
+        .month-header::before,
+        .month-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 19, 82, .2), transparent);
+        }
+
+        .month-badge {
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--color-primary, #c91352);
+            background: rgba(201, 19, 82, .1);
+            padding: 4px 14px;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+
+
+
+        /* ─── scroll progress ─────────────────────────────────────── */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--color-primary, #c91352);
+            z-index: 999;
+            transition: width .1s linear;
+        }
+
+        /* empty state */
+        #empty-state {
+            display: none;
+        }
+
+        /* main content above bokeh */
+        .relative-z {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 
-<body
-    class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 overflow-hidden h-screen flex flex-col paper-texture">
+<body class="font-display bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 min-h-screen">
     <script>initTheme('{{ settings.theme }}');</script>
-    <!-- Navbar -->
+
+    <!-- ── Scroll progress ── -->
+    <div id="scroll-progress" style="width:0%"></div>
+
+    <!-- ── Ambient bokeh blobs ──────────────────────────────── -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="bokeh"
+        style="width:520px;height:520px;background:radial-gradient(circle,rgba(201,19,82,.35),transparent 70%);top:-80px;right:-100px;animation:drift1 18s ease-in-out infinite;">
+    </div>
+    <div class="bokeh"
+        style="width:400px;height:400px;background:radial-gradient(circle,rgba(255,160,100,.3),transparent 70%);bottom:10%;left:-80px;animation:drift2 22s ease-in-out infinite;">
+    </div>
+    <div class="bokeh"
+        style="width:320px;height:320px;background:radial-gradient(circle,rgba(140,80,220,.25),transparent 70%);top:45%;right:5%;animation:drift3 16s ease-in-out infinite;">
+    </div>
+
+    <!-- ── Scrapbook layer: quotes + washi tape + corner doodles ── -->
+    <div id="scrapbook-bg" aria-hidden="true">
+
+        <!-- Corner doodles (SVG hearts / stars) -->
+        <svg class="corner-doodle" style="top:90px;left:18px;width:90px;height:90px;" viewBox="0 0 90 90" fill="none">
+            <path
+                d="M45 75 C20 55, 5 40, 5 25 C5 12 15 5 25 5 C33 5 40 11 45 18 C50 11 57 5 65 5 C75 5 85 12 85 25 C85 40 70 55 45 75Z"
+                fill="rgba(201,19,82,0.6)" />
+            <text x="12" y="82" font-family="Caveat" font-size="13" fill="rgba(201,19,82,0.5)"
+                transform="rotate(-12 0 90)">♡ always</text>
+        </svg>
+
+        <svg class="corner-doodle" style="bottom:120px;right:22px;width:80px;height:80px;" viewBox="0 0 80 80"
+            fill="none">
+            <g opacity="0.7">
+                <polygon points="40,5 47,28 72,28 52,43 59,66 40,51 21,66 28,43 8,28 33,28"
+                    fill="rgba(255,160,50,0.5)" />
+                <text x="0" y="77" font-family="Caveat" font-size="11" fill="rgba(201,19,82,0.5)"
+                    transform="rotate(8 40 40)">forever ✦</text>
+            </g>
+        </svg>
+
+        <!-- Washi tape strips will be added by JS -->
+        <!-- Floating quotes will be added by JS -->
+    </div>
+
     {% include 'partials/navbar.html' %}
-    <!-- Main Timeline Area -->
-    <main class="flex-1 w-full h-full relative overflow-hidden flex items-center">
-        <!-- Background decorative elements -->
-        <div class="absolute top-20 right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-10 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-        <!-- Horizontal Scrolling Container -->
-        <!-- Note: In a real app, JS would map vertical scroll to horizontal here -->
-        <div
-            class="timeline-container w-full h-full flex items-center overflow-x-auto px-10 md:px-32 space-x-12 py-20 no-scrollbar">
-            <!-- Start Marker -->
-            <div class="flex-shrink-0 flex flex-col items-center justify-center space-y-4 w-48 text-center">
-                <div
-                    class="w-16 h-16 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg border-2 border-primary/20">
-                    <span class="material-icons text-primary text-3xl">play_arrow</span>
-                </div>
-                <div>
-                    <h3 class="font-bold text-xl text-gray-800 dark:text-white">The Beginning</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Where it all started...</p>
-                </div>
-            </div>
-            <!-- Central Line (Visual Only - spans across items) -->
-            <!-- We will achieve the line effect by adding borders to the items or using a pseudo element. 
-                 Since this is a flex container, a continuous line is tricky without absolute positioning.
-                 Instead, we'll draw the line visually behind the cards using a long absolute div centered vertically. -->
-            <div
-                class="absolute left-0 right-0 top-1/2 h-0.5 bg-primary/20 border-t-2 border-dashed border-primary/30 w-[3000px] -z-10 transform -translate-y-1/2">
-            </div>
 
-            {% for memory in memories %}
-            {% set is_top = loop.index0 % 2 == 0 %}
-            <!-- Generated Card {{ loop.index0 }} -->
-            <div class="relative flex-shrink-0 w-80 group {% if not is_top %}mt-48{% endif %}">
-                <!-- Connector Line -->
-                <div
-                    class="absolute left-1/2 {% if is_top %}top-full{% else %}bottom-full{% endif %} h-12 w-0.5 bg-primary/30 border-l-2 border-dashed border-primary/30 -translate-x-1/2">
-                </div>
-                <!-- Node -->
-                <div
-                    class="absolute left-1/2 {% if is_top %}top-[calc(100%+2.8rem)]{% else %}bottom-[calc(100%+2.8rem)]{% endif %} w-4 h-4 bg-primary rounded-full -translate-x-1/2 ring-4 ring-white dark:ring-background-dark shadow-md z-10">
-                </div>
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--             STICKY FILTER BAR                      -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div
+        class="relative-z filter-bar sticky top-[72px] z-40 bg-background-light/85 dark:bg-background-dark/85 border-b border-gray-200/50 dark:border-gray-700/50 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 space-y-2.5">
 
-                <a href="/memory/{{ memory.id }}">
-                    <div
-                        class="bg-white dark:bg-gray-800 p-4 pb-6 rounded-lg polaroid-shadow transform transition-transform duration-300 hover:-translate-y-2 hover:rotate-1 relative {% if is_top %}mb-12{% endif %}">
-                        <!-- Tape -->
-                        <div
-                            class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-primary/10 backdrop-blur-sm transform -rotate-1 opacity-80 z-20">
-                        </div>
+            <!-- Row 1: Year filter pills + Sort + Time window -->
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Year</span>
+                <div id="year-pills" class="flex gap-1.5 flex-wrap"></div>
+                <div class="flex-1"></div>
 
-                        <div
-                            class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded mb-4 overflow-hidden relative">
-                            {% if memory.photos %}
-                            <img alt="{{ memory.title }}" class="w-full h-full object-cover"
-                                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
-                            {% else %}
-                            <img alt="{{ memory.title }}" class="w-full h-full object-cover"
-                                src="https://placehold.co/400x300?text=No+Photo" />
-                            {% endif %}
-                        </div>
-
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-baseline">
-                                <span class="font-display font-bold text-lg text-gray-900 dark:text-white">{{
-                                    memory.title }}</span>
-                                <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-full">{{
-                                    memory.date }}{% if memory.days_journey %} • {{ memory.days_journey }}{% endif
-                                    %}</span>
-                            </div>
-                            <p
-                                class="text-sm text-gray-600 dark:text-gray-300 font-display leading-relaxed line-clamp-3">
-                                {{ memory.timeline_note if memory.timeline_note else memory.description }}
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-
-            <!-- End Marker -->
-            <div class="flex-shrink-0 flex flex-col items-center justify-center space-y-4 w-48 text-center ml-12">
-                <a href="/add"
-                    class="w-16 h-16 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg border-2 border-primary/20 hover:bg-primary/5 transition-colors cursor-pointer group">
+                <!-- NEW SEARCH BAR -->
+                <div class="relative group hidden md:block">
                     <span
-                        class="material-icons text-primary/50 group-hover:text-primary transition-colors text-3xl">add</span>
-                </a>
-                <div>
-                    <h3 class="font-bold text-xl text-gray-800 dark:text-white">To be continued...</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Add your next memory</p>
+                        class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">search</span>
+                    <input type="text" id="timeline-search" placeholder="Search memories..." autocomplete="off"
+                        class="pl-11 pr-10 py-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-56 transition-all focus:w-72 placeholder-gray-400 shadow-sm">
+                    <button id="clear-search"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden transition-colors"
+                        onclick="clearSearch()">
+                        <span class="material-icons text-base">close</span>
+                    </button>
                 </div>
+
+                <select id="months-select" class="pill pill-inactive text-xs border-0 pr-5"
+                    style="appearance:none;-webkit-appearance:none;background-image:none;" onchange="applyFilters()">
+                    <option value="3">Last 3 months</option>
+                    <option value="6">Last 6 months</option>
+                    <option value="12">Last year</option>
+                    <option value="0">All time</option>
+                </select>
+                <button id="btn-show-all" class="pill pill-inactive" onclick="toggleShowAll()">Show All</button>
+                <button id="sort-btn" class="pill pill-inactive" onclick="toggleSort()">
+                    <span class="material-icons text-sm" id="sort-icon">arrow_downward</span>
+                    <span id="sort-label">Newest</span>
+                </button>
             </div>
-            <!-- Extra space for scrolling feel -->
-            <div class="w-20 flex-shrink-0"></div>
+
+            <!-- Mobile Search Bar (shows below year pills on small screens) -->
+            <div class="md:hidden relative w-full mb-2">
+                <span
+                    class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">search</span>
+                <input type="text" id="timeline-search-mobile" placeholder="Search places, food, memories..."
+                    autocomplete="off"
+                    class="pl-11 pr-10 py-3 text-[15px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-gray-400 shadow-sm block">
+                <button id="clear-search-mobile"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden transition-colors"
+                    onclick="clearSearch()">
+                    <span class="material-icons text-base">close</span>
+                </button>
+            </div>
+
+            <!-- Row 2: Category pills -->
+            <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Type</span>
+                <button class="pill pill-active" id="cat-all" onclick="setCategory('all')">All</button>
+                {% for cat in categories %}
+                <button class="pill pill-inactive" id="cat-{{ cat.value }}" onclick="setCategory('{{ cat.value }}')">{{
+                    cat.label }}</button>
+                {% endfor %}
+            </div>
+
+            <!-- Row 3: Custom month-year range pickers -->
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Range</span>
+
+                <!-- From picker -->
+                <div class="month-picker-wrap" id="wrap-start">
+                    <div class="month-picker-display" id="disp-start" onclick="togglePicker('start')">
+                        <span class="material-icons text-sm">date_range</span>
+                        <span id="disp-start-text">From</span>
+                        <span class="material-icons text-xs opacity-50">expand_more</span>
+                    </div>
+                    <div class="month-picker-popup" id="popup-start">
+                        <div class="mp-year-nav">
+                            <button onclick="pickerYear('start',-1)"><span
+                                    class="material-icons text-sm">chevron_left</span></button>
+                            <span class="mp-year-label" id="mp-year-start">2025</span>
+                            <button onclick="pickerYear('start',1)"><span
+                                    class="material-icons text-sm">chevron_right</span></button>
+                        </div>
+                        <div class="mp-months" id="mp-months-start"></div>
+                    </div>
+                </div>
+
+                <span class="text-gray-400">→</span>
+
+                <!-- To picker -->
+                <div class="month-picker-wrap" id="wrap-end">
+                    <div class="month-picker-display" id="disp-end" onclick="togglePicker('end')">
+                        <span class="material-icons text-sm">date_range</span>
+                        <span id="disp-end-text">To</span>
+                        <span class="material-icons text-xs opacity-50">expand_more</span>
+                    </div>
+                    <div class="month-picker-popup" id="popup-end">
+                        <div class="mp-year-nav">
+                            <button onclick="pickerYear('end',-1)"><span
+                                    class="material-icons text-sm">chevron_left</span></button>
+                            <span class="mp-year-label" id="mp-year-end">2026</span>
+                            <button onclick="pickerYear('end',1)"><span
+                                    class="material-icons text-sm">chevron_right</span></button>
+                        </div>
+                        <div class="mp-months" id="mp-months-end"></div>
+                    </div>
+                </div>
+
+                <button onclick="clearRange()" class="pill pill-inactive text-xs">
+                    <span class="material-icons text-xs">close</span> Clear
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--             SEARCH PHOTO REEL                      -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div id="search-reel-container" class="relative-z max-w-5xl mx-auto px-4 pt-8 mt-12 hidden">
+        <div class="flex items-center justify-between mb-4">
+            <h3
+                class="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1.5 rounded-full inline-block">
+                <span id="search-result-count">0</span> matching memories
+            </h3>
+        </div>
+        <!-- Horizontal scrolling container -->
+        <div id="search-photo-reel" class="flex gap-4 overflow-x-auto pb-6 pt-2 snap-x hide-scrollbars">
+            <!-- Dynamically injected photos go here -->
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--                TIMELINE FEED                       -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <main class="relative-z max-w-5xl mx-auto px-4 py-10 pb-32 relative">
+        <div id="timeline-feed"></div>
+
+        <!-- Infinite Scroll Sentinel -->
+        <div id="load-more-trigger" class="h-10 w-full mt-8 opacity-0"></div>
+
+        <div id="empty-state" class="text-center py-24 space-y-4">
+            <span class="material-icons text-5xl" style="color:rgba(201,19,82,.3)">search_off</span>
+            <p class="text-gray-500 dark:text-gray-400">No memories match your filters.</p>
+            <button onclick="resetFilters()" class="pill pill-active mx-auto">Reset</button>
         </div>
     </main>
-    <!-- Floating Action Button -->
-    <div class="fixed bottom-8 right-8 z-40">
+
+    <!-- FAB -->
+    <div class="relative-z fixed bottom-8 right-8 z-40">
         <a href="/add"
             class="bg-primary hover:bg-red-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 group relative">
             <span class="material-icons text-2xl">add_a_photo</span>
@@ -185,10 +710,721 @@
                 Memory</span>
         </a>
     </div>
-    <!-- Scroll Indicator (Visual Only) -->
-    <div class="fixed bottom-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-800">
-        <div class="h-full bg-primary w-1/3 rounded-r-full"></div>
-    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--            DATA + JAVASCRIPT                       -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <script>
+        // ── Data ──────────────────────────────────────────────────────────────────────
+        const R2_URL = "{{ r2_url }}";
+        window.__MEMORIES__ = {{ memories | tojson }};
+
+        // ── State ─────────────────────────────────────────────────────────────────────
+        let state = {
+            category: 'all',
+            sortDesc: true,
+            showAllTime: false,
+            monthsBack: 3,
+            yearFilter: null,   // null = no year filter; number = filter to that year
+            rangeStart: null,   // "YYYY-MM"
+            rangeEnd: null,
+            visibleCount: 15,   // For infinite scroll virtualization
+            currentFiltered: [], // Holds current complete filtered list
+        };
+
+        // ── Picker internal state ─────────────────────────────────────────────────────
+        const pickerState = {
+            start: { year: new Date().getFullYear(), value: null },
+            end: { year: new Date().getFullYear(), value: null },
+        };
+
+        const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        // ── Date helpers ──────────────────────────────────────────────────────────────
+        function parseMemoryDate(s) {
+            if (!s) return null;
+            const d = new Date(s);
+            return isNaN(d) ? null : d;
+        }
+        function toMonthKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; }
+        function formatMonthLabel(key) {
+            const [y, m] = key.split('-');
+            return `${MONTHS_LONG[+m - 1]} ${y}`;
+        }
+        function keyToDisplay(k) {
+            const [y, m] = k.split('-');
+            return `${MONTHS_SHORT[+m - 1]} ${y}`;
+        }
+
+        // ── Custom month picker ───────────────────────────────────────────────────────
+        function renderPickerMonths(which) {
+            const st = pickerState[which];
+            const el = document.getElementById(`mp-months-${which}`);
+            const opp = which === 'start' ? 'end' : 'start';
+            el.innerHTML = '';
+            MONTHS_SHORT.forEach((mo, idx) => {
+                const key = `${st.year}-${String(idx + 1).padStart(2, '0')}`;
+                const btn = document.createElement('button');
+                btn.className = 'mp-month-btn';
+                btn.textContent = mo;
+                if (st.value === key) btn.classList.add('selected');
+                btn.onclick = () => selectMonth(which, key);
+                el.appendChild(btn);
+            });
+            document.getElementById(`mp-year-${which}`).textContent = st.year;
+        }
+
+        function pickerYear(which, delta) {
+            pickerState[which].year += delta;
+            renderPickerMonths(which);
+        }
+
+        function togglePicker(which) {
+            const popup = document.getElementById(`popup-${which}`);
+            const other = which === 'start' ? 'end' : 'start';
+            document.getElementById(`popup-${other}`).classList.remove('open');
+            popup.classList.toggle('open');
+            if (popup.classList.contains('open')) renderPickerMonths(which);
+        }
+
+        function selectMonth(which, key) {
+            pickerState[which].value = key;
+            document.getElementById(`popup-${which}`).classList.remove('open');
+
+            const disp = document.getElementById(`disp-${which}-text`);
+            disp.textContent = keyToDisplay(key);
+            document.getElementById(`disp-${which}`).classList.add('has-value');
+
+            // Update state
+            state.rangeStart = pickerState['start'].value;
+            state.rangeEnd = pickerState['end'].value;
+
+            // If setting a year filter, clear it since range takes precedence
+            if (state.yearFilter !== null) {
+                state.yearFilter = null;
+                updateYearPillsUI();
+            }
+            applyFilters();
+        }
+
+        function clearRange() {
+            ['start', 'end'].forEach(w => {
+                pickerState[w].value = null;
+                document.getElementById(`disp-${w}-text`).textContent = w === 'start' ? 'From' : 'To';
+                document.getElementById(`disp-${w}`).classList.remove('has-value');
+            });
+            state.rangeStart = null;
+            state.rangeEnd = null;
+            applyFilters();
+        }
+
+        // Close picker on outside click
+        document.addEventListener('click', e => {
+            ['start', 'end'].forEach(which => {
+                const wrap = document.getElementById(`wrap-${which}`);
+                if (wrap && !wrap.contains(e.target)) {
+                    document.getElementById(`popup-${which}`).classList.remove('open');
+                }
+            });
+        });
+
+        // ── Year pills — FILTER by year ───────────────────────────────────────────────
+        function buildYearPills() {
+            const years = [...new Set(
+                window.__MEMORIES__
+                    .map(m => parseMemoryDate(m.date))
+                    .filter(Boolean)
+                    .map(d => d.getFullYear())
+            )].sort((a, b) => b - a);
+
+            const container = document.getElementById('year-pills');
+            container.innerHTML = '';
+            years.forEach(y => {
+                const btn = document.createElement('button');
+                btn.className = 'pill pill-inactive';
+                btn.textContent = y;
+                btn.id = `year-pill-${y}`;
+                btn.onclick = () => toggleYearFilter(y);
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleYearFilter(year) {
+            if (state.yearFilter === year) {
+                // Deselect — back to months-back window
+                state.yearFilter = null;
+            } else {
+                state.yearFilter = year;
+                // Range overrides year; clear range when year selected
+                clearRange();
+            }
+            updateYearPillsUI();
+            applyFilters();
+        }
+
+        function updateYearPillsUI() {
+            document.querySelectorAll('[id^="year-pill-"]').forEach(btn => {
+                const y = parseInt(btn.id.replace('year-pill-', ''), 10);
+                btn.classList.toggle('pill-active', y === state.yearFilter);
+                btn.classList.toggle('pill-inactive', y !== state.yearFilter);
+            });
+        }
+
+        // ── Category filter ───────────────────────────────────────────────────────────
+        function setCategory(cat) {
+            state.category = cat;
+            document.querySelectorAll('[id^="cat-"]').forEach(b => {
+                b.classList.toggle('pill-active', b.id === `cat-${cat}`);
+                b.classList.toggle('pill-inactive', b.id !== `cat-${cat}`);
+            });
+            applyFilters();
+        }
+
+        // ── Sort ──────────────────────────────────────────────────────────────────────
+        function toggleSort() {
+            state.sortDesc = !state.sortDesc;
+            document.getElementById('sort-icon').textContent = state.sortDesc ? 'arrow_downward' : 'arrow_upward';
+            document.getElementById('sort-label').textContent = state.sortDesc ? 'Newest' : 'Oldest';
+            applyFilters();
+        }
+
+        // ── Show-all / months-back ────────────────────────────────────────────────────
+        function toggleShowAll() {
+            state.showAllTime = !state.showAllTime;
+            const btn = document.getElementById('btn-show-all');
+            const sel = document.getElementById('months-select');
+            if (state.showAllTime) {
+                btn.classList.replace('pill-inactive', 'pill-active');
+                btn.textContent = 'Showing All';
+                sel.disabled = true; sel.style.opacity = '.4';
+                state.yearFilter = null; updateYearPillsUI();
+            } else {
+                btn.classList.replace('pill-active', 'pill-inactive');
+                btn.textContent = 'Show All';
+                sel.disabled = false; sel.style.opacity = '1';
+            }
+            applyFilters();
+        }
+
+        // ── Search Engine Logic ──────────────────────────────────────────────────────
+        let memorySearchCache = [];
+        let searchDebounceTimer;
+
+        function getSearchPayload(memory) {
+            let parts = [memory.title, memory.description, memory.category];
+            if (memory.tags) parts.push(...memory.tags);
+            if (memory.itinerary && Array.isArray(memory.itinerary)) {
+                memory.itinerary.forEach(it => {
+                    parts.push(it.name);
+                    if (it.notes) parts.push(it.notes);
+                    if (it.food_names) parts.push(...it.food_names);
+                });
+            }
+            return parts.filter(Boolean).join(' ').toLowerCase();
+        }
+
+        function initSearchCache() {
+            memorySearchCache = window.__MEMORIES__.map(m => ({
+                id: m.id,
+                payload: getSearchPayload(m)
+            }));
+        }
+
+        function calculateSearchScore(queryParts, payload) {
+            if (queryParts.length === 0) return 1;
+            let score = 0;
+            // Require all terms to loosely match for a positive score
+            const allTermsMatch = queryParts.every(term => payload.includes(term));
+            if (!allTermsMatch) return 0;
+
+            for (let term of queryParts) {
+                if (payload.includes(term)) {
+                    score += 10;
+                }
+            }
+            return score;
+        }
+
+        function clearSearch() {
+            document.getElementById('timeline-search').value = '';
+            const mobileSearch = document.getElementById('timeline-search-mobile');
+            if (mobileSearch) mobileSearch.value = '';
+
+            document.getElementById('clear-search').classList.add('hidden');
+            const mobileClear = document.getElementById('clear-search-mobile');
+            if (mobileClear) mobileClear.classList.add('hidden');
+
+            applyFilters();
+        }
+
+        function handleSearchInput(e) {
+            clearTimeout(searchDebounceTimer);
+            const query = e.target.value.trim().toLowerCase();
+
+            const clearBtns = [document.getElementById('clear-search'), document.getElementById('clear-search-mobile')];
+            clearBtns.forEach(btn => {
+                if (btn) btn.classList.toggle('hidden', query.length === 0);
+            });
+
+            // Sync inputs
+            if (e.target.id === 'timeline-search') {
+                const mob = document.getElementById('timeline-search-mobile');
+                if (mob) mob.value = query;
+            } else {
+                const desk = document.getElementById('timeline-search');
+                if (desk) desk.value = query;
+            }
+
+            searchDebounceTimer = setTimeout(() => {
+                applyFilters();
+            }, 250);
+        }
+
+        setTimeout(() => {
+            document.getElementById('timeline-search')?.addEventListener('input', handleSearchInput);
+            document.getElementById('timeline-search-mobile')?.addEventListener('input', handleSearchInput);
+        }, 100);
+
+        function populateSearchReel(memories) {
+            const reelContainer = document.getElementById('search-reel-container');
+            const reel = document.getElementById('search-photo-reel');
+            const count = document.getElementById('search-result-count');
+
+            reel.innerHTML = '';
+            count.textContent = memories.length;
+
+            if (memories.length === 0) {
+                reelContainer.classList.add('hidden');
+                return;
+            }
+            reelContainer.classList.remove('hidden');
+
+            let photos = [];
+            const isVideo = url => typeof url === 'string' && /\.(mp4|mov|webm)$/i.test(url);
+
+            memories.forEach(mem => {
+                if (mem.photos && mem.photos.length > 0) {
+                    if (!isVideo(mem.photos[0])) {
+                        photos.push({ url: mem.photos[0], memId: mem.id });
+                    }
+                    if (mem.photos.length > 1 && !isVideo(mem.photos[1]) && Math.random() > 0.5) {
+                        photos.push({ url: mem.photos[1], memId: mem.id });
+                    }
+                }
+            });
+
+            photos.sort(() => 0.5 - Math.random());
+            photos = photos.slice(0, 10);
+
+            if (photos.length === 0) {
+                reelContainer.classList.add('hidden');
+                return;
+            }
+
+            photos.forEach(photo => {
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'flex-shrink-0 snap-center rounded-xl overflow-hidden shadow-sm border border-black/5 dark:border-white/10 hover:shadow-lg transition-all cursor-pointer relative group';
+                imgWrap.style.width = '100px';
+                imgWrap.style.height = '100px';
+                imgWrap.onclick = () => {
+                    const mem = window.__MEMORIES__.find(m => m.id === photo.memId);
+                    if (mem) {
+                        const mKey = toMonthKey(parseMemoryDate(mem.date));
+                        const section = document.getElementById(`section-month-${mKey}`);
+                        if (section) {
+                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            const cardCard = document.getElementById(`memory-card-${photo.memId}`);
+                            if (cardCard) {
+                                cardCard.classList.add('ring-4', 'ring-primary/60', 'rounded-3xl', 'transition-all', 'duration-500');
+                                setTimeout(() => cardCard.classList.remove('ring-4', 'ring-primary/60', 'rounded-3xl'), 2000);
+                            }
+                        }
+                    }
+                };
+
+                const img = document.createElement('img');
+                const isAbsolute = photo.url.startsWith('http') || photo.url.startsWith('/images');
+                img.src = isAbsolute ? photo.url : `${R2_URL}/uploads/${photo.memId}/${photo.url}`;
+                img.className = 'w-full h-full object-cover hover:scale-110 transition-transform duration-500';
+                img.loading = 'lazy';
+
+                imgWrap.appendChild(img);
+                reel.appendChild(imgWrap);
+            });
+        }
+
+        // ── Main filter ───────────────────────────────────────────────────────────────
+        function applyFilters() {
+            state.visibleCount = 15; // Reset virtualization count
+            state.monthsBack = parseInt(document.getElementById('months-select').value, 10);
+            const now = new Date();
+
+            const rawQuery = (document.getElementById('timeline-search')?.value || document.getElementById('timeline-search-mobile')?.value || '').trim().toLowerCase();
+            const queryParts = rawQuery.split(/\s+/).filter(Boolean);
+            const isSearching = queryParts.length > 0;
+
+            if (isSearching && memorySearchCache.length === 0) {
+                initSearchCache();
+            }
+
+            const filtered = window.__MEMORIES__.filter(m => {
+                const d = parseMemoryDate(m.date);
+                if (!d) return false;
+
+                // Category
+                if (state.category !== 'all' && m.type !== state.category) return false;
+
+                if (isSearching) {
+                    const cacheItem = memorySearchCache.find(c => c.id === m.id);
+                    if (!cacheItem) return false;
+                    const score = calculateSearchScore(queryParts, cacheItem.payload);
+                    return score > 0;
+                }
+
+                // YEAR filter — takes precedence over months-back (but not range)
+                if (state.yearFilter !== null && !state.rangeStart && !state.rangeEnd) {
+                    return d.getFullYear() === state.yearFilter;
+                }
+
+                // Date range picker
+                if (state.rangeStart || state.rangeEnd) {
+                    const mk = toMonthKey(d);
+                    if (state.rangeStart && mk < state.rangeStart) return false;
+                    if (state.rangeEnd && mk > state.rangeEnd) return false;
+                    return true;
+                }
+
+                // Show-all
+                if (state.showAllTime || state.monthsBack === 0) return true;
+
+                // Months-back
+                const cutoff = new Date(now);
+                cutoff.setMonth(cutoff.getMonth() - state.monthsBack);
+                return d >= cutoff;
+            });
+
+            filtered.sort((a, b) => {
+                const da = parseMemoryDate(a.date), db = parseMemoryDate(b.date);
+                return state.sortDesc ? db - da : da - db;
+            });
+
+            if (isSearching) {
+                populateSearchReel(filtered);
+            } else {
+                const r = document.getElementById('search-reel-container');
+                if (r) r.classList.add('hidden');
+            }
+
+            state.currentFiltered = filtered;
+            renderFeed(state.currentFiltered);
+        }
+
+        // ── Render ────────────────────────────────────────────────────────────────────
+        function renderFeed(memories) {
+            const feed = document.getElementById('timeline-feed');
+            const empty = document.getElementById('empty-state');
+            const loadMore = document.getElementById('load-more-trigger');
+
+            feed.innerHTML = '';
+            if (!memories.length) {
+                empty.style.display = 'block';
+                if (loadMore) loadMore.style.display = 'none';
+                return;
+            }
+            empty.style.display = 'none';
+
+            // Show hide load more trigger
+            if (state.visibleCount < memories.length) {
+                if (loadMore) loadMore.style.display = 'block';
+            } else {
+                if (loadMore) loadMore.style.display = 'none';
+            }
+
+            const visibleMemories = memories.slice(0, state.visibleCount);
+
+            // Group by Month+Year
+            const groups = {};
+            visibleMemories.forEach(m => {
+                const d = parseMemoryDate(m.date);
+                const k = toMonthKey(d);
+                if (!groups[k]) groups[k] = [];
+                groups[k].push(m);
+            });
+
+            const keys = Object.keys(groups).sort((a, b) => state.sortDesc ? b.localeCompare(a) : a.localeCompare(b));
+
+            keys.forEach(key => {
+                // Month header
+                const header = document.createElement('div');
+                // Use the stylesheet's 'month-header' which has 'margin: 48px 0 28px;' 
+                // but we add 'mt-12' to ensure it explicitly has a large top margin (48px) and won't get stuck under the sticky bar
+                header.className = 'month-header mb-8 mt-12';
+                header.id = `section-month-${key}`;
+                header.innerHTML = `<span class="month-badge">${formatMonthLabel(key)}</span>`;
+                feed.appendChild(header);
+
+                // Month grid container
+                const grid = document.createElement('div');
+                grid.className = 'month-grid';
+                feed.appendChild(grid);
+
+                groups[key].forEach(m => {
+                    const thumb = m.photos && m.photos.length
+                        ? `${R2_URL}/uploads/${m.id}/${m.photos[0]}`
+                        : 'https://placehold.co/400x300?text=No+Photo';
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'memory-card w-full flex justify-center';
+                    wrapper.id = `memory-card-${m.id}`;
+                    wrapper.innerHTML = cardHTML(m, thumb);
+                    grid.appendChild(wrapper);
+                });
+            });
+
+            // IntersectionObserver for card fade-ins - Optimized
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        // Use requestAnimationFrame to sync with browser paint
+                        requestAnimationFrame(() => e.target.classList.add('visible'));
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px -20px 0px',
+                threshold: 0
+            });
+            document.querySelectorAll('.memory-card').forEach(el => obs.observe(el));
+        }
+
+        function cardHTML(m, thumb) {
+            const note = m.timeline_note || m.description || '';
+            const ex = note.length > 90 ? note.slice(0, 90) + '…' : note;
+            return `
+        <a href="/memory/${m.id}" class="block max-w-xs w-full">
+            <div class="polaroid relative">
+                <div class="tape"></div>
+                <div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded overflow-hidden mb-3">
+                    <img src="${escHtml(thumb)}" alt="${escHtml(m.title)}" class="w-full h-full object-cover" loading="lazy">
+                </div>
+                <div class="space-y-1 px-1">
+                    <div class="flex justify-between items-start gap-2">
+                        <span class="font-bold text-sm text-gray-900 dark:text-white leading-snug">${escHtml(m.title)}</span>
+                        <span class="text-[10px] font-semibold shrink-0 px-2 py-0.5 rounded-full" style="background:rgba(201,19,82,.1);color:var(--color-primary,#c91352)">${escHtml(m.date)}</span>
+                    </div>
+                    ${ex ? `<p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">${escHtml(ex)}</p>` : ''}
+                    ${m.days_journey ? `<p class="text-[10px] font-semibold" style="color:rgba(201,19,82,.7)">${escHtml(m.days_journey)}</p>` : ''}
+                </div>
+            </div>
+        </a>`;
+        }
+
+        function escHtml(s) {
+            if (!s) return '';
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function resetFilters() {
+            state = { category: 'all', sortDesc: true, showAllTime: false, monthsBack: 3, yearFilter: null, rangeStart: null, rangeEnd: null, visibleCount: 15, currentFiltered: [] };
+            document.getElementById('months-select').value = '3';
+
+            const desk = document.getElementById('timeline-search');
+            if (desk) desk.value = '';
+            const mob = document.getElementById('timeline-search-mobile');
+            if (mob) mob.value = '';
+            const cD = document.getElementById('clear-search');
+            if (cD) cD.classList.add('hidden');
+            const cM = document.getElementById('clear-search-mobile');
+            if (cM) cM.classList.add('hidden');
+
+            clearRange();
+            document.querySelectorAll('[id^="cat-"]').forEach(b => {
+                b.classList.toggle('pill-active', b.id === 'cat-all');
+                b.classList.toggle('pill-inactive', b.id !== 'cat-all');
+            });
+            updateYearPillsUI();
+            document.getElementById('sort-icon').textContent = 'arrow_downward';
+            document.getElementById('sort-label').textContent = 'Newest';
+            applyFilters();
+        }
+
+        // ── Scroll progress ───────────────────────────────────────────────────────────
+        let scrollTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(() => {
+                    const el = document.documentElement;
+                    const progress = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+                    document.getElementById('scroll-progress').style.width = progress + '%';
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+
+        // ── Particle canvas ───────────────────────────────────────────────────────────
+        (function () {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, particles = [];
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            function rand(a, b) { return a + Math.random() * (b - a); }
+
+            for (let i = 0; i < 55; i++) {
+                particles.push({
+                    x: rand(0, 1), y: rand(0, 1),
+                    r: rand(.5, 2.2),
+                    vx: rand(-.00015, .00015),
+                    vy: rand(-.00008, .00008),
+                    a: rand(.15, .55),
+                    color: Math.random() > .6
+                        ? `rgba(201,19,82,${rand(.2, .5)})`
+                        : Math.random() > .5
+                            ? `rgba(255,200,130,${rand(.15, .4)})`
+                            : `rgba(180,120,255,${rand(.15, .4)})`
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                const isDark = document.documentElement.classList.contains('dark');
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
+                    if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = isDark ? p.a * .6 : p.a * .4;
+                    ctx.fill();
+                });
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        // ── Init ──────────────────────────────────────────────────────────────────────
+        buildYearPills();
+
+        // Set picker years to sensible defaults
+        const allDates = window.__MEMORIES__.map(m => parseMemoryDate(m.date)).filter(Boolean);
+        if (allDates.length) {
+            const minY = Math.min(...allDates.map(d => d.getFullYear()));
+            const maxY = Math.max(...allDates.map(d => d.getFullYear()));
+            pickerState.start.year = minY;
+            pickerState.end.year = maxY;
+        }
+
+        // ── Infinite Scroll Observer ──────────────────────────────────────────────────
+        const infiniteScrollObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && state.visibleCount < state.currentFiltered.length) {
+                // User reached bottom, load 15 more
+                state.visibleCount += 15;
+                renderFeed(state.currentFiltered);
+            }
+        }, { rootMargin: '0px 0px 400px 0px' });
+
+        const triggerEl = document.getElementById('load-more-trigger');
+        if (triggerEl) infiniteScrollObserver.observe(triggerEl);
+
+        applyFilters();
+
+        // ── Scrapbook: floating quotes + washi tape ───────────────────
+        (function buildScrapbook() {
+            const bg = document.getElementById('scrapbook-bg');
+            if (!bg) return;
+
+            // Love quotes in handwriting style
+            const QUOTES = [
+                "every moment with you is a treasure ♡",
+                "some souls just understand each other",
+                "you're my favourite adventure",
+                "in all the world, there is no heart for me like yours",
+                "together is a wonderful place to be",
+                "you make my heart happy ✦",
+                "forever & always",
+                "i choose you, every single day",
+                "home is wherever i'm with you",
+                "you are my sunshine on cloudy days",
+                "two hearts, one story",
+                "love is the only thing that grows when shared",
+                "you had me at hello ♡",
+                "our story is my favourite",
+                "making memories with you",
+                "love is not finding someone to live with — it's finding someone you can't live without",
+            ];
+
+            // Seed positions to avoid clustering (rough grid)
+            const positions = [
+                { x: 3, y: 8 }, { x: 55, y: 5 }, { x: 72, y: 14 },
+                { x: 8, y: 22 }, { x: 40, y: 28 }, { x: 78, y: 32 },
+                { x: 12, y: 42 }, { x: 60, y: 48 }, { x: 25, y: 55 },
+                { x: 80, y: 60 }, { x: 5, y: 68 }, { x: 48, y: 72 },
+                { x: 70, y: 78 }, { x: 18, y: 82 }, { x: 85, y: 88 },
+                { x: 35, y: 92 },
+            ];
+
+            const rotations = [-12, -8, -5, -3, 0, 3, 5, 8, 12, -10, 7, -6, 4, -4, 9, -7];
+            // Subtle watermark opacities
+            const opacities = [.22, .18, .24, .19, .20, .18, .22, .19, .24, .18, .22, .19, .20, .18, .22, .19];
+
+            QUOTES.forEach((q, i) => {
+                const pos = positions[i % positions.length];
+                const rot = rotations[i % rotations.length];
+                const op = opacities[i % opacities.length];
+                const el = document.createElement('div');
+                el.className = 'float-quote';
+                el.textContent = q;
+                el.style.cssText = `
+                    left:${pos.x}%;
+                    top:${pos.y}%;
+                    transform: rotate(${rot}deg);
+                    opacity: ${op};
+                    font-size: clamp(22px, 2.5vw, 36px);
+                    color: rgba(180, 60, 90, 0.4);
+                `;
+                bg.appendChild(el);
+            });
+
+            // Washi tape strips — left and right margins
+            const washibands = [
+                { top: '8%', left: '-10px', width: '160px', rot: '-3deg', color: 'rgba(201,19,82,.55)' },
+                { top: '22%', left: '-8px', width: '120px', rot: '2deg', color: 'rgba(255,160,60,.55)' },
+                { top: '38%', left: '-12px', width: '180px', rot: '-1.5deg', color: 'rgba(140,80,220,.45)' },
+                { top: '55%', left: '-6px', width: '130px', rot: '3deg', color: 'rgba(80,190,180,.45)' },
+                { top: '72%', left: '-10px', width: '150px', rot: '-2.5deg', color: 'rgba(255,120,100,.5)' },
+                { top: '12%', right: '-10px', width: '140px', rot: '4deg', color: 'rgba(255,160,60,.5)' },
+                { top: '35%', right: '-8px', width: '170px', rot: '-2deg', color: 'rgba(201,19,82,.45)' },
+                { top: '62%', right: '-12px', width: '125px', rot: '2.5deg', color: 'rgba(140,80,220,.4)' },
+            ];
+
+            washibands.forEach(w => {
+                const el = document.createElement('div');
+                el.className = 'washi';
+                el.style.cssText = `
+                    top:${w.top};
+                    ${w.left ? 'left:' + w.left + ';' : ''}
+                    ${w.right ? 'right:' + w.right + ';' : ''}
+                    width:${w.width};
+                    transform: rotate(${w.rot});
+                    background: ${w.color};
+                `;
+                bg.appendChild(el);
+            });
+        })();
+    </script>
+
+
+
 </body>
 
 </html>

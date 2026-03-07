@@ -53,7 +53,7 @@ async def add_memory(memory: dict):
 async def get_settings():
     db = get_db()
     settings = await db.settings.find_one({}, {"_id": 0})
-    defaults = {"private_mode": False, "theme": "classic", "birthday_mode": False}
+    defaults = {"private_mode": False, "theme": "classic", "birthday_mode": False, "hero_images": []}
     if settings:
         # Ensure all default keys exist
         for key, val in defaults.items():
