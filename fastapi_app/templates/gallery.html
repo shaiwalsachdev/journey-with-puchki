@@ -103,12 +103,25 @@
                 </div>
             </div>
 
-            <!-- Shuffle Button -->
-            <button onclick="shuffleGallery()"
-                class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-white shadow-lg shadow-primary/25 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95 font-medium whitespace-nowrap">
-                <span class="material-icons text-sm">shuffle</span>
-                Shuffle &amp; Refresh
-            </button>
+            <div class="flex items-center justify-center gap-3 flex-wrap">
+                <!-- Shuffle Button -->
+                <button onclick="shuffleGallery()"
+                    class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-all hover:-translate-y-0.5 active:translate-y-0 font-medium whitespace-nowrap border border-slate-200 dark:border-slate-700">
+                    <span class="material-icons text-sm">shuffle</span>
+                    Shuffle
+                </button>
+
+                <!-- AI Magic Button -->
+                <button onclick="startAiMagic()"
+                    class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all hover:scale-105 active:scale-95 font-bold whitespace-nowrap overflow-hidden relative group">
+                    <div
+                        class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                    </div>
+                    <span
+                        class="material-icons text-base group-hover:rotate-12 transition-transform duration-300 relative z-10">auto_awesome</span>
+                    <span class="relative z-10 tracking-wide">AI Magic ✨</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -278,12 +291,16 @@
         // We will do this by dispatching 'gallery-updated' and listening in lightbox partial.
 
         function openLightboxFromEl(el) {
-            // This is just a fallback if click delegation fails or for explicit usage
-            // The global listener in lightbox.html checks clicks.
-            // So empty function here or remove onclick.
-            // Let's leave onclick empty/remove it to rely on delegation.
+            // Use the improved global trigger
+            const img = el.querySelector('img');
+            if (img && window.openLightboxWithImage) {
+                window.openLightboxWithImage(img);
+            }
         }
     </script>
+    <!-- AI Magic Partial -->
+    {% include 'partials/ai_magic.html' %}
+
 </body>
 
 </html>

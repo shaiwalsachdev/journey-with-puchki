@@ -283,7 +283,8 @@ async def get_filtered_memories(settings, seed=None):
                     "title": redact_text(m.get("title", ""), settings.get("private_mode")),
                     "date": m.get("date", ""),
                     "type": m.get("type", ""),
-                    "photo": p
+                    "photo": p,
+                    "is_favorite": m.get("is_favorite", False)
                 })
 
     if seed is not None:
@@ -311,7 +312,10 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
         return RedirectResponse(url="/gallery?category=all&page=1", status_code=302)
 
     if category != "all":
-        all_items = [item for item in all_items if item["type"] == category]
+        if category == "favorite":
+            all_items = [item for item in all_items if item.get("is_favorite")]
+        else:
+            all_items = [item for item in all_items if item["type"] == category]
     elif not settings.get("birthday_mode"):
         # When viewing 'all' and birthday mode is off, exclude hot items
         all_items = [item for item in all_items if item.get("type") != "hot"]
@@ -333,7 +337,7 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
     for m in memories:
         if m.get("type"):
             type_set.add(m["type"])
-    categories = []
+    categories = [{"value": "favorite", "label": "Favorites ❤️"}]
     for t in sorted(type_set):
         # Hide 'start' in private mode
         if settings.get("private_mode") and t in PRIVATE_HIDDEN_CATEGORIES:
@@ -361,7 +365,10 @@ async def get_memories_api(request: Request, page: int = 1, limit: int = 12, see
     all_items = await get_filtered_memories(settings, seed=seed)
 
     if category != "all":
-        all_items = [item for item in all_items if item["type"] == category]
+        if category == "favorite":
+            all_items = [item for item in all_items if item.get("is_favorite")]
+        else:
+            all_items = [item for item in all_items if item["type"] == category]
 
     total_items = len(all_items)
     start = (page - 1) * limit
@@ -747,6 +754,19 @@ async def update_photo_privacy(memory_id: int, update: PhotoPrivacyUpdate):
         "hidden_photos": update.hidden_photos
     })
     return {"status": "success", "message": "Privacy settings updated"}
+
+
+@app.post("/api/memory/{memory_id}/favorite")
+async def toggle_favorite(request: Request, memory_id: int):
+    memory = await get_memory_by_id(memory_id)
+    if not memory:
+        raise HTTPException(status_code=404, detail="Memory not found")
+    
+    current_status = memory.get("is_favorite", False)
+    new_status = not current_status
+    
+    await update_memory(memory_id, {"is_favorite": new_status})
+    return {"status": "success", "is_favorite": new_status}
 
 
 # --- Rate Date ---

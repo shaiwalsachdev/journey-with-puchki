@@ -65,12 +65,14 @@
             images = Array.from(allCandidates).filter(img => {
                 const isLogo = img.src.includes('logo') || img.classList.contains('icon');
                 const isProfile = img.classList.contains('rounded-full') && img.width < 100;
-                // Removed strict naturalDimension check as it filters out lazy-loaded images (width=0)
-                // We rely on the specific selectors above to target content images
                 const isLightbox = img.id === 'lightbox-img';
                 return !isLogo && !isProfile && !isLightbox;
             });
+            console.log(`Lightbox: Refreshed image list, found ${images.length} candidates.`);
         }
+
+        // Expose globally
+        window.refreshLightboxImages = refreshImageList;
 
         // Global Click Listener (Event Delegation)
         document.addEventListener('click', (e) => {
@@ -81,44 +83,40 @@
             let targetImg = null;
 
             // Direct image click
-            if (e.target.tagName === 'IMG' && images.includes(e.target)) {
+            if (e.target.tagName === 'IMG') {
                 targetImg = e.target;
             }
-            // Wrapper/Overlay click
+            // Wrapper/Overlay click - prioritize masonry items or common groups
             else {
-                // 1. First try to find a wrapper that CONTAINS the image
-                const wrapper = e.target.closest('.masonry-item, .group, .grid > div, .relative');
+                const wrapper = e.target.closest('.masonry-item, .group, .grid > div, .relative, [onclick*="openLightbox"]');
                 if (wrapper) {
-                    const img = wrapper.querySelector('img');
-                    if (img && images.includes(img)) {
-                        // Ensure we didn't click a button/link inside the wrapper
-                        if (!e.target.closest('a:not([href="#"]), button')) {
-                            targetImg = img;
-                        }
-                    }
-                }
-                // 2. If not found, check if the clicked element is a sibling overlay of an image
-                if (!targetImg) {
-                    const clickedElement = e.target;
-                    // Check for common overlay patterns that are siblings to an image
-                    const siblingImg = clickedElement.nextElementSibling && clickedElement.nextElementSibling.tagName === 'IMG' ? clickedElement.nextElementSibling :
-                        clickedElement.previousElementSibling && clickedElement.previousElementSibling.tagName === 'IMG' ? clickedElement.previousElementSibling :
-                            null;
-
-                    if (siblingImg && images.includes(siblingImg)) {
-                        // Ensure we didn't click a button/link inside the overlay
-                        if (!e.target.closest('a:not([href="#"]), button')) {
-                            targetImg = siblingImg;
-                        }
-                    }
+                    targetImg = wrapper.querySelector('img');
                 }
             }
 
-            if (targetImg) {
-                e.preventDefault();
-                e.stopPropagation();
-                openLightbox(images.indexOf(targetImg));
+            // Check if it's one of our target lightbox images
+            if (targetImg && !targetImg.id.includes('lightbox-img')) {
+                // Ensure it's not a link or button
+                if (e.target.closest('a:not([href="#"]), button')) return;
+
+                // Sync image list if it doesn't contain this image yet (e.g. newly loaded)
+                if (!images.includes(targetImg)) {
+                    refreshImageList();
+                }
+
+                const index = images.indexOf(targetImg);
+                if (index !== -1) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openLightbox(index);
+                }
             }
+        });
+
+        // Listen for dynamic updates
+        window.addEventListener('gallery-updated', () => {
+            console.log("Lightbox: gallery-updated event received");
+            refreshImageList();
         });
 
         function openLightbox(index) {
@@ -128,7 +126,7 @@
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
             }, 10);
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('lightbox-open');
         }
 
         function closeLightbox() {
@@ -137,7 +135,7 @@
                 modal.classList.add('hidden');
                 modalImg.src = '';
             }, 300);
-            document.body.style.overflow = '';
+            document.body.classList.remove('lightbox-open');
         }
 
         function updateLightboxContent() {
@@ -173,6 +171,13 @@
             currentIndex = (currentIndex - 1 + images.length) % images.length;
             updateLightboxContent();
         }
+
+        // Global trigger method
+        window.openLightboxWithImage = function (imgEl) {
+            if (!images.includes(imgEl)) refreshImageList();
+            const index = images.indexOf(imgEl);
+            if (index !== -1) openLightbox(index);
+        };
 
         // Controls
         closeBtn.addEventListener('click', closeLightbox);
