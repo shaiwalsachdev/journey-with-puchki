@@ -246,7 +246,7 @@
                                     favorite person, my partner in crime, and the love of my life. 💖</p>
 
                                 <!-- Audio Element setup for MP3 file -->
-                                <audio id="birthday-audio" src="/static/audio/birthday-song.mp3"></audio>
+                                <audio id="birthday-audio" src="/static/audio/Birthday_song_2.mp3"></audio>
                                 <audio id="love-audio" src="/static/audio/love-song.mp3"></audio>
 
                                 <div class="pt-8 flex justify-center gap-4 flex-wrap">
@@ -285,10 +285,15 @@
                                         </button>
                                     </div>
                                     <div class="flex flex-col items-center gap-3">
-                                        <button onclick="startSlideshow()"
-                                            class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-white/30 transition-all flex items-center gap-2 w-full justify-center">
-                                            <span class="material-icons">slideshow</span>
-                                            Play Slideshow 📸
+                                        <!-- AI Magic Button -->
+                                        <button onclick="startAiMagic()"
+                                            class="flex items-center justify-center gap-2 px-8 py-3 w-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 transition-all hover:scale-105 active:scale-95 font-bold whitespace-nowrap overflow-hidden relative group">
+                                            <div
+                                                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                                            </div>
+                                            <span
+                                                class="material-icons text-base group-hover:rotate-12 transition-transform duration-300 relative z-10">auto_awesome</span>
+                                            <span class="relative z-10 tracking-wide">AI Magic ✨</span>
                                         </button>
                                     </div>
                                     <div class="flex flex-col items-center gap-3">
@@ -601,14 +606,7 @@
             class="absolute right-6 text-white text-5xl z-10 hover:text-pink-300 transition-colors">&#8250;</button>
     </div>
 
-    <!-- Slideshow Overlay -->
-    <div id="slideshow-overlay" onclick="stopSlideshow()">
-        <div class="slideshow-counter" id="slideshow-counter">1 / 1</div>
-        <img id="slideshow-img" src="" alt="Slideshow" class="fade-in" onclick="event.stopPropagation()" />
-        <button onclick="stopSlideshow()"
-            class="absolute top-6 right-6 text-white text-4xl z-10 hover:text-pink-300 transition-colors">&times;</button>
-        <div class="slideshow-progress" id="slideshow-dots" onclick="event.stopPropagation()"></div>
-    </div>
+    <!-- Old Slideshow Overlay (removed) -->
 
     <!-- Lyrics Modal -->
     <div id="lyrics-modal"
@@ -735,92 +733,96 @@
 
         // --- Lyrics Data ---
         const lyricsData = {
-            'birthday': `🎂 “Jeevansaathi Se Janamdin Tak” 🎶
+            'birthday': `🎂 **“Jeevansaathi Se Janamdin Tak”** 🎶
 
-(For My Shaila, My Puchki)
+*(For My Shaila, My Puchki)*
 
-🎵 Verse 1 – Destiny Begins
+🎵 **Verse 1 – Where It All Began**
 
-Jeevansaathi pe ek rishta bana,
-Jaise Rab ne khud likha ho fasana ✨
-Parents connected, dil chup-chup muskuraya,
-Hum jaante the… par duniya ko bataya na 😌
+Jeevansaathi par ek rishta bana,
+Jaise Rab ne khud likha ho afsana ✨
+Paarents mile, kahaani shuru ho gayi,
+Dil chupke se tumhari taraf ho gaya 😌
 
-Baatein hui shaadi, future aur ghar ki,
+Baatein hui shaadi aur sapno ki,
 Har lafz mein tasveer thi sirf “hum” ki ❤️
-Woh pehli lambi call jo dil tak gayi,
-Tab samjha — meri duniya tum ban gayi.
+Woh pehli lambi call jo dil ko chhoo gayi,
+Tab samjha mein — meri duniya tum ban gayi.
 
-🎵 Chorus
+---
 
-Happy Birthday, meri Puchki jaan 🎂
-Tu hi meri khushi, tu hi armaan ❤️
+🎵 **Chorus**
+
+Happy Birthday meri Puchki jaan 🎂
+Tu hi meri khushi, tu hi meri pehchaan ❤️
 Har weekend ka intezaar tum,
 Har sukoon bhari raat ka pyaar tum.
-Is saal sirf ek hi khwaab sajaya —
+
+Is saal bas ek hi khwaab sajaya —
 Tumhe apni dulhan bana kar ghar le aaya 💍
 
-🎵 Verse 2 – Families & First Meetings
+---
+
+🎵 **Verse 2 – Families & First Meeting**
 
 October ki woh pehli mulaqat,
-Tumhare ghar pe dil ko mila sukoon ka saath 🏡
-Itna comfortable, itna apna sa,
-Jaise saalon se ho rishta gehra sa.
+Tumhare ghar mila dil ko sukoon ka saath 🏡
+Sab kuch itna apna sa lagne laga,
+Jaise purana koi rishta jagne laga.
 
-Advant ke dahi kebab yaad hain mujhe,
-Karigari ne haan karwayi sabse tujhe 😄
-Us din families ne jo faisla kiya,
-Maine mann hi mann tujhe apna keh diya.
+---
 
-🎵 Verse 3 – Dates & Memories
+🎵 **Verse 3 – Our Little Dates**
 
 Chocolate date aur phoolon ka pyaar 🌹
 Healthy pasta bhi laga tyohar 😅
-Worldmark ki woh pehli si jhappi,
-Blue-black matching — meri lucky Puchki 💙
+Woh candlelight wala din,
+Haathon mein haath aur dil ki baat ✨
+food dates with sushi aur bao,
+Har meal ban gaya love story ka vow 🍣
 
-Candlelight GK2 ki raat,
-Haathon mein haath, dil ke jazbaat ✨
-Director’s Cut, sushi, bao,
-Har meal bana love story ka vow 🍣
+Painting date aur chhota sa ghar 🎨
+Jaise future ka sapna ho amar
+Har OOTD sent on whatsapp, har goodnight call,
+Tum ho meri duniyaaaa
 
-Painting date, chhota sa ghar 🎨
-Jaise future ka sapna tha amar
-Har OOTD, har goodnight call,
-Tum ho meri duniya, meri sabse badi wall.
+---
 
-🎵 Bridge – Roka & Roshni
+🎵 **Bridge – Roka & New Beginnings**
 
-Roka dresses choose karte hue,
-Aankhon mein chamak dekh raha tha main tujhe ✨
-Kulcha Culture ki lassi yaad hai na?
-Tumhari hasi — meri sabse badi dua 💛
+Dresses choose karte hue,
+Aankhon mein chamak dekhta raha main tujhe ✨
+Tumhari hasi meri sabse badi dua 💛
 
-Woh blue dress mein tum chand lagi,
-Music & Mountains ki raat mein duniya ruki.
-Gurdwara se New Year start hua,
-Rab ne bola — “Yeh rishta pakka hua.” 🙏
+Blue dress mein tum chand si lagi rhi ho tum,
+Gurdwara se New Year ki shuruaat hui,
+Jaise Rab ne kaha — “Yeh jodi bani hi thi.” 🙏
 
-🎵 Final Chorus (Emotional)
+---
 
-Happy Birthday, meri hone wali wife 💕
+🎵 **Final Chorus**
+
+Happy Birthday meri hone wali wife 💕
 Tu hi meri peace, tu hi meri life.
-Har hug mein ghar milta hai mujhe,
-Har muskaan mein Rab dikhta hai tujhe.
+Har muskaan mein Rab nazar aata hai mujhe.
 
 Ab bas ek hi intezaar hai mujhe,
 Iss saal shaadi ka pyaar hai mujhe 💍
-Puchki… main har janam mein tumhe chahunga,
-Aur har birthday tumhe aise hi gaa kar manauga.
+Shaaailaaa… har janam mein tumhe chahunga,
+Aur har birthday tumhe chahuga
 
-🎵 Soft Ending (Spoken)
+---
+
+🎵 **Soft Ending (Spoken)**
 
 Shaila…
 Thank you for choosing this journey with me.
-Thank you for every hug, every laugh, every sushi date.
-This year… I can’t wait to marry you.
+For every hug, every laugh, every sushi date.
 
-Happy Birthday, meri Puchki ❤️✨`,
+This year…
+I can’t wait to marry you.
+
+**Happy Birthday, meri Shaila ❤️✨**`,
             'love': `🎂 “Shaaaaila…” 🎶
 
 (Very Emotional Birthday Song)
@@ -1046,109 +1048,7 @@ Happy Birthday, Shaaaaila. ❤️✨`
             document.getElementById('birthday-lightbox-img').src = allPhotos[currentPhotoIndex];
         }
 
-        // --- Slideshow ---
-        let slideshowInterval = null;
-        let slideshowConfettiInterval = null;
-        let slideshowIndex = 0;
-
-        function startSlideshow() {
-            if (allPhotos.length === 0) return alert('No photos to show!');
-
-            const overlay = document.getElementById('slideshow-overlay');
-            const img = document.getElementById('slideshow-img');
-            const counter = document.getElementById('slideshow-counter');
-            const dotsContainer = document.getElementById('slideshow-dots');
-
-            // Build dots
-            dotsContainer.innerHTML = '';
-            allPhotos.forEach((_, i) => {
-                const dot = document.createElement('div');
-                dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
-                dot.onclick = (e) => { e.stopPropagation(); goToSlide(i); };
-                dotsContainer.appendChild(dot);
-            });
-
-            slideshowIndex = 0;
-            img.src = allPhotos[0];
-            img.className = 'fade-in';
-            counter.textContent = `1 / ${allPhotos.length}`;
-            overlay.classList.add('active');
-
-            // Start playing the birthday song
-            if (birthdayAudio.paused) {
-                birthdayAudio.play();
-                playBtnText.innerText = "Pause Birthday Song";
-                playBtnIcon.innerText = "pause_circle_filled";
-            }
-
-            // Auto-advance every 3 seconds
-            slideshowInterval = setInterval(() => {
-                nextSlide();
-            }, 3000);
-
-            // Continuous confetti during slideshow - force canvas above overlay
-            slideshowConfettiInterval = setInterval(() => {
-                confetti({
-                    particleCount: 8, angle: 60, spread: 55,
-                    origin: { x: 0, y: 0.7 },
-                    colors: ['#f42559', '#ff69b4', '#ffd700', '#ff1493', '#ffb6c1'],
-                    zIndex: 10001
-                });
-                confetti({
-                    particleCount: 8, angle: 120, spread: 55,
-                    origin: { x: 1, y: 0.7 },
-                    colors: ['#f42559', '#ff69b4', '#ffd700', '#ff1493', '#ffb6c1'],
-                    zIndex: 10001
-                });
-                confetti({
-                    particleCount: 5, angle: 90, spread: 120,
-                    origin: { x: 0.5, y: 0.3 },
-                    colors: ['#f42559', '#ff69b4', '#ffd700', '#ff1493', '#ffb6c1'],
-                    shapes: ['circle'],
-                    zIndex: 10001
-                });
-            }, 1500);
-
-            // Stop when song ends
-            birthdayAudio.addEventListener('ended', stopSlideshow, { once: true });
-        }
-
-        function nextSlide() {
-            const img = document.getElementById('slideshow-img');
-            img.className = 'fade-out';
-            setTimeout(() => {
-                slideshowIndex = (slideshowIndex + 1) % allPhotos.length;
-                img.src = allPhotos[slideshowIndex];
-                img.className = 'fade-in';
-                updateSlideshowUI();
-            }, 800);
-        }
-
-        function goToSlide(index) {
-            const img = document.getElementById('slideshow-img');
-            img.className = 'fade-out';
-            setTimeout(() => {
-                slideshowIndex = index;
-                img.src = allPhotos[slideshowIndex];
-                img.className = 'fade-in';
-                updateSlideshowUI();
-            }, 400);
-        }
-
-        function updateSlideshowUI() {
-            document.getElementById('slideshow-counter').textContent = `${slideshowIndex + 1} / ${allPhotos.length}`;
-            document.querySelectorAll('.slideshow-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === slideshowIndex);
-            });
-        }
-
-        function stopSlideshow() {
-            clearInterval(slideshowInterval);
-            clearInterval(slideshowConfettiInterval);
-            slideshowInterval = null;
-            slideshowConfettiInterval = null;
-            document.getElementById('slideshow-overlay').classList.remove('active');
-        }
+        // --- AI Magic Feature included via partial below ---
 
         // --- Greeting Card Typewriter & Flip Effect ---
         const greetingCardModal = document.getElementById('greeting-card-modal');
@@ -1265,6 +1165,8 @@ Forever yours. 💕`;
         });
     </script>
 
+    <!-- AI Magic Partial -->
+    {% include 'partials/ai_magic_birthday.html' %}
 </body>
 
 </html>
