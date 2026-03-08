@@ -102,8 +102,9 @@
                 <div class="flex justify-between items-start mb-6">
                     <span class="material-icons-round text-primary/30 text-4xl">{{ entry.icon|default('format_quote')
                         }}</span>
-                    <button
-                        class="w-12 h-12 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center shadow-inner">
+                    <button onclick="speakWord('{{ entry.word }}')"
+                        class="w-12 h-12 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center shadow-inner"
+                        title="Listen to this word">
                         <span class="material-icons-round">volume_up</span>
                     </button>
                 </div>
@@ -206,6 +207,66 @@
             <span class="text-primary font-handwriting font-bold">Midnight Snack?</span>
         </div>
     </div>
+
+    <!-- Text to Speech Logic -->
+    <script>
+        function speakWord(text) {
+            if ('speechSynthesis' in window) {
+                // Cancel any currently speaking text
+                window.speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+
+                // Try to find a melodious Indian female voice
+                const voices = window.speechSynthesis.getVoices();
+
+                // 1. Look for Indian Female specifically (by lang AND name keywords)
+                // Common names: Heera, Veena, Isha, Google English (India)
+                let preferredVoice = voices.find(v =>
+                    (v.lang.includes('en-IN') || v.lang.includes('en_IN')) &&
+                    (v.name.toLowerCase().includes('female') ||
+                        v.name.toLowerCase().includes('heera') ||
+                        v.name.toLowerCase().includes('veena') ||
+                        v.name.toLowerCase().includes('isha') ||
+                        v.name.toLowerCase().includes('google')) &&
+                    !v.name.toLowerCase().includes('rishi') // Strictly avoid male voice
+                );
+
+                // 2. Fallback to any English Female voice (melodious)
+                if (!preferredVoice) {
+                    preferredVoice = voices.find(v =>
+                        v.lang.startsWith('en') &&
+                        (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('google'))
+                    );
+                }
+
+                // 3. Last fallback: any female voice
+                if (!preferredVoice) {
+                    preferredVoice = voices.find(v => v.name.toLowerCase().includes('female'));
+                }
+
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+
+                // Melodious settings: slightly higher pitch, slower rate
+                utterance.pitch = 1.15;
+                utterance.rate = 0.85;
+                utterance.volume = 1;
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Text-to-speech not supported in this browser.");
+            }
+        }
+
+        // Ensure voices are loaded (some browsers load them asynchronously)
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = function () {
+                window.speechSynthesis.getVoices();
+            };
+        }
+    </script>
 </body>
 
 </html>
