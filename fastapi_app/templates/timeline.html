@@ -182,6 +182,44 @@
             -webkit-backdrop-filter: blur(20px);
         }
 
+        /* ─── mobile collapsible filter panel ───────────────────────── */
+        #mobile-filter-toggle {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            #mobile-filter-toggle {
+                display: inline-flex;
+            }
+
+            #filter-panel {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+                opacity: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+
+            #filter-panel.open {
+                max-height: 600px;
+                opacity: 1;
+                padding-top: 0.625rem;
+                padding-bottom: 0.625rem;
+            }
+
+            /* Compact row always visible on mobile */
+            #mobile-compact-row {
+                display: flex;
+            }
+        }
+
+        @media (min-width: 768px) {
+            #mobile-compact-row {
+                display: none;
+            }
+        }
+
         /* ─── pill buttons ───────────────────────────────────────── */
         .pill {
             display: inline-flex;
@@ -557,113 +595,128 @@
     <!-- ═══════════════════════════════════════════════════ -->
     <div
         class="relative-z filter-bar sticky top-[72px] z-40 bg-background-light/85 dark:bg-background-dark/85 border-b border-gray-200/50 dark:border-gray-700/50 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 py-3 space-y-2.5">
+        <div class="max-w-5xl mx-auto px-4 py-2.5">
 
-            <!-- Row 1: Year filter pills + Sort + Time window -->
-            <div class="flex items-center gap-2 flex-wrap">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Year</span>
-                <div id="year-pills" class="flex gap-1.5 flex-wrap"></div>
-                <div class="flex-1"></div>
-
-                <!-- NEW SEARCH BAR -->
-                <div class="relative group hidden md:block">
+            <!-- ── Mobile compact row (always visible on mobile) ── -->
+            <div id="mobile-compact-row" class="items-center gap-2 w-full">
+                <!-- Mobile search -->
+                <div class="relative flex-1">
                     <span
-                        class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">search</span>
-                    <input type="text" id="timeline-search" placeholder="Search memories..." autocomplete="off"
-                        class="pl-11 pr-10 py-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-56 transition-all focus:w-72 placeholder-gray-400 shadow-sm">
-                    <button id="clear-search"
+                        class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">search</span>
+                    <input type="text" id="timeline-search-mobile" placeholder="Search memories..."
+                        autocomplete="off"
+                        class="pl-10 pr-9 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-gray-400 shadow-sm">
+                    <button id="clear-search-mobile"
                         class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden transition-colors"
                         onclick="clearSearch()">
                         <span class="material-icons text-base">close</span>
                     </button>
                 </div>
-
-                <select id="months-select" class="pill pill-inactive text-xs border-0 pr-5"
-                    style="appearance:none;-webkit-appearance:none;background-image:none;" onchange="applyFilters()">
-                    <option value="3">Last 3 months</option>
-                    <option value="6">Last 6 months</option>
-                    <option value="12">Last year</option>
-                    <option value="0">All time</option>
-                </select>
-                <button id="btn-show-all" class="pill pill-inactive" onclick="toggleShowAll()">Show All</button>
-                <button id="sort-btn" class="pill pill-inactive" onclick="toggleSort()">
-                    <span class="material-icons text-sm" id="sort-icon">arrow_downward</span>
-                    <span id="sort-label">Newest</span>
+                <!-- Filter toggle button -->
+                <button id="mobile-filter-toggle" onclick="toggleMobileFilters()"
+                    class="pill pill-inactive flex-shrink-0 flex items-center gap-1">
+                    <span class="material-icons text-sm" id="mobile-filter-icon">tune</span>
+                    <span id="mobile-filter-label">Filters</span>
+                    <span class="material-icons text-xs" id="mobile-filter-caret">expand_more</span>
                 </button>
             </div>
 
-            <!-- Mobile Search Bar (shows below year pills on small screens) -->
-            <div class="md:hidden relative w-full mb-2">
-                <span
-                    class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">search</span>
-                <input type="text" id="timeline-search-mobile" placeholder="Search places, food, memories..."
-                    autocomplete="off"
-                    class="pl-11 pr-10 py-3 text-[15px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full placeholder-gray-400 shadow-sm block">
-                <button id="clear-search-mobile"
-                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden transition-colors"
-                    onclick="clearSearch()">
-                    <span class="material-icons text-base">close</span>
-                </button>
-            </div>
+            <!-- ── Filter panel (always visible on desktop, collapsible on mobile) ── -->
+            <div id="filter-panel" class="space-y-2.5 md:pt-2.5">
 
-            <!-- Row 2: Category pills -->
-            <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Type</span>
-                <button class="pill pill-active" id="cat-all" onclick="setCategory('all')">All</button>
-                {% for cat in categories %}
-                <button class="pill pill-inactive" id="cat-{{ cat.value }}" onclick="setCategory('{{ cat.value }}')">{{
-                    cat.label }}</button>
-                {% endfor %}
-            </div>
+                <!-- Row 1: Year filter pills + Sort + Time window -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Year</span>
+                    <div id="year-pills" class="flex gap-1.5 flex-wrap"></div>
+                    <div class="flex-1"></div>
 
-            <!-- Row 3: Custom month-year range pickers -->
-            <div class="flex items-center gap-3 flex-wrap">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Range</span>
-
-                <!-- From picker -->
-                <div class="month-picker-wrap" id="wrap-start">
-                    <div class="month-picker-display" id="disp-start" onclick="togglePicker('start')">
-                        <span class="material-icons text-sm">date_range</span>
-                        <span id="disp-start-text">From</span>
-                        <span class="material-icons text-xs opacity-50">expand_more</span>
+                    <!-- Desktop search -->
+                    <div class="relative group hidden md:block">
+                        <span
+                            class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-base pointer-events-none">search</span>
+                        <input type="text" id="timeline-search" placeholder="Search memories..." autocomplete="off"
+                            class="pl-11 pr-10 py-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-56 transition-all focus:w-72 placeholder-gray-400 shadow-sm">
+                        <button id="clear-search"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden transition-colors"
+                            onclick="clearSearch()">
+                            <span class="material-icons text-base">close</span>
+                        </button>
                     </div>
-                    <div class="month-picker-popup" id="popup-start">
-                        <div class="mp-year-nav">
-                            <button onclick="pickerYear('start',-1)"><span
-                                    class="material-icons text-sm">chevron_left</span></button>
-                            <span class="mp-year-label" id="mp-year-start">2025</span>
-                            <button onclick="pickerYear('start',1)"><span
-                                    class="material-icons text-sm">chevron_right</span></button>
-                        </div>
-                        <div class="mp-months" id="mp-months-start"></div>
-                    </div>
+
+                    <select id="months-select" class="pill pill-inactive text-xs border-0 pr-5"
+                        style="appearance:none;-webkit-appearance:none;background-image:none;" onchange="applyFilters()">
+                        <option value="3">Last 3 months</option>
+                        <option value="6">Last 6 months</option>
+                        <option value="12">Last year</option>
+                        <option value="0">All time</option>
+                    </select>
+                    <button id="btn-show-all" class="pill pill-inactive" onclick="toggleShowAll()">Show All</button>
+                    <button id="sort-btn" class="pill pill-inactive" onclick="toggleSort()">
+                        <span class="material-icons text-sm" id="sort-icon">arrow_downward</span>
+                        <span id="sort-label">Newest</span>
+                    </button>
                 </div>
 
-                <span class="text-gray-400">→</span>
-
-                <!-- To picker -->
-                <div class="month-picker-wrap" id="wrap-end">
-                    <div class="month-picker-display" id="disp-end" onclick="togglePicker('end')">
-                        <span class="material-icons text-sm">date_range</span>
-                        <span id="disp-end-text">To</span>
-                        <span class="material-icons text-xs opacity-50">expand_more</span>
-                    </div>
-                    <div class="month-picker-popup" id="popup-end">
-                        <div class="mp-year-nav">
-                            <button onclick="pickerYear('end',-1)"><span
-                                    class="material-icons text-sm">chevron_left</span></button>
-                            <span class="mp-year-label" id="mp-year-end">2026</span>
-                            <button onclick="pickerYear('end',1)"><span
-                                    class="material-icons text-sm">chevron_right</span></button>
-                        </div>
-                        <div class="mp-months" id="mp-months-end"></div>
-                    </div>
+                <!-- Row 2: Category pills -->
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Type</span>
+                    <button class="pill pill-active" id="cat-all" onclick="setCategory('all')">All</button>
+                    {% for cat in categories %}
+                    <button class="pill pill-inactive" id="cat-{{ cat.value }}" onclick="setCategory('{{ cat.value }}')">{{
+                        cat.label }}</button>
+                    {% endfor %}
                 </div>
 
-                <button onclick="clearRange()" class="pill pill-inactive text-xs">
-                    <span class="material-icons text-xs">close</span> Clear
-                </button>
-            </div>
+                <!-- Row 3: Custom month-year range pickers -->
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Range</span>
+
+                    <!-- From picker -->
+                    <div class="month-picker-wrap" id="wrap-start">
+                        <div class="month-picker-display" id="disp-start" onclick="togglePicker('start')">
+                            <span class="material-icons text-sm">date_range</span>
+                            <span id="disp-start-text">From</span>
+                            <span class="material-icons text-xs opacity-50">expand_more</span>
+                        </div>
+                        <div class="month-picker-popup" id="popup-start">
+                            <div class="mp-year-nav">
+                                <button onclick="pickerYear('start',-1)"><span
+                                        class="material-icons text-sm">chevron_left</span></button>
+                                <span class="mp-year-label" id="mp-year-start">2025</span>
+                                <button onclick="pickerYear('start',1)"><span
+                                        class="material-icons text-sm">chevron_right</span></button>
+                            </div>
+                            <div class="mp-months" id="mp-months-start"></div>
+                        </div>
+                    </div>
+
+                    <span class="text-gray-400">→</span>
+
+                    <!-- To picker -->
+                    <div class="month-picker-wrap" id="wrap-end">
+                        <div class="month-picker-display" id="disp-end" onclick="togglePicker('end')">
+                            <span class="material-icons text-sm">date_range</span>
+                            <span id="disp-end-text">To</span>
+                            <span class="material-icons text-xs opacity-50">expand_more</span>
+                        </div>
+                        <div class="month-picker-popup" id="popup-end">
+                            <div class="mp-year-nav">
+                                <button onclick="pickerYear('end',-1)"><span
+                                        class="material-icons text-sm">chevron_left</span></button>
+                                <span class="mp-year-label" id="mp-year-end">2026</span>
+                                <button onclick="pickerYear('end',1)"><span
+                                        class="material-icons text-sm">chevron_right</span></button>
+                            </div>
+                            <div class="mp-months" id="mp-months-end"></div>
+                        </div>
+                    </div>
+
+                    <button onclick="clearRange()" class="pill pill-inactive text-xs">
+                        <span class="material-icons text-xs">close</span> Clear
+                    </button>
+                </div>
+
+            </div><!-- /#filter-panel -->
 
         </div>
     </div>
@@ -786,6 +839,19 @@
             document.getElementById(`popup-${other}`).classList.remove('open');
             popup.classList.toggle('open');
             if (popup.classList.contains('open')) renderPickerMonths(which);
+        }
+
+        // ── Mobile filter panel toggle ──────────────────────────────────────────────
+        function toggleMobileFilters() {
+            const panel = document.getElementById('filter-panel');
+            const caret = document.getElementById('mobile-filter-caret');
+            const label = document.getElementById('mobile-filter-label');
+            const btn   = document.getElementById('mobile-filter-toggle');
+            const isOpen = panel.classList.toggle('open');
+            caret.textContent = isOpen ? 'expand_less' : 'expand_more';
+            label.textContent = isOpen ? 'Hide' : 'Filters';
+            btn.classList.toggle('pill-active', isOpen);
+            btn.classList.toggle('pill-inactive', !isOpen);
         }
 
         function selectMonth(which, key) {
