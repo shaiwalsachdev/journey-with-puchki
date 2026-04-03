@@ -78,9 +78,10 @@
             <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white">{{ memory.title }}</h1>
             <!-- Description -->
             <div class="prose prose-invert prose-lg max-w-none">
-                <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-light">
-                    {{ memory.description }}
-                </p>
+                <div class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-light space-y-4
+                    [&_strong]:font-bold [&_strong]:text-gray-900 [&_strong]:dark:text-white">
+                    {{ memory.description | safe }}
+                </div>
                 <div class="mt-6 text-right">
                     <span class="font-handwriting text-3xl text-pink-500 transform -rotate-2 inline-block">-
                         Shaiwal</span>

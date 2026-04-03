@@ -53,7 +53,7 @@ def redact_text(text: str, is_private_mode: bool) -> str:
     return text
 
 
-def process_memories_for_display(memories: List[dict], settings: dict) -> List[dict]:
+def process_memories_for_display(memories: List[dict], settings: dict, always_include_hot: bool = False) -> List[dict]:
     """
     Processes memories for display:
     1. Filters out blocked memories (e.g. ID 1 in private mode)
@@ -69,7 +69,8 @@ def process_memories_for_display(memories: List[dict], settings: dict) -> List[d
             continue
         
         # Hide 'hot' tagged memories globally unless birthday mode is active
-        if not is_birthday and m.get("type") == "hot":
+        # (or caller explicitly wants them, e.g. timeline always shows them)
+        if not is_birthday and not always_include_hot and m.get("type") == "hot":
             continue
 
         m_copy = m.copy()
@@ -228,7 +229,7 @@ async def birthday(request: Request):
 async def timeline(request: Request):
     memories = await get_all_memories()
     settings = request.state.settings
-    visible_memories = process_memories_for_display(memories, settings)
+    visible_memories = process_memories_for_display(memories, settings, always_include_hot=True)
     # Filter out memories specifically hidden from timeline
     visible_memories = [m for m in visible_memories if not m.get("hide_timeline")]
 
@@ -254,7 +255,7 @@ async def timeline(request: Request):
 async def memory_detail(request: Request, memory_id: int):
     memories = await get_all_memories()
     settings = request.state.settings
-    processed_memories = process_memories_for_display(memories, settings)
+    processed_memories = process_memories_for_display(memories, settings, always_include_hot=True)
     memory = next((m for m in processed_memories if m["id"] == memory_id), None)
 
     if not memory:

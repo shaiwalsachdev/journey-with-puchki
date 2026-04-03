@@ -135,10 +135,8 @@
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="/coupons">Coupons</a>
                 {% endif %}
-                {% if settings.birthday_mode %}
                 <a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors {% if page == 'birthday' %}border-b-2 border-primary font-bold{% endif %}"
                     href="/birthday">🎂 Birthday ✨</a>
-                {% endif %}
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="/roka">Roka</a>
                 <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
@@ -183,11 +181,9 @@
             class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">card_giftcard</span> Coupons</a>
         {% endif %}
-        {% if settings.birthday_mode %}
         <a href="/birthday"
             class="block py-3 px-6 text-primary font-bold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">cake</span> Birthday ✨</a>
-        {% endif %}
         <a href="/roka" class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">favorite</span> Roka</a>
         <a href="/wishlist"

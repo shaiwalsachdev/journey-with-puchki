@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#9afac0",
+                    "inverse-surface": "#3d2c2e",
+                    "on-primary-fixed": "#400014",
+                    "tertiary-fixed": "#97f6bd",
+                    "tertiary": "#005b36",
+                    "surface-container-highest": "#f9dcde",
+                    "on-secondary-fixed-variant": "#5d4400",
+                    "primary-container": "#c91352",
+                    "surface-dim": "#f0d3d6",
+                    "on-primary-container": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005230",
+                    "tertiary-container": "#007648",
+                    "outline-variant": "rgba(201, 19, 82, 0.1)",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#002111",
+                    "outline": "#8e6f73",
+                    "primary": "#c91352",
+                    "tertiary-fixed-dim": "#7bd9a2",
+                    "surface-container": "rgba(247, 231, 206, 0.4)",
+                    "on-surface": "#211116",
+                    "surface-variant": "#f9dcde",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#c91352",
+                    "secondary": "#F7E7CE",
+                    "primary-fixed": "#ffd9dd",
+                    "primary-fixed-dim": "#ffb2bd",
+                    "on-secondary-fixed": "#251a00",
+                    "on-secondary": "#400014",
+                    "surface-bright": "#ffffff",
+                    "background": "#FFFDF5",
+                    "on-secondary-container": "#751932",
+                    "surface-container-low": "rgba(255, 253, 245, 0.4)",
+                    "on-primary-fixed-variant": "#900037",
+                    "on-background": "#211116",
+                    "inverse-on-surface": "#ffecee",
+                    "inverse-primary": "#ffb2bd",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#F7E7CE",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#fee1e4",
+                    "surface": "#FFFDF5",
+                    "secondary-container": "#FFFDF5",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#eecda3",
+                    "on-surface-variant": "#5a4043"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Noto Serif"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .marigold-pattern {
+            background-image: radial-gradient(#c91352 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.05;
+        }
+        .royal-gradient {
+            background: linear-gradient(135deg, #FFFDF5 0%, #F7E7CE 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cursive-title {
+            font-family: 'Noto Serif', serif;
+            font-style: italic;
+        }
+        .watermark-text {
+            font-size: 200px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .section-header {
+            position: relative;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: #c91352;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+<!-- TopAppBar Navigation -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+<nav class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-2xl font-bold text-primary tracking-widest font-serif italic">ShaiX2</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-serif italic tracking-tight text-stone-600 hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-serif italic tracking-tight text-stone-600 hover:text-primary transition-colors" href="#">Our Story</a>
+<a class="font-serif italic tracking-tight text-primary border-b-2 border-primary pb-1" href="#">Memory Lane</a>
+<a class="font-serif italic tracking-tight text-stone-600 hover:text-primary transition-colors" href="#">Gallery</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary scale-95 transition-transform duration-300 hover:opacity-80">music_note</button>
+</div>
+</nav>
+</header>
+<main class="relative pt-24">
+<!-- Background Decorations -->
+<div class="absolute top-0 left-0 w-full h-full marigold-pattern -z-10"></div>
+<!-- Hero Section & Video -->
+<section class="max-w-7xl mx-auto px-6 py-12 text-center">
+<h1 class="text-6xl md:text-[5rem] font-headline font-bold tracking-tight text-on-surface leading-tight mb-4">
+                Roka: Our Eternal <span class="cursive-title text-primary">Promise</span>
+</h1>
+<p class="font-label text-sm uppercase tracking-[0.3em] text-on-surface-variant mb-12">March 12, 2026</p>
+<div class="relative max-w-5xl mx-auto group">
+<div class="absolute -inset-4 border-4 border-secondary opacity-50 rounded-xl -z-10 group-hover:scale-[1.02] transition-transform duration-700"></div>
+<div class="bg-surface shadow-2xl rounded-lg overflow-hidden border-[8px] border-white aspect-video relative">
+<img alt="Roka Ceremony Film" class="w-full h-full object-cover brightness-75" data-alt="Cinematic still of an Indian Roka ceremony with warm golden lighting, traditional marigold decor, and a couple in elegant ethnic attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASTk1_xPesPWzm-1JLMNqxW7d3nL3M4icO2299eZ8QolIDwNjqDXaGXA3SVwnxpkGtbQ5Enq6MWiduF_Z2brYsOtLwAH_NfVWW3PJsCwXSoVmE9CZjr83Cjz8bijC8NSsTnaOT03rJg6P7L296sJkFDYZNQJwC23LoUQXo18eSyt5Y8K5dDVV5mrmcEIXhlA5Q3oDuCUhC2iK0_2-hQvJWjxwRnF53N0eoYyVcedazu5eIvqk7cA_eksNMMrDRyRMY6Mz2s7vrkCw2"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+<button class="w-20 h-20 bg-primary/90 text-on-primary rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">play_arrow</span>
+</button>
+<p class="mt-4 font-headline italic text-xl tracking-wide">The Promise Film • 10:42</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 1. The Venue & Decor -->
+<section class="max-w-7xl mx-auto px-6 py-24">
+<div class="section-header">
+<span class="font-label text-xs uppercase tracking-widest text-primary font-semibold">Album I</span>
+<h2 class="text-4xl font-headline font-bold mt-2">The Venue &amp; <span class="cursive-title text-primary">Decor</span></h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative overflow-hidden rounded-sm shadow-lg group">
+<img class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Luxury wedding venue entrance decorated with heavy garlands of orange and yellow marigold flowers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACBGPuvJF49i1Ck8upQNAf9afTvaVZFCu5jjcKuMxhNhn_Ls2eLZ62rC2TwScqdbHqksGuzuByzzZoCsVFD3NT72baXThH3h1ZHrLwetTL9X736tb97l4vAjbHqrwY0BRRtSU-boMvsI4Gz-4NxQfiWBa_LaRcbvOhQuClWCuxMzARRAtjZaOrjVa0OPcUNoeMlBJ88mWcTUIKNDYb8ZbJsXP4h0ddnS1v0gdxHf_kaI3N-RZDzQBL1ln4bTdpmvfLPKo4PKMNR277"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-secondary p-4 flex flex-col justify-center text-center rounded-sm">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">local_florist</span>
+<p class="font-headline italic text-lg">Sacred Marigolds</p>
+<p class="text-xs font-label uppercase mt-2 tracking-tighter">Traditional Aesthetics</p>
+</div>
+<img class="w-full aspect-square object-cover rounded-sm shadow-md" data-alt="Close up of traditional Indian Roka ritual items: marigold flowers, vermilion, and sweets on a silver platter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEUldj1xGa-qbTnuMJVx_4BC-D_-Q7gSQCn9zSlxy2ZgrNzeto0S4EvTSr_1eCEhc8sulVNmLS0KNQAjy8Yz915DmavhtFrJ6Lhz_FbDp7tVHksJGVHTQcNcl6A_XER6y0AWSIRxc_EyLsTS3Zr-mUtkJBbu5gmuekAfKLxZwQ_d0GHErIOAxMMRb102I-tggF3A647YBOTeKbvts4a8qnHyBOzHb1YrNM7_kLmmJ3_p7MgM1NiQzyfmU6azziciJbIH932ESmgE8X"/>
+<div class="col-span-2 relative h-48 overflow-hidden rounded-sm shadow-md">
+<img class="w-full h-full object-cover" data-alt="Floral arrangement and royal setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZErMkcwKnmYwcTC0rwb0b5QKxe09cgV_fUEB1dByv2sNbaXPYMOyz76N519kxoPdZm0zFAK3vdbEtBHomZeyT4tOVJtTQh-_DoWMmyrgh2HVRyIGigPpdSELnzsfSzlLBszc4bJ9AlZJsa0-jiKRR9Lh9TAuS3GQiQeWY-ICvohkq60NTFRY9Cneb1rW5ts5kTufmdzEpzF_bcfWmDwJ_Y6FgVQHCuC1CWeua_tBynL8N8aEQklBAf3Hw9Zq8CZwQGT5TEfBCax6E"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Our Moments -->
+<section class="bg-secondary/20 py-24 relative overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="section-header">
+<span class="font-label text-xs uppercase tracking-widest text-primary font-semibold">Album II</span>
+<h2 class="text-4xl font-headline font-bold mt-2">Our <span class="cursive-title text-primary">Moments</span></h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="space-y-4">
+<div class="relative group">
+<div class="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-primary"></div>
+<img class="w-full aspect-[3/4] object-cover shadow-2xl rounded-sm" data-alt="Close-up portrait of the couple in traditional attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZErMkcwKnmYwcTC0rwb0b5QKxe09cgV_fUEB1dByv2sNbaXPYMOyz76N519kxoPdZm0zFAK3vdbEtBHomZeyT4tOVJtTQh-_DoWMmyrgh2HVRyIGigPpdSELnzsfSzlLBszc4bJ9AlZJsa0-jiKRR9Lh9TAuS3GQiQeWY-ICvohkq60NTFRY9Cneb1rW5ts5kTufmdzEpzF_bcfWmDwJ_Y6FgVQHCuC1CWeua_tBynL8N8aEQklBAf3Hw9Zq8CZwQGT5TEfBCax6E"/>
+</div>
+</div>
+<div class="flex flex-col gap-8">
+<div class="bg-white p-10 border-l-4 border-primary shadow-xl italic">
+<p class="text-xl font-headline leading-relaxed">
+                                "The alignment of souls that began long before we met. 
+                                Captured in every glance, every shared smile on this beautiful day."
+                            </p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<img class="w-full aspect-square object-cover rounded-sm" data-alt="Portrait detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClS1A7GkNy37swZxV5aWCCkCT0XMhiCT-DY0ze-YdRLniiF5TM_uEnOpH_PZoQvOakBJgGFdH4OV3Ug1_IKVBnyDth4LPDyAg6BXvw8wKpAoSzTwAFJE65s0yLC-2TgLnx32Ornl70lEOXNodJ1uZfnxDk9Ix8rXefUonBKQo1alm6gVDN3t89cfpPmkVUxjbsMELLixEw-8qagWMJzjyJReOkan2POSRtrwYfSQfokz4aIEoWean7wuUTt4VLhbofqeAvCoilEt-p"/>
+<img class="w-full aspect-square object-cover rounded-sm" data-alt="Portrait detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu6_Hv4f0yrMNLOk_pppLRZe6hSD-UHpRkfp2JAlUulLaCkeP4o8gNq89Q_3PBOYENNPvLf-WyF3IgcMlP3y1TOY_ztze1RZqeDK6TvUniX2SwOyfUxD7a52Q2NIyrT7pdLaZuu5MCnzlNXZlx8WNKJi3XmW5cuxWHaRdsj9NPTIiGCHqxl-i9rbMONyJApH-AVOSHfSGWxYf5oS2VGtTbvMuwVGmTig7JowxokxkeI_1JeQcUB_PZDvODlkqK9GxRquNFeQV9Y_ea"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. The Union of Families -->
+<section class="max-w-7xl mx-auto px-6 py-24">
+<div class="section-header">
+<span class="font-label text-xs uppercase tracking-widest text-primary font-semibold">Album III</span>
+<h2 class="text-4xl font-headline font-bold mt-2">The Union of <span class="cursive-title text-primary">Families</span></h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+<div class="md:col-span-5 relative group">
+<img class="w-full aspect-[4/5] object-cover rounded-sm shadow-xl" data-alt="Sophisticated portrait of a joyful Indian bride's family" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2aPNuQ2zy-u_6AbejYYGwZop-h8UU8ZmGKCpDvO5Ov8AButJPt40CZ-sfKf85IcYX7qZsuH2KcTMOCAzdtIgfrmalZ7XOW1UCozLc2EJhbAaPKDXTz-No7LiqyKtNLvocylkB0UaV-FlMzSecKN7RzkruxIdBm3JKZaKfcRxYJZwbhE4wfzxEY_g-TiLffQR_eghGtI6OeA0JgXVVzygNuXY7CKxtz6ztLyUMLYLk_TDHvc4BhSjfTMi88WdtLvNI-lZAZUdZUmH3"/>
+<div class="absolute bottom-4 left-4 bg-white/95 px-4 py-2 border-l-2 border-primary shadow-md">
+<p class="font-label text-xs uppercase tracking-widest text-primary">The Agarwals</p>
+</div>
+</div>
+<div class="md:col-span-2 flex flex-col items-center gap-6">
+<span class="material-symbols-outlined text-secondary text-5xl" data-weight="fill">favorite</span>
+<div class="h-24 w-[1px] bg-primary/20"></div>
+</div>
+<div class="md:col-span-5 relative group md:translate-y-12">
+<img class="w-full aspect-[4/5] object-cover rounded-sm shadow-xl" data-alt="Elegant group photo of a groom's family" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX97Rp6Xi6pebAfNBZxMHwbXaHJQR7s2RQqiBNPfbzjbDLbsYGSNp_BhgaCBKz-xABo4LHXs6inQfA05J9H5yonG3Fod9zdST4xPsaslpd2UYviYktKE0kiM9P8gwJ3uxQtdi0KRDNwApxbFU1QRq8NYJX93qGmEZbQR5hkTEvkQK0U5V9P5If5rXOtkwBrgZ059GL5MMGjodr-km3HoQRGoTkoHrG_OfljZ-fOXFOoPFqVsUhFHQ7aGf5o--HcwtrevX2nhJqy-k7"/>
+<div class="absolute bottom-4 right-4 bg-white/95 px-4 py-2 border-r-2 border-primary shadow-md text-right">
+<p class="font-label text-xs uppercase tracking-widest text-primary">The Sharmas</p>
+</div>
+</div>
+</div>
+<div class="mt-24 text-center">
+<div class="inline-flex flex-col items-center gap-2">
+<div class="bg-secondary rounded-full w-20 h-20 flex items-center justify-center shadow-inner">
+<span class="text-xl font-bold text-primary">32/36</span>
+</div>
+<span class="text-[10px] font-label uppercase tracking-widest">Soul Alignment</span>
+</div>
+</div>
+</section>
+<!-- 4. Ceremony Highlights -->
+<section class="bg-stone-50 py-24">
+<div class="max-w-7xl mx-auto px-6">
+<div class="section-header">
+<span class="font-label text-xs uppercase tracking-widest text-primary font-semibold">Album IV</span>
+<h2 class="text-4xl font-headline font-bold mt-2">Ceremony <span class="cursive-title text-primary">Highlights</span></h2>
+</div>
+<div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+<div class="relative group rounded-sm shadow-md overflow-hidden bg-white p-2">
+<img class="w-full object-cover rounded-sm" data-alt="Close up of traditional Indian Roka ritual" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEUldj1xGa-qbTnuMJVx_4BC-D_-Q7gSQCn9zSlxy2ZgrNzeto0S4EvTSr_1eCEhc8sulVNmLS0KNQAjy8Yz915DmavhtFrJ6Lhz_FbDp7tVHksJGVHTQcNcl6A_XER6y0AWSIRxc_EyLsTS3Zr-mUtkJBbu5gmuekAfKLxZwQ_d0GHErIOAxMMRb102I-tggF3A647YBOTeKbvts4a8qnHyBOzHb1YrNM7_kLmmJ3_p7MgM1NiQzyfmU6azziciJbIH932ESmgE8X"/>
+</div>
+<div class="relative group rounded-sm shadow-xl overflow-hidden border-4 border-white">
+<img class="w-full" data-alt="Hands during ceremony" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClS1A7GkNy37swZxV5aWCCkCT0XMhiCT-DY0ze-YdRLniiF5TM_uEnOpH_PZoQvOakBJgGFdH4OV3Ug1_IKVBnyDth4LPDyAg6BXvw8wKpAoSzTwAFJE65s0yLC-2TgLnx32Ornl70lEOXNodJ1uZfnxDk9Ix8rXefUonBKQo1alm6gVDN3t89cfpPmkVUxjbsMELLixEw-8qagWMJzjyJReOkan2POSRtrwYfSQfokz4aIEoWean7wuUTt4VLhbofqeAvCoilEt-p"/>
+</div>
+<div class="bg-secondary/40 p-8 rounded-sm italic font-body text-center shadow-inner flex flex-col justify-center items-center">
+<span class="material-symbols-outlined text-primary mb-4">format_quote</span>
+<p class="text-lg leading-relaxed">"The way our families met was as if they had known each other for lifetimes."</p>
+<div class="h-px w-12 bg-primary/20 my-4"></div>
+<p class="font-label text-[10px] uppercase tracking-widest text-primary">- Shaiwal</p>
+</div>
+<div class="relative group rounded-sm shadow-xl overflow-hidden">
+<img class="w-full" data-alt="Ring ceremony" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu6_Hv4f0yrMNLOk_pppLRZe6hSD-UHpRkfp2JAlUulLaCkeP4o8gNq89Q_3PBOYENNPvLf-WyF3IgcMlP3y1TOY_ztze1RZqeDK6TvUniX2SwOyfUxD7a52Q2NIyrT7pdLaZuu5MCnzlNXZlx8WNKJi3XmW5cuxWHaRdsj9NPTIiGCHqxl-i9rbMONyJApH-AVOSHfSGWxYf5oS2VGtTbvMuwVGmTig7JowxokxkeI_1JeQcUB_PZDvODlkqK9GxRquNFeQV9Y_ea"/>
+</div>
+<div class="relative group rounded-sm shadow-md overflow-hidden bg-primary/5 p-4 border border-primary/10">
+<img class="w-full aspect-square object-cover" data-alt="Decor details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACBGPuvJF49i1Ck8upQNAf9afTvaVZFCu5jjcKuMxhNhn_Ls2eLZ62rC2TwScqdbHqksGuzuByzzZoCsVFD3NT72baXThH3h1ZHrLwetTL9X736tb97l4vAjbHqrwY0BRRtSU-boMvsI4Gz-4NxQfiWBa_LaRcbvOhQuClWCuxMzARRAtjZaOrjVa0OPcUNoeMlBJ88mWcTUIKNDYb8ZbJsXP4h0ddnS1v0gdxHf_kaI3N-RZDzQBL1ln4bTdpmvfLPKo4PKMNR277"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Music Widget -->
+<div class="fixed bottom-8 left-8 z-40">
+<div class="bg-white/95 backdrop-blur-md rounded-full shadow-2xl p-2 flex items-center gap-4 pr-6 border border-secondary group hover:bg-secondary/20 transition-colors">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined animate-[spin_8s_linear_infinite]">album</span>
+</div>
+<div>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Now Playing</p>
+<p class="font-headline italic text-sm text-primary">Din Shagna Da (Roka Mix)</p>
+</div>
+<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">pause_circle</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-stone-200 bg-stone-50">
+<div class="flex flex-col items-center py-12 gap-6 w-full max-w-7xl mx-auto px-6">
+<div class="text-xl font-semibold text-primary font-serif italic tracking-widest">ShaiX2</div>
+<div class="flex items-center gap-4 opacity-30">
+<div class="h-[1px] w-24 bg-on-surface"></div>
+<span class="material-symbols-outlined text-sm">local_florist</span>
+<span class="material-symbols-outlined text-lg text-primary">local_florist</span>
+<span class="material-symbols-outlined text-sm">local_florist</span>
+<div class="h-[1px] w-24 bg-on-surface"></div>
+</div>
+<div class="flex gap-8">
+<a class="font-serif text-xs uppercase tracking-widest text-stone-500 hover:text-primary transition-colors" href="#">Instagram</a>
+<a class="font-serif text-xs uppercase tracking-widest text-stone-500 hover:text-primary transition-colors" href="#">Pinterest</a>
+<a class="font-serif text-xs uppercase tracking-widest text-stone-500 hover:text-primary transition-colors" href="#">Mail</a>
+</div>
+<p class="font-serif text-xs uppercase tracking-widest text-stone-400 mt-4">Made with love by ShaiX2 • 2026</p>
+</div>
+</footer>
+</body></html>
