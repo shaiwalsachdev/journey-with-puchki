@@ -239,8 +239,9 @@ async def timeline(request: Request):
         "food": "🍜", "movie": "🎬", "shopping": "🛍️", "family": "👨‍👩‍👧",
         "art": "🎨", "celebration": "🎉", "hot": "❤️",
     }
+    DISPLAY_NAME_MAP = {"hot": "Beautiful"}
     type_set = set(m.get("type", "") for m in visible_memories if m.get("type"))
-    categories = [{"value": t, "label": f"{EMOJI_MAP.get(t, '')} {t.title()}"} for t in sorted(type_set)]
+    categories = [{"value": t, "label": f"{EMOJI_MAP.get(t, '')} {DISPLAY_NAME_MAP.get(t, t.title())}"} for t in sorted(type_set)]
 
     return templates.TemplateResponse("timeline.html", {
         "request": request,
@@ -333,6 +334,7 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
         "food": "🍜", "movie": "🎬", "shopping": "🛍️", "family": "👨‍👩‍👧",
         "art": "🎨", "celebration": "🎉", "hot": "❤️",
     }
+    DISPLAY_NAME_MAP = {"hot": "Beautiful"}
     PRIVATE_HIDDEN_CATEGORIES = {"start"}
     type_set = set()
     for m in memories:
@@ -346,7 +348,7 @@ async def read_gallery(request: Request, page: int = 1, limit: int = 12, seed: i
         # Hide 'hot' when birthday mode is off
         if t == "hot" and not settings.get("birthday_mode"):
             continue
-        categories.append({"value": t, "label": f"{t.title()} {EMOJI_MAP.get(t, '')}"})
+        categories.append({"value": t, "label": f"{DISPLAY_NAME_MAP.get(t, t.title())} {EMOJI_MAP.get(t, '')}"})
     return templates.TemplateResponse("gallery.html", {
         "request": request,
         "items": paginated_items,
