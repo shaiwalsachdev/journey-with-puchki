@@ -528,22 +528,28 @@ async def add_memory(
                     raise HTTPException(status_code=400, detail=f"Invalid file type: {photo.filename} ({photo.content_type}). Only images and videos are allowed.")
                 content = await photo.read()
                 filename = photo.filename
-                content_type = photo.content_type
+                content_type = photo.content_type or ""
 
-                # Convert HEIC → JPEG (browsers can't display HEIC)
-                if filename.lower().endswith(('.heic', '.heif')):
-                    try:
-                        from PIL import Image
-                        from pillow_heif import register_heif_opener
-                        register_heif_opener()
-                        img = Image.open(io.BytesIO(content))
-                        buf = io.BytesIO()
-                        img.convert("RGB").save(buf, format="JPEG", quality=90)
-                        content = buf.getvalue()
-                        filename = os.path.splitext(filename)[0] + ".jpg"
-                        content_type = "image/jpeg"
-                    except Exception as e:
-                        print(f"HEIC conversion failed for {filename}: {e}")
+                # Auto-optimize: images → WebP 85%/1440px, videos → H.264 MP4 1080p
+                try:
+                    from fastapi_app.media_optimizer import optimize_file_bytes
+                    content, filename, content_type = optimize_file_bytes(content, filename)
+                except Exception as e:
+                    print(f"Media optimization failed for {filename}: {e}")
+                    # Fall back: at minimum convert HEIC → JPEG so browsers can show it
+                    if filename.lower().endswith(('.heic', '.heif')):
+                        try:
+                            from PIL import Image
+                            from pillow_heif import register_heif_opener
+                            register_heif_opener()
+                            img = Image.open(io.BytesIO(content))
+                            buf = io.BytesIO()
+                            img.convert("RGB").save(buf, format="JPEG", quality=90)
+                            content = buf.getvalue()
+                            filename = os.path.splitext(filename)[0] + ".jpg"
+                            content_type = "image/jpeg"
+                        except Exception as e2:
+                            print(f"HEIC fallback also failed for {filename}: {e2}")
 
                 r2_key = f"uploads/{new_id}/{filename}"
                 upload_tasks.append((r2_key, content, content_type))
