@@ -8,7 +8,7 @@ import os
 import io
 import subprocess
 import tempfile
-from PIL import Image
+from PIL import Image, ImageOps
 
 # Register HEIC support
 try:
@@ -41,6 +41,8 @@ def optimize_image_bytes(content: bytes, original_filename: str) -> tuple[bytes,
     Returns: (webp_bytes, new_filename, 'image/webp')
     """
     img = Image.open(io.BytesIO(content))
+    # Fix EXIF orientation before any processing (iPhone photos carry rotation in EXIF)
+    img = ImageOps.exif_transpose(img)
     img = img.convert("RGB")
 
     # Resize if larger than MAX_PX on either dimension
