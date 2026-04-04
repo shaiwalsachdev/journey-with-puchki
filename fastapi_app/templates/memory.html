@@ -106,10 +106,10 @@
                         {% if photo_lower.endswith('.mov') or photo_lower.endswith('.mp4') or
                         photo_lower.endswith('.webm') or photo_lower.endswith('.avi') or photo_lower.endswith('.mkv') %}
                         <video class="w-full h-auto" controls playsinline preload="metadata"
-                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}">
+                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1">
                         </video>
                         {% else %}
-                        <img src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" alt="Memory Photo"
+                        <img src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" alt="Memory Photo"
                             class="w-full h-auto" loading="lazy">
                         {% endif %}
                         <div

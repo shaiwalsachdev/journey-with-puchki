@@ -1111,7 +1111,7 @@
 
                 const img = document.createElement('img');
                 const isAbsolute = photo.url.startsWith('http') || photo.url.startsWith('/images');
-                img.src = isAbsolute ? photo.url : `${R2_URL}/uploads/${photo.memId}/${photo.url}`;
+                img.src = isAbsolute ? photo.url : `${R2_URL}/uploads/${photo.memId}/${photo.url}?v=1`;
                 img.className = 'w-full h-full object-cover hover:scale-110 transition-transform duration-500';
                 img.loading = 'lazy';
 
@@ -1237,7 +1237,7 @@
 
                 groups[key].forEach(m => {
                     const thumb = m.photos && m.photos.length
-                        ? `${R2_URL}/uploads/${m.id}/${m.photos[0]}`
+                        ? `${R2_URL}/uploads/${m.id}/${m.photos[0]}?v=1`
                         : 'https://placehold.co/400x300?text=No+Photo';
 
                     const wrapper = document.createElement('div');
@@ -1272,7 +1272,7 @@
             <div class="polaroid relative">
                 <div class="tape"></div>
                 <div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded overflow-hidden mb-3">
-                    <img src="${escHtml(thumb)}" alt="${escHtml(m.title)}" class="w-full h-full object-cover" loading="lazy">
+                    <img src="${escHtml(thumb)}?v=1" alt="${escHtml(m.title)}" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div class="space-y-1 px-1">
                     <div class="flex justify-between items-start gap-2">
