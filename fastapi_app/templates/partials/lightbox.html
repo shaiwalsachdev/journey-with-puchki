@@ -298,6 +298,7 @@
         prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
 
         modal.addEventListener('click', (e) => {
+            if (e.target.closest('#rotation-controls') || e.target.closest('#rotate-status')) return;
             if (e.target === modal || e.target.id === 'lightbox-modal' || e.target.classList.contains('flex')) {
                 closeLightbox();
             }
