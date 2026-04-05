@@ -1111,8 +1111,6 @@ async def api_add_new_dictionary(request: Request):
 
 @app.post("/api/rotate-photo")
 async def api_rotate_photo(request: Request):
-    if request.cookies.get("session") != "admin_logged_in":
-        raise HTTPException(status_code=401, detail="Unauthorized")
     
     data = await request.json()
     memory_id = data.get("memory_id")
