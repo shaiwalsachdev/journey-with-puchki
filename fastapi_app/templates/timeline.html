@@ -1112,6 +1112,10 @@
                 const img = document.createElement('img');
                 const isAbsolute = photo.url.startsWith('http') || photo.url.startsWith('/images');
                 img.src = isAbsolute ? photo.url : `${R2_URL}/uploads/${photo.memId}/${photo.url}?v=1`;
+                if (!isAbsolute) {
+                    img.setAttribute('data-memory-id', photo.memId);
+                    img.setAttribute('data-photo-name', photo.url);
+                }
                 img.className = 'w-full h-full object-cover hover:scale-110 transition-transform duration-500';
                 img.loading = 'lazy';
 
@@ -1239,11 +1243,12 @@
                     const thumb = m.photos && m.photos.length
                         ? `${R2_URL}/uploads/${m.id}/${m.photos[0]}?v=1`
                         : 'https://placehold.co/400x300?text=No+Photo';
+                    const photoName = m.photos && m.photos.length ? m.photos[0] : '';
 
                     const wrapper = document.createElement('div');
                     wrapper.className = 'memory-card w-full flex justify-center';
                     wrapper.id = `memory-card-${m.id}`;
-                    wrapper.innerHTML = cardHTML(m, thumb);
+                    wrapper.innerHTML = cardHTML(m, thumb, photoName);
                     grid.appendChild(wrapper);
                 });
             });
@@ -1264,7 +1269,7 @@
             document.querySelectorAll('.memory-card').forEach(el => obs.observe(el));
         }
 
-        function cardHTML(m, thumb) {
+        function cardHTML(m, thumb, photoName) {
             const note = m.timeline_note || m.description || '';
             const ex = note.length > 90 ? note.slice(0, 90) + '…' : note;
             return `
@@ -1272,7 +1277,8 @@
             <div class="polaroid relative">
                 <div class="tape"></div>
                 <div class="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-700 rounded overflow-hidden mb-3">
-                    <img src="${escHtml(thumb)}?v=1" alt="${escHtml(m.title)}" class="w-full h-full object-cover" loading="lazy">
+                    <img src="${escHtml(thumb)}?v=1" alt="${escHtml(m.title)}" class="w-full h-full object-cover" loading="lazy"
+                        data-memory-id="${m.id}" data-photo-name="${escHtml(photoName)}">
                 </div>
                 <div class="space-y-1 px-1">
                     <div class="flex justify-between items-start gap-2">

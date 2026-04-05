@@ -29,12 +29,35 @@
 
     <!-- Image Container -->
     <div class="relative max-w-7xl max-h-screen w-full flex flex-col items-center justify-center pointer-events-none">
-        <img id="lightbox-img" src="" alt="Full screen view"
-            class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl transform transition-transform duration-300 selection:bg-none pointer-events-auto" />
+        <div id="lightbox-img-wrapper" class="relative group pointer-events-auto">
+            <img id="lightbox-img" src="" alt="Full screen view"
+                class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl transition-all duration-300 selection:bg-none" />
+            
+            <!-- Rotation Controls Overlay (Visible on hover or when rotated) -->
+            <div id="rotation-controls" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
+                <button onclick="rotateImage(-90)" class="text-white/80 hover:text-white p-1" title="Rotate Left">
+                    <span class="material-icons">rotate_left</span>
+                </button>
+                <button onclick="rotateImage(90)" class="text-white/80 hover:text-white p-1" title="Rotate Right">
+                    <span class="material-icons">rotate_right</span>
+                </button>
+                <button onclick="rotateImage(180)" class="text-white/80 hover:text-white p-1" title="Flip 180">
+                    <span class="material-icons">flip_camera_android</span>
+                </button>
+                <div class="w-px h-4 bg-white/20 mx-1"></div>
+                <button id="save-rotation-btn" onclick="saveRotation()" class="text-white hover:text-green-400 p-1 flex items-center gap-1 text-xs font-bold" title="Save to R2">
+                    <span class="material-icons text-sm">save</span>
+                    SAVE
+                </button>
+            </div>
+        </div>
 
         <!-- Caption -->
         <div id="lightbox-caption"
             class="mt-4 text-white/90 text-center font-display text-lg tracking-wide hidden pointer-events-auto"></div>
+        
+        <!-- Status Message -->
+        <div id="rotate-status" class="mt-2 text-white/60 text-xs font-medium animate-pulse hidden">Saving to R2...</div>
     </div>
 </div>
 
@@ -49,6 +72,7 @@
 
         let images = [];
         let currentIndex = 0;
+        let currentRotation = 0;
 
         function refreshImageList() {
             // Selectors for gallery items, timeline photos, and memory content
@@ -134,6 +158,8 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modalImg.src = '';
+                currentRotation = 0;
+                applyRotation();
             }, 300);
             document.body.classList.remove('lightbox-open');
         }
@@ -150,6 +176,9 @@
             modalImg.style.opacity = '0.5';
             setTimeout(() => {
                 modalImg.src = img.src;
+                currentRotation = 0;
+                applyRotation();
+                
                 const caption = img.getAttribute('data-alt') || img.alt;
                 if (caption) {
                     captionText.textContent = caption;
@@ -161,6 +190,90 @@
                 modalImg.style.transform = 'scale(1)';
             }, 150);
         }
+
+        function rotateImage(delta) {
+            currentRotation = (currentRotation + delta) % 360;
+            applyRotation();
+        }
+
+        function applyRotation() {
+            modalImg.style.transform = `rotate(${currentRotation}deg)`;
+            // Adjust margin if portrait-landscape swap
+            const is90 = Math.abs(currentRotation % 180) === 90;
+            modalImg.style.margin = is90 ? '40px 0' : '0';
+        }
+
+        async function saveRotation() {
+            if (currentRotation === 0) return;
+            
+            const currentImg = images[currentIndex];
+            const memoryId = currentImg.getAttribute('data-memory-id');
+            const photoName = currentImg.getAttribute('data-photo-name');
+            
+            if (!memoryId || !photoName) {
+                alert("Cannot save: missing photo metadata.");
+                return;
+            }
+
+            const status = document.getElementById('rotate-status');
+            const saveBtn = document.getElementById('save-rotation-btn');
+            
+            status.classList.remove('hidden', 'text-green-400', 'pointer-events-auto');
+            status.classList.add('animate-pulse');
+            status.textContent = "Saving to R2...";
+            saveBtn.disabled = true;
+            saveBtn.style.opacity = '0.5';
+
+            try {
+                // Backend expects the angle in PIL rotate terms. 
+                // In PIL, rotate(90) is CCW. In CSS, rotate(90deg) is CW.
+                // So we negate the angle for PIL if we want to match visual.
+                const pilAngle = -currentRotation;
+
+                const response = await fetch('/api/rotate-photo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        memory_id: parseInt(memoryId),
+                        photo_name: photoName,
+                        angle: pilAngle
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.status === 'success') {
+                    status.classList.remove('animate-pulse');
+                    status.classList.add('text-green-400', 'pointer-events-auto');
+                    status.innerHTML = `Saved! Updating view... <button onclick="document.getElementById('rotate-status').classList.add('hidden')" class="ml-2 bg-green-500/20 px-2 py-0.5 rounded text-white hover:bg-green-500/40 transition">Close</button>`;
+                    
+                    // Force refresh image src with cache buster
+                    const newUrl = new URL(modalImg.src);
+                    newUrl.searchParams.set('v', Date.now());
+                    modalImg.src = newUrl.toString();
+                    
+                    // Sync the source image too if visible
+                    currentImg.src = newUrl.toString();
+                    
+                    // Reset rotation visual state, but keep the success notification visible
+                    currentRotation = 0;
+                    applyRotation();
+                    saveBtn.disabled = false;
+                    saveBtn.style.opacity = '1';
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Failed to save rotation: " + err.message);
+                status.classList.add('hidden');
+                saveBtn.disabled = false;
+                saveBtn.style.opacity = '1';
+            }
+        }
+
+        // Expose to window for onclick handlers
+        window.rotateImage = rotateImage;
+        window.saveRotation = saveRotation;
 
         function showNext() {
             currentIndex = (currentIndex + 1) % images.length;

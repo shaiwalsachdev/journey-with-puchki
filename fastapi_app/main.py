@@ -23,7 +23,8 @@ from fastapi_app.database import (
     get_all_wishlist, add_wishlist_item, delete_wishlist_item, update_wishlist_item,
     get_all_dictionary, add_dictionary_word, save_all_dictionary, delete_dictionary_word, update_dictionary_word
 )
-from fastapi_app.storage import upload_file, get_photo_url, R2_PUBLIC_URL
+from fastapi_app.storage import upload_file, get_photo_url, R2_PUBLIC_URL, get_s3_client, R2_BUCKET_NAME, delete_file
+from PIL import Image
 
 app = FastAPI()
 
@@ -1106,3 +1107,43 @@ async def api_add_new_dictionary(request: Request):
     data = await request.json()
     await add_dictionary_word(data)
     return {"status": "success", "message": "Dictionary word added successfully"}
+
+
+@app.post("/api/rotate-photo")
+async def api_rotate_photo(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    
+    data = await request.json()
+    memory_id = data.get("memory_id")
+    photo_name = data.get("photo_name")
+    angle = data.get("angle")
+    
+    if not all([memory_id, photo_name, angle is not None]):
+        raise HTTPException(status_code=400, detail="Missing parameters")
+
+    try:
+        r2_key = f"uploads/{memory_id}/{photo_name}"
+        s3 = get_s3_client()
+        
+        # Download
+        buf = io.BytesIO()
+        s3.download_fileobj(R2_BUCKET_NAME, r2_key, buf)
+        buf.seek(0)
+        
+        # Rotate
+        img = Image.open(buf)
+        # expand=True is critical for portrait/landscape flips
+        rotated = img.rotate(angle, expand=True)
+        
+        # Save back as WebP
+        out = io.BytesIO()
+        rotated.save(out, format="WEBP", quality=85)
+        out.seek(0)
+        s3.put_object(Bucket=R2_BUCKET_NAME, Key=r2_key, Body=out, ContentType="image/webp")
+        
+        return {"status": "success", "message": f"Photo rotated by {angle} degrees"}
+    except Exception as e:
+        import traceback
+        print(traceback.format_exc())
+        return {"status": "error", "message": str(e)}

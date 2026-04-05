@@ -79,7 +79,7 @@
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos and memory.photos|length > 0 %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" />
             {% else %}
             <div class="w-full h-full bg-neutral-dark flex items-center justify-center">
                 <span class="material-icons text-white/20 text-9xl">image</span>
@@ -125,7 +125,7 @@
                             src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[1] }}" />
                         {% elif memory.photos and memory.photos|length > 0 %}
                         <img alt="Detail" class="w-full h-full object-cover"
-                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                            src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" />
                         {% endif %}
                     </div>
                 </div>
@@ -171,11 +171,11 @@
                 {% if photo_lower.endswith('.mov') or photo_lower.endswith('.mp4') or photo_lower.endswith('.webm') or
                 photo_lower.endswith('.avi') or photo_lower.endswith('.mkv') %}
                 <video class="w-full h-full object-cover" controls playsinline preload="metadata"
-                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}"></video>
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}"></video>
                 {% else %}
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" />
                 {% endif %}
             </div>
             {% endfor %}

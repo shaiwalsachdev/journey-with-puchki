@@ -134,12 +134,12 @@
                     {% if memory.photos[0].lower().endswith('.mp4') or memory.photos[0].lower().endswith('.mov') or
                     memory.photos[0].lower().endswith('.webm') %}
                     <video class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500"
-                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" controls
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" controls
                         preload="metadata"></video>
                     {% else %}
                     <img alt="{{ memory.title }}"
                         class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-500"
-                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" />
                     {% endif %}
                     {% else %}
                     <img alt="Cinema Placeholder" class="w-full h-full object-cover opacity-80"
@@ -184,11 +184,11 @@
                     {% if photo.lower().endswith('.mp4') or photo.lower().endswith('.mov') or
                     photo.lower().endswith('.webm') %}
                     <video class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
-                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" controls preload="metadata"></video>
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" controls preload="metadata"></video>
                     {% else %}
                     <img alt="{{ memory.title }}"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
-                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" />
                     {% endif %}
                     <div
                         class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors pointer-events-none">

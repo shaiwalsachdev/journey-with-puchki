@@ -39,7 +39,7 @@
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" />
             {% else %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
                 src="https://placehold.co/1920x1080?text=No+Photo" />
@@ -99,8 +99,8 @@
                 <div
                     class="group rounded-xl overflow-hidden relative cursor-pointer shadow-lg hover:shadow-xl transition-shadow bg-black">
                     <video controls playsinline class="w-full h-auto object-contain">
-                        <source src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" type="video/quicktime">
-                        <source src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" type="video/mp4">
+                        <source src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" type="video/quicktime">
+                        <source src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -109,7 +109,7 @@
                     class="group rounded-xl overflow-hidden relative cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 masonry-item">
                     <img alt="{{ memory.title }}" loading="lazy"
                         class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
-                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                        src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" />
                     <div
                         class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none">
                     </div>

@@ -76,7 +76,7 @@
         <div class="absolute inset-0 w-full h-full">
             {% if memory.photos %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" />
             {% else %}
             <img alt="Hero Image" class="w-full h-full object-cover object-center"
                 src="https://placehold.co/1920x1080?text=Gaming+Date" />
@@ -164,11 +164,11 @@
                 {% if photo_lower.endswith('.mov') or photo_lower.endswith('.mp4') or photo_lower.endswith('.webm') or
                 photo_lower.endswith('.avi') or photo_lower.endswith('.mkv') %}
                 <video class="w-full h-full object-cover" controls playsinline preload="metadata"
-                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}"></video>
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}"></video>
                 {% else %}
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" />
                 <div
                     class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                     <span class="text-white text-lg font-medium">{{ memory.date }}</span>

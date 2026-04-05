@@ -41,10 +41,10 @@
             {% if memory.photos[0].lower().endswith('.mov') or memory.photos[0].lower().endswith('.mp4') or
             memory.photos[0].lower().endswith('.webm') %}
             <video class="w-full h-full object-cover object-center"
-                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" controls preload="metadata"></video>
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" controls preload="metadata"></video>
             {% else %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
-                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}" />
+                src="{{ r2_url }}/uploads/{{ memory.id }}/{{ memory.photos[0] }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ memory.photos[0] }}" />
             {% endif %}
             {% else %}
             <img alt="{{ memory.title }}" class="w-full h-full object-cover object-center"
@@ -109,11 +109,11 @@
                 {% if photo.lower().endswith('.mov') or photo.lower().endswith('.mp4') or
                 photo.lower().endswith('.webm') %}
                 <video class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" controls preload="metadata"></video>
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" controls preload="metadata"></video>
                 {% else %}
                 <img alt="{{ memory.title }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}" />
+                    src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}" />
                 {% endif %}
             </div>
             {% endfor %}
