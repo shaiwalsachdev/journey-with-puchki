@@ -1270,7 +1270,9 @@
         }
 
         function cardHTML(m, thumb, photoName) {
-            const note = m.timeline_note || m.description || '';
+            let noteStr = m.timeline_note || m.description || '';
+            noteStr = noteStr.replace(/<\/?[^>]+(>|$)/g, "").trim();
+            const note = noteStr;
             const ex = note.length > 90 ? note.slice(0, 90) + '…' : note;
             return `
         <a href="/memory/${m.id}" class="block max-w-xs w-full">
