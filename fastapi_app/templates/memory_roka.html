@@ -1,414 +1,339 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="light" lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roka Ceremony Invitation — ShaiX2</title>
-
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Roka | ShaiX2 Cinematic</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Material Icons (navbar + back_button partials) -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Material Symbols Outlined (this page) -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet">
-    <!-- Typefaces -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
-
-    <script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#c91352",
-                        "gold": "#d4af37",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#211116",
+                        "primary": "#E50914", // Netflix Red
+                        "background-light": "#141414", // Dark background throughout
+                        "background-dark": "#141414",
+                        "surface-dark": "#181818"
                     },
                     fontFamily: {
-                        "display": ["Manrope", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"],
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
                     },
                 },
             },
         }
     </script>
-
+    <script src="/static/js/theme.js"></script>
     <style>
-        /* ── Gold text ── */
-        .gold-gradient {
-            background: linear-gradient(45deg, #d4af37, #fcf6ba, #d4af37, #aa771c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* ── Card shell ── */
-        .luxury-border {
-            border: 1px solid rgba(212, 175, 55, 0.35);
-        }
-
-        .card-shimmer {
-            background: linear-gradient(135deg,
-                    rgba(201, 19, 82, 0.06) 0%,
-                    rgba(212, 175, 55, 0.04) 50%,
-                    rgba(201, 19, 82, 0.06) 100%);
-        }
-
-        /* ── Ornamental divider ── */
-        .ornament-line {
+        /* Hide scrollbar for horizontal lists */
+        .netflix-row {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: rgba(212, 175, 55, 0.6);
-            font-size: 1.1rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+        }
+        .netflix-row::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
-        .ornament-line::before,
-        .ornament-line::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+        .netflix-row > * {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
         }
 
-        /* ── Entrance animations ── */
-        @keyframes fadeDown {
-            from {
-                opacity: 0;
-                transform: translateY(-18px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(22px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.93);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .anim-fade-down {
-            animation: fadeDown 0.7s ease both;
-        }
-
-        .anim-fade-up {
-            animation: fadeUp 0.7s ease both;
-        }
-
-        .anim-fade-in {
-            animation: fadeIn 0.8s ease both;
-        }
-
-        .anim-scale-in {
-            animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-        }
-
-        .d-100 {
-            animation-delay: 0.10s;
-        }
-
-        .d-200 {
-            animation-delay: 0.20s;
-        }
-
-        .d-350 {
-            animation-delay: 0.35s;
-        }
-
-        .d-500 {
-            animation-delay: 0.50s;
-        }
-
-        .d-650 {
-            animation-delay: 0.65s;
-        }
-
-        .d-800 {
-            animation-delay: 0.80s;
-        }
-
-        .d-1000 {
-            animation-delay: 1.00s;
-        }
-
-        /* ── Ken Burns on hero photo ── */
-        @keyframes kenBurns {
-            0% {
-                transform: scale(1.08) translate(0%, 0%);
-            }
-
-            33% {
-                transform: scale(1.13) translate(-1.5%, -1%);
-            }
-
-            66% {
-                transform: scale(1.10) translate(1.5%, 0.5%);
-            }
-
-            100% {
-                transform: scale(1.08) translate(0%, 0%);
-            }
-        }
-
-        .ken-burns {
-            animation: kenBurns 16s ease-in-out infinite;
+        .netflix-card {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transform-origin: center center;
         }
-
-        /* ── Petals / confetti ── */
-        @keyframes petalFall {
-            0% {
-                transform: translateY(-60px) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.85;
-            }
-
-            90% {
-                opacity: 0.6;
-            }
-
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+        .netflix-card:hover {
+            transform: scale(1.08);
+            z-index: 50;
         }
-
-        .petal {
-            position: fixed;
-            top: -60px;
-            pointer-events: none;
-            z-index: 0;
-            animation: petalFall linear infinite;
-            font-size: 18px;
-            will-change: transform;
-        }
-
-        /* ── Glow pulse on date block ── */
-        @keyframes glowPulse {
-
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(201, 19, 82, 0);
-            }
-
-            50% {
-                box-shadow: 0 0 22px 6px rgba(201, 19, 82, 0.18);
-            }
-        }
-
-        .glow-pulse {
-            animation: glowPulse 3s ease-in-out infinite;
-        }
-
-        /* ── Ribbon scroll-reveal for items ── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .hero-vignette {
+            background: linear-gradient(to top, #141414 0%, transparent 40%, rgba(20,20,20,0.8) 100%);
         }
     </style>
 </head>
 
-<body
-    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<body class="bg-[#141414] antialiased selection:bg-primary selection:text-white">
 
-    {% include 'partials/navbar.html' %}
-    {% include 'partials/back_button.html' %}
-    {% include 'partials/lightbox.html' %}
+    <!-- Navbar: included directly -->
+    <div class="fixed top-0 w-full z-[100] transition-colors duration-500 bg-gradient-to-b from-black/90 pb-8 to-transparent">
+        {% set page = 'roka' %}
+        {% include 'partials/navbar.html' %}
+    </div>
 
-    <!-- Falling petals (spawned by JS) -->
-    <div id="petal-container" aria-hidden="true"></div>
+    <!-- Cinematic Hero Section -->
+    <main class="relative w-full overflow-hidden">
+        {% set chapter_order = [
+            'The Venue and Decor',
+            'Union of Families',
+            'Ceremony Highlights',
+            'Our Moments',
+            'Cake Cutting',
+            'Dinner',
+            'Portraits'
+        ] %}
+        {% set chapter_notes = {
+            'The Venue and Decor': 'Every perfect memory needs a perfect backdrop. Draped in warmth and light, this was the breathtaking canvas where our story took its next beautiful step.',
+            'Union of Families': 'Two worlds converging into one seamless tapestry of love. A beautiful meeting of hearts, traditions, and lifelong promises.',
+            'Ceremony Highlights': 'The sacred rituals that bind us. Beautiful traditions wrapped in laughter and surrounded by the endless blessings of those we cherish most.',
+            'Our Moments': 'Between the lights and the blessings, there was just us. Stolen glances and quiet promises that spoke louder than any words ever could.',
+            'Cake Cutting': 'A slice of pure happiness, sprinkled with endless cheers. Here’s to sweet beginnings and celebrating a love that only grows richer with time.',
+            'Dinner': 'Laughter ringing over shared plates and clinking glasses. A grand feast to cap off the night our families joyously grew by leaps and bounds.',
+            'Portraits': 'Capturing the love, the tearful smiles, and our favorite people in the world.'
+        } %}
+        <section class="relative w-full h-[85vh] lg:h-[95vh] flex items-center">
+            
+            {% if hero_media %}
+            <!-- Background Video looping over dynamic intervals -->
+            <video id="hero-bg-video" autoplay muted playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="{{ r2_url }}/{{ hero_media.filename }}" type="video/mp4">
+            </video>
+            {% else %}
+            <!-- Fallback background if no video found -->
+            <div class="absolute inset-0 w-full h-full object-cover z-0 bg-zinc-900 border-4 border-red-500 flex items-center justify-center">No Hero Media</div>
+            {% endif %}
+            
+            <div class="absolute inset-0 hero-vignette z-10 pointer-events-none"></div>
+            <!-- Side gradient for text readability -->
+            <div class="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/60 to-transparent w-[70vw] lg:w-[50vw] z-10 pointer-events-none"></div>
 
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!--                    INVITATION CARD                        -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <div class="w-full pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-        <div
-            class="max-w-3xl mx-auto relative rounded-3xl overflow-hidden luxury-border shadow-2xl shadow-primary/10 card-shimmer bg-background-light dark:bg-background-dark anim-scale-in">
-
-            <!-- Top accent bar -->
-            <div class="h-1.5 w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"></div>
-
-            <!-- ─── Hero Photo ─────────────────────────────────── -->
-            <div class="relative w-full overflow-hidden" style="height:clamp(260px,38vw,460px);">
-                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/images/favourites/IMG_8895%20(1).jpg"
-                    alt="Roka Ceremony" class="w-full h-full object-cover object-center ken-burns">
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-background-dark/95 via-background-dark/25 to-transparent">
+            <div class="relative z-20 px-8 md:px-16 lg:px-24 max-w-4xl pt-24 text-shadow-xl">
+                <!-- Top 10 Badge -->
+                <div class="flex items-center gap-2 mb-4 drop-shadow-md">
+                    <div class="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Top 10</div>
+                    <span class="text-white font-bold text-xl drop-shadow-lg">#1 in Our Hearts Today</span>
+                </div>
+                
+                <h1 class="text-6xl md:text-8xl font-display font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl mb-1 text-shadow">
+                    Roka
+                </h1>
+                <h2 class="text-3xl md:text-5xl font-display font-bold text-white/90 leading-[1.1] tracking-tight drop-shadow-2xl mb-4 text-shadow italic">
+                    The Eternal Promise
+                </h2>
+                
+                <div class="flex items-center gap-3 mb-6 text-sm md:text-base font-bold drop-shadow-md text-gray-200">
+                    <span class="text-[#46d369]">99% Match</span>
+                    <span>March 12, 2026</span>
+                    <span class="border border-white px-2 py-0.5 rounded-sm">10m Movie</span>
+                    <span class="border border-gray-400 px-1 rounded-sm text-xs">HD</span>
                 </div>
 
-                <!-- Hero text overlay -->
-                <div class="absolute bottom-0 left-0 right-0 px-6 sm:px-10 pb-8 text-center">
-                    <p class="anim-fade-in d-200 text-white/80 text-base sm:text-lg italic drop-shadow-lg font-serif">
-                        "Two souls, one destiny — written in the stars."
-                    </p>
+                <p class="text-lg md:text-xl text-gray-100 max-w-2xl leading-relaxed mb-8 drop-shadow-md font-medium text-shadow">
+                    Two families become one. A cinematic journey of love, joy, and the eternal promise between Shaiwal and Shaila. Join us as the journey with Puchki begins.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    {% if hero_media %}
+                    <button onclick="playNetflixVideo('{{ r2_url }}/{{ hero_media.filename }}')" class="flex items-center gap-2 bg-white text-black px-6 py-2 md:px-8 md:py-3.5 rounded md:text-xl font-bold hover:bg-white/80 transition shadow-2xl">
+                        <span class="material-icons text-3xl md:text-4xl text-black">play_arrow</span>
+                        Play Movie
+                    </button>
+                    {% endif %}
+                    <button onclick="startAiMagic()" class="flex items-center gap-2 bg-zinc-800/80 text-white px-6 py-2 md:px-8 md:py-3.5 rounded md:text-xl font-bold hover:bg-zinc-700/80 transition shadow-2xl group backdrop-blur-md">
+                        <span class="material-icons text-3xl md:text-4xl text-pink-400 animate-pulse group-hover:rotate-12 transition-transform">auto_awesome</span>
+                        AI Magic ✨
+                    </button>
+                    <button onclick="document.getElementById('movies-start').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 bg-gray-500/60 text-white px-6 py-2 md:px-8 md:py-3.5 rounded md:text-xl font-bold hover:bg-gray-500/80 transition backdrop-blur-sm shadow-2xl">
+                        <span class="material-icons text-3xl md:text-4xl text-white">photo_library</span>
+                        Browse
+                    </button>
                 </div>
             </div>
+            
+            <!-- Bottom gradient merging into next section -->
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#141414] z-10 pointer-events-none"></div>
+        </section>
 
-            <!-- ─── Body ─────────────────────────────────────────── -->
-            <div class="px-6 sm:px-10 py-10 space-y-10 relative z-10">
-
-                <!-- INVITATION headline -->
-                <div class="text-center space-y-2 reveal">
-                    <p class="text-primary text-[11px] font-extrabold uppercase tracking-[0.45em]">— You Are Cordially
-                        Invited To —</p>
-                    <h2 class="gold-gradient text-5xl sm:text-6xl font-serif font-bold py-1 leading-tight">
-                        Roka Ceremony
-                    </h2>
-                    <div class="ornament-line mt-3">❧</div>
-                    <p
-                        class="text-slate-600 dark:text-slate-300 text-base leading-relaxed italic max-w-lg mx-auto pt-1">
-                        With joyful hearts and the blessings of our families, we invite you to witness the beginning of
-                        our forever.
-                    </p>
-                </div>
-
-                <!-- Date / Time / Day strip -->
-                <div class="reveal">
-                    <div class="glow-pulse bg-primary/10 dark:bg-primary/15 rounded-2xl p-6 sm:p-8 border border-primary/20
-                                flex flex-wrap items-center justify-center gap-8 sm:gap-14">
-                        <div class="text-center">
-                            <span
-                                class="block text-primary text-[11px] font-bold uppercase tracking-widest">March</span>
-                            <span class="block text-6xl font-serif font-extrabold leading-none">12</span>
-                            <span class="block text-primary text-[11px] font-bold uppercase tracking-widest">2026</span>
+        <!-- Dynamic Rows (Chapters = Netflix Rows) -->
+        <section id="movies-start" class="relative z-30 -mt-16 md:-mt-24 space-y-16 px-4 md:px-12 pb-16">
+            {% for chap in chapter_order %}
+                {% if chapters_map[chap] and chapters_map[chap]|length > 0 %}
+                <div class="chapter-row">
+                    <!-- Row Title & Description -->
+                    <div class="mb-5 pr-4 pl-2 md:pl-0">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center group cursor-pointer w-full flex-wrap gap-2">
+                            {{ chap }}
+                            <span class="text-[#54b9c5] text-sm font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex items-center mt-1">
+                                Explore All <span class="material-icons text-sm ml-1">arrow_forward_ios</span>
+                            </span>
+                        </h2>
+                        {% if chapter_notes[chap] %}
+                            <p class="text-gray-400 text-sm md:text-base mt-2 max-w-4xl italic leading-relaxed">{{ chapter_notes[chap] }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Scrollable Container -->
+                    <div class="relative group/row">
+                        <!-- Left Arrow -->
+                        <div class="absolute left-0 top-0 bottom-8 w-12 bg-black/60 z-20 flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition duration-300 rounded-r-md cursor-pointer hover:bg-black/90 hover:scale-105" onclick="document.getElementById('row-{{ loop.index }}').scrollBy({left: -800, behavior: 'smooth'})">
+                            <span class="material-icons text-white text-5xl">chevron_left</span>
                         </div>
-                        <div class="h-14 w-px bg-primary/25 hidden sm:block"></div>
-                        <div class="text-center">
-                            <span
-                                class="block text-slate-500 dark:text-slate-400 text-[11px] font-bold uppercase tracking-widest">Time</span>
-                            <span class="block text-3xl font-serif font-bold leading-none mt-1">07:30 PM</span>
+                        
+                        <!-- Cards Track -->
+                        <div class="netflix-row gap-3 md:gap-4 py-4 px-2" id="row-{{ loop.index }}">
+                            {% for item in chapters_map[chap] %}
+                                <!-- The Card -->
+                                <div class="netflix-card group relative w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] rounded-md bg-zinc-800 overflow-hidden shadow-lg {{ 'netflix-card-first' if loop.first else '' }} {{ 'netflix-card-last' if loop.last else '' }}">
+                                    <!-- Add .group for lightbox attachment! -->
+                                    <div class="aspect-[4/3] relative w-full h-full cursor-pointer lightbox-group group">
+                                        {% if item.media_type == "video" %}
+                                            <div onclick="event.stopPropagation(); playNetflixVideo('{{ r2_url }}/{{ item.filename }}')" class="w-full h-full relative cursor-pointer">
+                                                <video src="{{ r2_url }}/{{ item.filename }}#t=0.5" preload="metadata" class="absolute inset-0 w-full h-full object-cover"></video>
+                                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center pointer-events-none">
+                                                    <span class="material-icons text-white text-6xl drop-shadow-xl opacity-80">play_circle_filled</span>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <img src="{{ r2_url }}/{{ item.filename }}" data-alt="{{ item.note|escape }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
+                                            {% if item.note %}
+                                            <div class="absolute bottom-0 w-full p-3 bg-gradient-to-t from-black/90 to-transparent z-10">
+                                                <p class="text-white text-xs font-medium truncate drop-shadow-md">{{ item.note }}</p>
+                                            </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="h-14 w-px bg-primary/25 hidden sm:block"></div>
-                        <div class="text-center">
-                            <span
-                                class="block text-slate-500 dark:text-slate-400 text-[11px] font-bold uppercase tracking-widest">Day</span>
-                            <span class="block text-xl font-serif font-bold leading-tight mt-1">Thursday</span>
+                        
+                        <!-- Right Arrow -->
+                        <div class="absolute right-0 top-0 bottom-8 w-12 bg-black/60 z-20 flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition duration-300 rounded-l-md cursor-pointer hover:bg-black/90 hover:scale-105" onclick="document.getElementById('row-{{ loop.index }}').scrollBy({left: 800, behavior: 'smooth'})">
+                            <span class="material-icons text-white text-5xl">chevron_right</span>
                         </div>
                     </div>
                 </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
 
-                <!-- Venue -->
-                <div class="reveal flex items-start gap-4">
-                    <div class="bg-primary/10 p-2.5 rounded-full text-primary shrink-0 mt-0.5">
-                        <span class="material-symbols-outlined">location_on</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Venue</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-0.5">
-                            Private Dining Room, Empress of China<br>
-                            Eros Hotel, Nehru Place, New Delhi<br>
-                            Delhi — 110019
-                        </p>
-                    </div>
+    <!-- Fullscreen Video Player Modal -->
+    <div id="netflix-video-modal" class="fixed inset-0 bg-black z-[100] hidden flex flex-col transition-all duration-500">
+        <!-- Floating Netflix-style title bar -->
+        <div class="absolute top-0 w-full z-20 p-6 flex items-center bg-gradient-to-b from-black/90 to-transparent group transition-opacity duration-300" id="v-player-controls">
+            <div class="flex items-center gap-6">
+                <button onclick="closeNetflixVideo()" class="text-white hover:text-[#E50914] transition flex items-center gap-2 text-xl font-bold font-sans">
+                    <span class="material-icons text-4xl">arrow_back</span>
+                </button>
+                <div class="hidden md:block">
+                    <h2 class="text-xl font-bold text-white tracking-wide" id="v-player-title">Roka: The Eternal Promise</h2>
+                    <p class="text-gray-400 text-sm font-medium">March 12, 2026 • 10m Movie</p>
                 </div>
-
-                <!-- Map -->
-                <div class="reveal w-full rounded-2xl overflow-hidden shadow-lg border border-primary/20">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.6603597384324!2d77.24652837630735!3d28.54992677570998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3cf1dfeece7%3A0xee690c3f5b362567!2sEros%20Hotel%20New%20Delhi%20Nehru%20Place!5e0!3m2!1sen!2sin!4v1772871569675!5m2!1sen!2sin"
-                        width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-
-                <!-- Closing line -->
-                <div class="reveal text-center space-y-3 pt-2">
-                    <div class="ornament-line">✦</div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm italic">
-                        We look forward to your presence and blessings.
-                    </p>
-                    <p class="text-primary font-bold font-serif text-xl">ShaiX2</p>
-                </div>
-
             </div>
-
-            <!-- Bottom accent bar -->
-            <div class="h-1.5 w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"></div>
+        </div>
+        
+        <div class="w-full h-full flex items-center justify-center relative bg-black" id="v-player-content">
+            <!-- Dynamically injected video -->
         </div>
     </div>
-    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Background Video Highlight Rotation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const bgVideo = document.getElementById("hero-bg-video");
+            if(!bgVideo) return;
+            
+            // Highlight loop logic requested
+            const highlights = [
+                { start: 39, end: 77 },
+                { start: 555, end: 600 }, // 9:15 to end ~10 min
+                { start: 196, end: 217 }  // 3:16 to 3:37
+            ];
+            
+            // Start at a random segment
+            let curHndx = Math.floor(Math.random() * highlights.length);
+            let checkInterval;
+            
+            function playHighlight() {
+                const hl = highlights[curHndx];
+                bgVideo.currentTime = hl.start;
+                bgVideo.muted = true; // explicitly ensure muted
+                bgVideo.play().catch(e => console.log('Autoplay prevented', e));
+                
+                checkInterval = setInterval(() => {
+                    // if video buffered past the end or ended naturally
+                    if (bgVideo.currentTime >= hl.end || bgVideo.ended) {
+                        clearInterval(checkInterval);
+                        curHndx = (curHndx + 1) % highlights.length;
+                        playHighlight();
+                    }
+                }, 500);
+            }
+            
+            bgVideo.onloadedmetadata = () => {
+                playHighlight();
+            };
+            
+            if (bgVideo.readyState >= 1) {
+                playHighlight();
+            }
+        });
+
+        function playNetflixVideo(url) {
+            const modal = document.getElementById('netflix-video-modal');
+            const content = document.getElementById('v-player-content');
+            
+            // Standard HTML5 player styled beautifully
+            content.innerHTML = `
+                <video id="active-n-video" src="${url}" controls autoplay preload="auto" class="w-full h-full object-contain max-h-screen"></video>
+            `;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 50);
+            document.body.style.overflow = 'hidden';
+            
+            const bg = document.getElementById("hero-bg-video");
+            if(bg) bg.pause(); // pause backgroung looping
+            
+            const v = document.getElementById('active-n-video');
+            if(v && v.requestFullscreen) {
+                v.requestFullscreen().catch(e => console.log("Fullscreen blocked"));
+            }
+        }
+
+        function closeNetflixVideo() {
+            const modal = document.getElementById('netflix-video-modal');
+            const content = document.getElementById('v-player-content');
+            
+            document.exitFullscreen?.().catch(() => {});
+            
+            modal.classList.add('hidden');
+            modal.classList.remove('opacity-100');
+            content.innerHTML = '';
+            document.body.style.overflow = '';
+            
+            const bg = document.getElementById("hero-bg-video");
+            if(bg) bg.play().catch(e=>e);
+        }
+    </script>
+
+    <!-- Include custom Roka AI Magic logic -->
+    <audio id="roka-magic-audio" src="/static/music/aaj_sajeya.mp3" preload="auto"></audio>
+    {% include 'partials/ai_magic_roka.html' %}
+    
+    <!-- Restore standard Lightbox -->
+    {% include 'partials/lightbox.html' %}
 
     {% include 'partials/footer.html' %}
 
-    <script>
-        // ── Falling rose petals ───────────────────────────────────
-        const petalSymbols = ['🌸', '🌺', '✨', '💮', '🌹', '💐'];
-        const container = document.getElementById('petal-container');
-
-        function spawnPetal() {
-            const el = document.createElement('div');
-            el.className = 'petal';
-            el.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
-            el.style.left = Math.random() * 100 + 'vw';
-            el.style.fontSize = (12 + Math.random() * 14) + 'px';
-            el.style.animationDuration = (9 + Math.random() * 10) + 's';
-            el.style.animationDelay = (Math.random() * 3) + 's';
-            el.style.opacity = (0.4 + Math.random() * 0.5).toString();
-            container.appendChild(el);
-            const dur = parseFloat(el.style.animationDuration) * 1000 + 4000;
-            setTimeout(() => el.remove(), dur);
+    <style>
+        .text-shadow {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.8);
         }
-
-        // Stagger initial burst then keep trickling
-        for (let i = 0; i < 10; i++) setTimeout(spawnPetal, i * 350);
-        setInterval(spawnPetal, 1800);
-
-        // ── Scroll reveal ─────────────────────────────────────────
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('visible');
-                    observer.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.15 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
-
+    </style>
 </body>
-
 </html>

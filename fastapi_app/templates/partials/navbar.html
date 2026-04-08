@@ -123,29 +123,29 @@
                 <span class="font-bold text-2xl tracking-tight text-primary">ShaiX2</span>
             </a>
             <div class="hidden md:flex space-x-6 items-center">
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/">Home</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/timeline">Timeline</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/gallery">Gallery</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/music">Music</a>
                 {% if not settings.private_mode %}
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/coupons">Coupons</a>
                 {% endif %}
-                <a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors {% if page == 'birthday' %}border-b-2 border-primary font-bold{% endif %}"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-primary hover:text-primary-dark{% endif %} transition-colors {% if page == 'birthday' %}border-b-2 border-primary font-bold{% endif %}"
                     href="/birthday">🎂 Birthday ✨</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white font-bold border-b-2 border-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/roka">Roka</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/wishlist">Wishlist</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/guestbook">Guestbook</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/upcoming">Upcoming</a>
-                <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
                     href="/dictionary">Dictionary</a>
             </div>
             <!-- Play Theme Button (Global) -->

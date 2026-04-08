@@ -145,6 +145,23 @@ async def add_dictionary_word(word: dict):
     db = get_db()
     await db.dictionary.insert_one(word)
 
+# --- Roka Media ---
+async def get_all_roka_media():
+    db = get_db()
+    return await db.roka_media.find({}, {"_id": 0}).sort("order", 1).to_list(length=None)
+
+async def add_roka_media(media: dict):
+    db = get_db()
+    await db.roka_media.insert_one(media)
+
+async def update_roka_media(media_id: str, data: dict):
+    db = get_db()
+    await db.roka_media.update_one(_build_id_query(media_id), {"$set": data})
+
+async def delete_roka_media(media_id: str):
+    db = get_db()
+    await db.roka_media.delete_one(_build_id_query(media_id))
+
 # --- Delete Operations ---
 async def delete_memory(memory_id: int):
     db = get_db()

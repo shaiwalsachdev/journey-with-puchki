@@ -21,7 +21,8 @@ from fastapi_app.database import (
     get_all_guestbook, add_guestbook_entry, delete_guestbook_entry, update_guestbook_entry,
     get_all_vault,
     get_all_wishlist, add_wishlist_item, delete_wishlist_item, update_wishlist_item,
-    get_all_dictionary, add_dictionary_word, save_all_dictionary, delete_dictionary_word, update_dictionary_word
+    get_all_dictionary, add_dictionary_word, save_all_dictionary, delete_dictionary_word, update_dictionary_word,
+    get_all_roka_media, add_roka_media, update_roka_media, delete_roka_media
 )
 from fastapi_app.storage import upload_file, get_photo_url, R2_PUBLIC_URL, get_s3_client, R2_BUCKET_NAME, delete_file
 from PIL import Image
@@ -653,21 +654,136 @@ async def read_vault(request: Request):
 
 @app.get("/roka", response_class=HTMLResponse)
 async def read_roka(request: Request):
-    dummy_memory = {
-        "id": "roka",
-        "title": "The Grand Roka",
-        "description": "Where two families become one.",
-        "date": "March 12, 2026",
-        "photos": [],
-        "comments": [],
-        "smart_data": {
-            "itinerary": [],
-            "vibe": "Blessed & Happy",
-            "entities": {"food": [], "places": []}
-        }
-    }
+    media = await get_all_roka_media()
+    
+    hero_media = None
+    first_video = None
+    chapters_map = {}
+    for item in media:
+        if item.get("media_type") == "video":
+            if not first_video:
+                first_video = item
+            if "roka" in item.get("filename", "").lower():
+                hero_media = item
+                
+        ch = item.get("chapter", "Other")
+        if ch not in chapters_map:
+            chapters_map[ch] = []
+        chapters_map[ch].append(item)
+        
+    if not hero_media:
+        hero_media = first_video
+        
     settings = request.state.settings
-    return templates.TemplateResponse("memory_roka.html", {"request": request, "memory": dummy_memory, "settings": settings})
+    return templates.TemplateResponse("memory_roka.html", {
+        "request": request, 
+        "hero_media": hero_media,
+        "chapters_map": chapters_map, 
+        "settings": settings
+    })
+
+# --- Roka Admin Creator ---
+
+@app.get("/admin/roka-creator", response_class=HTMLResponse)
+async def roka_creator(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        return RedirectResponse(url="/login?next=/admin/roka-creator")
+    settings = request.state.settings
+    media = await get_all_roka_media()
+    return templates.TemplateResponse("admin_roka.html", {"request": request, "settings": settings, "media": media})
+
+@app.post("/admin/roka-media/upload")
+async def upload_roka_media(
+    request: Request,
+    chapter: str = Form("The Venue"),
+    note: str = Form(""),
+    files: List[UploadFile] = File(...)
+):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    import time
+    from fastapi_app.media_optimizer import optimize_file_bytes
+    import io
+    import uuid
+
+    upload_tasks = []
+    
+    # Pre-process files
+    for file in files:
+        if file.filename and file.size > 0:
+            content = await file.read()
+            filename = file.filename
+            content_type = file.content_type or ""
+
+            try:
+                content, filename, content_type = optimize_file_bytes(content, filename)
+            except Exception as e:
+                print(f"Media optimization failed for {filename}: {e}")
+                if filename.lower().endswith(('.heic', '.heif')):
+                    try:
+                        from PIL import Image
+                        from pillow_heif import register_heif_opener
+                        register_heif_opener()
+                        img = Image.open(io.BytesIO(content))
+                        buf = io.BytesIO()
+                        img.convert("RGB").save(buf, format="JPEG", quality=90)
+                        content = buf.getvalue()
+                        filename = os.path.splitext(filename)[0] + ".jpg"
+                        content_type = "image/jpeg"
+                    except Exception:
+                        pass
+            
+            media_type = "video" if "video" in content_type else "image"
+            r2_key = f"roka/{int(time.time())}_{filename}"
+            upload_tasks.append({
+                "key": r2_key,
+                "content": content,
+                "content_type": content_type,
+                "media": {
+                    "id": str(uuid.uuid4()),
+                    "filename": r2_key,
+                    "chapter": chapter,
+                    "note": note,
+                    "media_type": media_type,
+                    "order": int(time.time())
+                }
+            })
+            
+    # Parallel upload
+    if upload_tasks:
+        import concurrent.futures
+        def _upload(task):
+            upload_file(io.BytesIO(task["content"]), task["key"], task["content_type"])
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(_upload, upload_tasks)
+            
+    # Save to db
+    for task in upload_tasks:
+        await add_roka_media(task["media"])
+
+    return RedirectResponse(url="/admin/roka-creator", status_code=303)
+
+
+@app.post("/admin/roka-media/{media_id}")
+async def update_roka_item(request: Request, media_id: str, chapter: str = Form(...), note: str = Form(""), order: float = Form(0)):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    await update_roka_media(media_id, {
+        "chapter": chapter,
+        "note": note,
+        "order": order
+    })
+    return RedirectResponse(url="/admin/roka-creator", status_code=303)
+
+@app.post("/admin/roka-media/{media_id}/delete")
+async def delete_roka_item(request: Request, media_id: str):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+    
+    await delete_roka_media(media_id)
+    return RedirectResponse(url="/admin/roka-creator", status_code=303)
 
 
 # --- Wishlist ---
