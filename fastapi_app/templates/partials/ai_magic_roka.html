@@ -737,6 +737,10 @@
             const noteEl = row.querySelector('p.italic');
             
             const chapterTitle = titleEl ? titleEl.textContent.split('Explore All')[0].replace(/\n/g, '').trim() : `Chapter ${index + 1}`;
+            
+            // Explicitly skip "Others" from the AI Magic slideshow
+            if (chapterTitle === 'Others') return;
+
             const chapterNote = noteEl ? noteEl.textContent.trim() : '';
             
             newItems.push({
