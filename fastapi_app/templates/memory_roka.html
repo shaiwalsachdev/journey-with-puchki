@@ -176,9 +176,14 @@
                     <div class="mb-5 pr-4 pl-2 md:pl-0">
                         <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center group cursor-pointer w-full flex-wrap gap-2">
                             {{ chap }}
-                            <span class="text-[#54b9c5] text-sm font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex items-center mt-1">
-                                Explore All <span class="material-icons text-sm ml-1">arrow_forward_ios</span>
-                            </span>
+                            <div class="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex mt-1">
+                                <span onclick="startAiMagic('{{ chap }}'); event.stopPropagation();" class="text-pink-400 text-sm font-bold uppercase tracking-wider cursor-pointer hover:text-pink-300 flex items-center shadow-sm">
+                                    AI SlideShow <span class="material-icons text-sm ml-1">auto_awesome</span>
+                                </span>
+                                <span onclick="openLightboxForContainer('#row-{{ loop.index }}'); event.stopPropagation();" class="text-[#54b9c5] text-sm font-bold uppercase tracking-wider cursor-pointer hover:text-white flex items-center shadow-sm">
+                                    View All <span class="material-icons text-sm ml-1">grid_view</span>
+                                </span>
+                            </div>
                         </h2>
                         {% if chapter_notes[chap] %}
                             <p class="text-gray-400 text-sm md:text-base mt-2 max-w-4xl italic leading-relaxed">{{ chapter_notes[chap] }}</p>

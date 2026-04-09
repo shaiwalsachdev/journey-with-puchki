@@ -412,6 +412,22 @@
                         class="px-4 py-2 rounded-full text-sm font-bold transition-all ai-color-btn hover:bg-white/10 text-blue-200">Blue</button>
                 </div>
             </div>
+
+            <div class="flex flex-col items-center gap-2">
+                <label class="text-sm font-bold tracking-widest uppercase text-white/70">Photos per Chapter</label>
+                <div class="flex bg-white/10 rounded-full p-1 border border-white/20 backdrop-blur-md">
+                    <button onclick="setAiPhotoCount(5)" id="ai-count-5"
+                        class="px-3 py-2 rounded-full text-sm font-bold transition-all ai-count-btn hover:bg-white/10 text-white">5</button>
+                    <button onclick="setAiPhotoCount(10)" id="ai-count-10"
+                        class="px-3 py-2 rounded-full text-sm font-bold transition-all ai-count-btn bg-pink-500 text-white shadow-lg">10</button>
+                    <button onclick="setAiPhotoCount(20)" id="ai-count-20"
+                        class="px-3 py-2 rounded-full text-sm font-bold transition-all ai-count-btn hover:bg-white/10 text-white">20</button>
+                    <button onclick="setAiPhotoCount(30)" id="ai-count-30"
+                        class="px-3 py-2 rounded-full text-sm font-bold transition-all ai-count-btn hover:bg-white/10 text-white">30</button>
+                    <button onclick="setAiPhotoCount('all')" id="ai-count-all"
+                        class="px-3 py-2 rounded-full text-sm font-bold transition-all ai-count-btn hover:bg-white/10 text-white">All</button>
+                </div>
+            </div>
         </div>
 
         <h3 class="text-white text-xl md:text-2xl font-display font-bold mb-6 drop-shadow-lg text-center px-4">Choose
@@ -599,9 +615,10 @@
         }
 
         // Expose start function globally so the main gallery page can call it
-        window.startAiMagic = async function () {
+        window.startAiMagic = async function (chapterName = null) {
             if (isActive) return;
             isActive = true;
+            currentExploreChapter = typeof chapterName === 'string' ? chapterName : null;
 
             // Show Container with Menu
             container.classList.remove('hidden');
@@ -637,11 +654,28 @@
             if (pageLoveAudio && !pageLoveAudio.paused) {
                 window.toggleLoveSong();
             }
+
+            if (currentExploreChapter) {
+                // Hide menu immediately and jump right in
+                menuOverlay.classList.add('hidden');
+                menuOverlay.style.opacity = '0';
+                beginRokaExperience();
+            }
         };
 
         // UI State for Settings
         let currentPace = 'balanced';
         let currentColorTheme = 'default';
+        let currentPhotoCount = 10;
+        let currentExploreChapter = null;
+
+        window.setAiPhotoCount = function (count) {
+            currentPhotoCount = count;
+            document.querySelectorAll('.ai-count-btn').forEach(btn => {
+                btn.classList.remove('bg-pink-500', 'shadow-lg');
+            });
+            document.getElementById(`ai-count-${count}`).classList.add('bg-pink-500', 'shadow-lg');
+        };
 
         window.setAiPacing = function (pace) {
             currentPace = pace;
@@ -736,10 +770,14 @@
             const titleEl = row.querySelector('h2');
             const noteEl = row.querySelector('p.italic');
             
-            const chapterTitle = titleEl ? titleEl.textContent.split('Explore All')[0].replace(/\n/g, '').trim() : `Chapter ${index + 1}`;
+            const titleTextNode = titleEl ? Array.from(titleEl.childNodes).find(n => n.nodeType === Node.TEXT_NODE) : null;
+            const chapterTitle = titleTextNode ? titleTextNode.nodeValue.replace(/\n/g, '').trim() : `Chapter ${index + 1}`;
             
             // Explicitly skip "Others" from the AI Magic slideshow
             if (chapterTitle === 'Others') return;
+
+            // If a specific chapter was requested, skip the rest
+            if (currentExploreChapter && currentExploreChapter !== chapterTitle) return;
 
             const chapterNote = noteEl ? noteEl.textContent.trim() : '';
             
@@ -772,6 +810,11 @@
             for (let i = sectionPhotos.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [sectionPhotos[i], sectionPhotos[j]] = [sectionPhotos[j], sectionPhotos[i]];
+            }
+
+            // Apply photo count limit unless it is 'all' or we are exploring a specific chapter
+            if (!currentExploreChapter && currentPhotoCount !== 'all') {
+                sectionPhotos = sectionPhotos.slice(0, currentPhotoCount);
             }
             
             newItems = newItems.concat(sectionPhotos);

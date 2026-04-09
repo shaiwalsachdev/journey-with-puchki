@@ -74,8 +74,10 @@
         let currentIndex = 0;
         let currentRotation = 0;
 
-        function refreshImageList() {
-            // Selectors for gallery items, timeline photos, and memory content
+        let currentFilterContainer = null;
+
+        function refreshImageList(containerSelector = null) {
+            currentFilterContainer = containerSelector;
             const selectors = [
                 '.masonry-item img',           // Gallery grid
                 'section img[data-alt]',       // Story/Timeline specific images using data-alt
@@ -85,14 +87,21 @@
                 '.group img'                   // Common pattern for image wrappers
             ];
 
-            const allCandidates = document.querySelectorAll(selectors.join(', '));
+            let query = selectors.join(', ');
+            if (containerSelector) {
+                // If narrowing down to a container, scope the selectors
+                const prefix = containerSelector + ' ';
+                query = selectors.map(s => prefix + s).join(', ');
+            }
+
+            const allCandidates = document.querySelectorAll(query);
             images = Array.from(allCandidates).filter(img => {
                 const isLogo = img.src.includes('logo') || img.classList.contains('icon');
                 const isProfile = img.classList.contains('rounded-full') && img.width < 100;
                 const isLightbox = img.id === 'lightbox-img';
                 return !isLogo && !isProfile && !isLightbox;
             });
-            console.log(`Lightbox: Refreshed image list, found ${images.length} candidates.`);
+            console.log(`Lightbox: Refreshed image list, found ${images.length} candidates. Filter: ${containerSelector || 'Global'}`);
         }
 
         // Expose globally
@@ -123,9 +132,9 @@
                 // Ensure it's not a link or button
                 if (e.target.closest('a:not([href="#"]), button')) return;
 
-                // Sync image list if it doesn't contain this image yet (e.g. newly loaded)
-                if (!images.includes(targetImg)) {
-                    refreshImageList();
+                // Sync image list if it doesn't contain this image yet, or if a filter is active
+                if (!images.includes(targetImg) || currentFilterContainer) {
+                    refreshImageList(); // no args resets to global
                 }
 
                 const index = images.indexOf(targetImg);
@@ -290,6 +299,14 @@
             if (!images.includes(imgEl)) refreshImageList();
             const index = images.indexOf(imgEl);
             if (index !== -1) openLightbox(index);
+        };
+
+        // Global trigger for a specific container
+        window.openLightboxForContainer = function(containerSelector) {
+            refreshImageList(containerSelector);
+            if (images.length > 0) {
+                openLightbox(0);
+            }
         };
 
         // Controls
