@@ -655,6 +655,10 @@
                         <span class="material-icons text-sm" id="sort-icon">arrow_downward</span>
                         <span id="sort-label">Newest</span>
                     </button>
+                    <!-- Netflix Mode Toggle -->
+                    <button onclick="openNetflixMode()" class="pill pill-inactive !bg-[#141414] !text-[#E50914] !border-[#E50914] hover:!bg-[#E50914] hover:!text-white transition-colors" style="box-shadow: 0 2px 10px rgba(229, 9, 20, 0.4);">
+                        <span class="material-icons text-sm">movie</span> Netflix Mode
+                    </button>
                 </div>
 
                 <!-- Row 2: Category pills -->
@@ -1497,8 +1501,7 @@
         })();
     </script>
 
-
-
+    {% include 'partials/netflix_mode.html' %}
 </body>
 
 </html>

@@ -1,0 +1,509 @@
+<style>
+/* ── Netflix Cinematic Styles ── */
+#netflix-mode-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: #141414;
+    color: white;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#netflix-mode-overlay.nf-active { display: block; }
+
+.nf-close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 10001;
+    color: white;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 28px;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+}
+.nf-close-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
+.nf-switch-btn {
+    position: fixed;
+    top: 24px;
+    right: 84px;
+    z-index: 10001;
+    color: white;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+}
+.nf-switch-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
+/* Intro Screen */
+#nf-intro {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 1s ease;
+}
+.nf-n-logo {
+    width: 160px;
+    transform: scale(0.5);
+    opacity: 0;
+    animation: nf-pop-in 3.5s forwards;
+}
+@keyframes nf-pop-in {
+    0% { 
+        transform: scale(0.3); opacity: 0; 
+        animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    15% { 
+        transform: scale(1); opacity: 1; 
+        animation-timing-function: linear;
+    }
+    75% { 
+        transform: scale(1.1); opacity: 1; 
+        filter: blur(0px);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    100% { 
+        transform: scale(40); opacity: 0; 
+        filter: blur(8px);
+    }
+}
+
+/* Profiles Screen */
+#nf-profiles {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #141414;
+    z-index: 9000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+#nf-profiles.active { opacity: 1; pointer-events: auto; }
+.nf-profiles-title { font-size: 3.5vw; font-weight: 500; margin-bottom: 2em; letter-spacing: 0.05em; }
+.nf-profiles-container { display: flex; gap: 4vw; flex-wrap: wrap; justify-content: center; }
+.nf-profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 140px; transition: transform 0.3s; }
+.nf-profile:hover { transform: scale(1.05); }
+.nf-profile-avatar {
+    width: 12vw; min-width: 100px; max-width: 180px; aspect-ratio: 1;
+    border-radius: 8px; border: 3px solid transparent; transition: border-color 0.3s;
+    background-size: cover; background-position: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+.nf-profile:hover .nf-profile-avatar { border-color: white; }
+.nf-profile-name { margin-top: 15px; color: #808080; font-size: 1.3vw; min-font-size: 14px; font-weight: 500; transition: color 0.3s; }
+.nf-profile:hover .nf-profile-name { color: white; }
+
+.avatar-1 { background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png'); }
+.avatar-2 { background-image: url('https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg'); }
+.avatar-3 { background-image: url('https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.jpg'); }
+.avatar-4 { background-image: url('https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-dyrp6bw6adbulg5b.jpg'); }
+
+/* Main UI Screen */
+#nf-main {
+    position: relative; width: 100%; min-height: 100%;
+    background: #141414; opacity: 0; pointer-events: none;
+    transition: opacity 0.8s ease; padding-bottom: 100px;
+}
+#nf-main.active { opacity: 1; pointer-events: auto; }
+
+/* Hero Section */
+.nf-hero {
+    position: relative; width: 100%; height: 85vh;
+    background-size: cover; background-position: center 30%;
+}
+.nf-hero-vignette {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, #141414 0%, transparent 40%, rgba(20,20,20,0.8) 100%);
+}
+.nf-hero-gradient-side {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, #141414 0%, rgba(20,20,20,0.6) 40%, transparent 100%);
+    width: 60%;
+}
+
+.text-shadow-hero { text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
+
+/* Horizontal Rows */
+.netflix-row {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; scroll-behavior: smooth;
+}
+.netflix-row::-webkit-scrollbar { display: none; }
+.netflix-card {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center center;
+}
+.netflix-card:hover { transform: scale(1.08); z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+
+/* Lightbox */
+#nf-lightbox {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+    z-index: 10005; display: none; align-items: center; justify-content: center;
+}
+#nf-lightbox.active { display: flex; }
+</style>
+
+<div id="netflix-mode-overlay">
+    <!-- Close -->
+    <button class="nf-close-btn" onclick="closeNetflixMode()"><span class="material-icons">close</span></button>
+
+    <!-- Audio (Tudum) -->
+    <!-- Handled by JS Audio API -->
+
+    <!-- Intro -->
+    <div id="nf-intro">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="nf-n-logo" alt="N" />
+    </div>
+
+    <!-- Profiles -->
+    <div id="nf-profiles">
+        <h1 class="nf-profiles-title">Who's watching?</h1>
+        <div class="nf-profiles-container">
+            <div class="nf-profile" onclick="selectNfProfile(1)">
+                <div class="nf-profile-avatar avatar-1"></div>
+                <div class="nf-profile-name">1 Month</div>
+            </div>
+            <div class="nf-profile" onclick="selectNfProfile(3)">
+                <div class="nf-profile-avatar avatar-2"></div>
+                <div class="nf-profile-name">3 Months</div>
+            </div>
+            <div class="nf-profile" onclick="selectNfProfile(6)">
+                <div class="nf-profile-avatar avatar-3"></div>
+                <div class="nf-profile-name">6 Months</div>
+            </div>
+            <div class="nf-profile" onclick="selectNfProfile(999)">
+                <div class="nf-profile-avatar avatar-4"></div>
+                <div class="nf-profile-name">All</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main UI -->
+    <div id="nf-main">
+        <button class="nf-switch-btn" onclick="showNfProfiles()" title="Switch Profile">
+            <span class="material-icons">people</span>
+        </button>
+
+        <div class="nf-hero" id="nf-hero">
+            <!-- Dynamically populated by JS -->
+        </div>
+
+        <div id="nf-rows-container" class="relative z-30 -mt-8 md:-mt-16 space-y-12">
+            <!-- Rows injected by JS -->
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="nf-lightbox" onclick="this.classList.remove('active'); document.getElementById('nf-lightbox-content').pause?.()">
+        <button class="nf-close-btn" style="top: 20px; right: 20px;"><span class="material-icons">close</span></button>
+        <!-- Content injected dynamically -->
+    </div>
+</div>
+
+<script>
+    const nfOverlay = document.getElementById('netflix-mode-overlay');
+    const nfIntro = document.getElementById('nf-intro');
+    const nfProfiles = document.getElementById('nf-profiles');
+    const nfMain = document.getElementById('nf-main');
+    
+    // Extracted global data
+    let nfFilteredMemories = [];
+
+    let nfTudumAudio = null;
+
+    function openNetflixMode() {
+        document.body.style.overflow = 'hidden';
+        nfOverlay.classList.add('nf-active');
+        nfIntro.style.display = 'flex';
+        nfIntro.style.opacity = '1';
+        nfProfiles.classList.remove('active');
+        nfMain.classList.remove('active');
+
+        // Restart animation
+        const logo = document.querySelector('.nf-n-logo');
+        logo.style.animation = 'none';
+        logo.offsetHeight; // trigger reflow
+        logo.style.animation = null;
+
+        // Play Tudum
+        if (nfTudumAudio) {
+            nfTudumAudio.pause();
+            nfTudumAudio.currentTime = 0;
+        } else {
+            nfTudumAudio = new Audio('/static/audio/Netflix%20tou%20doum%20-%20QuickSounds.com.mp3');
+        }
+        nfTudumAudio.volume = 1.0;
+        nfTudumAudio.play().catch(e => console.log('Audio block:', e));
+
+        // After animation (4s), show profiles
+        setTimeout(() => {
+            nfIntro.style.opacity = '0';
+            setTimeout(() => {
+                nfIntro.style.display = 'none';
+                nfProfiles.classList.add('active');
+            }, 1000);
+        }, 3500);
+    }
+
+    function closeNetflixMode() {
+        nfOverlay.classList.remove('nf-active');
+        document.body.style.overflow = '';
+        if (nfTudumAudio) nfTudumAudio.pause();
+    }
+
+    function showNfProfiles() {
+        nfMain.classList.remove('active');
+        setTimeout(() => {
+            nfProfiles.classList.add('active');
+            const heroVid = document.querySelector('#nf-hero video');
+            if (heroVid) heroVid.pause();
+        }, 500);
+    }
+
+    function nfParseDate(dateStr) {
+        if (!dateStr) return new Date(0);
+        let str = dateStr;
+        const match = dateStr.match(/([A-Z][a-z]+)\s*-\s*[A-Z][a-z]+\s*(\d{4})/);
+        if (match) str = `${match[1]} 1, ${match[2]}`;
+        const d = new Date(str);
+        return isNaN(d.getTime()) ? new Date(0) : d;
+    }
+
+    function selectNfProfile(months) {
+        nfProfiles.classList.remove('active');
+        
+        // Filter Memories
+        const now = new Date();
+        const past = new Date();
+        if (months !== 999) {
+            past.setMonth(now.getMonth() - months);
+        } else {
+            past.setFullYear(1900);
+        }
+
+        nfFilteredMemories = window.__MEMORIES__.filter(m => {
+            const md = nfParseDate(m.date);
+            return md >= past;
+        }).sort((a, b) => nfParseDate(b.date) - nfParseDate(a.date));
+
+        buildNfMain();
+
+        setTimeout(() => {
+            nfMain.classList.add('active');
+        }, 500);
+    }
+
+    const VIDEO_EXTS = ['.mp4', '.mov', '.webm', '.avi'];
+    function isVideo(filename) {
+        return VIDEO_EXTS.some(ext => filename.toLowerCase().endsWith(ext));
+    }
+
+    function buildNfMain() {
+
+        // Build Rows: Group strictly by type (Genres) to avoid repetition
+        const rowsContainer = document.getElementById('nf-rows-container');
+        rowsContainer.innerHTML = '';
+
+        const byType = {};
+        const allVideos = [];
+
+        nfFilteredMemories.forEach(m => {
+            const memType = m.type || m.category || "Others";
+            if (m.photos && m.photos.length > 0) {
+                if (!byType[memType]) byType[memType] = [];
+                let vidCount = 1;
+                let photoCount = 1;
+                // Add all photos/videos from this memory to its genre row
+                m.photos.forEach(p => {
+                    const cleanBase = R2_URL.endsWith('/') ? R2_URL.slice(0, -1) : R2_URL;
+                    let urlPath = `${cleanBase}/uploads/${m.id}/${p}`;
+                    const fullUrl = p.startsWith('http') ? p : encodeURI(urlPath);
+                    const isVid = isVideo(p);
+                    
+                    let suffix = '';
+                    if (m.photos.length > 1) {
+                        suffix = isVid ? ` - Part ${vidCount++}` : ` - Pic ${photoCount++}`;
+                    }
+
+                    const item = {
+                        url: fullUrl,
+                        title: m.title + suffix,
+                        date: m.date,
+                        type: isVid ? 'video' : 'photo'
+                    };
+                    byType[memType].push(item);
+                    if (isVid) allVideos.push(item);
+                });
+            }
+        });
+
+        // Set Hero using Roka styled UI
+        // Pick a random video for the hero
+        let heroItem = null;
+        if (allVideos.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allVideos.length);
+            heroItem = allVideos[randomIndex];
+        }
+        if (!heroItem) {
+            const allItems = Object.values(byType).flat();
+            if (allItems.length > 0) {
+                const randomIndex = Math.floor(Math.random() * allItems.length);
+                heroItem = allItems[randomIndex];
+            }
+        }
+
+        const heroEl = document.getElementById('nf-hero');
+        if (heroItem) {
+            let mediaBg = '';
+            if (heroItem.type === 'photo') {
+                heroEl.style.backgroundImage = `url('${heroItem.url}')`;
+            } else {
+                heroEl.style.backgroundImage = 'none';
+                mediaBg = `<video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0" src="${heroItem.url}"></video>`;
+            }
+            
+            heroEl.innerHTML = `
+                ${mediaBg}
+                <div class="nf-hero-vignette z-10"></div>
+                <div class="nf-hero-gradient-side z-10 pointer-events-none"></div>
+                
+                <div class="absolute z-20 px-5 md:px-16 lg:px-24 w-full bottom-[15%] lg:bottom-[20%] text-shadow-hero">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider shadow-lg">Top Memory</div>
+                        <span class="text-white font-bold text-lg md:text-xl shadow-md">#1 Trending Today</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-8xl font-display font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl mb-4 max-w-4xl">${heroItem.title}</h1>
+                    
+                    <div class="flex items-center gap-3 mb-6 text-sm md:text-base font-bold drop-shadow-md text-gray-200">
+                        <span class="text-[#46d369]">99% Match</span>
+                        <span>${heroItem.date || ''}</span>
+                        <span class="border border-white px-2 py-0.5 rounded-sm">Memory</span>
+                        <span class="border border-gray-400 px-1 rounded-sm text-xs">HD</span>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4">
+                        <button onclick="openNfMedia('${heroItem.url}', '${heroItem.type}')" class="flex items-center gap-2 bg-white text-black px-6 py-2 md:px-8 md:py-3.5 rounded md:text-xl font-bold hover:bg-white/80 transition shadow-2xl">
+                            <span class="material-icons text-3xl md:text-4xl">play_arrow</span>
+                            Play Memory
+                        </button>
+                        <button onclick="document.getElementById('nf-rows-container').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 bg-zinc-800/80 text-white px-6 py-2 md:px-8 md:py-3.5 rounded md:text-xl font-bold hover:bg-zinc-700/80 transition shadow-2xl backdrop-blur-md">
+                            <span class="material-icons text-3xl md:text-4xl text-white">info_outline</span>
+                            More Info
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        const EMOJI_MAP = {
+            "date": "🍕 Date Night", "dinner": "🍝 Dinner", "milestone": "💍 Milestone", "trip": "✈️ Travel",
+            "food": "🍜 Foodie", "movie": "🎬 Movies", "shopping": "🛍️ Shopping", "family": "👨‍👩‍👧 Family",
+            "art": "🎨 Art", "celebration": "🎉 Celebration", "hot": "❤️ Beautiful", "others": "✨ Others"
+        };
+
+        if (allVideos.length > 0) {
+            const shuffledVideos = [...allVideos].sort(() => 0.5 - Math.random());
+            rowsContainer.appendChild(createNfRow("🎥 Cinematic Videos", shuffledVideos));
+        }
+
+        for (const [type, items] of Object.entries(byType)) {
+            if (items.length > 0) {
+                const rowTitle = EMOJI_MAP[type.toLowerCase()] || (type.charAt(0).toUpperCase() + type.slice(1));
+                const shuffledItems = [...items].sort(() => 0.5 - Math.random());
+                rowsContainer.appendChild(createNfRow(rowTitle, shuffledItems));
+            }
+        }
+    }
+
+    function createNfRow(title, items) {
+        const rowId = 'nf-row-' + Math.random().toString(36).substr(2, 9);
+        const row = document.createElement('div');
+        row.className = 'relative group/row mb-12 pl-4 md:pl-12';
+        
+        row.innerHTML = `
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 flex items-center shadow-sm tracking-wide font-sans">${title}</h2>
+            <div class="relative">
+                <!-- Left Arrow -->
+                <div class="absolute left-0 top-0 bottom-0 w-12 bg-black/60 z-40 flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition duration-300 rounded-r-md cursor-pointer hover:bg-black/90 hover:scale-105" onclick="document.getElementById('${rowId}').scrollBy({left: -800, behavior: 'smooth'})">
+                    <span class="material-icons text-white text-4xl">chevron_left</span>
+                </div>
+                
+                <div id="${rowId}" class="netflix-row gap-3 py-2 px-1"></div>
+                
+                <!-- Right Arrow -->
+                <div class="absolute right-0 top-0 bottom-0 w-12 bg-black/60 z-40 flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition duration-300 rounded-l-md cursor-pointer hover:bg-black/90 hover:scale-105" onclick="document.getElementById('${rowId}').scrollBy({left: 800, behavior: 'smooth'})">
+                    <span class="material-icons text-white text-4xl">chevron_right</span>
+                </div>
+            </div>
+        `;
+        
+        const container = row.querySelector('.netflix-row');
+        
+        items.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'netflix-card relative flex-none w-[65vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] aspect-video rounded-md bg-zinc-800 overflow-hidden shadow-xl snap-start cursor-pointer group/card';
+            card.onclick = () => openNfMedia(item.url, item.type);
+            
+            if (item.type === 'photo') {
+                card.innerHTML = `
+                    <img src="${item.url}" loading="lazy" class="absolute inset-0 w-full h-full object-cover bg-zinc-900" onerror="this.src='/static/images/fallback.jpg'; this.onerror=null;" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-bold text-sm md:text-base truncate drop-shadow-md">${item.title}</span>
+                    </div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <video src="${item.url}" muted preload="metadata" onmouseover="this.play().catch(e=>e)" onmouseout="this.pause()" class="absolute inset-0 w-full h-full object-cover bg-zinc-900"></video>
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center pointer-events-none group-hover/card:bg-black/10 transition">
+                        <span class="material-icons text-white text-5xl drop-shadow-xl opacity-80 group-hover/card:scale-110 transition-transform">play_circle_filled</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white font-bold text-sm md:text-base truncate drop-shadow-md">${item.title}</span>
+                    </div>
+                `;
+            }
+            container.appendChild(card);
+        });
+
+        return row;
+    }
+
+    function openNfMedia(url, type) {
+        const lb = document.getElementById('nf-lightbox');
+        lb.innerHTML = '<button class="nf-close-btn" style="top: 20px; right: 20px;"><span class="material-icons">close</span></button>';
+        
+        if (type === 'photo') {
+            lb.innerHTML += `<img id="nf-lightbox-content" src="${url}" />`;
+        } else {
+            lb.innerHTML += `<video id="nf-lightbox-content" src="${url}" controls autoplay playsinline></video>`;
+        }
+        lb.classList.add('active');
+    }
+</script>
