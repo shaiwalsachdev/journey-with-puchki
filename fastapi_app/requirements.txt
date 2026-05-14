@@ -14,3 +14,5 @@ boto3
 certifi
 pillow
 pillow-heif
+openai
+python-dotenv

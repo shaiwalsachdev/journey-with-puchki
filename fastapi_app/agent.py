@@ -88,12 +88,21 @@ async def chat_with_agent(messages: list) -> dict:
         )
         
         content = response.choices[0].message.content
+        content = content.strip()
+        if content.startswith("```json"):
+            content = content[7:]
+        if content.startswith("```"):
+            content = content[3:]
+        if content.endswith("```"):
+            content = content[:-3]
+        content = content.strip()
+        
         return json.loads(content)
         
     except Exception as e:
         print("Agent error:", e)
         return {
-            "text": f"Error connecting to agent: {str(e)}\n\nMake sure your OPENAI_API_KEY is valid.",
+            "text": f"Error connecting to agent: {str(e)}\n\nMake sure your GEMINI_API_KEY is valid.",
             "cards": [],
             "metrics": []
         }
