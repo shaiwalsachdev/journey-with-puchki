@@ -655,10 +655,7 @@
                         <span class="material-icons text-sm" id="sort-icon">arrow_downward</span>
                         <span id="sort-label">Newest</span>
                     </button>
-                    <!-- Netflix Mode Toggle -->
-                    <button onclick="openNetflixMode()" class="pill pill-inactive !bg-[#141414] !text-[#E50914] !border-[#E50914] hover:!bg-[#E50914] hover:!text-white transition-colors" style="box-shadow: 0 2px 10px rgba(229, 9, 20, 0.4);">
-                        <span class="material-icons text-sm">movie</span> Netflix Mode
-                    </button>
+                    <!-- Netflix mode moved to FAB -->
                 </div>
 
                 <!-- Row 2: Category pills -->
@@ -757,7 +754,7 @@
         </div>
     </main>
 
-    <!-- FAB -->
+    <!-- FAB for Add Memory -->
     <div class="relative-z fixed bottom-8 right-8 z-40">
         <a href="/add"
             class="bg-primary hover:bg-red-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 group relative">
@@ -766,6 +763,15 @@
                 class="absolute right-full mr-4 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Add
                 Memory</span>
         </a>
+    </div>
+
+    <!-- FAB for Netflix Mode -->
+    <div class="relative-z fixed bottom-8 left-8 z-40 flex flex-col gap-2 items-start">
+        <button onclick="openNetflixMode()" class="group relative flex items-center justify-center w-14 h-14 rounded-full bg-black shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:shadow-[0_0_30px_rgba(229,9,20,0.9)] hover:scale-110 transition-all duration-300 overflow-hidden border border-[#E50914]/50">
+            <span class="absolute inset-0 bg-gradient-to-r from-transparent via-[#E50914]/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+            <img src="/static/round-netflix-logo.png" alt="Netflix Mode" class="w-10 h-10 relative z-10 transition-transform group-hover:scale-110 object-contain rounded-full shadow-[0_0_10px_rgba(229,9,20,0.5)]">
+        </button>
+        <span class="text-[10px] uppercase tracking-widest font-bold text-white bg-black/60 px-2 py-1 rounded-md backdrop-blur-sm pointer-events-none transition-opacity opacity-0 group-hover:opacity-100">Netflix Mode</span>
     </div>
 
     <!-- ═══════════════════════════════════════════════════ -->

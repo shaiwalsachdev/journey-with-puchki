@@ -53,19 +53,9 @@
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display">
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="/timeline"
-                    class="flex items-center space-x-2 text-primary hover:text-red-700 transition-colors">
-                    <span class="material-icons">arrow_back</span>
-                    <span class="font-bold">Back to Timeline</span>
-                </a>
-                <span class="font-bold text-lg">ShaiX2 Forever</span>
-            </div>
-        </div>
-    </nav>
+    <!-- Navigation -->
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/back_button.html' %}
 
     <!-- Lightbox Partial -->
     {% include 'partials/lightbox.html' %}
@@ -129,6 +119,9 @@
             <p class="text-gray-500 font-medium">No photos added yet for this memory.</p>
         </div>
         {% endif %}
+
+        <!-- Comments Section -->
+        {% include 'partials/comments.html' %}
     </main>
 
     {% include 'partials/footer.html' %}
