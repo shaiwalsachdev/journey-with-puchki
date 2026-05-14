@@ -394,6 +394,30 @@ async def get_admin_memories(request: Request):
         raise HTTPException(status_code=403, detail="Unauthorized")
     return await get_all_memories()
 
+# --- Agent Copilot ---
+
+@app.post("/api/agent/chat")
+async def agent_chat(request: Request):
+    from fastapi_app.agent import chat_with_agent
+    from fastapi_app.database import log_chat_interaction
+    data = await request.json()
+    
+    messages = data.get("messages", [])
+    if not messages and "message" in data:
+        messages = [{"role": "user", "content": data.get("message")}]
+        
+    if not messages:
+        return {"text": "Please say something!", "cards": []}
+    
+    latest_user_message = messages[-1].get("content", "") if messages else ""
+    
+    response = await chat_with_agent(messages)
+    
+    # Log to MongoDB
+    await log_chat_interaction(latest_user_message, response, messages)
+    
+    return response
+
 
 @app.get("/story", response_class=HTMLResponse)
 async def read_story(request: Request):

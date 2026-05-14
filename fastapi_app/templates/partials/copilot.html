@@ -1,0 +1,286 @@
+<!-- Memory Copilot Widget -->
+<div id="copilot-widget" class="fixed bottom-6 right-6 z-[99999] font-sans">
+    
+    <!-- Copilot Toggle Button -->
+    <button id="copilot-toggle" class="bg-gradient-to-r from-primary to-rose-500 text-white rounded-full p-4 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group">
+        <span class="material-icons animate-pulse">auto_awesome</span>
+        <!-- Sparkle effect -->
+        <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500"></div>
+    </button>
+
+    <!-- Copilot Chat Window -->
+    <div id="copilot-window" class="hidden absolute bottom-20 right-0 w-[350px] sm:w-[400px] h-[550px] max-h-[80vh] bg-white/90 dark:bg-background-dark/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-primary/20 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-primary/10 to-rose-500/10 dark:from-primary/20 dark:to-rose-500/20 p-4 border-b border-primary/20 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-rose-400 p-0.5 shadow-md">
+                    <div class="w-full h-full bg-white dark:bg-background-dark rounded-full flex items-center justify-center overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlz4O6Cid2mFtMgv9k9sw_6ZmG9Es_HBCaLygYLDkZr2Gl0NuEkuSJfdl_PXBGJIZ6dDHqVqZ81MPxKeQ6srRaK9-Kfl5tr8ox7rN93GzimVlglxGYA9v2QoSwaiUbf8-Ltixft60UnfsCHriet25t2h-LiciFDEnSh4BEqs0sII0zXNIsV0AXOWIryvbO_OOLU5Lj5Fm33YCpYuAyGRE7sn2E8ATeHU2-E6n7S2u0c9LdjfDIg41dd8T69aQ4jVf804fbJo2swiKQ" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base">Memory Guru</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Powered by AI Magic ✨</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="copilot-new-chat" class="text-xs font-bold text-rose-500 bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/50 px-2 py-1 rounded-md transition-colors flex items-center" title="Start a New Chat">
+                    <span class="material-icons text-[14px] mr-1">refresh</span>New
+                </button>
+                <button id="copilot-close" class="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors flex items-center">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div id="copilot-messages" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
+            <!-- Welcome Message -->
+            <div class="flex gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-rose-400 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">
+                    AI
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-sm text-gray-800 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700">
+                    Hi! I'm your Memory Guru. Ask me about your dates, ask for a love poem, or let me analyze your memories! Try: <br><br>
+                    <button class="suggestion-btn text-primary text-xs text-left hover:underline mb-1 w-full">"When was our Kokoy Cafe date?"</button>
+                    <button class="suggestion-btn text-primary text-xs text-left hover:underline w-full">"Write a short poem about us"</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="copilot-typing" class="hidden p-4 pt-0">
+            <div class="flex gap-2 items-center text-gray-400 text-xs font-medium">
+                <span class="material-icons text-[16px] animate-spin">autorenew</span>
+                <span>Copilot is thinking...</span>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-3 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+            <form id="copilot-form" class="relative flex items-center">
+                <input type="text" id="copilot-input" placeholder="Ask about your memories..." class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full py-3 pl-4 pr-12 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner transition-all">
+                <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center hover:bg-primary-dark transition-colors shadow-md disabled:opacity-50" id="copilot-send-btn">
+                    <span class="material-icons text-sm">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Move widget to document.body to escape any overflow:hidden containers
+    const widget = document.getElementById('copilot-widget');
+    if (widget && widget.parentElement !== document.body) {
+        document.body.appendChild(widget);
+    }
+
+    const toggleBtn = document.getElementById('copilot-toggle');
+    const closeBtn = document.getElementById('copilot-close');
+    const newChatBtn = document.getElementById('copilot-new-chat');
+    const windowEl = document.getElementById('copilot-window');
+    const form = document.getElementById('copilot-form');
+    const input = document.getElementById('copilot-input');
+    const messagesEl = document.getElementById('copilot-messages');
+    const typingIndicator = document.getElementById('copilot-typing');
+    const sendBtn = document.getElementById('copilot-send-btn');
+    const suggestions = document.querySelectorAll('.suggestion-btn');
+    const welcomeMsgHTML = messagesEl.innerHTML; // Save welcome message HTML
+
+    let chatHistory = JSON.parse(localStorage.getItem('copilot_chat_history') || '[]');
+
+    function saveHistory() {
+        localStorage.setItem('copilot_chat_history', JSON.stringify(chatHistory));
+    }
+
+    // Toggle Window
+    function toggleCopilot() {
+        if (windowEl.classList.contains('hidden')) {
+            windowEl.classList.remove('hidden');
+            setTimeout(() => {
+                input.focus();
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            }, 100);
+        } else {
+            windowEl.classList.add('hidden');
+        }
+    }
+
+    toggleBtn.addEventListener('click', toggleCopilot);
+    closeBtn.addEventListener('click', toggleCopilot);
+
+    // New Chat
+    newChatBtn.addEventListener('click', () => {
+        chatHistory = [];
+        saveHistory();
+        messagesEl.innerHTML = welcomeMsgHTML;
+        // re-bind suggestion buttons inside welcome message
+        bindSuggestions();
+    });
+
+    // Parse simple markdown
+    function parseMarkdown(text) {
+        if (!text) return "";
+        let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        html = html.replace(/\n/g, '<br>');
+        return html;
+    }
+
+    function addMessage(text, isUser = false) {
+        if (!text) return;
+        const div = document.createElement('div');
+        div.className = `flex gap-2 ${isUser ? 'justify-end' : ''}`;
+        
+        const avatarHTML = isUser ? '' : `
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-rose-400 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">
+                AI
+            </div>
+        `;
+
+        const parsedText = parseMarkdown(text);
+        const bubbleHTML = `
+            <div class="${isUser ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700'} rounded-2xl ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} p-3 max-w-[85%] text-sm shadow-sm break-words">
+                ${parsedText}
+            </div>
+        `;
+
+        div.innerHTML = isUser ? bubbleHTML : avatarHTML + bubbleHTML;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function addCards(cards) {
+        if (!cards || cards.length === 0) return;
+
+        const container = document.createElement('div');
+        container.className = 'flex gap-2 overflow-x-auto pb-2 ml-10 max-w-[85%] snap-x';
+        
+        cards.forEach(card => {
+            const cardEl = document.createElement('a');
+            cardEl.href = card.link || '#';
+            cardEl.className = 'flex-shrink-0 w-48 bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-200 snap-center block';
+            
+            let imgHTML = '';
+            if (card.image) {
+                const r2_url = "{{ r2_url }}";
+                const imgUrl = card.image.startsWith('http') ? card.image : `${r2_url}/${card.image}`;
+                imgHTML = `<img src="${imgUrl}" class="w-full h-32 object-cover" onerror="this.style.display='none'">`;
+            }
+
+            cardEl.innerHTML = `
+                ${imgHTML}
+                <div class="p-2">
+                    <h4 class="font-bold text-xs text-gray-900 dark:text-white line-clamp-2">${card.title}</h4>
+                    <div class="flex items-center justify-between mt-1">
+                        <span class="text-[10px] text-primary uppercase font-bold tracking-wider">${card.type}</span>
+                        <span class="material-icons text-[14px] text-gray-400">arrow_forward</span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(cardEl);
+        });
+
+        messagesEl.appendChild(container);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function addMetrics(metrics) {
+        if (!metrics || metrics.length === 0) return;
+        
+        const container = document.createElement('div');
+        container.className = 'grid grid-cols-2 gap-2 ml-10 max-w-[85%] mb-4';
+        
+        metrics.forEach(m => {
+            container.innerHTML += `
+                <div class="bg-primary/10 border border-primary/20 rounded-lg p-2 text-center">
+                    <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">${m.label}</div>
+                    <div class="text-lg font-bold text-primary">${m.value}</div>
+                </div>
+            `;
+        });
+        
+        messagesEl.appendChild(container);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function renderHistory() {
+        chatHistory.forEach(msg => {
+            if (msg.role === 'user') {
+                addMessage(msg.content, true);
+            } else if (msg.role === 'assistant') {
+                addMessage(msg.content, false);
+                if (msg.cards) addCards(msg.cards);
+                if (msg.metrics) addMetrics(msg.metrics);
+            }
+        });
+    }
+
+    // Load initial history
+    renderHistory();
+
+    async function handleSend(e) {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, true);
+        chatHistory.push({ role: 'user', content: text });
+        saveHistory();
+        
+        input.value = '';
+        sendBtn.disabled = true;
+        typingIndicator.classList.remove('hidden');
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+
+        try {
+            const res = await fetch('/api/agent/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: chatHistory })
+            });
+
+            const data = await res.json();
+            typingIndicator.classList.add('hidden');
+            
+            chatHistory.push({
+                role: 'assistant',
+                content: data.text || "",
+                cards: data.cards || [],
+                metrics: data.metrics || []
+            });
+            saveHistory();
+
+            if (data.text) addMessage(data.text, false);
+            if (data.cards) addCards(data.cards);
+            if (data.metrics) addMetrics(data.metrics);
+
+        } catch (err) {
+            typingIndicator.classList.add('hidden');
+            addMessage("Oops! Something went wrong communicating with the AI magic. 😢", false);
+        } finally {
+            sendBtn.disabled = false;
+        }
+    }
+
+    form.addEventListener('submit', handleSend);
+    
+    // Suggestions
+    function bindSuggestions() {
+        document.querySelectorAll('.suggestion-btn').forEach(btn => {
+            // Remove old listeners by cloning
+            const newBtn = btn.cloneNode(true);
+            if (btn.parentNode) {
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', () => {
+                    input.value = newBtn.innerText.replace(/"/g, '');
+                    handleSend({ preventDefault: () => {} });
+                });
+            }
+        });
+    }
+    bindSuggestions();
+});
+</script>

@@ -49,6 +49,17 @@ async def add_memory(memory: dict):
     db = get_db()
     await db.memories.insert_one(memory)
 
+async def log_chat_interaction(user_message: str, ai_response: dict, history: list):
+    import datetime
+    db = get_db()
+    interaction = {
+        "timestamp": datetime.datetime.utcnow(),
+        "user_message": user_message,
+        "ai_response": ai_response,
+        "history": history
+    }
+    await db.chat_logs.insert_one(interaction)
+
 # --- Settings ---
 async def get_settings():
     db = get_db()
