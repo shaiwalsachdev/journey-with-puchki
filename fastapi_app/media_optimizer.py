@@ -60,14 +60,14 @@ def optimize_image_bytes(content: bytes, original_filename: str) -> tuple[bytes,
     return buf.read(), new_filename, "image/webp"
 
 
-def optimize_video_file(src_path: str) -> tuple[str, str]:
+def optimize_video_file(src_path: str, original_filename: str) -> tuple[str, str]:
     """
     Re-encode video to H.264 MP4 1080p CRF 23, web-optimised (faststart).
     Returns: (dst_path, new_filename)
     The caller is responsible for cleaning up dst_path.
     """
     ffmpeg = _find_ffmpeg()
-    base = os.path.splitext(os.path.basename(src_path))[0]
+    base = os.path.splitext(original_filename)[0]
     new_filename = base + ".mp4"
 
     # Write to a sibling tmp file
@@ -110,7 +110,7 @@ def optimize_file_bytes(
             tmp.write(content)
             tmp_src = tmp.name
         try:
-            dst_path, new_filename = optimize_video_file(tmp_src)
+            dst_path, new_filename = optimize_video_file(tmp_src, original_filename)
             with open(dst_path, "rb") as f:
                 opt_bytes = f.read()
             os.unlink(dst_path)
