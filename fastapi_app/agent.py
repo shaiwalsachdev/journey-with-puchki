@@ -89,14 +89,13 @@ async def chat_with_agent(messages: list) -> dict:
         
         content = response.choices[0].message.content
         content = content.strip()
-        if content.startswith("```json"):
-            content = content[7:]
-        if content.startswith("```"):
-            content = content[3:]
-        if content.endswith("```"):
-            content = content[:-3]
-        content = content.strip()
         
+        # Robustly extract JSON object
+        start_idx = content.find('{')
+        end_idx = content.rfind('}')
+        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+            content = content[start_idx:end_idx+1]
+            
         return json.loads(content)
         
     except Exception as e:
