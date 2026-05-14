@@ -86,16 +86,28 @@ async def chat_with_agent(messages: list) -> dict:
             response_format={"type": "json_object"},
             temperature=0.7
         )
-        
         content = response.choices[0].message.content
         content = content.strip()
         
-        # Robustly extract JSON object
-        start_idx = content.find('{')
-        end_idx = content.rfind('}')
-        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
-            content = content[start_idx:end_idx+1]
+        # Strip markdown if present
+        if content.startswith("```json"):
+            content = content[7:]
+        elif content.startswith("```"):
+            content = content[3:]
             
+        # Brace counting to extract exactly the FIRST complete JSON object
+        start_idx = content.find('{')
+        if start_idx != -1:
+            brace_count = 0
+            for i in range(start_idx, len(content)):
+                if content[i] == '{':
+                    brace_count += 1
+                elif content[i] == '}':
+                    brace_count -= 1
+                    if brace_count == 0:
+                        content = content[start_idx:i+1]
+                        break
+                        
         return json.loads(content)
         
     except Exception as e:
