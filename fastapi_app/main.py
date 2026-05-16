@@ -207,8 +207,22 @@ async def delete_hero_image(request: Request):
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
+    import random
+    from fastapi_app.database import get_all_roka_media
     settings = request.state.settings
-    return templates.TemplateResponse("index.html", {"request": request, "page": "home", "settings": settings})
+    
+    # Fetch all Roka media and pick 100 random photos
+    all_roka = await get_all_roka_media()
+    roka_photos = [m for m in all_roka if m.get("media_type") == "image"]
+    random.shuffle(roka_photos)
+    carousel_photos = roka_photos[:100]
+    
+    return templates.TemplateResponse("index.html", {
+        "request": request, 
+        "page": "home", 
+        "settings": settings,
+        "carousel_photos": carousel_photos
+    })
 
 
 @app.get("/birthday", response_class=HTMLResponse)
