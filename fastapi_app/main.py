@@ -394,6 +394,13 @@ async def get_admin_memories(request: Request):
         raise HTTPException(status_code=403, detail="Unauthorized")
     return await get_all_memories()
 
+@app.get("/api/admin/chat-logs")
+async def get_admin_chat_logs(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        raise HTTPException(status_code=403, detail="Unauthorized")
+    from fastapi_app.database import get_all_chat_logs
+    return await get_all_chat_logs()
+
 # --- Agent Copilot ---
 
 @app.post("/api/agent/chat")

@@ -60,6 +60,15 @@ async def log_chat_interaction(user_message: str, ai_response: dict, history: li
     }
     await db.chat_logs.insert_one(interaction)
 
+async def get_all_chat_logs(limit: int = 100):
+    db = get_db()
+    logs = await db.chat_logs.find({}, {"_id": 0}).sort("timestamp", -1).limit(limit).to_list(length=limit)
+    # Convert datetime to ISO string for JSON serialization
+    for log in logs:
+        if "timestamp" in log and log["timestamp"]:
+            log["timestamp"] = log["timestamp"].isoformat()
+    return logs
+
 # --- Settings ---
 async def get_settings():
     db = get_db()
