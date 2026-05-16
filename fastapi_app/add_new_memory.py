@@ -47,12 +47,12 @@ async def main():
     # Create memory object
     memory_data = {
         "id": memory_id,
-        "title": "Food Date",
-        "date": "May 9, 2026",
-        "description": "It was beautiful day, we went to Kokoy cafe and had best turmeric latte and best neapolitan naples style veegi pizza you looked so pretty in that dress. it was great experience after that we went to beautiful cafe Camo it was amazing vibe there amazing vibe of the place mushroom chai with kulcha and that most tastiest paneer stuffed tikka. best way driving back and with sunroof open",
+        "title": "Dinner date",
+        "date": "May 15, 2026",
+        "description": "It was one of the most lovely spontaneous dates for dinner, late night driving, and Cafe Delhi Heights. That mushroom soup was one of the best, followed by so saucy pasta red sauce spaghetti, and then frozen hot chocolate showstopper, one of the best food dates and spontaneous late night dinner date. Loved the feeling, your hands and so cute beautiful dress. I also put nail paint on your nails. Pacific Mall Jasola Vihar, Cafe Delhi Heights. Also on May 16, 2026, we clicked so many cute photos and selfies we have added them.",
         "photos": uploaded_filenames,
         "type": "standard",
-        "location": "Kokoy Cafe & Camo"
+        "location": "Pacific Mall Jasola Vihar, Cafe Delhi Heights"
     }
     
     # Insert memory
