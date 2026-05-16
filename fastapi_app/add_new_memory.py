@@ -45,14 +45,29 @@ async def main():
         uploaded_filenames.append(new_filename)
         
     # Create memory object
+    smart_data = {
+        "itinerary": [
+            {"item": "Explored Vasant Kunj DLF Promenade and DLF Emporio.", "icon": "storefront", "highlight": False},
+            {"item": "Watched the movie 'Dhurandhar 2: Revenge' with Sumedha.", "icon": "movie", "highlight": True},
+            {"item": "Delicious feast at DHana estd 1986.", "icon": "restaurant", "highlight": False},
+            {"item": "Ended the day with amazing mix sauce pasta and a chocolate caramel crunch dessert.", "icon": "cake", "highlight": False}
+        ],
+        "entities": {
+            "food": ["Dahi Kebab", "Palak Seekh Kebab", "Pasta Mix Sauce", "Chocolate Caramel Crunch"],
+            "places": ["Vasant Kunj DLF Promenade", "DLF Emporio", "DHana estd 1986"]
+        },
+        "vibe": "Movie & Foodie Heaven 🎬😋"
+    }
+
     memory_data = {
         "id": memory_id,
-        "title": "Dinner date",
-        "date": "May 15, 2026",
-        "description": "It was one of the most lovely spontaneous dates for dinner, late night driving, and Cafe Delhi Heights. That mushroom soup was one of the best, followed by so saucy pasta red sauce spaghetti, and then frozen hot chocolate showstopper, one of the best food dates and spontaneous late night dinner date. Loved the feeling, your hands and so cute beautiful dress. I also put nail paint on your nails. Pacific Mall Jasola Vihar, Cafe Delhi Heights. Also on May 16, 2026, we clicked so many cute photos and selfies we have added them.",
+        "title": "Movie Date Dhurandhar 2: Revenge",
+        "date": "May 3, 2026",
+        "description": "It was an amazing movie date where we watched 'Dhurandhar 2: Revenge' with Sumedha. We spent time exploring Vasant Kunj DLF Promenade and DLF Emporio. For food, we had some fantastic dahi kebab and palak seekh kebab at DHana estd 1986, followed by a delicious mix sauce pasta and a chocolate caramel crunch. A perfect blend of entertainment and great food!",
         "photos": uploaded_filenames,
         "type": "standard",
-        "location": "Pacific Mall Jasola Vihar, Cafe Delhi Heights"
+        "location": "Vasant Kunj, DLF Promenade",
+        "smart_data": smart_data
     }
     
     # Insert memory
