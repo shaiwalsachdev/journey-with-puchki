@@ -47,26 +47,29 @@ async def main():
     # Create memory object
     smart_data = {
         "itinerary": [
-            {"item": "Explored Vasant Kunj DLF Promenade and DLF Emporio.", "icon": "storefront", "highlight": False},
-            {"item": "Watched the movie 'Dhurandhar 2: Revenge' with Sumedha.", "icon": "movie", "highlight": True},
-            {"item": "Delicious feast at DHana estd 1986.", "icon": "restaurant", "highlight": False},
-            {"item": "Ended the day with amazing mix sauce pasta and a chocolate caramel crunch dessert.", "icon": "cake", "highlight": False}
+            {"item": "Amazing lunch hosted by family, talking about Punjab, Canada and wedding banquets.", "icon": "restaurant", "highlight": False},
+            {"item": "Shopping at Nike and Jack & Jones. Got favourite orange white shoes and comfortable t-shirts.", "icon": "shopping_cart", "highlight": True},
+            {"item": "Ended the day at Dosa Coffee cafe with thatte idli, buttermilk and filter coffee.", "icon": "local_cafe", "highlight": False}
         ],
         "entities": {
-            "food": ["Dahi Kebab", "Palak Seekh Kebab", "Pasta Mix Sauce", "Chocolate Caramel Crunch"],
-            "places": ["Vasant Kunj DLF Promenade", "DLF Emporio", "DHana estd 1986"]
+            "food": ["Paneer sabzi", "rice", "parathi", "raita", "rajma rice", "thatte idli", "buttermilk", "filter coffee"],
+            "places": ["Nike", "Jack and Jones", "Dosa Coffee cafe"]
         },
-        "vibe": "Movie & Foodie Heaven 🎬😋"
+        "vibe": "Family, Food & Shopping 🛍️🍽️",
+        "rating": 5,
+        "comment": "Best places, finally got my favourite shoes and most comfortable t-shirts! Amazing gupshup."
     }
 
     memory_data = {
         "id": memory_id,
-        "title": "Movie Date Dhurandhar 2: Revenge",
-        "date": "May 3, 2026",
-        "description": "It was an amazing movie date where we watched 'Dhurandhar 2: Revenge' with Sumedha. We spent time exploring Vasant Kunj DLF Promenade and DLF Emporio. For food, we had some fantastic dahi kebab and palak seekh kebab at DHana estd 1986, followed by a delicious mix sauce pasta and a chocolate caramel crunch. A perfect blend of entertainment and great food!",
+        "title": "Family Lunch and Shopping",
+        "date": "18 May 2026",
+        "description": "Amazing lunch hosted by your family, so tasty food so much gupshup, so much talks in PUnjabi amazing day spemt afternoon and so much fun talking about Punjab and Canada and wedding banquets. amzing sooo tassy ty food , Paneer sabzi, rice, parathi , raita, rajma rice were out of the workdl. After that we went to Nike and Jack and Jones best places, finanly got my favioture shoes from there organe white color shoes and jack and jones best t shirts most comftrrabtle t shirts amzing gupshp, ended the day at Dosa Coffee cafe whith thatte idli, buttermilk and filter coffeee.",
         "photos": uploaded_filenames,
-        "type": "standard",
-        "location": "Vasant Kunj, DLF Promenade",
+        "type": "Family and Shopping",
+        "location": "Nike, Jack and Jones, Dosa Coffee cafe",
+        "rating": 5,
+        "comment": "Amazing gupshup, so much fun talking about Punjab and Canada and wedding banquets. Best places, finanly got my favioture shoes from there organe white color shoes and jack and jones best t shirts most comftrrabtle t shirts.",
         "smart_data": smart_data
     }
     
