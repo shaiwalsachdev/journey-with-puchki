@@ -211,9 +211,9 @@ async def home(request: Request):
     from fastapi_app.database import get_all_roka_media
     settings = request.state.settings
     
-    # Fetch all Roka media and pick 100 random photos
+    # Fetch all Roka media and pick 100 random photos from "Our Moments"
     all_roka = await get_all_roka_media()
-    roka_photos = [m for m in all_roka if m.get("media_type") == "image"]
+    roka_photos = [m for m in all_roka if m.get("media_type") == "image" and m.get("chapter") == "Our Moments"]
     random.shuffle(roka_photos)
     carousel_photos = roka_photos[:100]
     
