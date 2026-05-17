@@ -9,10 +9,20 @@
     </button>
 
     <!-- Copilot Chat Window -->
-    <div id="copilot-window" class="hidden absolute bottom-20 right-0 w-[350px] sm:w-[400px] h-[550px] max-h-[80vh] bg-white/90 dark:bg-background-dark/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-primary/20 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
+    <div id="copilot-window" class="hidden opacity-0 scale-0 translate-y-10 absolute bottom-20 right-0 w-[350px] sm:w-[400px] h-[550px] max-h-[80vh] min-h-[200px] min-w-[250px] bg-white/90 dark:bg-background-dark/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-primary/20 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
+        
+        <!-- Resize Handles -->
+        <div class="resizer resizer-top absolute top-0 left-0 w-full h-2 cursor-n-resize z-50"></div>
+        <div class="resizer resizer-right absolute top-0 right-0 w-2 h-full cursor-e-resize z-50"></div>
+        <div class="resizer resizer-bottom absolute bottom-0 left-0 w-full h-2 cursor-s-resize z-50"></div>
+        <div class="resizer resizer-left absolute top-0 left-0 w-2 h-full cursor-w-resize z-50"></div>
+        <div class="resizer resizer-top-left absolute top-0 left-0 w-4 h-4 cursor-nw-resize z-50"></div>
+        <div class="resizer resizer-top-right absolute top-0 right-0 w-4 h-4 cursor-ne-resize z-50"></div>
+        <div class="resizer resizer-bottom-left absolute bottom-0 left-0 w-4 h-4 cursor-sw-resize z-50"></div>
+        <div class="resizer resizer-bottom-right absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-50"></div>
         
         <!-- Header -->
-        <div class="bg-gradient-to-r from-primary/10 to-rose-500/10 dark:from-primary/20 dark:to-rose-500/20 p-4 border-b border-primary/20 flex justify-between items-center">
+        <div id="copilot-header" class="cursor-move bg-gradient-to-r from-primary/10 to-rose-500/10 dark:from-primary/20 dark:to-rose-500/20 p-4 border-b border-primary/20 flex justify-between items-center select-none">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-rose-400 p-0.5 shadow-md">
                     <div class="w-full h-full bg-white dark:bg-background-dark rounded-full flex items-center justify-center overflow-hidden">
@@ -28,6 +38,12 @@
                 <button id="copilot-new-chat" class="text-xs font-bold text-rose-500 bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/50 px-2 py-1 rounded-md transition-colors flex items-center" title="Start a New Chat">
                     <span class="material-icons text-[14px] mr-1">refresh</span>New
                 </button>
+                <button id="copilot-minimize" class="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors flex items-center" title="Minimize Window">
+                    <span class="material-icons" id="copilot-minimize-icon">remove</span>
+                </button>
+                <button id="copilot-expand" class="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors flex items-center" title="Expand Window">
+                    <span class="material-icons" id="copilot-expand-icon">open_in_full</span>
+                </button>
                 <button id="copilot-close" class="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors flex items-center">
                     <span class="material-icons">close</span>
                 </button>
@@ -42,9 +58,11 @@
                     AI
                 </div>
                 <div class="bg-gray-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-sm text-gray-800 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700">
-                    Hi! I'm your Memory Guru. Ask me about your dates, ask for a love poem, or let me analyze your memories! Try: <br><br>
-                    <button class="suggestion-btn text-primary text-xs text-left hover:underline mb-1 w-full">"When was our Kokoy Cafe date?"</button>
-                    <button class="suggestion-btn text-primary text-xs text-left hover:underline w-full">"Write a short poem about us"</button>
+                    Hi! I'm your Memory Guru. Ask me about your dates, ask for a love poem, or let me analyze your memories! Try:
+                    <div class="mt-2 space-y-1">
+                        <button class="suggestion-btn text-primary text-xs text-left hover:underline w-full">"When was our Kokoy Cafe date?"</button>
+                        <button class="suggestion-btn text-primary text-xs text-left hover:underline w-full">"Write a short poem about us"</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,6 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toggleBtn = document.getElementById('copilot-toggle');
     const closeBtn = document.getElementById('copilot-close');
+    const minimizeBtn = document.getElementById('copilot-minimize');
+    const minimizeIcon = document.getElementById('copilot-minimize-icon');
+    const expandBtn = document.getElementById('copilot-expand');
+    const expandIcon = document.getElementById('copilot-expand-icon');
     const newChatBtn = document.getElementById('copilot-new-chat');
     const windowEl = document.getElementById('copilot-window');
     const form = document.getElementById('copilot-form');
@@ -95,21 +117,179 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('copilot_chat_history', JSON.stringify(chatHistory));
     }
 
-    // Toggle Window
+    // Toggle Window with Animation
     function toggleCopilot() {
-        if (windowEl.classList.contains('hidden')) {
+        if (windowEl.classList.contains('hidden') || windowEl.classList.contains('opacity-0')) {
             windowEl.classList.remove('hidden');
+            // Small delay to allow display block to apply before transition
+            requestAnimationFrame(() => {
+                windowEl.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                windowEl.classList.remove('opacity-0', 'scale-0', 'translate-y-10');
+                windowEl.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+            });
             setTimeout(() => {
                 input.focus();
                 messagesEl.scrollTop = messagesEl.scrollHeight;
-            }, 100);
+            }, 300);
         } else {
-            windowEl.classList.add('hidden');
+            windowEl.style.transition = 'all 0.3s ease-in';
+            windowEl.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+            windowEl.classList.add('opacity-0', 'scale-0', 'translate-y-10');
+            
+            // If it was dragged/maximized, reset position so it goes back to bottom right icon properly
+            if (windowEl.style.position === 'fixed') {
+                windowEl.style.position = 'absolute';
+                windowEl.style.bottom = '5rem'; // bottom-20
+                windowEl.style.right = '0';
+                windowEl.style.left = 'auto';
+                windowEl.style.top = 'auto';
+            }
+
+            setTimeout(() => {
+                windowEl.classList.add('hidden');
+            }, 300);
         }
     }
 
     toggleBtn.addEventListener('click', toggleCopilot);
     closeBtn.addEventListener('click', toggleCopilot);
+    minimizeBtn.addEventListener('click', toggleCopilot);
+
+
+
+    // Expand Window
+    function toggleExpand() {
+        const isMaximized = windowEl.classList.contains('!fixed');
+        if (!isMaximized) {
+            windowEl.classList.add('!fixed', '!inset-4', '!w-auto', '!h-auto', '!max-h-none', 'z-[100000]', '!top-4', '!left-4');
+            expandIcon.innerText = 'close_fullscreen';
+        } else {
+            windowEl.classList.remove('!fixed', '!inset-4', '!w-auto', '!h-auto', '!max-h-none', 'z-[100000]', '!top-4', '!left-4');
+            expandIcon.innerText = 'open_in_full';
+        }
+        setTimeout(() => { messagesEl.scrollTop = messagesEl.scrollHeight; }, 300);
+    }
+    expandBtn.addEventListener('click', toggleExpand);
+
+    // Dragging Logic
+    const header = document.getElementById('copilot-header');
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
+    header.addEventListener('mousedown', (e) => {
+        if(e.target.closest('button')) return; // Ignore buttons
+        if(windowEl.classList.contains('!fixed') && windowEl.classList.contains('!inset-4')) return; // Ignore if maximized
+        
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        
+        const rect = windowEl.getBoundingClientRect();
+        windowEl.style.transition = 'none';
+        windowEl.style.position = 'fixed';
+        windowEl.style.bottom = 'auto';
+        windowEl.style.right = 'auto';
+        windowEl.style.margin = '0';
+        
+        initialLeft = rect.left;
+        initialTop = rect.top;
+        
+        windowEl.style.left = initialLeft + 'px';
+        windowEl.style.top = initialTop + 'px';
+        
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    });
+
+    function onMouseMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        windowEl.style.left = (initialLeft + dx) + 'px';
+        windowEl.style.top = (initialTop + dy) + 'px';
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+        setTimeout(() => {
+            windowEl.style.transition = 'all 0.3s ease';
+        }, 10);
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    // 4-Sided Resizing Logic
+    const resizers = document.querySelectorAll('.resizer');
+    let isResizing = false;
+    let currentResizer;
+    let resizeStartX, resizeStartY, resizeStartWidth, resizeStartHeight, resizeStartLeft, resizeStartTop;
+
+    resizers.forEach(resizer => {
+        resizer.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            if(windowEl.classList.contains('!fixed') && windowEl.classList.contains('!inset-4')) return;
+            if(windowEl.classList.contains('copilot-minimized')) return;
+
+            currentResizer = e.target;
+            isResizing = true;
+            resizeStartX = e.clientX;
+            resizeStartY = e.clientY;
+            
+            const rect = windowEl.getBoundingClientRect();
+            
+            windowEl.style.transition = 'none';
+            windowEl.style.position = 'fixed';
+            windowEl.style.bottom = 'auto';
+            windowEl.style.right = 'auto';
+            windowEl.style.margin = '0';
+            windowEl.style.maxHeight = 'none'; // allow stretching beyond 80vh
+            
+            resizeStartLeft = rect.left;
+            resizeStartTop = rect.top;
+            resizeStartWidth = rect.width;
+            resizeStartHeight = rect.height;
+
+            windowEl.style.left = resizeStartLeft + 'px';
+            windowEl.style.top = resizeStartTop + 'px';
+            windowEl.style.width = resizeStartWidth + 'px';
+            windowEl.style.height = resizeStartHeight + 'px';
+
+            document.addEventListener('mousemove', resizeWindow);
+            document.addEventListener('mouseup', stopResize);
+        });
+    });
+
+    function resizeWindow(e) {
+        if (!isResizing) return;
+        e.preventDefault();
+        const dx = e.clientX - resizeStartX;
+        const dy = e.clientY - resizeStartY;
+
+        if (currentResizer.classList.contains('resizer-right') || currentResizer.classList.contains('resizer-bottom-right') || currentResizer.classList.contains('resizer-top-right')) {
+            windowEl.style.width = resizeStartWidth + dx + 'px';
+        }
+        if (currentResizer.classList.contains('resizer-bottom') || currentResizer.classList.contains('resizer-bottom-right') || currentResizer.classList.contains('resizer-bottom-left')) {
+            windowEl.style.height = resizeStartHeight + dy + 'px';
+        }
+        if (currentResizer.classList.contains('resizer-left') || currentResizer.classList.contains('resizer-bottom-left') || currentResizer.classList.contains('resizer-top-left')) {
+            windowEl.style.width = resizeStartWidth - dx + 'px';
+            windowEl.style.left = resizeStartLeft + dx + 'px';
+        }
+        if (currentResizer.classList.contains('resizer-top') || currentResizer.classList.contains('resizer-top-left') || currentResizer.classList.contains('resizer-top-right')) {
+            windowEl.style.height = resizeStartHeight - dy + 'px';
+            windowEl.style.top = resizeStartTop + dy + 'px';
+        }
+    }
+
+    function stopResize() {
+        isResizing = false;
+        setTimeout(() => {
+            windowEl.style.transition = 'all 0.3s ease';
+        }, 10);
+        document.removeEventListener('mousemove', resizeWindow);
+        document.removeEventListener('mouseup', stopResize);
+    }
 
     // New Chat
     newChatBtn.addEventListener('click', () => {
@@ -123,7 +303,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parse simple markdown
     function parseMarkdown(text) {
         if (!text) return "";
-        let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        let html = text.trim();
+        html = html.replace(/\n{3,}/g, '\n\n'); // Limit to max 2 newlines
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
         html = html.replace(/\n/g, '<br>');
         return html;

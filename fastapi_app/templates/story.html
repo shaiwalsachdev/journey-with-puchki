@@ -124,9 +124,30 @@
                         <div class="space-y-4">
                             <div class="flex items-center gap-4">
                                 <span class="material-icons text-primary/50">cake</span>
-                                <span>March 15, 1995</span>
+                                <span>March 15, 1995, 5:15 PM</span>
                             </div>
-                            <div class="bg-primary/5 p-4 rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">location_on</span>
+                                <span>New Delhi</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">height</span>
+                                <span>5'2"</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">school</span>
+                                <span>MBA from IBS Gurgaon</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">work</span>
+                                <span>FP&A Manager at Genpact</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">link</span>
+                                <a href="https://www.linkedin.com/in/shaila-manaktahla-335878155/" target="_blank" class="text-blue-500 hover:underline">LinkedIn Profile</a>
+                            </div>
+
+                            <div class="bg-primary/5 p-4 rounded-lg mt-6">
                                 <p class="text-xs uppercase tracking-bold text-primary mb-1">Level</p>
                                 <div id="age-shaila"
                                     class="font-mono text-lg font-bold text-slate-700 dark:text-slate-300">
@@ -151,9 +172,30 @@
                         <div class="space-y-4">
                             <div class="flex items-center gap-4">
                                 <span class="material-icons text-primary/50">cake</span>
-                                <span>July 20, 1994</span>
+                                <span>July 20, 1994, 12:27 AM</span>
                             </div>
-                            <div class="bg-primary/5 p-4 rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">location_on</span>
+                                <span>Jhansi</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">height</span>
+                                <span>5'8"</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">school</span>
+                                <span>BTech (IT) from IIIT Allahabad</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">work</span>
+                                <span>Engineering Manager (AI) at Infoedge</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="material-icons text-primary/50">link</span>
+                                <a href="https://linkedin.com/in/shaiwalsachdev/" target="_blank" class="text-blue-500 hover:underline">LinkedIn Profile</a>
+                            </div>
+
+                            <div class="bg-primary/5 p-4 rounded-lg mt-6">
                                 <p class="text-xs uppercase tracking-bold text-primary mb-1">Level</p>
                                 <div id="age-shaiwal"
                                     class="font-mono text-lg font-bold text-slate-700 dark:text-slate-300">
@@ -449,14 +491,14 @@
         }
 
         setInterval(() => {
-            calculateAge('1995-03-15T00:00:00', 'age-shaila');
-            calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
+            calculateAge('1995-03-15T17:15:00', 'age-shaila');
+            calculateAge('1994-07-20T00:27:00', 'age-shaiwal');
             updateCounter(); // Existing counter
         }, 1000);
 
         // Initial call
-        calculateAge('1995-03-15T00:00:00', 'age-shaila');
-        calculateAge('1994-07-20T00:00:00', 'age-shaiwal');
+        calculateAge('1995-03-15T17:15:00', 'age-shaila');
+        calculateAge('1994-07-20T00:27:00', 'age-shaiwal');
 
         // Scroll Animations (Fade In)
         const observerOptions = {
