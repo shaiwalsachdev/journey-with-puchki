@@ -213,7 +213,8 @@ async def home(request: Request):
     
     # Fetch all Roka media and pick 100 random photos from "Our Moments"
     all_roka = await get_all_roka_media()
-    roka_photos = [m for m in all_roka if m.get("media_type") == "image" and m.get("chapter") == "Our Moments"]
+    hidden_photos = ["roka/1775666737_SHAIX-9425.webp"]
+    roka_photos = [m for m in all_roka if m.get("media_type") == "image" and m.get("chapter") == "Our Moments" and m.get("filename") not in hidden_photos]
     random.shuffle(roka_photos)
     
     old_photos = [
