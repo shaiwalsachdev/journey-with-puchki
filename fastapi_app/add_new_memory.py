@@ -66,7 +66,7 @@ async def main():
         "date": "18 May 2026",
         "description": "Amazing lunch hosted by your family, so tasty food so much gupshup, so much talks in PUnjabi amazing day spemt afternoon and so much fun talking about Punjab and Canada and wedding banquets. amzing sooo tassy ty food , Paneer sabzi, rice, parathi , raita, rajma rice were out of the workdl. After that we went to Nike and Jack and Jones best places, finanly got my favioture shoes from there organe white color shoes and jack and jones best t shirts most comftrrabtle t shirts amzing gupshp, ended the day at Dosa Coffee cafe whith thatte idli, buttermilk and filter coffeee.",
         "photos": uploaded_filenames,
-        "type": "Family and Shopping",
+        "type": "family",
         "location": "Nike, Jack and Jones, Dosa Coffee cafe",
         "rating": 5,
         "comment": "Amazing gupshup, so much fun talking about Punjab and Canada and wedding banquets. Best places, finanly got my favioture shoes from there organe white color shoes and jack and jones best t shirts most comftrrabtle t shirts.",
