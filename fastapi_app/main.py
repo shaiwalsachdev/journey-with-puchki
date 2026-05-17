@@ -215,7 +215,26 @@ async def home(request: Request):
     all_roka = await get_all_roka_media()
     roka_photos = [m for m in all_roka if m.get("media_type") == "image" and m.get("chapter") == "Our Moments"]
     random.shuffle(roka_photos)
-    carousel_photos = roka_photos[:100]
+    
+    old_photos = [
+        {"filename": "images/favourites/IMG_7650.jpg"},
+        {"filename": "images/favourites/IMG_7813.jpg"},
+        {"filename": "images/favourites/IMG_7997.jpg"},
+        {"filename": "images/favourites/IMG_8023 (1).jpg"},
+        {"filename": "images/favourites/IMG_8895 (1).jpg"},
+        {"filename": "images/favourites/IMG_8915.jpg"},
+        {"filename": "images/favourites/IMG_9150.jpg"},
+        {"filename": "images/favourites/IMG_9272.jpg"},
+        {"filename": "images/favourites/IMG_9292.jpg"},
+        {"filename": "images/favourites/IMG_9318.jpg"},
+        {"filename": "images/favourites/IMG_9454.jpg"},
+        {"filename": "images/favourites/IMG_9455.jpg"},
+        {"filename": "images/favourites/IMG_9456.jpg"},
+        {"filename": "images/favourites/IMG_9457.jpg"}
+    ]
+    
+    carousel_photos = old_photos + roka_photos[:100]
+    random.shuffle(carousel_photos)
     
     return templates.TemplateResponse("index.html", {
         "request": request, 
