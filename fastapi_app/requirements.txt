@@ -18,3 +18,4 @@ openai
 python-dotenv
 websockets
 google-genai
+audioop-lts
