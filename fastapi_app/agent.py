@@ -19,7 +19,7 @@ client = AsyncOpenAI(
 )
 
 SYSTEM_PROMPT = """
-You are Puchki's Memory Guru, a friendly and romantic AI assistant on the "Journey with Puchki" website.
+You are Kiara, a friendly and romantic AI assistant on the "Journey with Puchki" website.
 You have access to a JSON list of all memories, dates, and locations.
 
 Behavioral Instructions:
@@ -57,25 +57,11 @@ If no cards or metrics apply, leave the lists empty. Do not include raw markdown
 Here is the database of memories:
 """
 
+from fastapi_app.brain import get_kiara_context
+
 async def chat_with_agent(messages: list) -> dict:
-    # 1. Fetch memories
-    memories = await get_all_memories()
-    
-    # Compress memories to save tokens if needed, or just dump
-    compressed_memories = []
-    for m in memories:
-        compressed_memories.append({
-            "id": m.get("id"),
-            "title": m.get("title", ""),
-            "date": m.get("date", ""),
-            "type": m.get("type", "standard"),
-            "description": m.get("description", ""),
-            "main_image": m.get("photos", [""])[0] if m.get("photos") else "",
-            "smart_data": m.get("smart_data", {})
-        })
-        
-    memories_json = json.dumps(compressed_memories)
-    full_prompt = SYSTEM_PROMPT + "\n" + memories_json
+    context_str = await get_kiara_context()
+    full_prompt = SYSTEM_PROMPT + "\n" + context_str
     
     api_messages = [{"role": "system", "content": full_prompt}] + messages
     

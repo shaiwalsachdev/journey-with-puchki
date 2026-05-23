@@ -16,3 +16,5 @@ pillow
 pillow-heif
 openai
 python-dotenv
+websockets
+google-genai

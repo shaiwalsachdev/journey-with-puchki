@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, Request, Form, UploadFile, File, HTTPException
+from fastapi import FastAPI, Request, Form, UploadFile, File, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
@@ -11,7 +11,9 @@ import re
 import random
 import math
 import io
-
+import asyncio
+import websockets
+import base64
 # --- Database & Storage imports ---
 from fastapi_app.database import (
     get_db, get_all_memories, save_all_memories, update_memory, get_memory_by_id,
@@ -1326,3 +1328,82 @@ async def api_rotate_photo(request: Request):
         import traceback
         print(traceback.format_exc())
         return {"status": "error", "message": str(e)}
+
+# --- Realtime Voice Bot (Gemini Live API Proxy) ---
+@app.websocket("/ws/voice-chat")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    from fastapi_app.agent import GEMINI_API_KEY
+    from fastapi_app.gemini_live import GeminiLive
+    from google.genai import types
+    import traceback
+    
+    try:
+        # Load memories
+        from fastapi_app.brain import get_kiara_context, get_kiara_voice_instruction_parts
+        context_str = await get_kiara_context()
+        system_instruction = types.Content(parts=get_kiara_voice_instruction_parts(context_str))
+        
+        audio_input_queue = asyncio.Queue()
+        video_input_queue = asyncio.Queue()
+        text_input_queue = asyncio.Queue()
+
+        async def audio_output_callback(data):
+            await websocket.send_bytes(data)
+
+        async def audio_interrupt_callback():
+            pass
+
+        gemini_client = GeminiLive(
+            api_key=GEMINI_API_KEY, 
+            model="gemini-3.1-flash-live-preview", 
+            input_sample_rate=16000,
+            system_instruction=system_instruction
+        )
+        
+        async def receive_from_client():
+            try:
+                while True:
+                    message = await websocket.receive()
+                    
+                    if message.get("text"):
+                        # Parse JSON from client (e.g. {realtimeInput: {audio: {data: ...}}})
+                        try:
+                            payload = json.loads(message["text"])
+                            if "realtimeInput" in payload:
+                                if "audio" in payload["realtimeInput"]:
+                                    audio_b64 = payload["realtimeInput"]["audio"]["data"]
+                                    audio_bytes = base64.b64decode(audio_b64)
+                                    await audio_input_queue.put(audio_bytes)
+                                if "text" in payload["realtimeInput"]:
+                                    await text_input_queue.put(payload["realtimeInput"]["text"])
+                        except json.JSONDecodeError:
+                            pass
+            except WebSocketDisconnect:
+                pass
+            except Exception as e:
+                print("Client receive error:", e)
+
+        receive_task = asyncio.create_task(receive_from_client())
+
+        try:
+            async for event in gemini_client.start_session(
+                audio_input_queue=audio_input_queue,
+                video_input_queue=video_input_queue,
+                text_input_queue=text_input_queue,
+                audio_output_callback=audio_output_callback,
+                audio_interrupt_callback=audio_interrupt_callback,
+            ):
+                if event:
+                    # Forward transcriptions and other events as JSON
+                    await websocket.send_json(event)
+        finally:
+            receive_task.cancel()
+            
+    except Exception as e:
+        print("WebSocket SDK error:", e, traceback.format_exc())
+    finally:
+        try:
+            await websocket.close()
+        except:
+            pass

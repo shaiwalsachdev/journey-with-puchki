@@ -1,5 +1,5 @@
 <!-- Memory Copilot Widget -->
-<div id="copilot-widget" class="fixed bottom-6 right-6 z-[99999] font-sans">
+<div id="copilot-widget" class="fixed {{ copilot_position | default('bottom-6 right-6') }} z-[99999] font-sans">
     
     <!-- Copilot Toggle Button -->
     <button id="copilot-toggle" class="bg-gradient-to-r from-primary to-rose-500 text-white rounded-full p-4 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group">
@@ -26,12 +26,17 @@
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-rose-400 p-0.5 shadow-md">
                     <div class="w-full h-full bg-white dark:bg-background-dark rounded-full flex items-center justify-center overflow-hidden">
-                        <img src="/static/images/memory_guru_avatar.png" class="w-full h-full object-cover">
+                        <img src="/static/images/kiara_avatar.png" class="w-full h-full object-cover">
                     </div>
                 </div>
                 <div>
-                    <h3 class="font-bold text-gray-900 dark:text-white text-base">Memory Guru</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Powered by AI Magic ✨</p>
+                    <h3 class="font-bold text-lg tracking-wide drop-shadow-sm flex items-center gap-2">
+                        Kiara
+                        <div id="copilot-status-dot" class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse hidden"></div>
+                    </h3>
+                    <p class="text-[10px] text-green-500 font-bold tracking-wider uppercase flex items-center gap-1">
+                        <span id="copilot-voice-status">Online</span>
+                    </p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
@@ -54,11 +59,9 @@
         <div id="copilot-messages" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
             <!-- Welcome Message -->
             <div class="flex gap-2">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-rose-400 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">
-                    AI
-                </div>
+                <img src="/static/images/kiara_avatar.png" alt="Kiara" class="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-gray-200 dark:border-gray-700 shadow-sm">
                 <div class="bg-gray-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-sm text-gray-800 dark:text-gray-200 shadow-sm border border-gray-200 dark:border-gray-700">
-                    Hi! I'm your Memory Guru. Ask me about your dates, ask for a love poem, or let me analyze your memories! Try:
+                    Hi! I'm Kiara. Ask me about your dates, ask for a love poem, or let me analyze your memories! Try:
                     <div class="mt-2 space-y-1">
                         <button class="suggestion-btn text-primary text-xs text-left hover:underline w-full">"When was our Kokoy Cafe date?"</button>
                         <button class="suggestion-btn text-primary text-xs text-left hover:underline w-full">"Write a short poem about us"</button>
@@ -77,9 +80,18 @@
 
         <!-- Input Area -->
         <div class="p-3 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-            <form id="copilot-form" class="relative flex items-center">
-                <input type="text" id="copilot-input" placeholder="Ask about your memories..." class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full py-3 pl-4 pr-12 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner transition-all">
-                <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center hover:bg-primary-dark transition-colors shadow-md disabled:opacity-50" id="copilot-send-btn">
+            <form id="copilot-form" class="relative flex items-center gap-2">
+                <textarea id="copilot-input" 
+                    class="w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent resize-none min-h-[44px] max-h-[120px]" 
+                    placeholder="Message Kiara..." 
+                    rows="1"></textarea>
+                
+                <button id="copilot-voice-btn" type="button" class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-emerald-500 transition-colors flex-shrink-0 relative overflow-hidden group">
+                    <span class="material-icons" id="copilot-voice-icon">mic_none</span>
+                    <div id="copilot-voice-ripple" class="absolute inset-0 bg-emerald-500/20 rounded-full scale-0 transition-transform duration-300"></div>
+                </button>
+
+                <button type="submit" class="w-10 h-10 rounded-full bg-primary hover:bg-[#a00d3f] text-white flex items-center justify-center transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0" id="copilot-send-btn">
                     <span class="material-icons text-sm">send</span>
                 </button>
             </form>
@@ -305,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text) return "";
         let html = text.trim();
         html = html.replace(/\n{3,}/g, '\n\n'); // Limit to max 2 newlines
+        html = html.replace(/\[(.*?)\]\s*\((.*?)\)/g, '<a href="$2" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 underline">$1</a>');
         html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
         html = html.replace(/\n/g, '<br>');
@@ -317,9 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         div.className = `flex gap-2 ${isUser ? 'justify-end' : ''}`;
         
         const avatarHTML = isUser ? '' : `
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-rose-400 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">
-                AI
-            </div>
+            <img src="/static/images/kiara_avatar.png" alt="Kiara" class="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-gray-200 dark:border-gray-700 shadow-sm">
         `;
 
         const parsedText = parseMarkdown(text);
@@ -403,6 +414,226 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load initial history
     renderHistory();
 
+    // Voice UI elements
+    const voiceBtn = document.getElementById('copilot-voice-btn');
+    const voiceIcon = document.getElementById('copilot-voice-icon');
+    const voiceRipple = document.getElementById('copilot-voice-ripple');
+    const voiceStatus = document.getElementById('copilot-voice-status');
+    const statusDot = document.getElementById('copilot-status-dot');
+
+    let voiceActive = false;
+    let audioContext = null;
+    let microphone = null;
+    let processor = null;
+    let stream = null;
+    let nextAudioTime = 0;
+
+    function setVoiceUIState(state) {
+        if (state === 'inactive') {
+            voiceIcon.innerText = 'mic_none';
+            voiceBtn.classList.remove('text-rose-500');
+            voiceBtn.classList.add('text-gray-500');
+            voiceRipple.classList.replace('scale-150', 'scale-0');
+            voiceRipple.classList.remove('animate-pulse');
+            voiceStatus.innerText = 'Online';
+            statusDot.classList.replace('bg-emerald-500', 'bg-green-500');
+            statusDot.classList.replace('bg-rose-500', 'bg-green-500');
+        } else if (state === 'connecting') {
+            voiceStatus.innerText = "Connecting...";
+            voiceIcon.innerText = 'hourglass_empty';
+        } else if (state === 'active') {
+            voiceStatus.innerText = "Listening...";
+            voiceIcon.innerText = 'mic_off';
+            voiceBtn.classList.remove('text-gray-500');
+            voiceBtn.classList.add('text-rose-500');
+            voiceRipple.classList.replace('scale-0', 'scale-150');
+            voiceRipple.classList.add('animate-pulse');
+            statusDot.classList.replace('bg-green-500', 'bg-emerald-500');
+        }
+    }
+
+    async function startVoice() {
+        if (voiceActive) return;
+        voiceActive = true;
+        setVoiceUIState('connecting');
+
+        try {
+            nextAudioTime = 0;
+            stream = await navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                } 
+            });
+            audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+            await audioContext.audioWorklet.addModule('/static/js/audio-worklet.js');
+            
+            microphone = audioContext.createMediaStreamSource(stream);
+            processor = new AudioWorkletNode(audioContext, 'pcm-processor');
+            
+            microphone.connect(processor);
+            processor.connect(audioContext.destination);
+
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const ws = new WebSocket(`${protocol}//${window.location.host}/ws/voice-chat`);
+            window.kiaraWs = ws;
+            
+            ws.onopen = () => {
+                setVoiceUIState('active');
+                
+                processor.port.onmessage = (e) => {
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        const floats = e.data; // Float32Array
+                        const pcm16 = new Int16Array(floats.length);
+                        for (let i = 0; i < floats.length; i++) {
+                            const s = Math.max(-1, Math.min(1, floats[i]));
+                            pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                        }
+                        
+                        let binary = '';
+                        const bytes = new Uint8Array(pcm16.buffer);
+                        const len = bytes.byteLength;
+                        for (let i = 0; i < len; i++) { binary += String.fromCharCode(bytes[i]); }
+                        const base64 = window.btoa(binary);
+                        
+                        const msg = { realtimeInput: { audio: { mimeType: "audio/pcm;rate=16000", data: base64 } } };
+                        ws.send(JSON.stringify(msg));
+                    }
+                };
+            };
+
+            ws.onmessage = async (e) => {
+                try {
+                    if (e.data instanceof Blob) {
+                        const arrayBuffer = await e.data.arrayBuffer();
+                        const pcm16 = new Int16Array(arrayBuffer);
+                        const audioBuffer = audioContext.createBuffer(1, pcm16.length, 24000); 
+                        const channelData = audioBuffer.getChannelData(0);
+                        for (let i = 0; i < pcm16.length; i++) { channelData[i] = pcm16[i] / 32768.0; }
+
+                        const source = audioContext.createBufferSource();
+                        source.buffer = audioBuffer;
+                        source.connect(audioContext.destination);
+                        
+                        if (nextAudioTime < audioContext.currentTime) {
+                            nextAudioTime = audioContext.currentTime;
+                        }
+                        source.start(nextAudioTime);
+                        nextAudioTime += audioBuffer.duration;
+                        
+                        voiceStatus.innerText = "Kiara is speaking...";
+                        statusDot.classList.replace('bg-emerald-500', 'bg-rose-500');
+                        clearTimeout(window.kiaraSpeakTimeout);
+                        window.kiaraSpeakTimeout = setTimeout(() => {
+                            if(voiceActive) {
+                                voiceStatus.innerText = "Listening...";
+                                statusDot.classList.replace('bg-rose-500', 'bg-emerald-500');
+                            }
+                        }, 1000);
+                    } else {
+                        const data = JSON.parse(e.data);
+                        if (data.type === "gemini" && data.text) {
+                            addOrUpdateVoiceMessage(data.text, false);
+                        } else if (data.type === "user" && data.text) {
+                            addOrUpdateVoiceMessage(data.text, true);
+                        } else if (data.type === "turn_complete" || data.type === "interrupted") {
+                            sealVoiceMessages();
+                        }
+                    }
+                } catch (err) {
+                    console.error("WS Parse error:", err);
+                }
+            };
+
+            ws.onclose = () => { stopVoice(); };
+            
+        } catch (err) {
+            console.error("Voice start error:", err);
+            voiceStatus.innerText = "Error: " + err.message;
+            setTimeout(() => { stopVoice(); }, 2000);
+        }
+    }
+
+    let activeVoiceUserId = null;
+    let activeVoiceGeminiId = null;
+    let activeVoiceUserText = "";
+    let activeVoiceGeminiText = "";
+
+    function addOrUpdateVoiceMessage(textDelta, isUser) {
+        const activeId = isUser ? activeVoiceUserId : activeVoiceGeminiId;
+        
+        if (isUser) activeVoiceUserText += textDelta;
+        else activeVoiceGeminiText += textDelta;
+        
+        const fullText = isUser ? activeVoiceUserText : activeVoiceGeminiText;
+        const parsedText = parseMarkdown(fullText);
+
+        if (activeId) {
+            const bubble = document.getElementById(activeId);
+            if (bubble) {
+                bubble.innerHTML = parsedText;
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+                
+                for (let i = chatHistory.length - 1; i >= 0; i--) {
+                    if (chatHistory[i].role === (isUser ? 'user' : 'assistant')) {
+                        chatHistory[i].content = fullText;
+                        saveHistory();
+                        break;
+                    }
+                }
+                return;
+            }
+        }
+        
+        const div = document.createElement('div');
+        div.className = `flex gap-3 ${isUser ? 'flex-row-reverse' : ''} mb-4`;
+        
+        const avatarHTML = isUser ? '' : `
+            <img src="/static/images/kiara_avatar.png" alt="Kiara" class="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-gray-200 dark:border-gray-700 shadow-sm">
+        `;
+
+        const newId = 'voice-msg-' + Date.now();
+        if (isUser) activeVoiceUserId = newId;
+        else activeVoiceGeminiId = newId;
+
+        const bubbleHTML = `
+            <div id="${newId}" class="${isUser ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700'} rounded-2xl ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} p-3 max-w-[85%] text-sm shadow-sm break-words">
+                ${parsedText}
+            </div>
+        `;
+
+        div.innerHTML = isUser ? bubbleHTML : avatarHTML + bubbleHTML;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+
+        chatHistory.push({ role: isUser ? 'user' : 'assistant', content: fullText });
+        saveHistory();
+    }
+
+    function sealVoiceMessages() {
+        activeVoiceUserId = null;
+        activeVoiceGeminiId = null;
+        activeVoiceUserText = "";
+        activeVoiceGeminiText = "";
+    }
+
+    function stopVoice() {
+        voiceActive = false;
+        if (window.kiaraWs) { window.kiaraWs.close(); window.kiaraWs = null; }
+        if (processor) { processor.disconnect(); processor = null; }
+        if (microphone) { microphone.disconnect(); microphone = null; }
+        if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+        if (audioContext) { audioContext.close(); audioContext = null; }
+        
+        setVoiceUIState('inactive');
+    }
+
+    voiceBtn.addEventListener('click', () => {
+        if (voiceActive) stopVoice();
+        else startVoice();
+    });
+
     async function handleSend(e) {
         e.preventDefault();
         const text = input.value.trim();
@@ -416,6 +647,15 @@ document.addEventListener('DOMContentLoaded', () => {
         sendBtn.disabled = true;
         typingIndicator.classList.remove('hidden');
         messagesEl.scrollTop = messagesEl.scrollHeight;
+
+        if (window.kiaraWs && window.kiaraWs.readyState === WebSocket.OPEN) {
+            window.kiaraWs.send(JSON.stringify({
+                realtimeInput: { text: text }
+            }));
+            typingIndicator.classList.add('hidden');
+            sendBtn.disabled = false;
+            return;
+        }
 
         try {
             const res = await fetch('/api/agent/chat', {
@@ -449,6 +689,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', handleSend);
     
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend(e);
+        }
+    });
+    
     // Suggestions
     function bindSuggestions() {
         document.querySelectorAll('.suggestion-btn').forEach(btn => {
@@ -464,5 +711,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     bindSuggestions();
+
 });
 </script>
