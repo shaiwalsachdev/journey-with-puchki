@@ -657,135 +657,165 @@
     <!-- Main Navigation Cards Section -->
     <section class="relative z-20 -mt-24 pb-20 px-4" id="explore">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Cards -->
-                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
-                    href="/story">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWTdYjGgkTfjiofyV1BZLxkso0iJtYWSemjHgVkdjnv1hAAj9k_6uDxrj524Ir1H6_SAM43wOobj_pqvklbLXVqABQJI1lyEkXCi8WwOSism1CnBCsgRaBOW5s7NzFKujjjj6HiaDzaeYU31RU-7sUVFLs1hy1aljCGVfStZKZUDuJCy0OOZ0pf5zJGcXKLF4F8Nx50lPzXXEVeJfcT8v2lPFsHq-ntVLpsSqNIMAslJshEEWckAYrw8mooDwVw-hU-qKyF6uXH2Qz');">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
-                        <div
-                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Our Story -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-red-500/30 bg-white dark:bg-gray-800 border border-white/20" href="/story">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/images/favourites/IMG_8915.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-500/80 to-rose-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-red-500 transition-all duration-500">
                             <span class="material-icons text-3xl">auto_stories</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Our
-                            Story</h3>
-                        <p
-                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                            How we met & fell in love</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Our Story</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">How we met & fell in love</p>
                     </div>
                 </a>
 
-                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
-                    href="/timeline">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcpcqvukgxfqK935AXV8tPyVRhZig6HJACbH-QJDQglty6JWdown9YHKbHcKOq0IC8kQ1qAqBT7GhQJ5wHSpBhoGYTAMSdxs5Z5ND7W1Md6FGSAeiKjSgoDyePWb7QehHAjK5d6OfAylCIiDRgQlIQkOx-p-c2x4mcqtuCyEFm54uWSyRYdODHBvB1NGoUXHCLyFlx5dEeGEjZgouRC6tuzSsLWJGstMIweglOthjXqnZcuZ2ilcol_2sgqv2vgHuY_tnOZrPew-oB');">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
-                        <div
-                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
-                            <span class="material-icons text-3xl">photo_camera</span>
+                <!-- Timeline -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-purple-500/30 bg-white dark:bg-gray-800 border border-white/20" href="/timeline">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/images/favourites/IMG_9301.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/80 to-pink-500/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-purple-500 transition-all duration-500">
+                            <span class="material-icons text-3xl">timeline</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">ShaiX2
-                            Moments</h3>
-                        <p
-                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                            Every picture tells a story</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Timeline</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Chronology of us</p>
                     </div>
                 </a>
 
-                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
-                    href="/upcoming">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACbwNcvJP4ySmIGz4RFUC4okpUwr0ynds_nSOaeALbYtXjjDc35WZTErQBbDBfIv41jMrHhnZqsBBaAqWYqMXJuQmmDv-HgpTQxhVnQq6aybQAfm3Ra6qENGPC598le9IA5knPLRPL6sk6q5oKaENQnre2FXucDJ5yurMtvYMAsQi3kZgFFScODDniKkbhi9HL39iinnrqMYTycSNnZf58Y40BkfB4vshnAAodaxoNlWYJq7LuOyGoG2bGMLbF-Tk0dlrJnmd08JW2');">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
-                        <div
-                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
-                            <span class="material-icons text-3xl">event_available</span>
+                <!-- Gallery -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-amber-500/30 bg-white dark:bg-gray-800 border border-white/20" href="/gallery">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/uploads/12/IMG_8254.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-yellow-400/80 to-orange-500/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-orange-500 transition-all duration-500">
+                            <span class="material-icons text-3xl">photo_library</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Future
-                            Milestones</h3>
-                        <p
-                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                            Roka & Wedding Countdowns</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Gallery</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Every captured moment</p>
                     </div>
                 </a>
 
+                <!-- Music -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-teal-500/30 bg-white dark:bg-gray-800 border border-white/20" href="/music">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/images/favourites/IMG_8895%20(1).jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-400/80 to-teal-500/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-teal-500 transition-all duration-500">
+                            <span class="material-icons text-3xl">music_note</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Music</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">The soundtrack of us</p>
+                    </div>
+                </a>
+
+                <!-- Coupons -->
                 {% if not settings.private_mode %}
-                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
-                    href="/coupons">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBeToKQQVcDRFVbgpLm9IKGJkqoeVbUxKHGuhjrmnOLlcgcQ4xYXJVwUadxW72dNrh2_cIikrxXVtpUKcAw7e3zSTRHZm5D3M2rONghsU33uQus_5T6_4KYnqG04qSKmDZayoWCYSZmx94-h6jdqGGwE2_mVnl9suSsJaA4VYZWHl-YJH4MDo0eiYuaPYsgxsoKfbN0hK3fUVc9RxIsBS05iwdgUd8AuPzeR7sMJTVYo_BDcgln80UpmZHP-a6b6h3m-6-iZfMQ2lDC');">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
-                        <div
-                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-red-500/30 bg-white dark:bg-gray-800 border border-white/20" href="/coupons">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/uploads/21/IMG_9888.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-400/80 to-rose-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-rose-600 transition-all duration-500">
                             <span class="material-icons text-3xl">card_giftcard</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Love
-                            Coupons</h3>
-                        <p
-                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                            From Shaiwal to Shaila with Love</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Coupons</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">From Shaiwal with love</p>
                     </div>
                 </a>
                 {% endif %}
 
-                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
-                    href="/dictionary">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop');">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
-                        <div
-                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
-                            <span class="material-icons text-3xl">book</span>
+                <!-- Birthday -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-pink-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/birthday">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/images/favourites/IMG_9292.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-400/80 to-pink-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity animate-pulse-slow"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-pink-600 transition-all duration-500">
+                            <span class="material-icons text-3xl">cake</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">Puchki
-                            Lexicon</h3>
-                        <p
-                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                            Our Secret Language</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Birthday ✨</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Special celebration mode</p>
                     </div>
                 </a>
 
-                <a class="group relative h-80 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700"
-                    href="/gallery">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-90"
-                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTd2GMW1r0ae8muaMtFcus37NjLz5fg7NWeD7UhPuU6jtDkyTJ5zYu5MBh87yByqti8Nji1TOyZojAsA5Nf0boRVSCk1_H_NAKIzJ0oqN5qVfS_5tbQYgo-nXm-pk_ZanAF0mfXwayoe5QjoQjtpZU322C9zQlEmgQUtzPTJfRGiMgYYW-9-rtlaXhCw27wNac-oNcyBpmx_XXfwvldPAnlIfeSsOilHX00vr6Qjp4srjiTV2rYErSQtD8Akp7QgqgpnzKXq2ESHer');">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full text-center">
-                        <div
-                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-primary shadow-lg transform group-hover:scale-110 transition-transform">
-                            <span class="material-icons text-3xl">collections</span>
+                <!-- Roka -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-indigo-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/roka">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/images/favourites/IMG_7813.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-400/80 to-blue-800/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-indigo-600 transition-all duration-500">
+                            <span class="material-icons text-3xl">favorite</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:tracking-wider transition-all">
-                            Gallery</h3>
-                        <p
-                            class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                            Every Little Moment</p>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Roka</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">The official start</p>
                     </div>
                 </a>
+
+                <!-- Wishlist -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-cyan-500/30 bg-white dark:bg-gray-800 border border-white/20" href="/wishlist">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/uploads/9/IMG_7651.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/80 to-blue-500/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-cyan-600 transition-all duration-500">
+                            <span class="material-icons text-3xl">stars</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Wishlist</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Dreams and desires</p>
+                    </div>
+                </a>
+
+                <!-- Guestbook -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-emerald-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/guestbook">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/uploads/21/IMG_9903.jpg');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-400/80 to-green-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-emerald-600 transition-all duration-500">
+                            <span class="material-icons text-3xl">import_contacts</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Guestbook</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Notes from friends & family</p>
+                    </div>
+                </a>
+
+                <!-- Upcoming -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-violet-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/upcoming">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1000&auto=format&fit=crop');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-violet-400/80 to-purple-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-violet-600 transition-all duration-500">
+                            <span class="material-icons text-3xl">event</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Upcoming</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Future milestones</p>
+                    </div>
+                </a>
+
+                <!-- Dictionary -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-orange-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/dictionary">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-400/80 to-orange-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-orange-600 transition-all duration-500">
+                            <span class="material-icons text-3xl">book</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">Dictionary</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Puchki Lexicon</p>
+                    </div>
+                </a>
+
+                <!-- AI Planner -->
+                <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-slate-800/30 bg-white dark:bg-gray-800 border border-white/20" href="/planner">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1000&auto=format&fit=crop');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-slate-700/80 to-slate-900/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center transform transition-transform duration-500 group-hover:scale-110">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 text-white shadow-lg backdrop-blur-lg border border-white/30 group-hover:bg-white group-hover:text-slate-900 transition-all duration-500">
+                            <span class="material-icons text-3xl">flight_takeoff</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white tracking-wide">AI Planner</h3>
+                        <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Plan our trips</p>
+                    </div>
+                </a>
+            </div>
             </div>
         </div>
     </section>

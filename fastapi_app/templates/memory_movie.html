@@ -160,9 +160,9 @@
                 </div>
                 <h2 class="text-4xl font-bold leading-tight">More than just a movie.</h2>
                 <div class="prose prose-invert prose-lg max-w-none">
-                    <p class="text-xl text-white/80 leading-relaxed font-light">
-                        {{ memory.description }}
-                    </p>
+                    <div class="text-xl text-white/80 leading-relaxed font-light space-y-4">
+                        {{ memory.description | safe }}
+                    </div>
                     <div class="mt-6 text-right">
                         <span class="font-handwriting text-3xl text-primary transform -rotate-2 inline-block">-
                             Shaiwal</span>

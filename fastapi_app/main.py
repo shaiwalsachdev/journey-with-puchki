@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, Request, Form, UploadFile, File, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Request, Form, UploadFile, File, HTTPException, WebSocket, WebSocketDisconnect, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
@@ -465,8 +465,10 @@ async def agent_chat(request: Request):
 
 @app.get("/story", response_class=HTMLResponse)
 async def read_story(request: Request):
+    from fastapi_app.database import get_story_data
     settings = request.state.settings
-    return templates.TemplateResponse("story.html", {"request": request, "settings": settings})
+    story_data = await get_story_data()
+    return templates.TemplateResponse("story.html", {"request": request, "settings": settings, "story_data": story_data})
 
 
 # --- Coupons ---
@@ -558,6 +560,7 @@ async def add_memory_page(request: Request):
 @app.post("/add")
 async def add_memory(
     request: Request,
+    background_tasks: BackgroundTasks,
     date: str = Form(...),
     title: str = Form(...),
     description: str = Form(...),
@@ -670,6 +673,8 @@ async def add_memory(
             pass
 
     await db_add_memory(new_memory)
+    from fastapi_app.agent import generate_dynamic_storyline
+    background_tasks.add_task(generate_dynamic_storyline)
     return RedirectResponse(url=f"/memory/{new_id}", status_code=303)
 
 

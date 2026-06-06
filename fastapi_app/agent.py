@@ -103,3 +103,80 @@ async def chat_with_agent(messages: list) -> dict:
             "cards": [],
             "metrics": []
         }
+
+async def generate_dynamic_storyline():
+    """Background task to generate storyline data based on memories using Kiara."""
+    from fastapi_app.database import get_all_memories, save_story_data
+    from datetime import datetime
+    
+    try:
+        memories = await get_all_memories()
+        
+        # Format memories for the prompt (limit size if too many)
+        memory_texts = []
+        for m in memories[-50:]:  # Last 50 memories to avoid huge prompts
+            date = m.get('date', 'Unknown')
+            title = m.get('title', '')
+            desc = m.get('description', '')
+            memory_texts.append(f"[{date}] {title}: {desc}")
+            
+        memory_context = "\n".join(memory_texts)
+        
+        prompt = f"""
+You are Kiara, the AI assistant for Shaiwal and Shaila.
+Analyze their memories and generate updated JSON data for their 'Story' page.
+
+Memories:
+{memory_context}
+
+Return exactly this JSON format:
+{{
+  "chapters": [
+    {{
+      "title": "Chapter 1: A creative title",
+      "date_range": "Aug 2025 - Oct 2025",
+      "summary": "A 2-3 sentence romantic summary of this phase of their journey."
+    }}
+  ],
+  "system_logs": [
+    {{
+      "timestamp": "YYYY-MM-DD HH:MM:SS",
+      "type": "SYSTEM_LOG or CONNECTION_ESTABLISHED or INVENTORY_ALERT or MILESTONE_REACHED",
+      "message": "A short, hacker-style log entry based on a key memory."
+    }}
+  ],
+  "stats": {{
+    "dog_probability": "A fun percentage like 99.9%",
+    "pizza_pasta_sushi": "A fun number like 500+ based on food mentions"
+  }},
+  "algorithm_description": "A short 1-2 sentence romantic description of their algorithm."
+}}
+
+Instructions:
+- Create 3-5 chapters that perfectly summarize the chronological flow of their memories.
+- Create exactly 5 system logs covering their journey. Give them realistic timestamps (based on the memory dates if possible).
+- Make the stats and algorithm description fun, romantic, and relevant to their backgrounds (Shaiwal=AI Engineering, Shaila=FP&A).
+- CRITICAL STATS RULE: For 'dog_probability' and 'pizza_pasta_sushi', return ONLY a short number or percentage (maximum 5 characters, e.g., "99.9%" or "142+"). Do NOT include any explanations, words, or parenthesis.
+- CRITICAL: Do NOT mention "Hinge" or any dating apps. Refer to how they met as a "digital connection", "algorithm", or something mysterious and romantic, without naming the platform.
+"""
+        response = await client.chat.completions.create(
+            model=DEFAULT_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            temperature=0.7
+        )
+        content = response.choices[0].message.content.strip()
+        
+        # Cleanup markdown
+        if content.startswith("```json"):
+            content = content[7:]
+        if content.startswith("```"):
+            content = content[3:]
+        if content.endswith("```"):
+            content = content[:-3]
+            
+        story_data = json.loads(content)
+        await save_story_data(story_data)
+        print("Successfully generated dynamic storyline.")
+    except Exception as e:
+        print(f"Failed to generate dynamic storyline: {e}")

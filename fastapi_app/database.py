@@ -266,3 +266,18 @@ async def delete_ai_plan(plan_id: str):
     db = get_db()
     await db.ai_plans.delete_one(_build_id_query(plan_id))
 
+# --- Story Data ---
+async def get_story_data():
+    db = get_db()
+    data = await db.story_data.find_one({}, {"_id": 0})
+    if not data:
+        return {
+            "system_logs": [],
+            "stats": {"dog_probability": "99.9%", "pizza_pasta_sushi": "500+"},
+            "algorithm_description": "When logic meets emotion. A dashboard forecasting our future using advanced predictive modeling."
+        }
+    return data
+
+async def save_story_data(data: dict):
+    db = get_db()
+    await db.story_data.replace_one({}, data, upsert=True)
