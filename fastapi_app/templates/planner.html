@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Planner - Journey with Puchki</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221011",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "cursive": ["Great Vibes", "cursive"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+        .dark .glass-card {
+            background: rgba(20, 10, 10, 0.7);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-bubble-user {
+            background: linear-gradient(135deg, #ec131e 0%, #b30f17 100%);
+            color: white;
+            border-radius: 20px 20px 0 20px;
+        }
+
+        .chat-bubble-ai {
+            background: white;
+            color: #333;
+            border: 1px solid #eee;
+            border-radius: 20px 20px 20px 0;
+        }
+        .dark .chat-bubble-ai {
+            background: #2a1516;
+            color: #eee;
+            border-color: #3f1e20;
+        }
+
+        .loading-dots::after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            40% { color: inherit; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            60% { text-shadow: .25em 0 0 inherit, .5em 0 0 rgba(0,0,0,0); }
+            80%, 100% { text-shadow: .25em 0 0 inherit, .5em 0 0 inherit; }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display">
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="max-w-7xl mx-auto px-4 py-24 min-h-screen">
+        
+        <div class="text-center mb-10">
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">✨ AI Trip Planner ✨</h1>
+            <p class="text-gray-500 dark:text-gray-400">Powered by Magic Planner. Let's plan your dream getaway.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Panel: Controls & Chat -->
+            <div class="space-y-6 lg:col-span-1">
+                
+                <!-- Saved Plans -->
+                <div class="glass-card rounded-2xl p-6 hidden" id="savedPlansCard">
+                    <h3 class="font-bold text-lg mb-4 border-b pb-2 dark:border-gray-700">My Saved Plans</h3>
+                    <div id="savedPlansList" class="space-y-2 max-h-40 overflow-y-auto pr-2">
+                        <!-- Saved plans injected here -->
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 border-b pb-2 dark:border-gray-700">Trip Parameters</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Workflow Type</label>
+                            <select id="workflow" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-black/50 dark:text-white shadow-sm focus:border-primary focus:ring-primary">
+                                <option value="honeymoon">💍 Honeymoon Planner (Dec 2026)</option>
+                                <option value="weekend">🚗 Weekend Getaway</option>
+                                <option value="anniversary">🥂 Anniversary Trip</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Region</label>
+                            <select id="region" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-black/50 dark:text-white shadow-sm focus:border-primary focus:ring-primary">
+                                <option value="India">🇮🇳 Within India</option>
+                                <option value="Outside India">🌍 Outside India</option>
+                            </select>
+                        </div>
+
+                        <button id="btnSearch" class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                            <span class="material-icons text-sm">search</span> Find Destinations
+                        </button>
+                    </div>
+                </div>
+
+                <!-- My Preferences -->
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="font-bold text-lg mb-4 border-b pb-2 dark:border-gray-700 flex items-center gap-2">
+                        <span class="material-icons text-primary">favorite</span> My Preferences
+                    </h3>
+                    <p class="text-xs text-gray-500 mb-2">Add items from the itinerary here to save them or chat with Magic Planner about them.</p>
+                    <textarea id="preferencesText" rows="4" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-black/50 dark:text-white shadow-sm focus:border-primary focus:ring-primary text-sm p-3" placeholder="I really want to..."></textarea>
+                </div>
+
+                <!-- Chat Interface -->
+                <div class="glass-card rounded-2xl flex flex-col h-[500px]">
+                    <div class="p-4 border-b dark:border-gray-700 bg-primary/5 rounded-t-2xl flex items-center gap-2">
+                        <span class="material-icons text-primary">auto_awesome</span>
+                        <h3 class="font-bold">Chat with Magic Planner</h3>
+                    </div>
+                    
+                    <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 text-sm flex flex-col">
+                        <div class="chat-bubble-ai p-3 self-start max-w-[85%]">
+                            Hi! I'm Magic Planner. Let's plan the perfect trip. Search for destinations first, and then you can ask me to refine preferences or adjust your budget!
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border-t dark:border-gray-700">
+                        <form id="chatForm" class="flex gap-2">
+                            <input type="text" id="chatInput" placeholder="Ask about preferences, budget..." class="flex-1 rounded-full border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-black/50 dark:text-white focus:ring-primary focus:border-primary text-sm px-4">
+                            <button type="submit" class="bg-primary hover:bg-red-700 text-white rounded-full w-10 h-10 flex items-center justify-center shrink-0 transition">
+                                <span class="material-icons text-sm">send</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Canvas -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Destinations List Canvas -->
+                <div id="destinationsCanvas" class="glass-card rounded-2xl p-6 min-h-[300px]">
+                    <div class="flex items-center justify-between mb-4 border-b pb-2 dark:border-gray-700">
+                        <h3 class="font-bold text-xl">Recommended Destinations</h3>
+                        <span id="loadingDestinations" class="text-primary font-bold hidden loading-dots">Searching</span>
+                    </div>
+                    
+                    <div id="destinationsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="text-gray-400 italic text-sm py-8 col-span-full text-center">
+                            Select parameters and click "Find Destinations" to begin.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination Details Canvas -->
+                <div id="detailsCanvas" class="glass-card rounded-2xl p-6 min-h-[400px] hidden">
+                    <div class="flex items-center justify-between mb-6 border-b pb-4 dark:border-gray-700">
+                        <div>
+                            <h2 id="detailTitle" class="font-serif text-3xl font-bold text-primary">Destination</h2>
+                            <p id="detailRating" class="text-sm font-bold mt-1 opacity-70">Honeymoon Rating: -/10</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs uppercase tracking-wider opacity-50 font-bold mb-1">Estimated Cost</p>
+                            <p id="detailCost" class="text-xl font-bold text-green-600 dark:text-green-400">₹ -</p>
+                        </div>
+                    </div>
+
+                    <p id="detailHighlights" class="text-gray-700 dark:text-gray-300 mb-6 italic border-l-4 border-primary pl-4"></p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 flex items-center gap-2"><span class="material-icons text-primary text-sm">explore</span> Things To Do</h4>
+                            <ul id="detailToDo" class="space-y-2 text-sm text-gray-600 dark:text-gray-400 list-disc pl-5"></ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 flex items-center gap-2"><span class="material-icons text-primary text-sm">restaurant</span> Things To Eat</h4>
+                            <ul id="detailToEat" class="space-y-2 text-sm text-gray-600 dark:text-gray-400 list-disc pl-5"></ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="font-bold text-lg mb-3 flex items-center gap-2"><span class="material-icons text-primary text-sm">camera_alt</span> Popular Sites</h4>
+                        <div id="detailSites" class="flex flex-wrap gap-2"></div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-lg mb-4 flex items-center gap-2"><span class="material-icons text-primary text-sm">hotel</span> Recommended Hotels</h4>
+                        <div id="detailHotels" class="space-y-3"></div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-end">
+                        <button id="btnSavePlan" class="bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-200 dark:text-black text-white px-6 py-2 rounded-lg font-bold text-sm shadow transition flex items-center gap-2">
+                            <span class="material-icons text-sm">save</span> Save This Plan
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script>
+        // State
+        let currentDestinations = [];
+        let selectedDestination = null;
+        let chatHistory = [];
+        let currentPlanId = null;
+        
+        // DOM Elements
+        const btnSearch = document.getElementById('btnSearch');
+        const regionSelect = document.getElementById('region');
+        const workflowSelect = document.getElementById('workflow');
+        const destinationsGrid = document.getElementById('destinationsGrid');
+        const loadingDestinations = document.getElementById('loadingDestinations');
+        const detailsCanvas = document.getElementById('detailsCanvas');
+        
+        // Fetch Saved Plans on load
+        async function fetchSavedPlans() {
+            try {
+                const res = await fetch('/api/planner/plans');
+                const data = await res.json();
+                if (data.plans && data.plans.length > 0) {
+                    const card = document.getElementById('savedPlansCard');
+                    const list = document.getElementById('savedPlansList');
+                    card.classList.remove('hidden');
+                    list.innerHTML = '';
+                    data.plans.forEach(plan => {
+                        const btn = document.createElement('button');
+                        btn.className = "w-full text-left text-sm p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black/30 hover:border-primary transition group";
+                        btn.innerHTML = `
+                            <div class="font-bold text-gray-900 dark:text-white group-hover:text-primary transition">${plan.title}</div>
+                            <div class="text-xs text-gray-500 mt-1">${plan.workflow_type} • ${new Date(plan.created_at || plan.updated_at).toLocaleDateString()}</div>
+                        `;
+                        btn.onclick = () => loadSavedPlan(plan);
+                        list.appendChild(btn);
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to fetch saved plans", err);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', fetchSavedPlans);
+
+        function loadSavedPlan(plan) {
+            currentPlanId = plan._id || plan.id;
+            workflowSelect.value = Array.from(workflowSelect.options).find(o => o.text === plan.workflow_type)?.value || workflowSelect.value;
+            regionSelect.value = plan.region || regionSelect.value;
+            document.getElementById('preferencesText').value = plan.preferences || "";
+            
+            chatHistory = plan.chat_history || [];
+            
+            // Re-render chat
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="chat-bubble-ai p-3 self-start max-w-[85%]">
+                    Hi! I'm Magic Planner. I've loaded your plan for ${plan.title}. How can we refine it further?
+                </div>
+            `;
+            chatHistory.forEach(msg => {
+                appendMessage(msg.role === 'user' ? 'user' : 'ai', msg.content);
+            });
+            
+            if (plan.destination) {
+                loadDestinationDetails(plan.destination);
+            }
+        }
+        
+        // Render Destinations
+        function renderDestinations(destinations) {
+            destinationsGrid.innerHTML = '';
+            if(!destinations || destinations.length === 0) {
+                destinationsGrid.innerHTML = `<div class="col-span-full text-center text-red-500 py-8">No destinations found. Try again.</div>`;
+                return;
+            }
+            
+            destinations.forEach((dest, idx) => {
+                const card = document.createElement('div');
+                card.className = "cursor-pointer group relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black/40 hover:shadow-lg transition";
+                card.innerHTML = `
+                    <div class="h-32 bg-gray-200 dark:bg-gray-800 relative overflow-hidden">
+                        <img src="${dest.imageUrl || 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600&auto=format&fit=crop'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${dest.name}" onerror="this.src='https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600&auto=format&fit=crop'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <h4 class="absolute bottom-2 left-3 font-bold text-white text-lg">${dest.name}</h4>
+                        <span class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${dest.country}</span>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">${dest.brief_description}</p>
+                        <button class="mt-2 text-primary font-bold text-xs uppercase tracking-wider flex items-center gap-1 group-hover:underline">
+                            Explore <span class="material-icons text-[12px]">arrow_forward</span>
+                        </button>
+                    </div>
+                `;
+                card.onclick = () => loadDestinationDetails(dest);
+                destinationsGrid.appendChild(card);
+            });
+        }
+        
+        // Search Click
+        btnSearch.onclick = async () => {
+            const region = regionSelect.value;
+            const workflow = workflowSelect.options[workflowSelect.selectedIndex].text;
+            
+            loadingDestinations.classList.remove('hidden');
+            destinationsGrid.innerHTML = '';
+            detailsCanvas.classList.add('hidden');
+            
+            try {
+                const query = `${workflow} in ${region}`;
+                const res = await fetch('/api/planner/search', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({query})
+                });
+                const data = await res.json();
+                currentDestinations = data.destinations || [];
+                renderDestinations(currentDestinations);
+            } catch (err) {
+                console.error(err);
+                destinationsGrid.innerHTML = `<div class="col-span-full text-center text-red-500 py-8">Error fetching destinations.</div>`;
+            } finally {
+                loadingDestinations.classList.add('hidden');
+            }
+        };
+        
+        // Load Details
+        async function loadDestinationDetails(dest) {
+            selectedDestination = dest;
+            
+            // Show canvas but add loading state
+            detailsCanvas.classList.remove('hidden');
+            document.getElementById('detailTitle').textContent = `Loading ${dest.name}...`;
+            document.getElementById('detailRating').textContent = "Honeymoon Rating: -/10";
+            document.getElementById('detailCost').textContent = "₹ -";
+            document.getElementById('detailHighlights').innerHTML = "<span class='loading-dots text-primary font-bold'>Fetching detailed itinerary</span>";
+            document.getElementById('detailToDo').innerHTML = "";
+            document.getElementById('detailToEat').innerHTML = "";
+            document.getElementById('detailSites').innerHTML = "";
+            document.getElementById('detailHotels').innerHTML = "";
+            
+            detailsCanvas.scrollIntoView({behavior: 'smooth'});
+            
+            try {
+                const res = await fetch('/api/planner/details', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({destination: dest.name, month: "December 2026"})
+                });
+                const details = await res.json();
+                
+                if (details.error) {
+                    alert("Failed to load details");
+                    return;
+                }
+                
+                // Populate Details
+                document.getElementById('detailTitle').textContent = dest.name;
+                document.getElementById('detailRating').textContent = `Honeymoon Rating: ${details.honeymoon_rating || 'N/A'}`;
+                document.getElementById('detailCost').textContent = details.cost_in_inr || 'Varies';
+                document.getElementById('detailHighlights').textContent = details.key_highlights || '';
+                
+                // Lists
+                const ulToDo = document.getElementById('detailToDo');
+                (details.things_to_do || []).forEach(item => {
+                    ulToDo.innerHTML += `<li class="flex justify-between items-start mb-2"><span class="flex-1">${item}</span><button onclick="addToPreferences(this)" data-item="${item.replace(/"/g, '&quot;')}" class="text-primary hover:bg-primary/10 rounded-full p-1 ml-2 flex-shrink-0 transition"><span class="material-icons text-sm">add_circle_outline</span></button></li>`;
+                });
+                
+                const ulToEat = document.getElementById('detailToEat');
+                (details.things_to_eat || []).forEach(item => {
+                    ulToEat.innerHTML += `<li class="flex justify-between items-start mb-2"><span class="flex-1">${item}</span><button onclick="addToPreferences(this)" data-item="${item.replace(/"/g, '&quot;')}" class="text-primary hover:bg-primary/10 rounded-full p-1 ml-2 flex-shrink-0 transition"><span class="material-icons text-sm">add_circle_outline</span></button></li>`;
+                });
+                
+                const divSites = document.getElementById('detailSites');
+                (details.popular_sites || []).forEach(item => {
+                    divSites.innerHTML += `<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 flex items-center gap-1">${item} <button onclick="addToPreferences(this)" data-item="${item.replace(/"/g, '&quot;')}" class="text-primary hover:text-red-700"><span class="material-icons text-[14px]">add</span></button></span>`;
+                });
+                
+                const divHotels = document.getElementById('detailHotels');
+                (details.hotels || []).forEach(hotel => {
+                    divHotels.innerHTML += `
+                        <div class="bg-gray-50 dark:bg-black/30 p-3 rounded-lg border border-gray-200 dark:border-gray-800 flex justify-between items-center gap-4 group">
+                            <div>
+                                <h5 class="font-bold text-sm text-gray-900 dark:text-white">${hotel.name}</h5>
+                                <p class="text-xs text-gray-500 line-clamp-1 mt-0.5">${hotel.description}</p>
+                            </div>
+                            <div class="text-right shrink-0 flex flex-col items-end gap-1">
+                                <span class="font-bold text-primary text-sm">${hotel.price_per_night}</span>
+                                <button onclick="addToPreferences(this)" data-item="${hotel.name.replace(/"/g, '&quot;')}" class="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition">Add</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+            } catch(e) {
+                console.error(e);
+            }
+        }
+        
+        // Chat Logic
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+        
+        function appendMessage(role, text) {
+            const div = document.createElement('div');
+            div.className = `p-3 max-w-[85%] ${role === 'user' ? 'chat-bubble-user self-end' : 'chat-bubble-ai self-start'}`;
+            // Convert simple markdown strong to bold
+            let parsedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            div.innerHTML = parsedText;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        chatForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if(!text) return;
+            
+            appendMessage('user', text);
+            chatInput.value = '';
+            
+            chatHistory.push({role: 'user', content: text});
+            
+            // Add a temporary typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-bubble-ai p-3 self-start max-w-[85%] text-gray-400 italic text-xs';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<span class="loading-dots">Magic Planner is thinking</span>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            try {
+                const res = await fetch('/api/planner/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({messages: chatHistory})
+                });
+                const data = await res.json();
+                
+                document.getElementById('typingIndicator')?.remove();
+                
+                if (data.text) {
+                    chatHistory.push({role: 'assistant', content: data.text});
+                    appendMessage('ai', data.text);
+                }
+            } catch (err) {
+                document.getElementById('typingIndicator')?.remove();
+                appendMessage('ai', "Sorry, I'm having trouble connecting right now.");
+            }
+        };
+
+        // Save Plan Logic
+        document.getElementById('btnSavePlan').onclick = async () => {
+            if(!selectedDestination) return;
+            
+            const btn = document.getElementById('btnSavePlan');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<span class="material-icons text-sm animate-spin">refresh</span> Saving...`;
+            
+            const plan = {
+                title: `Honeymoon in ${selectedDestination.name}`,
+                workflow_type: workflowSelect.options[workflowSelect.selectedIndex].text,
+                region: regionSelect.value,
+                destination: selectedDestination,
+                chat_history: chatHistory,
+                preferences: document.getElementById('preferencesText').value
+            };
+            if (currentPlanId) plan.id = currentPlanId;
+            
+            try {
+                const res = await fetch('/api/planner/save', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(plan)
+                });
+                const data = await res.json();
+                if(data.status === 'success') {
+                    btn.innerHTML = `<span class="material-icons text-sm">check</span> Saved!`;
+                    currentPlanId = data.id;
+                    fetchSavedPlans(); // Refresh the list
+                    setTimeout(() => btn.innerHTML = originalText, 3000);
+                }
+            } catch (err) {
+                btn.innerHTML = `Error!`;
+                setTimeout(() => btn.innerHTML = originalText, 3000);
+            }
+        };
+        // Add to Preferences helper
+        function addToPreferences(btn) {
+            const item = btn.getAttribute('data-item');
+            const prefArea = document.getElementById('preferencesText');
+            if(prefArea.value) {
+                prefArea.value += '\n- ' + item;
+            } else {
+                prefArea.value = '- ' + item;
+            }
+            
+            // Visual feedback
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<span class="material-icons text-[14px] text-green-500">check</span>';
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>

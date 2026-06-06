@@ -223,3 +223,46 @@ async def update_guestbook_entry(note_id: str, data: dict):
 async def update_dictionary_word(word_id: str, data: dict):
     db = get_db()
     await db.dictionary.update_one(_build_id_query(word_id), {"$set": data})
+
+# --- AI Plans ---
+async def get_all_ai_plans():
+    db = get_db()
+    plans = await db.ai_plans.find({}).sort("updated_at", -1).to_list(length=None)
+    for p in plans:
+        if "_id" in p:
+            p["_id"] = str(p["_id"])
+    return plans
+
+async def get_ai_plan(plan_id: str):
+    db = get_db()
+    plan = await db.ai_plans.find_one(_build_id_query(plan_id))
+    if plan and "_id" in plan:
+        plan["_id"] = str(plan["_id"])
+    return plan
+
+async def save_ai_plan(plan: dict):
+    db = get_db()
+    import datetime
+    plan["updated_at"] = datetime.datetime.utcnow()
+    # Check if id exists
+    if "id" in plan and plan["id"]:
+        # Update existing
+        plan_id = plan["id"]
+        # Remove _id if it's there to avoid immutable field error
+        plan_copy = plan.copy()
+        if "_id" in plan_copy:
+            del plan_copy["_id"]
+        await db.ai_plans.update_one(_build_id_query(plan_id), {"$set": plan_copy})
+        return plan_id
+    else:
+        # Generate new ID
+        import uuid
+        plan["id"] = str(uuid.uuid4())
+        plan["created_at"] = plan["updated_at"]
+        await db.ai_plans.insert_one(plan)
+        return plan["id"]
+
+async def delete_ai_plan(plan_id: str):
+    db = get_db()
+    await db.ai_plans.delete_one(_build_id_query(plan_id))
+

@@ -114,6 +114,11 @@
                 <span class="material-icons text-primary/70 text-lg">forum</span>
                 <span class="font-medium text-sm">Chat Logs</span>
             </a>
+            <a href="#" onclick="switchTab('ai-plans')" id="nav-ai-plans"
+                class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-icons text-primary/70 text-lg">flight_takeoff</span>
+                <span class="font-medium text-sm">AI Plans</span>
+            </a>
             <a href="/admin/roka-creator"
                 class="admin-nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <span class="material-icons text-primary/70 text-lg">movie_creation</span>
@@ -484,6 +489,23 @@
                 </section>
             </div>
 
+            <!-- AI Plans Manager -->
+            <div id="section-ai-plans" class="admin-section hidden scroll-mt-24 mb-8">
+                <section class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Saved AI Plans</h3>
+                        <button onclick="fetchAIPlans()"
+                            class="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <span class="material-icons text-sm">refresh</span> Refresh
+                        </button>
+                    </div>
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm p-4"
+                        id="ai-plans-list-container">
+                        <div class="p-8 text-center text-gray-500 dark:text-gray-400">Loading AI plans...</div>
+                    </div>
+                </section>
+            </div>
+
             <!-- Chat Logs Manager -->
             <div id="section-chat-logs" class="admin-section hidden scroll-mt-24 mb-8">
                 <section class="space-y-6">
@@ -636,6 +658,9 @@
                 el.classList.remove('bg-gray-100', 'dark:bg-gray-800');
             });
             document.getElementById('nav-' + tabId).classList.add('bg-gray-100', 'dark:bg-gray-800');
+
+            // Fetch data if needed
+            if (tabId === 'ai-plans') fetchAIPlans();
         }
 
         // --- Memory & Photo Logic ---
@@ -1363,6 +1388,43 @@
 
         // --- Coupons Logic ---
         let allCoupons = [];
+
+        async function fetchAIPlans() {
+            try {
+                const res = await fetch('/api/planner/plans');
+                const data = await res.json();
+                const container = document.getElementById('ai-plans-list-container');
+                if (!data.plans || data.plans.length === 0) {
+                    container.innerHTML = '<div class="p-8 text-center text-gray-500">No AI plans saved yet.</div>';
+                    return;
+                }
+                
+                let html = '<div class="divide-y divide-gray-100 dark:divide-gray-800">';
+                data.plans.forEach(plan => {
+                    html += `
+                    <div class="p-4 hover:bg-gray-50 dark:hover:bg-surface-lighter transition-colors">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white">${plan.title || 'Untitled Plan'}</h4>
+                                <p class="text-xs text-gray-500">${plan.workflow_type || 'Custom'} • ${plan.region || 'Unknown'}</p>
+                            </div>
+                            <span class="text-[10px] text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-lg">${new Date(plan.created_at).toLocaleDateString()}</span>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700">
+                            <strong>Destination:</strong> ${plan.destination ? plan.destination.name : 'Not set'}
+                            <div class="mt-1 flex gap-2 overflow-x-auto text-xs pb-1">
+                                <span class="bg-primary/10 text-primary px-2 py-0.5 rounded-full whitespace-nowrap">Chat Messages: ${plan.chat_history ? plan.chat_history.length : 0}</span>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('ai-plans-list-container').innerHTML = '<div class="p-8 text-center text-red-500">Error loading plans</div>';
+            }
+        }
 
         async function fetchCoupons() {
             try {

@@ -24,7 +24,8 @@ from fastapi_app.database import (
     get_all_vault,
     get_all_wishlist, add_wishlist_item, delete_wishlist_item, update_wishlist_item,
     get_all_dictionary, add_dictionary_word, save_all_dictionary, delete_dictionary_word, update_dictionary_word,
-    get_all_roka_media, add_roka_media, update_roka_media, delete_roka_media
+    get_all_roka_media, add_roka_media, update_roka_media, delete_roka_media,
+    get_all_ai_plans, save_ai_plan, get_ai_plan
 )
 from fastapi_app.storage import upload_file, get_photo_url, R2_PUBLIC_URL, get_s3_client, R2_BUCKET_NAME, delete_file
 from PIL import Image
@@ -1407,3 +1408,155 @@ async def websocket_endpoint(websocket: WebSocket):
             await websocket.close()
         except:
             pass
+
+# --- AI Planner Endpoints ---
+
+@app.get("/planner", response_class=HTMLResponse)
+async def ai_planner_page(request: Request):
+    settings = request.state.settings
+    return templates.TemplateResponse("planner.html", {"request": request, "settings": settings})
+
+@app.post("/api/planner/search")
+async def planner_search(request: Request):
+    import os
+    from google import genai
+    from google.genai import types
+    from dotenv import load_dotenv
+    
+    load_dotenv()
+    data = await request.json()
+    query = data.get("query", "")
+    
+    prompt = f"User is planning a honeymoon trip. Query: {query}. Respond with a list of 3-5 recommended destinations."
+    
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    try:
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema={
+                    "type": "ARRAY",
+                    "items": {
+                        "type": "OBJECT",
+                        "properties": {
+                            "name": {"type": "STRING"},
+                            "country": {"type": "STRING"},
+                            "brief_description": {"type": "STRING"},
+                            "imageUrl": {"type": "STRING"}
+                        },
+                        "required": ["name", "country", "brief_description", "imageUrl"]
+                    }
+                },
+                temperature=0.7,
+            ),
+        )
+        destinations = json.loads(response.text)
+    except Exception as e:
+        destinations = [{"name": "Error", "brief_description": f"Failed: {e}"}]
+        
+    return {"destinations": destinations}
+
+@app.post("/api/planner/details")
+async def planner_details(request: Request):
+    import os
+    from google import genai
+    from google.genai import types
+    from dotenv import load_dotenv
+    
+    load_dotenv()
+    data = await request.json()
+    destination = data.get("destination", "")
+    month = data.get("month", "December 2026")
+    
+    prompt = f"Provide detailed honeymoon itinerary and details for {destination} in {month} for a 6-7 day trip."
+    
+    schema = {
+        "type": "OBJECT",
+        "properties": {
+            "things_to_do": {"type": "ARRAY", "items": {"type": "STRING"}},
+            "things_to_eat": {"type": "ARRAY", "items": {"type": "STRING"}},
+            "popular_sites": {"type": "ARRAY", "items": {"type": "STRING"}},
+            "key_highlights": {"type": "STRING"},
+            "honeymoon_rating": {"type": "STRING"},
+            "cost_in_inr": {"type": "STRING"},
+            "hotels": {
+                "type": "ARRAY",
+                "items": {
+                    "type": "OBJECT",
+                    "properties": {
+                        "name": {"type": "STRING"},
+                        "price_per_night": {"type": "STRING"},
+                        "description": {"type": "STRING"}
+                    }
+                }
+            }
+        }
+    }
+    
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    try:
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=schema,
+                temperature=0.7,
+            ),
+        )
+        details = json.loads(response.text)
+    except Exception as e:
+        details = {"error": f"Could not parse details: {e}"}
+        
+    return details
+
+@app.post("/api/planner/chat")
+async def planner_chat(request: Request):
+    import os
+    from google import genai
+    from google.genai import types
+    from dotenv import load_dotenv
+    
+    load_dotenv()
+    data = await request.json()
+    messages = data.get("messages", [])
+    if not messages:
+        return {"text": "Please ask a planning question."}
+        
+    system_prompt = "You are Kiara, a specialized AI Honeymoon Planner. Provide concise, helpful responses to help refine the user's 6-7 day trip and always suggest cost estimates in INR when relevant. You are chatting directly with the user."
+    
+    # Format messages for genai
+    formatted_contents = []
+    for m in messages:
+        role = "user" if m["role"] == "user" else "model"
+        formatted_contents.append(types.Content(role=role, parts=[types.Part.from_text(text=m["content"])]))
+    
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    try:
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=formatted_contents,
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                temperature=0.7,
+            ),
+        )
+        return {"text": response.text}
+    except Exception as e:
+        return {"text": f"Error: {e}"}
+
+@app.get("/api/planner/plans")
+async def get_planner_plans(request: Request):
+    plans = await get_all_ai_plans()
+    return {"plans": plans}
+
+@app.post("/api/planner/save")
+async def save_planner_plan(request: Request):
+    data = await request.json()
+    plan_id = await save_ai_plan(data)
+    return {"status": "success", "id": plan_id}
