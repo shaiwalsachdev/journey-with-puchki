@@ -84,23 +84,27 @@
 
         <!-- Photo Grid -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-24">
+            {% if memory.linear_grid %}
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px]">
+            {% else %}
             <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+            {% endif %}
                 {% for photo in memory.photos %}
-                <div class="group relative break-inside-avoid">
+                <div class="group relative break-inside-avoid {% if memory.linear_grid %}h-full{% endif %}">
                     <div
                         class="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-500">
                     </div>
                     <div
-                        class="relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl transform transition duration-500 hover:scale-[1.02]">
+                        class="relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl transform transition duration-500 hover:scale-[1.02] {% if memory.linear_grid %}h-full flex flex-col{% endif %}">
                         {% set photo_lower = photo.lower() %}
                         {% if photo_lower.endswith('.mov') or photo_lower.endswith('.mp4') or
                         photo_lower.endswith('.webm') or photo_lower.endswith('.avi') or photo_lower.endswith('.mkv') %}
-                        <video class="w-full h-auto" controls playsinline preload="metadata"
+                        <video class="w-full {% if memory.linear_grid %}h-full object-cover{% else %}h-auto{% endif %}" controls playsinline preload="metadata"
                             src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1">
                         </video>
                         {% else %}
                         <img src="{{ r2_url }}/uploads/{{ memory.id }}/{{ photo }}?v=1" alt="Memory Photo"
-                            class="w-full h-auto" loading="lazy"
+                            class="w-full {% if memory.linear_grid %}h-full object-cover{% else %}h-auto{% endif %}" loading="lazy"
                             data-memory-id="{{ memory.id }}" data-photo-name="{{ photo }}">
                         {% endif %}
                         <div
