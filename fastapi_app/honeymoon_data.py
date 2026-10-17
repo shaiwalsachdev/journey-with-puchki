@@ -450,14 +450,18 @@ DEFAULT_HONEYMOON_DATA = {
             {"title": "No Smoking Outside Designated Areas", "desc": "Only smoke in yellow box Designated Smoking Areas (DSAs). Fine: SGD 200 - SGD 1,000."},
             {"title": "No Littering or Spitting", "desc": "Dropping tissue or trash carries a SGD 300 first-time on-the-spot fine."},
             {"title": "No Jaywalking", "desc": "Always use pedestrian crossings or overhead bridges within 50m of traffic. Fine: SGD 50+."},
-            {"title": "No Connecting to Open Unsecured Wi-Fi", "desc": "Legally considered unauthorized network access under Computer Misuse Act."}
+            {"title": "No Connecting to Open Unsecured Wi-Fi", "desc": "Legally considered unauthorized network access under Computer Misuse Act."},
+            {"title": "Don't Over-Rely on Cabs as a Couple", "desc": "Cabs (Grab/Gojek) cost SGD 15–25 (₹1,500–2,000) per trip. MRT is only SGD 1.5–2 (₹100–150) and reaches everywhere fast."},
+            {"title": "Don't Buy Tickets at Venue Counters", "desc": "Counter queues take 30–60 mins and cost 10–20% more than booking in advance on Klook."}
         ],
         "dos": [
-            {"title": "Tap Water is 100% Safe", "desc": "Singapore tap water is cleaner than bottled water. Carry reusable insulated flasks."},
-            {"title": "Tap Credit/Debit Card for MRT", "desc": "No need to buy transit cards! Simply tap any contactless Visa/Mastercard directly at MRT gates."},
+            {"title": "Tap Water is 100% Safe (Refill Flasks)", "desc": "Singapore tap water is cleaner than bottled water. Bottled water costs SGD 2.50 (~₹180). Carry reusable insulated flasks and refill at hotels & attractions."},
+            {"title": "Claim 8–9% GST Tourist Refund at Changi", "desc": "Spend > SGD 100 at any single participating store? Present your passport at checkout for eTRS tax-free slip and claim 8–9% refund at Changi Airport kiosks before your flight home."},
+            {"title": "Tap Credit/Debit Card for MRT", "desc": "No need to buy transit cards (EZ-Link)! Simply tap any contactless Visa/Mastercard directly at MRT gates."},
             {"title": "Tipping is NOT Customary", "desc": "10% service charge and 9% GST are already included in hotel and restaurant bills."},
-            {"title": "Modest Temple Attire", "desc": "Cover shoulders and knees when entering Hindu, Buddhist, or Muslim places of worship."},
-            {"title": "Download Grab App", "desc": "Grab is Southeast Asia's Uber. Seamless for booking taxis and island rides."}
+            {"title": "Modest Temple Attire", "desc": "Cover shoulders and knees when entering Hindu, Buddhist, or Muslim places of worship in Little India and Chinatown."},
+            {"title": "Download Grab & Gojek Apps", "desc": "Download both apps in India before flying. Airport street taxis charge premium surge rates; Grab/Gojek offer fixed upfront prices."},
+            {"title": "Watch Free Night Light Shows", "desc": "Supertree Grove Garden Rhapsody (7:45 PM & 8:45 PM) and Spectra Waterfront Laser Show (8:00 PM & 9:00 PM) are 100% free romantic highlights!"}
         ]
     },
 
@@ -505,6 +509,22 @@ DEFAULT_HONEYMOON_DATA = {
         },
         {
             "id": "d6",
+            "name": "Lau Pa Sat (Satay Street & Hawker Centre)",
+            "area": "Downtown Marina Bay",
+            "cuisine": "Iconic Street Food & Satay",
+            "highlight": "Boon Tat Street shuts down every evening into an open-air Satay grill feast. Spectacular vibe under city skyscrapers.",
+            "status": "Must Visit"
+        },
+        {
+            "id": "d7",
+            "name": "Little India Vegetarian Gems (Gandhi Mess, MTR, Ananda Bhavan)",
+            "area": "Little India / Serangoon Rd",
+            "cuisine": "Authentic Pure Vegetarian South & North Indian",
+            "highlight": "Gandhi Mess for $2 dosas on banana leaves, MTR for rava idlis, Jaggi's for homestyle Punjabi parathas.",
+            "status": "Shortlisted"
+        },
+        {
+            "id": "d8",
             "name": "Cultivate Cafe (Maxwell Reserve)",
             "area": "Tanjong Pagar / Chinatown",
             "cuisine": "Candlelit Library Plant-Based",
@@ -566,7 +586,7 @@ DEFAULT_HONEYMOON_DATA = {
             {"category": "Disney Cruise Gala / Evening", "count": "1–2 Outfits", "suggestion": "Crisp dress shirt (or blazer/chinos combo) with formal leather loafers for Captain's Gala & Rotational Dining."},
             {"category": "Cruise Daywear & Pool Deck", "count": "2–3 Outfits", "suggestion": "Smart polo shirts, lightweight cotton shorts, linen button-downs for Imagination Garden & pool deck."},
             {"category": "Romantic Island & City Dinners", "count": "3 Outfits", "suggestion": "Linen shirts (white, sky blue, sage), tailored chinos, smart leather slip-ons for CHIJMES, Trapizza, and Quayside Isle."},
-            {"category": "Sightseeing & Walking Days", "count": "4 Outfits", "suggestion": "Moisture-wicking tees, comfortable stretch chino shorts, and UV sunglasses for Mandai River Safari & Marina Bay."},
+            {"category": "Sightseeing & Active Days", "count": "4 Outfits", "suggestion": "Moisture-wicking tees, comfortable stretch chino shorts, and UV sunglasses for Mandai River Safari & Marina Bay."},
             {"category": "Swimwear", "count": "2–3 Pairs", "suggestion": "Quick-dry board shorts for cruise swimming pools, Sentosa Siloso beach & Oasia resort pool."},
             {"category": "Footwear", "count": "3 Pairs", "suggestion": "1 pair supportive walking sneakers, 1 pair waterproof pool slides/sandals, 1 pair smart loafers/boat shoes for dinner."}
         ]
@@ -577,8 +597,8 @@ DEFAULT_HONEYMOON_DATA = {
         "esim_and_connectivity": {
             "title": "e-SIM & Connectivity (Stay Connected Seamlessly)",
             "options": [
-                {"provider": "Airalo / Nomad e-SIM (Recommended)", "desc": "Buy online before departure (e.g. 10GB for ~₹1,100). Activates automatically as soon as your flight touches down at Changi Airport. No physical SIM swapping needed."},
-                {"provider": "Singtel Tourist SIM (Physical)", "desc": "Available at Changi Airport arrival terminal (Travelex counter). 100GB 4G/5G data for SGD 12 (~₹750) valid for 14 days."},
+                {"provider": "Klook Singtel / StarHub 5G eSIM (Recommended)", "desc": "Book on Klook beforehand (~₹950 for 10–20 GB or 100GB). Install the QR profile in Delhi; activates automatically as soon as your flight touches down at Changi Airport. No physical SIM swapping needed."},
+                {"provider": "Changi Airport Physical SIM", "desc": "Available at Changi Airport arrival terminal (UOB/Travelex counter) for ~SGD 12 (~₹750) if phone lacks eSIM capability."},
                 {"provider": "Cruise Note", "desc": "Cellular roaming turns off at sea. The Disney Cruise Line Navigator app works on the ship's FREE onboard Wi-Fi without any paid package."}
             ]
         },
@@ -586,8 +606,8 @@ DEFAULT_HONEYMOON_DATA = {
             "title": "Currency, Forex Cards & Cash Rules",
             "points": [
                 {"title": "Zero Forex Markup Card (Niyo / Scapia / Fi)", "desc": "95%+ of Singapore transactions are cashless. Tap directly for MRT, Grab, cafes, and shops with zero markup fees."},
-                {"title": "Cash Requirement", "desc": "Carry only SGD 150–200 (~₹9,500–₹12,500) cash in total for hawker centers or small local stalls. Withdraw at any DBS/UOB ATM at Changi Airport."},
-                {"title": "Indian Currency Tip", "desc": "Do not exchange INR to SGD in Singapore city centers at poor rates. Carry a clean debit/forex card or exchange a small amount at Delhi Airport before departure."}
+                {"title": "Cash Requirement & Exchange Rates", "desc": "Carry only SGD 150–200 (~₹9,500–₹12,500) cash in total for hawker centers (Lau Pa Sat satay carts) or small local stalls. Note: Changi Airport money exchange counters give slightly lower rates ($100 USD = $123.8 SGD) than city money changers ($100 USD = $125 SGD). Withdraw from bank ATMs directly with your zero-forex debit card for the best interbank rate!"},
+                {"title": "DCC Warning", "desc": "Always choose to be charged in SGD on card machines. Never select INR to avoid the 4–7% dynamic currency conversion penalty."}
             ]
         },
         "powerbanks_and_electronics": {
@@ -601,14 +621,16 @@ DEFAULT_HONEYMOON_DATA = {
         "transportation_and_cars": {
             "title": "Taxis, Grab, Cars & MRT Logistics",
             "guide": [
-                {"mode": "Grab App (Southeast Asia's Uber)", "desc": "Download & verify the Grab app in India beforehand. Add credit card. Seamless for Changi-to-Carlton, hotel-to-cruise, and evening rides back to Sentosa."},
-                {"mode": "MRT & Public Buses (Contactless Tap)", "desc": "No need for transit cards (EZ-Link)! Simply tap your contactless Visa/Mastercard or Apple Pay directly at the turnstiles."},
+                {"mode": "MRT & Public Buses (Contactless Tap)", "desc": "The fastest, cleanest, and most budget-friendly transport in Singapore (~SGD 1.50–2.00 / ₹100–150 per trip). Simply tap your contactless Visa/Mastercard directly at turnstiles. No need to buy an EZ-Link card."},
+                {"mode": "Grab & Gojek Apps", "desc": "Download & verify both apps before flying. Street taxis charge airport surcharge and midnight fees. Grab/Gojek offer clear upfront fixed pricing ($15–$25 SGD / ₹1,500–2,000). Use for luggage transfers and late night rides back to Sentosa."},
                 {"mode": "Sentosa Express Monorail", "desc": "Complimentary unlimited passes provided by Oasia Resort Sentosa during your 4-night stay."},
                 {"mode": "Rental Cars (Do NOT Rent)", "desc": "Avoid self-drive car rentals! Singapore has expensive Electronic Road Pricing (ERP), steep parking fees ($3–$6/hr), and left-hand driving with strict speed cameras."}
             ]
         },
         "must_eat_places": [
             {"name": "Trapizza (Siloso Beach, Sentosa)", "type": "Italian Wood-fired by the waves", "must_try": "Pizza Quattro Formaggi, Linguine Granchio, sunset spritz on the sand."},
+            {"name": "Lau Pa Sat (Satay Street)", "type": "Historic Victorian Hawker Centre", "must_try": "Boon Tat Street open-air Satay stalls (stall 7 & 8), chicken/mutton satay with peanut dipping sauce under city lights ($5–10 SGD)."},
+            {"name": "Little India Vegetarian Hotspots", "type": "Authentic Pure Indian Vegetarian", "must_try": "Gandhi Mess for $2 dosas on banana leaves, MTR for rava idlis, Jaggi's for Punjabi parathas, Ananda Bhavan."},
             {"name": "Cassia (Capella Singapore)", "type": "Heritage Cantonese Fine Dining", "must_try": "Truffle crystal dumplings, dim sum lunch in colonial heritage setting."},
             {"name": "CHIJMES Courtyards", "type": "Fairytale Gothic Chapel Dining", "must_try": "Tapas, pizza, craft beer right across from Carlton Hotel."},
             {"name": "Nalan Vegetarian (Capitol Singapore)", "type": "100% Pure Vegetarian Fine Dining", "must_try": "Paneer tikka masala, crispy masala dosas (2 mins from Carlton)."},
@@ -616,23 +638,29 @@ DEFAULT_HONEYMOON_DATA = {
             {"name": "Disney Rotational Dining", "type": "Disney Adventure Cruise", "must_try": "3 distinct themed restaurants with your personal Disney serving team."}
         ],
         "skip_places": [
-            {"place": "Singapore Zoo Daytime", "reason": "Skip daytime Zoo; your itinerary features Mandai River Wonders with pandas Jia Jia & Kai Kai which is fully sheltered, shaded, and far more romantic."},
-            {"place": "Orchard Road Mega Malls", "reason": "Skip wasting whole days in generic malls. High prices due to 9% GST. Enjoy Sentosa beach, nature, and scenic spots instead."},
+            {"place": "Singapore Flyer", "reason": "Costly (~₹2,600–3,000/person) for a slow 30-min observation wheel. MBS SkyPark (57 levels high) and Cloud Forest have far superior romantic views and photos."},
+            {"place": "Museum of Ice Cream", "reason": "Overpriced (~₹5,000/person) and geared towards kids/TikTok props rather than romantic honeymoon memories."},
+            {"place": "Street Shopping at Bugis / Arab Street", "reason": "Basic cheap street stalls. Focus your souvenir shopping at Chinatown (Pagoda St) or branded outlets at IMM Mall instead."},
+            {"place": "Singapore Zoo Daytime", "reason": "Skip daytime Zoo; your itinerary features Mandai River Wonders with pandas Jia Jia & Kai Kai which is fully sheltered, shaded, air-conditioned and far more romantic."},
             {"place": "Night Safari (Late Night Tram)", "reason": "Often overcrowded with 2-hour queue lines in pitch darkness. River Wonders daytime is 10x better."},
+            {"place": "Universal Studios Singapore (USS) on Weekends without Express Pass", "reason": "If you visit on peak weekends, ride queues take 60–80 mins each. Skip or only go if booking Express Passes."},
             {"place": "Sentosa Merlion", "reason": "Permanently demolished. The original Merlion Park at Marina Bay Waterfront is where you take couple photos."}
         ],
         "singapore_dos_and_donts": {
             "donts": [
-                "NEVER carry chewing gum, vapes, or e-cigarettes into Singapore (confiscated at customs, heavy fines).",
+                "NEVER carry chewing gum, vapes, or e-cigarettes into Singapore (confiscated at customs, heavy fines up to SGD 2,000).",
                 "Do NOT drink water or eat anything inside MRT trains or stations (SGD 500 fine).",
                 "Do NOT jaywalk across roads within 50m of a crossing (SGD 50–1,000 fine).",
+                "Do NOT buy tickets at venue counters (queues take 45+ mins; pre-book on Klook for 10–20% discounts).",
+                "Do NOT assume all dishes in food courts are vegetarian — always ask if sauces contain fish sauce, oyster sauce, or chicken stock.",
                 "Do NOT smoke on stateroom verandahs or public streets (only yellow box Designated Smoking Areas).",
                 "Do NOT connect to unverified open public Wi-Fi networks (illegal under Computer Misuse Act)."
             ],
             "dos": [
-                "DO drink the tap water everywhere in Singapore — it is 100% safe, filtered, and higher quality than bottled water.",
+                "DO drink the tap water everywhere in Singapore — it is 100% safe, filtered, and higher quality than bottled water (saves $2.50 SGD/bottle).",
+                "DO claim your 8–9% GST tourist refund at Changi Airport for single-store purchases over SGD 100 (keep passport handy at checkout).",
                 "DO carry 2 compact windproof umbrellas at all times for December monsoon showers.",
-                "DO pre-submit the electronic SG Arrival Card within 72 hours before landing in Singapore (free at ica.gov.sg).",
+                "DO pre-submit the electronic SG Arrival Card within 72 hours before landing in Singapore (100% free at ica.gov.sg).",
                 "DO dress modestly (covered knees/shoulders) when visiting heritage temples in Chinatown or Little India.",
                 "DO book Disney Princess Royal Gathering on the Navigator app the moment you board the cruise!"
             ]
