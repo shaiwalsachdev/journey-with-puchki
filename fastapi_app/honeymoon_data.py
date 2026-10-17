@@ -679,6 +679,197 @@ DEFAULT_HONEYMOON_DATA = {
             {"item": "Light Cardigan / Shawl for Cruise & Indoors", "desc": "Walt Disney Theatre, Rotational Dining rooms, and Cloud Forest run at chilly 19°C–21°C air-conditioning.", "icon": "ac_unit"},
             {"item": "Silica Gel Packs / Ziploc Bags", "desc": "Place silica gel packets in luggage and camera bags to prevent lens moisture during humid-to-cold transitions.", "icon": "inventory_2"}
         ],
+        "packing_checklist": [
+            # Electronics & Power
+            {
+                "id": "p-elec-1",
+                "category": "Electronics & Power",
+                "item": "Universal Travel Adapter (Type G / UK 3-Pin)",
+                "detail": "Singapore and Disney Adventure use Type G (UK 3-pin). Bring a multi-plug universal adapter with built-in USB-C fast charging ports.",
+                "rule": "Mandatory for Carlton Hotel & Oasia Sentosa. Pack in cabin or checked luggage.",
+                "icon": "electrical_services",
+                "packed": False
+            },
+            {
+                "id": "p-elec-2",
+                "category": "Electronics & Power",
+                "item": "Power Banks (10,000–20,000 mAh max 2 per person)",
+                "detail": "Strict Airline Rule: Power banks are 100% FORBIDDEN in checked luggage! Must be in HAND LUGGAGE only (< 100Wh).",
+                "rule": "Strict Hand Luggage Only (DGCA / CAAS). Essential for all-day navigation & photos.",
+                "icon": "battery_charging_full",
+                "packed": False
+            },
+            {
+                "id": "p-elec-3",
+                "category": "Electronics & Power",
+                "item": "Multi-Port USB-C Fast GaN Charger (65W–100W)",
+                "detail": "Charges 2 phones, DJI camera, smartwatch, and power bank simultaneously from a single wall socket.",
+                "rule": "Saves outlet space in hotel rooms & cruise cabin.",
+                "icon": "power",
+                "packed": False
+            },
+            {
+                "id": "p-elec-4",
+                "category": "Electronics & Power",
+                "item": "Long Braided Charging Cables (Type-C & Lightning 2m)",
+                "detail": "Wall outlets on cruise staterooms and bedside hotel tables are sometimes positioned away from pillows.",
+                "rule": "Pack 2x 2-meter cables.",
+                "icon": "cable",
+                "packed": False
+            },
+            {
+                "id": "p-elec-5",
+                "category": "Electronics & Power",
+                "item": "Rented Pocket Camera (DJI Pocket 3 / Osmo / Insta360) + Extra SD Cards",
+                "detail": "Collect on Nov 15 from SharePal. Bring mini tripod, magnetic clip, and extra high-speed U3 MicroSD (128GB+).",
+                "rule": "Carry on board in camera pouch.",
+                "icon": "videocam",
+                "packed": False
+            },
+
+            # Monsoon & Weather Armor
+            {
+                "id": "p-rain-1",
+                "category": "Rain & Sun Protection",
+                "item": "2x Compact Windproof Travel Umbrellas",
+                "detail": "Keep one in Shaiwal's daypack and one in Shaila's handbag at all times. Tropical showers start without warning.",
+                "rule": "Carry-on friendly. Instant rain defense.",
+                "icon": "umbrella",
+                "packed": False
+            },
+            {
+                "id": "p-rain-2",
+                "category": "Rain & Sun Protection",
+                "item": "2x Lightweight Breathable Rain Ponchos",
+                "detail": "Far superior to heavy raincoats in 85% humidity. Keeps your clothes and backpacks bone dry at Universal and River Wonders.",
+                "rule": "Reusable, packs into tiny pouch.",
+                "icon": "water_drop",
+                "packed": False
+            },
+            {
+                "id": "p-rain-3",
+                "category": "Rain & Sun Protection",
+                "item": "Waterproof Floating Phone Pouches (IPX8) + 10L Dry Bag",
+                "detail": "Essential for Disney Cruise cantilevered infinity pool, waterslides, and Siloso beach swimming.",
+                "rule": "Protects phones and cash from chlorinated pool and sea spray.",
+                "icon": "lock",
+                "packed": False
+            },
+            {
+                "id": "p-rain-4",
+                "category": "Rain & Sun Protection",
+                "item": "High-SPF Broad Spectrum Sunscreen (SPF 50+ PA++++)",
+                "detail": "Singapore sits 1° north of the equator. UV index frequently hits 11–12 (Extreme). Apply 20 mins before stepping outdoors.",
+                "rule": "Reapply every 2 hours when outdoors.",
+                "icon": "wb_sunny",
+                "packed": False
+            },
+            {
+                "id": "p-rain-5",
+                "category": "Rain & Sun Protection",
+                "item": "Silica Gel Packs (For Camera & Electronics Bags)",
+                "detail": "Stops internal condensation and lens fogging when moving from cold air-conditioned rooms (19°C) to humid outdoors (31°C).",
+                "rule": "Drop into camera bag and stateroom pouch.",
+                "icon": "inventory_2",
+                "packed": False
+            },
+
+            # Cruise Traditions & Special Items
+            {
+                "id": "p-cruise-1",
+                "category": "Cruise Special",
+                "item": "Cabin Door Decorative Magnets (Stateroom 11680)",
+                "detail": "Disney cruise doors are metal! Cruisers personalize their stateroom doors with custom name magnets (Shaiwal ❤️ Shaila Honeymoon).",
+                "rule": "Beloved Disney cruise tradition. Prepare printed magnets beforehand.",
+                "icon": "door_front",
+                "packed": False
+            },
+            {
+                "id": "p-cruise-2",
+                "category": "Cruise Special",
+                "item": "Lanyards with Clear Card Pouches",
+                "detail": "Used for holding your Disney 'Key to the World' cabin cards around the ship without carrying bags.",
+                "rule": "Wear comfortably around ship deck.",
+                "icon": "badge",
+                "packed": False
+            },
+            {
+                "id": "p-cruise-3",
+                "category": "Cruise Special",
+                "item": "Light Evening Shawl / Cardigan",
+                "detail": "Walt Disney Theatre and rotational dining restaurants are air-conditioned to 19°C. A light wrap keeps Shaila warm during Broadway shows.",
+                "rule": "Keep in evening bag.",
+                "icon": "ac_unit",
+                "packed": False
+            },
+
+            # Health, Comfort & Pharmacy
+            {
+                "id": "p-health-1",
+                "category": "Health & Comfort",
+                "item": "Motion Sickness / Seasickness Tablets (Avomine / Dramamine)",
+                "detail": "Although the mega ship Disney Adventure has advanced stabilizers, keep a pack handy for high seas.",
+                "rule": "Take 30 mins before boarding if sea-sensitive.",
+                "icon": "medication",
+                "packed": False
+            },
+            {
+                "id": "p-health-2",
+                "category": "Health & Comfort",
+                "item": "Blister Prevention Gel Cushions & Band-Aids",
+                "detail": "You will walk 12,000 to 18,000 steps daily across Gardens by the Bay, Universal Studios, and cruise decks.",
+                "rule": "Put inside sneakers or sandals on first sign of rubbing.",
+                "icon": "healing",
+                "packed": False
+            },
+            {
+                "id": "p-health-3",
+                "category": "Health & Comfort",
+                "item": "DEET-Free Mosquito Repellent Spray & Patches",
+                "detail": "Must-have for evening Mandai Rainforest Wildlife Lumina, Night Safari, and Sentosa coastal trails.",
+                "rule": "Non-aerosol spray (< 100ml for cabin).",
+                "icon": "bug_report",
+                "packed": False
+            },
+            {
+                "id": "p-health-4",
+                "category": "Health & Comfort",
+                "item": "Personal Medical Kit (Paracetamol, ORS Electrolytes, Antacids)",
+                "detail": "Tropical humidity dehydrates quickly; pack electrolyte fizz tablets. Antacids for spicy hawker satay and chili crab.",
+                "rule": "Keep in original labeled foil strips.",
+                "icon": "medical_services",
+                "packed": False
+            },
+
+            # Hand Luggage Day 1 Criticals
+            {
+                "id": "p-hand-1",
+                "category": "Hand Luggage Day 1",
+                "item": "Zero Forex Credit & Debit Cards (Niyo / Scapia / Fi)",
+                "detail": "Keep in wallet. Tapped for MRT gates, Grab taxis, and 7-Eleven. Carry SGD 150 cash for hawker stalls.",
+                "rule": "Ensure International Card Usage is toggled ON in your banking app before flying.",
+                "icon": "credit_card",
+                "packed": False
+            },
+            {
+                "id": "p-hand-2",
+                "category": "Hand Luggage Day 1",
+                "item": "Passports + e-Visa Printouts + Singapore Arrival Card PDF",
+                "detail": "Never put travel documents in checked bags! Always in Shaiwal's secure daypack.",
+                "rule": "Keep 2 physical hard-copy sets + saved in your portal Document Vault.",
+                "icon": "folder_shared",
+                "packed": False
+            },
+            {
+                "id": "p-hand-3",
+                "category": "Hand Luggage Day 1",
+                "item": "First Day Embarkation Change of Clothes & Swimwear in Carry-on",
+                "detail": "On cruise embarkation day, checked luggage takes until 5 PM to arrive at Stateroom 11680. Hand luggage swimwear lets you hit the infinity pool at 1 PM!",
+                "rule": "Essential cruise pro-tip.",
+                "icon": "luggage",
+                "packed": False
+            }
+        ],
         "outfit_count_summary": {
             "trip_duration": "9 Days / 8 Nights (Dec 13–21, 2026)",
             "shaila_total": "12–14 Outfits (Daywear, Cruise Glamour, Resort Casual, Swimwear)",

@@ -297,9 +297,84 @@ async def toggle_honeymoon_checklist(request: Request):
                 t["booked"] = not t.get("booked", False)
                 t["status"] = "Booked ✅" if t["booked"] else "To Book"
                 break
+    elif category == "packing" and "packing_and_outfits" in data and "packing_checklist" in data["packing_and_outfits"]:
+        for p in data["packing_and_outfits"]["packing_checklist"]:
+            if p.get("id") == item_id:
+                p["packed"] = not p.get("packed", False)
+                break
 
     await save_honeymoon_data(data)
     return {"status": "success", "data": data}
+
+
+@app.post("/api/honeymoon/packing/save")
+async def save_packing_item(request: Request):
+    import uuid
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    p_id = body.get("id")
+    category = body.get("category", "General")
+    item_name = body.get("item", "").strip()
+    detail = body.get("detail", "")
+    rule = body.get("rule", "")
+    icon = body.get("icon", "check_circle")
+    packed = bool(body.get("packed", False))
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "packing_and_outfits" not in data:
+        data["packing_and_outfits"] = DEFAULT_HONEYMOON_DATA.get("packing_and_outfits", {})
+    if "packing_checklist" not in data["packing_and_outfits"]:
+        data["packing_and_outfits"]["packing_checklist"] = []
+
+    checklist = data["packing_and_outfits"]["packing_checklist"]
+    updated = False
+    if p_id:
+        for p in checklist:
+            if p.get("id") == p_id:
+                p["category"] = category
+                p["item"] = item_name
+                p["detail"] = detail
+                p["rule"] = rule
+                p["icon"] = icon
+                p["packed"] = packed
+                updated = True
+                break
+
+    if not updated:
+        checklist.append({
+            "id": p_id or f"p-{uuid.uuid4().hex[:8]}",
+            "category": category,
+            "item": item_name,
+            "detail": detail,
+            "rule": rule,
+            "icon": icon,
+            "packed": packed
+        })
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "checklist": checklist}
+
+
+@app.delete("/api/honeymoon/packing/{p_id}")
+async def delete_packing_item(p_id: str):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "packing_and_outfits" in data and "packing_checklist" in data["packing_and_outfits"]:
+        data["packing_and_outfits"]["packing_checklist"] = [
+            p for p in data["packing_and_outfits"]["packing_checklist"] if p.get("id") != p_id
+        ]
+
+    await save_honeymoon_data(data)
+    return {"status": "success"}
 
 
 @app.post("/api/honeymoon/visa/status")

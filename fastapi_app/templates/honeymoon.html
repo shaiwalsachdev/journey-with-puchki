@@ -1308,21 +1308,96 @@
                 </div>
             </div>
 
-            <!-- Monsoon Rainy Season Essentials Grid -->
-            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-sky-200/60 dark:border-white/10">
-                <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 mb-4">
-                    <span class="material-icons text-2xl">beach_access</span>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Rainy Season Must-Packs</h3>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {% for item in honeymoon.packing_and_outfits.rainy_essentials %}
-                    <div class="p-4 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-100 dark:border-white/5 flex items-start gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-sky-500 text-white flex items-center justify-center shrink-0 shadow-sm">
-                            <span class="material-icons text-lg">{{ item.icon }}</span>
+            <!-- Universal Adapter & Electronics Advisory Banner -->
+            <div class="glass-panel p-5 sm:p-6 rounded-3xl border border-amber-300/60 dark:border-amber-700/40 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                            <span class="material-icons text-2xl">electrical_services</span>
                         </div>
                         <div>
-                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ item.item }}</h4>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+                            <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                🔌 Universal Adapter & Power Bank Packing Rule
+                                <span class="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/40">Critical</span>
+                            </h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 leading-relaxed max-w-3xl">
+                                <b>1. Universal Adapter:</b> Singapore uses <b>Type G (UK 3-pin plugs, 230V)</b>. Carlton Hotel, Disney Cruise cabins, and Oasia Sentosa require Type G plugs. Pack a universal multi-pin adapter with USB-C GaN ports.<br/>
+                                <b>2. Power Banks:</b> <b>STRICTLY FORBIDDEN IN CHECKED LUGGAGE!</b> Must be in your <b>HAND LUGGAGE ONLY</b> (max 20,000mAh per power bank, max 2 per person) per DGCA / Singapore CAAS aviation safety laws.
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="openPackingModal()" class="shrink-0 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5 self-start sm:self-auto">
+                        <span class="material-icons text-sm">add</span> Add Packing Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Master Interactive Packing Checklist (Category-wise & Tick-tracked) -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-lg border-2 border-sky-300/40 relative">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-200/60 dark:border-white/10">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-300 text-xs font-bold mb-2">
+                            <span class="material-icons text-sm">checklist_rtl</span> Interactive Luggage Tracker
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Master Luggage & Electronics Checklist 🧳</h3>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                            Click any item once packed to tick it off. Progress updates in real-time and persists in MongoDB!
+                        </p>
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    {% set packed_count = honeymoon.packing_and_outfits.packing_checklist | selectattr('packed') | list | length %}
+                    {% set total_items = honeymoon.packing_and_outfits.packing_checklist | length %}
+                    <div class="flex items-center gap-3 bg-white/70 dark:bg-white/5 px-4 py-3 rounded-2xl border border-gray-200 dark:border-white/10">
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white block">{{ packed_count }} of {{ total_items }} Packed</span>
+                            <span class="text-[10px] text-gray-500">{% if packed_count == total_items %}Everything Ready! 🚀{% else %}{{ total_items - packed_count }} remaining to pack{% endif %}</span>
+                        </div>
+                        <div class="w-24 h-2.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-sky-500 rounded-full transition-all" style="width: {{ (packed_count / (total_items or 1) * 100) | round }}%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categorized Checklist Items -->
+                {% set categories = ['Electronics & Power', 'Rain & Sun Protection', 'Cruise Special', 'Health & Comfort', 'Hand Luggage Day 1'] %}
+                
+                <div class="space-y-6">
+                    {% for cat in categories %}
+                    <div>
+                        <h4 class="text-xs font-extrabold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-sky-500"></span> {{ cat }}
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            {% for p in honeymoon.packing_and_outfits.packing_checklist %}
+                            {% if p.category == cat %}
+                            <div onclick="toggleChecklist('{{ p.id }}', 'packing')" 
+                                class="p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 select-none hover:shadow-md {% if p.packed %}bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/50{% else %}bg-white/80 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-sky-300{% endif %}">
+                                <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all shrink-0 {% if p.packed %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent hover:border-sky-400{% endif %}">
+                                    <span class="material-icons text-base">check</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <h5 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white {% if p.packed %}line-through opacity-70{% endif %}">
+                                            {{ p.item }}
+                                        </h5>
+                                        <div class="flex items-center gap-1">
+                                            <button onclick="event.stopPropagation(); deletePackingItem('{{ p.id }}')" class="text-gray-400 hover:text-rose-500 p-0.5 rounded" title="Remove">
+                                                <span class="material-icons text-xs">close</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="text-[11px] text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ p.detail }}</p>
+                                    {% if p.rule %}
+                                    <div class="mt-2 text-[10px] font-semibold text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/40 px-2 py-0.5 rounded-md inline-block">
+                                        📌 {{ p.rule }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                     {% endfor %}
@@ -1931,6 +2006,59 @@
         </div>
     </div>
 
+    <!-- Packing Item Add/Edit Modal -->
+    <div id="packing-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-7 shadow-2xl border border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-200/60 dark:border-white/10 mb-5">
+                <div class="flex items-center gap-2 text-sky-500">
+                    <span class="material-icons text-2xl">luggage</span>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white" id="packing-modal-title">Add Luggage Item</h3>
+                </div>
+                <button type="button" onclick="closePackingModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+
+            <form id="packing-form" onsubmit="handleSavePackingItem(event)" class="space-y-3.5">
+                <input type="hidden" id="packing-id" />
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Category</label>
+                    <select id="packing-category" class="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white font-semibold">
+                        <option value="Electronics & Power">Electronics & Power</option>
+                        <option value="Rain & Sun Protection">Rain & Sun Protection</option>
+                        <option value="Cruise Special">Cruise Special</option>
+                        <option value="Health & Comfort">Health & Comfort</option>
+                        <option value="Hand Luggage Day 1">Hand Luggage Day 1</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Item Name</label>
+                    <input type="text" id="packing-item-name" placeholder="e.g. Type G Universal Adapter" required 
+                        class="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Packing Rule / Location</label>
+                    <input type="text" id="packing-rule" placeholder="e.g. Hand luggage only / Checked bag" 
+                        class="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Details & Purpose</label>
+                    <textarea id="packing-detail" rows="2" placeholder="Why you need this item or instructions..." 
+                        class="w-full px-3 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="closePackingModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-500 hover:text-gray-700">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold shadow-md">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-12 border-t border-gray-200/60 dark:border-white/10 text-center text-xs text-gray-500">
         <p>Made with endless love for Shaila by Shaiwal · Singapore Honeymoon 2026 ❤️</p>
@@ -2493,6 +2621,60 @@
                 }
             } catch (err) {
                 console.error('Error deleting outfit:', err);
+            }
+        }
+
+        // --- Packing Items JS Handlers ---
+        function openPackingModal() {
+            document.getElementById('packing-modal').classList.remove('hidden');
+            document.getElementById('packing-id').value = '';
+            document.getElementById('packing-form').reset();
+        }
+
+        function closePackingModal() {
+            document.getElementById('packing-modal').classList.add('hidden');
+        }
+
+        async function handleSavePackingItem(e) {
+            e.preventDefault();
+            const payload = {
+                id: document.getElementById('packing-id').value,
+                category: document.getElementById('packing-category').value,
+                item: document.getElementById('packing-item-name').value,
+                rule: document.getElementById('packing-rule').value,
+                detail: document.getElementById('packing-detail').value,
+                icon: "luggage",
+                packed: false
+            };
+
+            try {
+                const res = await fetch('/api/honeymoon/packing/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'packing');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error saving packing item:', err);
+                alert('Failed to save packing item.');
+            }
+        }
+
+        async function deletePackingItem(pId) {
+            if (!confirm('Remove this item from your packing checklist?')) return;
+            try {
+                const res = await fetch(`/api/honeymoon/packing/${pId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'packing');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error deleting packing item:', err);
             }
         }
 
