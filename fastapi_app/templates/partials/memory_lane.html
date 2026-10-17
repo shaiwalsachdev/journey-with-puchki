@@ -1,0 +1,394 @@
+<!-- ==========================================
+     IN-HERO MEMORY LANE STORIES (Google Photos Style)
+     ========================================== -->
+{% if highlights and highlights|length > 0 %}
+<div class="w-full max-w-6xl mx-auto mt-6 sm:mt-8 px-2 relative z-30" id="hero-memory-lane">
+    <!-- Header Pill -->
+    <div class="flex items-center justify-between mb-3 px-2">
+        <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-md">
+                <span class="material-icons text-rose-400 text-sm animate-pulse">auto_awesome</span>
+                <span>Memory Lane Highlights</span>
+            </span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="scrollHeroHighlights(-220)" 
+                class="w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-transform active:scale-90 text-sm">
+                <span class="material-icons text-base">chevron_left</span>
+            </button>
+            <button onclick="scrollHeroHighlights(220)" 
+                class="w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-transform active:scale-90 text-sm">
+                <span class="material-icons text-base">chevron_right</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Horizontal Story Cards Carousel -->
+    <div id="hero-highlights-scroll" 
+        class="flex gap-3 sm:gap-4 overflow-x-auto pb-2 pt-1 px-1 scroll-smooth no-scrollbar snap-x snap-mandatory">
+        {% for hl in highlights %}
+        <div onclick="openStoryViewer({{ loop.index0 }})"
+            class="snap-start shrink-0 cursor-pointer group/card relative w-[130px] sm:w-[160px] md:w-[180px] h-[180px] sm:h-[220px] md:h-[240px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 select-none border border-white/30 dark:border-white/10 ring-2 ring-transparent hover:ring-rose-400/80 bg-black/40 backdrop-blur-sm">
+            
+            <!-- Cover Photo with Zoom -->
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover/card:scale-110"
+                style="background-image: url('{{ hl.cover_url }}');">
+            </div>
+
+            <!-- Gradient Overlays -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40"></div>
+            <div class="absolute inset-0 bg-rose-500/10 group-hover/card:bg-transparent transition-colors"></div>
+
+            <!-- Top Badge Pill -->
+            <div class="absolute top-2 left-2 right-2 flex items-center justify-between z-10">
+                <span class="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-white px-2 py-0.5 rounded-full bg-gradient-to-r {{ hl.badge_color }} shadow-md backdrop-blur-md">
+                    <span class="material-icons text-[10px] sm:text-[12px]">{{ hl.icon }}</span>
+                    {{ hl.badge }}
+                </span>
+                <span class="bg-black/60 backdrop-blur-md text-white/90 text-[9px] px-1.5 py-0.5 rounded-full font-medium flex items-center gap-0.5">
+                    <span class="material-icons text-[9px]">photo_library</span>
+                    {{ hl.photo_count }}
+                </span>
+            </div>
+
+            <!-- Hover Play Button -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-all duration-300 transform scale-75 group-hover/card:scale-100 z-10 pointer-events-none">
+                <div class="w-10 h-10 rounded-full bg-white/30 backdrop-blur-md border border-white/60 flex items-center justify-center text-white shadow-xl">
+                    <span class="material-icons text-xl">play_arrow</span>
+                </div>
+            </div>
+
+            <!-- Bottom Content -->
+            <div class="absolute bottom-2.5 left-2.5 right-2.5 z-10 text-white text-left">
+                <p class="text-[10px] sm:text-[11px] font-semibold text-rose-300 drop-shadow flex items-center gap-1">
+                    <span class="material-icons text-[10px]">calendar_today</span>
+                    {{ hl.subtitle }}
+                </p>
+                <h3 class="text-xs sm:text-sm font-bold text-white line-clamp-2 leading-tight drop-shadow-md mt-0.5 group-hover/card:text-rose-100 transition-colors">
+                    {{ hl.title }}
+                </h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- ==========================================
+     FULLSCREEN STORY VIEWER MODAL (Google Photos Style)
+     ========================================== -->
+<div id="story-viewer-modal" class="fixed inset-0 z-[9999] bg-black/95 hidden flex-col items-center justify-center select-none backdrop-blur-xl">
+    <!-- Close Button -->
+    <button onclick="closeStoryViewer()" 
+        class="absolute top-4 right-4 z-50 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full backdrop-blur-md transition-all shadow-lg">
+        <span class="material-icons text-2xl">close</span>
+    </button>
+
+    <!-- Main Story Frame (9:16 mobile aspect ratio on desktop) -->
+    <div id="story-frame" class="relative w-full h-full sm:max-w-md sm:h-[90vh] sm:rounded-3xl overflow-hidden bg-black flex flex-col justify-between shadow-2xl sm:border border-white/10">
+        
+        <!-- Story Progress Bars at Top -->
+        <div id="story-progress-container" class="absolute top-3 left-3 right-3 z-40 flex gap-1.5 px-1 py-1">
+            <!-- Progress bars injected dynamically via JS -->
+        </div>
+
+        <!-- Story Top Header (Badge, Title, Memory Link) -->
+        <div class="absolute top-8 left-4 right-14 z-40 flex items-center justify-between text-white drop-shadow">
+            <div class="flex items-center gap-2 overflow-hidden">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center shrink-0 shadow-md">
+                    <span id="story-badge-icon" class="material-icons text-sm text-white">auto_awesome</span>
+                </div>
+                <div class="overflow-hidden">
+                    <div class="flex items-center gap-2">
+                        <span id="story-badge-text" class="text-xs font-bold text-rose-300 tracking-wide uppercase">1 Year Ago</span>
+                        <span id="story-date-text" class="text-[11px] text-white/70">Oct 18, 2025</span>
+                    </div>
+                    <h4 id="story-title-text" class="text-sm font-bold truncate text-white">Family Meeting at Karigari</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story Media Container (Photos) -->
+        <div id="story-media-container" class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
+            <!-- Current Photo -->
+            <img id="story-image" src="" alt="Story Photo" 
+                class="w-full h-full object-cover transition-opacity duration-300 opacity-0" />
+            
+            <!-- Gradient Overlay for readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/60 pointer-events-none"></div>
+
+            <!-- Tap Interaction Zones (Left = Prev, Center = Pause, Right = Next) -->
+            <div onclick="prevStorySlide()" class="absolute left-0 top-16 bottom-24 w-1/3 z-30 cursor-pointer"></div>
+            <div id="story-pause-zone" class="absolute left-1/3 top-16 bottom-24 w-1/3 z-30 cursor-pointer"></div>
+            <div onclick="nextStorySlide()" class="absolute right-0 top-16 bottom-24 w-1/3 z-30 cursor-pointer"></div>
+        </div>
+
+        <!-- Story Bottom Footer / Captions -->
+        <div class="absolute bottom-4 left-4 right-4 z-40 flex flex-col gap-2.5 text-white">
+            <div id="story-caption-box" class="bg-black/60 backdrop-blur-md rounded-2xl p-3 border border-white/10 shadow-lg">
+                <p id="story-caption-text" class="text-sm text-white/95 leading-relaxed"></p>
+                <p id="story-vibe-text" class="text-xs text-rose-300 font-semibold mt-1 flex items-center gap-1"></p>
+            </div>
+
+            <!-- Action Buttons: Memory Link & Reaction -->
+            <div class="flex items-center justify-between gap-3 pt-1">
+                <a id="story-memory-link" href="#" 
+                    class="flex-1 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white rounded-full py-2.5 px-4 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md">
+                    <span>View Full Memory</span>
+                    <span class="material-icons text-sm">arrow_forward</span>
+                </a>
+                <button onclick="triggerStoryHearts()" 
+                    class="w-10 h-10 rounded-full bg-rose-500/80 hover:bg-rose-500 text-white flex items-center justify-center shadow-lg transition-transform active:scale-125">
+                    <span class="material-icons text-xl">favorite</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Left/Right Arrows for Desktop Click -->
+        <button onclick="prevStorySlide()" 
+            class="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-40 w-8 h-8 rounded-full bg-black/40 hover:bg-black/70 text-white items-center justify-center backdrop-blur-sm">
+            <span class="material-icons text-lg">chevron_left</span>
+        </button>
+        <button onclick="nextStorySlide()" 
+            class="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-40 w-8 h-8 rounded-full bg-black/40 hover:bg-black/70 text-white items-center justify-center backdrop-blur-sm">
+            <span class="material-icons text-lg">chevron_right</span>
+        </button>
+    </div>
+</div>
+
+<style>
+/* Hide standard scrollbars for smooth story carousel */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Story progress bar styling */
+.story-bar-segment {
+    height: 3px;
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+}
+.story-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #ffffff;
+    border-radius: 9999px;
+    transition: width 0.1s linear;
+}
+</style>
+
+<script>
+// --- Client-side Story Viewer Engine ---
+const STORY_HIGHLIGHTS = {{ highlights | tojson | safe }};
+let currentHighlightIndex = 0;
+let currentSlideIndex = 0;
+let storyTimer = null;
+let storyStartTime = null;
+let storyElapsedBeforePause = 0;
+let isStoryPaused = false;
+const SLIDE_DURATION = 4500; // 4.5 seconds per photo slide
+
+function scrollHeroHighlights(offset) {
+    const el = document.getElementById('hero-highlights-scroll');
+    if (el) el.scrollBy({ left: offset, behavior: 'smooth' });
+}
+
+function openStoryViewer(highlightIdx) {
+    if (!STORY_HIGHLIGHTS || !STORY_HIGHLIGHTS[highlightIdx]) return;
+    currentHighlightIndex = highlightIdx;
+    currentSlideIndex = 0;
+
+    const modal = document.getElementById('story-viewer-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+
+    loadHighlightStory(currentHighlightIndex, currentSlideIndex);
+}
+
+function closeStoryViewer() {
+    clearTimeout(storyTimer);
+    const modal = document.getElementById('story-viewer-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+}
+
+function loadHighlightStory(hlIdx, slideIdx) {
+    clearTimeout(storyTimer);
+    const hl = STORY_HIGHLIGHTS[hlIdx];
+    if (!hl || !hl.slides || hl.slides.length === 0) return;
+
+    if (slideIdx < 0) slideIdx = 0;
+    if (slideIdx >= hl.slides.length) {
+        if (hlIdx + 1 < STORY_HIGHLIGHTS.length) {
+            currentHighlightIndex++;
+            currentSlideIndex = 0;
+            loadHighlightStory(currentHighlightIndex, 0);
+            return;
+        } else {
+            closeStoryViewer();
+            return;
+        }
+    }
+
+    currentHighlightIndex = hlIdx;
+    currentSlideIndex = slideIdx;
+
+    // Progress Bar segments
+    const progressContainer = document.getElementById('story-progress-container');
+    progressContainer.innerHTML = '';
+    for (let i = 0; i < hl.slides.length; i++) {
+        const seg = document.createElement('div');
+        seg.className = 'story-bar-segment';
+        const fill = document.createElement('div');
+        fill.className = 'story-bar-fill';
+        fill.id = `story-bar-${i}`;
+        if (i < slideIdx) {
+            fill.style.width = '100%';
+        } else {
+            fill.style.width = '0%';
+        }
+        seg.appendChild(fill);
+        progressContainer.appendChild(seg);
+    }
+
+    // Header
+    document.getElementById('story-badge-text').innerText = hl.badge;
+    document.getElementById('story-badge-icon').innerText = hl.icon || 'auto_awesome';
+    document.getElementById('story-date-text').innerText = hl.subtitle;
+    document.getElementById('story-title-text').innerText = hl.title;
+
+    // Captions & Links
+    const currentSlide = hl.slides[slideIdx];
+    document.getElementById('story-caption-text').innerText = currentSlide.caption || hl.summary || '';
+    document.getElementById('story-vibe-text').innerText = hl.vibe ? `✨ ${hl.vibe}` : '';
+    document.getElementById('story-memory-link').href = `/memory/${hl.memory_id}`;
+
+    // Load Image
+    const img = document.getElementById('story-image');
+    img.style.opacity = '0';
+    img.onload = () => {
+        img.style.opacity = '1';
+        startSlideTimer();
+    };
+    img.src = currentSlide.url;
+}
+
+function startSlideTimer() {
+    clearTimeout(storyTimer);
+    storyStartTime = Date.now();
+    storyElapsedBeforePause = 0;
+    isStoryPaused = false;
+
+    const fill = document.getElementById(`story-bar-${currentSlideIndex}`);
+    if (fill) {
+        fill.style.transition = `width ${SLIDE_DURATION}ms linear`;
+        setTimeout(() => {
+            fill.style.width = '100%';
+        }, 20);
+    }
+
+    storyTimer = setTimeout(() => {
+        nextStorySlide();
+    }, SLIDE_DURATION);
+}
+
+function nextStorySlide() {
+    const hl = STORY_HIGHLIGHTS[currentHighlightIndex];
+    if (currentSlideIndex + 1 < hl.slides.length) {
+        loadHighlightStory(currentHighlightIndex, currentSlideIndex + 1);
+    } else {
+        if (currentHighlightIndex + 1 < STORY_HIGHLIGHTS.length) {
+            loadHighlightStory(currentHighlightIndex + 1, 0);
+        } else {
+            closeStoryViewer();
+        }
+    }
+}
+
+function prevStorySlide() {
+    if (currentSlideIndex > 0) {
+        loadHighlightStory(currentHighlightIndex, currentSlideIndex - 1);
+    } else if (currentHighlightIndex > 0) {
+        const prevHl = STORY_HIGHLIGHTS[currentHighlightIndex - 1];
+        loadHighlightStory(currentHighlightIndex - 1, prevHl.slides.length - 1);
+    }
+}
+
+// Pause on mouse down / touch hold
+const pauseZone = document.getElementById('story-pause-zone');
+if (pauseZone) {
+    pauseZone.addEventListener('mousedown', () => pauseStory());
+    pauseZone.addEventListener('mouseup', () => resumeStory());
+    pauseZone.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        pauseStory();
+    });
+    pauseZone.addEventListener('touchend', () => resumeStory());
+}
+
+function pauseStory() {
+    if (isStoryPaused) return;
+    isStoryPaused = true;
+    clearTimeout(storyTimer);
+    const elapsed = Date.now() - storyStartTime;
+    storyElapsedBeforePause += elapsed;
+
+    const fill = document.getElementById(`story-bar-${currentSlideIndex}`);
+    if (fill) {
+        const computedWidth = window.getComputedStyle(fill).width;
+        fill.style.transition = 'none';
+        fill.style.width = computedWidth;
+    }
+}
+
+function resumeStory() {
+    if (!isStoryPaused) return;
+    isStoryPaused = false;
+    const remaining = Math.max(500, SLIDE_DURATION - storyElapsedBeforePause);
+    storyStartTime = Date.now();
+
+    const fill = document.getElementById(`story-bar-${currentSlideIndex}`);
+    if (fill) {
+        fill.style.transition = `width ${remaining}ms linear`;
+        fill.style.width = '100%';
+    }
+
+    storyTimer = setTimeout(() => {
+        nextStorySlide();
+    }, remaining);
+}
+
+function triggerStoryHearts() {
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 35,
+            spread: 60,
+            origin: { y: 0.85 },
+            colors: ['#ff1493', '#ff69b4', '#ff4500', '#ffd700']
+        });
+    }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    const modal = document.getElementById('story-viewer-modal');
+    if (!modal || modal.classList.contains('hidden')) return;
+
+    if (e.key === 'Escape') closeStoryViewer();
+    else if (e.key === 'ArrowRight') nextStorySlide();
+    else if (e.key === 'ArrowLeft') prevStorySlide();
+    else if (e.key === ' ') {
+        if (isStoryPaused) resumeStory();
+        else pauseStory();
+    }
+});
+</script>
+{% endif %}

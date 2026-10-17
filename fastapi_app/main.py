@@ -211,9 +211,15 @@ async def delete_hero_image(request: Request):
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     import random
-    from fastapi_app.database import get_all_roka_media
+    from fastapi_app.database import get_all_roka_media, get_all_memories
+    from fastapi_app.highlights import build_memory_lane_highlights
+    from fastapi_app.storage import R2_PUBLIC_URL
     settings = request.state.settings
     
+    # Fetch highlights for Memory Lane
+    all_memories = await get_all_memories()
+    highlights = build_memory_lane_highlights(all_memories, R2_PUBLIC_URL)
+
     # Fetch all Roka media and pick 100 random photos from "Our Moments"
     all_roka = await get_all_roka_media()
     hidden_photos = ["roka/1775666737_SHAIX-9425.webp"]
@@ -244,7 +250,8 @@ async def home(request: Request):
         "request": request, 
         "page": "home", 
         "settings": settings,
-        "carousel_photos": carousel_photos
+        "carousel_photos": carousel_photos,
+        "highlights": highlights
     })
 
 
