@@ -718,7 +718,7 @@ DEFAULT_HONEYMOON_DATA = {
     # Live Expense Tracker Items (Fully Editable with actual expense tracking)
     "expenses": [
         {"id": "exp-1", "category": "Visa", "item": "Singapore e-Visa (2 Adults)", "amount": 6500, "actual_amount": 0, "currency": "INR", "status": "Pending", "notes": "Submit Nov 1"},
-        {"id": "exp-2", "category": "Flights", "item": "Roundtrip Delhi - Singapore (Air India / Singapore Airlines)", "amount": 65000, "actual_amount": 64200, "currency": "INR", "status": "Booked", "notes": "Confirmed roundtrip"},
+        {"id": "exp-2", "category": "Flights", "item": "Singapore Airlines Roundtrip (DEL - SIN · SQ 401 & SQ 406)", "amount": 81696, "actual_amount": 81696, "currency": "INR", "status": "Booked", "notes": "PNR: DVXVBM · MMT: NN7AMSIR48944422426 · Paid ₹81,696", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Singapore_Airlines_DEL_SIN_DVXVBM.pdf", "doc_name": "Singapore Airlines E-Ticket (DVXVBM)", "doc_id": "doc-sia-flights"},
         {"id": "exp-3", "category": "Hotels", "item": "Carlton Hotel (1 Night) + Oasia Resort Sentosa (4 Nights)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Carlton + Oasia Deluxe"},
         {"id": "exp-4", "category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Disney Adventure Sailing"},
         {"id": "exp-5", "category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "actual_amount": 0, "currency": "INR", "status": "To Book", "notes": "Cable Car, River Wonders, Gardens, MBS"},
@@ -727,6 +727,16 @@ DEFAULT_HONEYMOON_DATA = {
 
     # Uploaded Tickets, Vouchers & PDF Documents
     "documents": [
+        {
+            "id": "doc-sia-flights",
+            "name": "Singapore Airlines Roundtrip E-Ticket & Receipt",
+            "category": "Flights",
+            "filename": "Singapore_Airlines_DEL_SIN_DVXVBM.pdf",
+            "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Singapore_Airlines_DEL_SIN_DVXVBM.pdf",
+            "size": "PNR: DVXVBM · SQ 401 / SQ 406",
+            "expense_id": "exp-2",
+            "uploaded_at": "6 Aug 2026 · Confirmed"
+        },
         {
             "id": "doc-dcl",
             "name": "Disney Adventure Cruise Confirmation",
