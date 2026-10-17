@@ -34,6 +34,55 @@ DEFAULT_HONEYMOON_DATA = {
         }
     ],
 
+    # Confirmed Disney Cruise Reservation Details (Dec 14-17, 2026)
+    "cruise_booking": {
+        "ship": "Disney Adventure 🚢✨",
+        "reservation_number": "44985264",
+        "stateroom": "11680",
+        "stateroom_type": "Deluxe Oceanview Stateroom with Verandah (Category 06C)",
+        "deck": "Deck 11 · Midship",
+        "guests": ["SHAIWAL SACHDEV", "SHAILA MANAKTAHLA"],
+        "status": "Paid in Full ✅",
+        "dates": "14 - 17 December 2026 (3-Night Cruise from Singapore)",
+        "support_phone": "+91 80357-38899",
+        "support_hours": "Mon-Fri: 8:00 AM - 10:00 PM IST | Sat-Sun: 9:00 AM - 8:00 PM IST",
+        "online_checkin_date": "14 November 2026",
+        "activities_booking_deadline": "11 December 2026",
+        "dining_seating": "8:15 PM Main Dining (Rotational Dining)",
+        "evening_show_time": "5:45 PM Signature Theatre Show",
+        "all_aboard_time": "4:00 PM (14 Dec 2026)",
+        "departure_time": "5:00 PM (14 Dec 2026)",
+        "debarkation_time": "7:00 AM (17 Dec 2026)"
+    },
+
+    # Disney Cruise Rules, Regulations, Do's and Don'ts
+    "cruise_rules": {
+        "prohibited_items": [
+            {"item": "No Irons, Steamers or Heating Appliances", "reason": "Strict fire hazard. Clothing steamers, electric irons, hot plates, and heating pads are confiscated at embarkation. Laundry/pressing services are available on board.", "icon": "iron"},
+            {"item": "No Extension Cords or Surge Protectors", "reason": "Surge protectors interfere with the ship's marine electrical safety system. Multi-port USB hubs without surge protectors are permitted.", "icon": "electrical_services"},
+            {"item": "No Hookah, Vapes or E-Cigarettes in Staterooms / Verandah", "reason": "Smoking or vaping on verandahs or in staterooms carries a $250+ cleaning fine and possible debarkation. Smoking is ONLY permitted in designated open-air deck smoking zones.", "icon": "vape_free"},
+            {"item": "No Hard Liquor or Spirits Brought Onboard", "reason": "Hard liquor is prohibited in carry-on and checked luggage. Each adult (21+) is allowed to bring up to 2 bottles of unopened wine/champagne (750ml) OR six 355ml beers strictly in carry-on luggage at embarkation.", "icon": "no_drinks"},
+            {"item": "No Drones, Kites or Remote Air Toys", "reason": "Prohibited maritime regulation. Drones will be confiscated at port security.", "icon": "flight_disturb"},
+            {"item": "No Candles, Incense or Open Flames", "reason": "Open flames of any kind are strictly prohibited at sea.", "icon": "fire_extinguisher"},
+            {"item": "No Weapons, Toy Replicas or Fireworks", "reason": "Any realistic toy guns, swords, knives, or flammable devices are strictly barred.", "icon": "shield"}
+        ],
+        "important_dos": [
+            {"title": "Online Check-In on 14 Nov 2026", "desc": "Check-in opens midnight 14 November. Upload passport photos and immediately select the earliest Port Arrival Time (PAT) window for priority boarding!", "badge": "14 Nov 2026"},
+            {"title": "Carry Critical Items in Hand Luggage", "desc": "Keep passports, Singapore e-Visa printouts, cruise documents, jewelry, medications, and your first-day swimwear/clothes in hand luggage. Checked bags arrive at your stateroom late afternoon.", "badge": "Embarkation Day"},
+            {"title": "Mandatory Guest Assembly Drill", "desc": "Complete the safety check-in via the Disney Cruise Line Navigator App upon boarding and report to your designated assembly muster station before sail away (around 3:45 PM).", "badge": "Mandatory Safety"},
+            {"title": "Download Disney Cruise Navigator App", "desc": "Essential on board (works on ship's complimentary intranet without paying for internet). Unlocks daily schedules, character meet & greets, chat, deck plans, and restaurant menus.", "badge": "App Required"},
+            {"title": "Book Royal Gathering & Princess Meets Promptly", "desc": "As soon as you board and connect to ship Wi-Fi, open the Navigator app to book the free Disney Princess Royal Gathering slots before they fill up.", "badge": "Princess Magic"},
+            {"title": "Attend Rotational Dining at 8:15 PM", "desc": "Your assigned table follows you each night. Inform Disney in advance if you have vegetarian/Jain dietary needs via Special Requests.", "badge": "Table Reserved"},
+            {"title": "Catch 5:45 PM Broadway Shows", "desc": "Arrive 15–20 minutes early at the Walt Disney Theatre to get the best honeymoon seats for Broadway musicals before dinner.", "badge": "Entertainment"}
+        ],
+        "verandah_safety": [
+            "Never leave verandah furniture near railings or sit on railings.",
+            "Always lock the childproof safety latch on the verandah sliding glass door.",
+            "Do not hang towels or clothing to dry on verandah railings (they can blow overboard).",
+            "Keep the verandah exterior door closed when using room air conditioning to prevent condensation."
+        ]
+    },
+
     # Disney Cruise Special Zones & Features
     "disney_features": [
         {
