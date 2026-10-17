@@ -720,7 +720,7 @@ DEFAULT_HONEYMOON_DATA = {
         {"id": "exp-1", "category": "Visa", "item": "Singapore e-Visa (2 Adults)", "amount": 6500, "actual_amount": 0, "currency": "INR", "status": "Pending", "notes": "Submit Nov 1"},
         {"id": "exp-2", "category": "Flights", "item": "Singapore Airlines Roundtrip (DEL - SIN · SQ 401 & SQ 406)", "amount": 81696, "actual_amount": 81696, "currency": "INR", "status": "Booked", "notes": "PNR: DVXVBM · MMT: NN7AMSIR48944422426 · Paid ₹81,696", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Singapore_Airlines_DEL_SIN_DVXVBM.pdf", "doc_name": "Singapore Airlines E-Ticket (DVXVBM)", "doc_id": "doc-sia-flights"},
         {"id": "exp-3", "category": "Hotels", "item": "Carlton Hotel Singapore (1 Night · Deluxe King Room with Breakfast)", "amount": 23950, "actual_amount": 23950, "currency": "INR", "status": "Booked", "notes": "Booking ID: NH76149509489544 · PNR: 0184752125 · Dec 13-14 · Honeymoon King Bed", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Carlton_Hotel_Singapore_Voucher_NH76149509489544.pdf", "doc_name": "Carlton Hotel Voucher (NH76149509489544)", "doc_id": "doc-carlton-hotel"},
-        {"id": "exp-oasia-sentosa", "category": "Hotels", "item": "Oasia Resort Sentosa (4 Nights · Deluxe Room Dec 17–21)", "amount": 65000, "actual_amount": 65000, "currency": "INR", "status": "Booked", "notes": "Sentosa wellness sanctuary post-cruise"},
+        {"id": "exp-oasia-sentosa", "category": "Hotels", "item": "Oasia Resort Sentosa (4 Nights · Family Suite with Sofa Bed)", "amount": 135804, "actual_amount": 135804, "currency": "INR", "status": "Booked", "notes": "Booking ID: NH77022510686190 · PNR: 0185175700 · Dec 17–21 · Palawan Ridge Sentosa", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Oasia_Resort_Sentosa_Voucher_NH77022510686190.pdf", "doc_name": "Oasia Resort Sentosa Voucher (NH77022510686190)", "doc_id": "doc-oasia-sentosa"},
         {"id": "exp-ins-hotel", "category": "Insurance", "item": "Tata AIG Travel Insurance ($250,000 USD Medical Cover · 2 Adults)", "amount": 886, "actual_amount": 886, "currency": "INR", "status": "Paid", "notes": "Cert No: 50027999 · Order ID: MTMINFIH41529640636128 · Dec 13-14 Singapore", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Tata_AIG_Travel_Insurance_50027999_MTMINFIH41529640636128.pdf", "doc_name": "Tata AIG Insurance Policy (50027999)", "doc_id": "doc-tata-aig-insurance"},
         {"id": "exp-4", "category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Disney Adventure Sailing"},
         {"id": "exp-5", "category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "actual_amount": 0, "currency": "INR", "status": "To Book", "notes": "Cable Car, River Wonders, Gardens, MBS"},
@@ -730,14 +730,14 @@ DEFAULT_HONEYMOON_DATA = {
     # Uploaded Tickets, Vouchers & PDF Documents
     "documents": [
         {
-            "id": "doc-tata-aig-insurance",
-            "name": "Tata AIG Travel Insurance Policy Certificate ($250k USD)",
-            "category": "Insurance",
-            "filename": "Tata_AIG_Travel_Insurance_50027999_MTMINFIH41529640636128.pdf",
-            "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Tata_AIG_Travel_Insurance_50027999_MTMINFIH41529640636128.pdf",
-            "size": "Cert #50027999 · 2 Adults",
-            "expense_id": "exp-ins-hotel",
-            "uploaded_at": "15 Aug 2026 · Active"
+            "id": "doc-oasia-sentosa",
+            "name": "Oasia Resort Sentosa Official Voucher (4 Nights)",
+            "category": "Hotels",
+            "filename": "Oasia_Resort_Sentosa_Voucher_NH77022510686190.pdf",
+            "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Oasia_Resort_Sentosa_Voucher_NH77022510686190.pdf",
+            "size": "Family Suite · Dec 17–21",
+            "expense_id": "exp-oasia-sentosa",
+            "uploaded_at": "20 Aug 2026 · Confirmed"
         },
         {
             "id": "doc-carlton-hotel",
