@@ -2479,9 +2479,14 @@
                                     </div>
                                 </td>
                                 <td class="py-3">
-                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {% if exp.status in ['Booked', 'Paid'] %}bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300{% elif exp.status == 'Pending' %}bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300{% else %}bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300{% endif %}">
-                                        {{ exp.status }}
-                                    </span>
+                                    <select onchange="updateExpenseStatus('{{ exp.id }}', this.value)" 
+                                        class="cursor-pointer text-[10px] font-bold px-2.5 py-1 rounded-full border outline-none transition-all {% if exp.status in ['Booked', 'Paid'] %}bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800{% elif exp.status == 'Pending' %}bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800{% else %}bg-gray-100 text-gray-700 border-gray-300 dark:bg-white/10 dark:text-gray-300 dark:border-white/10{% endif %}">
+                                        <option value="Paid" {% if exp.status == 'Paid' %}selected{% endif %}>Paid</option>
+                                        <option value="Booked" {% if exp.status == 'Booked' %}selected{% endif %}>Booked</option>
+                                        <option value="Pending" {% if exp.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                        <option value="Estimated" {% if exp.status == 'Estimated' %}selected{% endif %}>Estimated</option>
+                                        <option value="Budget" {% if exp.status == 'Budget' %}selected{% endif %}>Budget</option>
+                                    </select>
                                 </td>
                                 <td class="py-3 text-right font-bold text-gray-900 dark:text-white">₹{{ "{:,.0f}".format(exp.amount) }}</td>
                                 <td class="py-3 text-right font-bold {% if exp.actual_amount and exp.actual_amount > 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-gray-400{% endif %}">
@@ -2975,6 +2980,22 @@
             document.getElementById('exp-status').value = 'Estimated';
             document.getElementById('exp-submit-btn').textContent = "+ Add Expense";
             document.getElementById('exp-cancel-btn').classList.add('hidden');
+        }
+
+        async function updateExpenseStatus(id, newStatus) {
+            try {
+                const res = await fetch('/api/honeymoon/expense', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, status: newStatus })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error updating status:', err);
+            }
         }
 
         async function handleSaveExpense(e) {

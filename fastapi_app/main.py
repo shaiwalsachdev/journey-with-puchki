@@ -437,12 +437,12 @@ async def save_expense(request: Request):
     if exp_id:
         for exp in data["expenses"]:
             if exp.get("id") == exp_id:
-                exp["item"] = item
-                exp["category"] = category
-                exp["amount"] = estimated
-                exp["actual_amount"] = actual
-                exp["status"] = status
-                exp["notes"] = notes
+                if item: exp["item"] = item
+                if "category" in body: exp["category"] = category
+                if "amount" in body or "estimated_amount" in body: exp["amount"] = estimated
+                if "actual_amount" in body: exp["actual_amount"] = actual
+                if "status" in body: exp["status"] = status
+                if "notes" in body: exp["notes"] = notes
                 updated = True
                 break
     
