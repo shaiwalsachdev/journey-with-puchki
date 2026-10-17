@@ -617,9 +617,16 @@
                             <span class="material-icons text-base">check</span>
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white {% if item.done %}line-through opacity-70{% endif %}">
-                                {{ item.title }}
-                            </h4>
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white {% if item.done %}line-through opacity-70{% endif %}">
+                                    {{ item.title }}
+                                </h4>
+                                {% if item.due_date %}
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {% if item.done %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400{% else %}bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/40{% endif %} flex items-center gap-1">
+                                    <span class="material-icons text-[11px]">schedule</span> {{ item.due_date }}
+                                </span>
+                                {% endif %}
+                            </div>
                             <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.detail }}</p>
                         </div>
                     </div>
@@ -648,7 +655,14 @@
                     <div class="p-5 rounded-3xl border transition-all flex flex-col justify-between {% if t.booked or t.status == 'Booked ✅' %}bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:shadow-lg{% endif %}">
                         <div>
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full">{{ t.date }}</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full">{{ t.date }}</span>
+                                    {% if t.due_date %}
+                                    <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <span class="material-icons text-[11px]">alarm</span> {{ t.due_date }}
+                                    </span>
+                                    {% endif %}
+                                </div>
                                 <div class="flex items-center gap-1.5">
                                     <select onchange="updateTicketStatus('{{ t.id }}', this.value)" 
                                         class="text-xs font-bold px-2.5 py-1 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-1 focus:ring-primary">
@@ -683,6 +697,72 @@
                     {% endfor %}
                 </div>
             </div>
+
+            <!-- SharePal Camera Rental Strategy & Comparison (Due Nov 15) -->
+            {% if honeymoon.camera_rental %}
+            {% set cam = honeymoon.camera_rental %}
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl border-2 border-indigo-400/40 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold mb-2">
+                            <span class="material-icons text-sm">photo_camera</span>
+                            <span>Honeymoon Camera Gear Rental</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">SharePal Rental: DJI Osmo Pocket 3 vs Insta360</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Zero-deposit home delivery rental in Delhi-NCR</p>
+                    </div>
+                    <div class="bg-gradient-to-tr from-indigo-600 to-purple-600 text-white px-5 py-3 rounded-2xl text-center shrink-0 shadow-md">
+                        <span class="text-[10px] uppercase tracking-wider block opacity-80 font-bold">Booking Deadline</span>
+                        <span class="text-xl font-extrabold block">Due: Nov 15</span>
+                        <span class="text-[11px] opacity-90">Delivery: Dec 12, Delhi</span>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-900/40 mb-6">
+                    <div class="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-bold text-sm mb-1">
+                        <span class="material-icons text-base">recommend</span>
+                        <span>Official Recommendation: {{ cam.recommended_choice }}</span>
+                    </div>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ cam.why_recommended }}</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    {% for c in cam.cameras %}
+                    <div class="p-5 rounded-2xl border flex flex-col justify-between {% if 'Highly Recommended' in c.verdict %}bg-emerald-50/60 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800 shadow-sm{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10{% endif %}">
+                        <div>
+                            <span class="text-[11px] font-bold block mb-1 {% if 'Highly Recommended' in c.verdict %}text-emerald-600 dark:text-emerald-400{% else %}text-gray-500 dark:text-gray-400{% endif %}">
+                                {{ c.verdict }}
+                            </span>
+                            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">{{ c.name }}</h3>
+                            
+                            <div class="space-y-2 text-xs text-gray-600 dark:text-gray-300">
+                                <div>
+                                    <span class="font-bold text-gray-800 dark:text-gray-200 block text-[11px]">Best For:</span>
+                                    <p class="leading-normal">{{ c.ideal_for }}</p>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-emerald-600 dark:text-emerald-400 block text-[11px]">Pros:</span>
+                                    <p class="leading-normal">{{ c.pros }}</p>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-rose-500 block text-[11px]">Cons:</span>
+                                    <p class="leading-normal">{{ c.cons }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-gray-200/50 dark:border-white/10 flex items-center justify-between text-[11px]">
+                            <span class="text-gray-500 dark:text-gray-400 font-semibold">{{ c.sharepal_note }}</span>
+                            <a href="https://sharepal.in" target="_blank" rel="noopener noreferrer" class="text-primary font-bold hover:underline flex items-center gap-0.5">
+                                <span>SharePal</span>
+                                <span class="material-icons text-xs">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
 
             <!-- Free Attractions Section -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-sm border border-emerald-200/50 dark:border-emerald-900/30">

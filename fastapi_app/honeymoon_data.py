@@ -172,48 +172,56 @@ DEFAULT_HONEYMOON_DATA = {
             {
                 "id": "v1",
                 "title": "Original Indian Passports",
+                "due_date": "Due: Ready Now (Verify Validity > Jun 2027)",
                 "detail": "Must have min. 6 months validity from Dec 13, 2026 (at least 2 blank pages).",
                 "done": True
             },
             {
                 "id": "v2",
                 "title": "Completed & Signed Form 14A",
-                "detail": "Official Singapore visa application form for both Shaiwal and Shaila.",
+                "due_date": "Due: Oct 28, 2026",
+                "detail": "Official Singapore visa application form for both Shaiwal and Shaila. Print & sign.",
                 "done": False
             },
             {
                 "id": "v3",
                 "title": "Passport-sized Photos (ICA Spec)",
-                "detail": "35mm x 45mm, matte finish, white background, 80% face coverage, taken within last 3 months.",
+                "due_date": "Due: Oct 28, 2026",
+                "detail": "35mm x 45mm, matte finish, pure white background, 80% face coverage, no spectacles.",
                 "done": False
             },
             {
                 "id": "v4",
                 "title": "Confirmed Flight Tickets",
+                "due_date": "Done ✅",
                 "detail": "Roundtrip Delhi - Singapore (Dec 13 arrival 6 PM, Dec 21 departure 4:40 PM).",
                 "done": True
             },
             {
                 "id": "v5",
                 "title": "Hotel & Disney Cruise Confirmations",
+                "due_date": "Done ✅",
                 "detail": "Vouchers for Carlton Hotel (13 Dec), Disney Adventure Cruise (14-16 Dec), Oasia Resort Sentosa (17-21 Dec).",
                 "done": True
             },
             {
                 "id": "v6",
                 "title": "Bank Statements (Last 3–6 Months)",
-                "detail": "Original or stamped bank statements showing sufficient funds for the honeymoon.",
+                "due_date": "Due: Oct 30, 2026",
+                "detail": "Bank stamped statements showing healthy balance (≥ ₹1.5–2 Lakhs) for Shaiwal.",
                 "done": False
             },
             {
                 "id": "v7",
                 "title": "Cover Letter & Employment Details",
+                "due_date": "Due: Oct 30, 2026",
                 "detail": "Honeymoon cover letter detailing travel dates + salary slips / company leave approval.",
                 "done": False
             },
             {
                 "id": "v8",
                 "title": "SG Arrival Card (Electronic)",
+                "due_date": "Due: Dec 10–12, 2026 (strictly 72 hrs prior)",
                 "detail": "Submit online at ica.gov.sg strictly within 3 days (72 hours) before landing in Singapore (Dec 10-12). Free of cost.",
                 "done": False
             }
@@ -376,16 +384,50 @@ DEFAULT_HONEYMOON_DATA = {
         }
     ],
 
-    # Tickets to Book (Klook Checklist)
+    # Tickets to Book (Klook Checklist) with Due Dates
     "klook_tickets": [
-        {"id": "t1", "date": "17 Dec 2026", "name": "Singapore Cable Car SkyPass", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", "booked": False, "price": "~₹2,200 / person"},
-        {"id": "t2", "date": "17 Dec 2026", "name": "Wings of Time (Sentosa)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", "booked": False, "price": "~₹1,100 / person"},
-        {"id": "t3", "date": "18 Dec 2026", "name": "Singapore Oceanarium (S.E.A. Aquarium)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/119-sea-aquarium-singapore/", "booked": False, "price": "~₹2,800 / person"},
-        {"id": "t4", "date": "18 Dec 2026", "name": "Harry Potter: Visions of Magic", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/112678-harry-potter-visions-of-magic-singapore/", "booked": False, "price": "~₹3,200 / person"},
-        {"id": "t5", "date": "19 Dec 2026", "name": "River Wonders (with Giant Panda Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/123-river-safari-singapore/", "booked": False, "price": "~₹2,600 / person"},
-        {"id": "t6", "date": "20 Dec 2026", "name": "Gardens by the Bay (Flower Dome + Cloud Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", "booked": False, "price": "~₹3,100 / person"},
-        {"id": "t7", "date": "20 Dec 2026", "name": "Marina Bay Sands SkyPark Observation Deck", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/148-skypark-observation-deck-singapore/", "booked": False, "price": "~₹2,100 / person"}
+        {"id": "t1", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Singapore Cable Car SkyPass", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", "booked": False, "price": "~₹2,200 / person"},
+        {"id": "t2", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Wings of Time (Sentosa)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", "booked": False, "price": "~₹1,100 / person"},
+        {"id": "t3", "date": "18 Dec 2026", "due_date": "Book by Nov 25, 2026", "name": "Singapore Oceanarium (S.E.A. Aquarium)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/119-sea-aquarium-singapore/", "booked": False, "price": "~₹2,800 / person"},
+        {"id": "t4", "date": "18 Dec 2026", "due_date": "Book by Nov 20, 2026 ⚠️ (Slots Fill Fast)", "name": "Harry Potter: Visions of Magic", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/112678-harry-potter-visions-of-magic-singapore/", "booked": False, "price": "~₹3,200 / person"},
+        {"id": "t5", "date": "19 Dec 2026", "due_date": "Book by Nov 25, 2026", "name": "River Wonders (with Giant Panda Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/123-river-safari-singapore/", "booked": False, "price": "~₹2,600 / person"},
+        {"id": "t6", "date": "20 Dec 2026", "due_date": "Book by Nov 20, 2026 ⚠️ (Prime Sunset Domes)", "name": "Gardens by the Bay (Flower Dome + Cloud Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", "booked": False, "price": "~₹3,100 / person"},
+        {"id": "t7", "date": "20 Dec 2026", "due_date": "Book by Nov 20, 2026 ⚠️ (Sunset Slot 5:30 PM)", "name": "Marina Bay Sands SkyPark Observation Deck", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/148-skypark-observation-deck-singapore/", "booked": False, "price": "~₹2,100 / person"}
     ],
+
+    # Camera Rental Strategy: SharePal Recommendation & Comparison
+    "camera_rental": {
+        "due_date": "15 November 2026",
+        "recommended_choice": "DJI Osmo Pocket 3 Creator Combo",
+        "rental_platform": "SharePal India (Delhi-NCR free home delivery & return pickup, 0 deposit)",
+        "why_recommended": "For a romantic honeymoon in Singapore and on the Disney Adventure, DJI Osmo Pocket 3 is the undisputed winner. It has a massive 1-inch sensor for stunning low-light videos in dimly lit Disney evening shows, Gardens by the Bay night lights, and romantic dinners. The mechanical 3-axis gimbal gives buttery-smooth cinematic walking footage without bulky gear, and the rotatable screen flips to vertical for instant Instagram Reels.",
+        "cameras": [
+            {
+                "name": "DJI Osmo Pocket 3 (Creator Combo)",
+                "verdict": "⭐ Highly Recommended for Honeymoon",
+                "ideal_for": "Romantic couple vlogging, Disney Cruise musicals, low-light indoor dinners, Gardens by the Bay light show, high-quality audio with wireless mic.",
+                "pros": "1-inch CMOS sensor (unbeatable low-light & creamy background blur), 3-axis physical gimbal stabilization (true cinematic movie look), rotatable 2-inch OLED touchscreen (quick horizontal/vertical Reels switch), ultra-compact pocket size, DJI Mic 2 wireless transmitter included.",
+                "cons": "Not waterproof (needs rain cover or umbrella during monsoon showers; don't take into cruise swimming pools).",
+                "sharepal_note": "Book by Nov 15 on SharePal Delhi for Dec 12 delivery."
+            },
+            {
+                "name": "Insta360 X4 (8K 360° Action Cam)",
+                "verdict": "Alternative for Action / Riding / Beach Only",
+                "ideal_for": "Action sports, Skyline Luge downhill racing, Siloso beach water splashes, 'third-person invisible selfie stick' drone-like shots.",
+                "pros": "Complete 360-degree capture (reframe in app after shooting), invisible selfie stick effect, fully waterproof down to 10m, rugged and durable.",
+                "cons": "Weak in low-light and indoor restaurants (360 lenses split pixels, causing graininess); requires tedious reframing/editing for every clip; not flattering for couple close-ups or soft portraits.",
+                "sharepal_note": "Great for biking/sports trips, but secondary to Pocket 3 for romantic honeymoon moments."
+            },
+            {
+                "name": "Insta360 Ace Pro (Co-engineered with Leica)",
+                "verdict": "Rugged Action Alternative",
+                "ideal_for": "High-impact water sports, wet pool decks, action POV shots.",
+                "pros": "Flip screen, Leica lens, good PureVideo low-light mode for an action camera, tough waterproof body.",
+                "cons": "Wide action lens with electronic crop (no true optical/mechanical bokeh), heavier than Pocket 3, lacks the motorized face-tracking gimbal that keeps Shaiwal & Shaila smoothly centered.",
+                "sharepal_note": "Sturdy, but Pocket 3 produces vastly more romantic, movie-like honeymoon footage."
+            }
+        ]
+    },
 
     # Free Romantic Attractions
     "free_attractions": [
