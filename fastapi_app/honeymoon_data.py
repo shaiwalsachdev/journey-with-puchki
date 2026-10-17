@@ -209,6 +209,11 @@ DEFAULT_HONEYMOON_DATA = {
         "target_decision": "Within 3–5 working days (issued as e-Visa)",
         "processing_window": "Must apply within 30 days of arrival (Nov 1 is the perfect date!)",
         "fee": "SGD 30 ICA fee + authorized visa agent service fee (~₹1,200 - ₹1,800)",
+        "status": "In Progress", # "Documents Gathering", "Submitted to Agent", "In Progress", "Processing at ICA", "Approved & Issued"
+        "application_ref": "ICA-SG-2026-PENDING",
+        "agent_name": "Authorised Visa Agent / MMT",
+        "approval_date": "",
+        "notes": "Target submission date: Nov 1, 2026. Keep hard copies ready for immigration.",
         "checklist": [
             {
                 "id": "v1",

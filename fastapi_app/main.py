@@ -302,6 +302,39 @@ async def toggle_honeymoon_checklist(request: Request):
     return {"status": "success", "data": data}
 
 
+@app.post("/api/honeymoon/visa/status")
+async def update_visa_status(request: Request):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    status = body.get("status")
+    application_ref = body.get("application_ref")
+    agent_name = body.get("agent_name")
+    approval_date = body.get("approval_date")
+    notes = body.get("notes")
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "visa" not in data:
+        data["visa"] = DEFAULT_HONEYMOON_DATA.get("visa", {})
+
+    if status:
+        data["visa"]["status"] = status
+    if application_ref is not None:
+        data["visa"]["application_ref"] = application_ref
+    if agent_name is not None:
+        data["visa"]["agent_name"] = agent_name
+    if approval_date is not None:
+        data["visa"]["approval_date"] = approval_date
+    if notes is not None:
+        data["visa"]["notes"] = notes
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "visa": data["visa"]}
+
+
 @app.post("/api/honeymoon/expense")
 async def save_expense(request: Request):
     import uuid

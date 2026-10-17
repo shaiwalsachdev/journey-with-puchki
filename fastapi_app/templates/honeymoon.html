@@ -660,49 +660,145 @@
              TAB 2: VISA & DOCUMENT CAPTURE (APPLYING NOV 1)
              ======================================================== -->
         <section id="tab-content-visa" class="tab-content hidden space-y-8">
-            <!-- Visa Strategy Card -->
+            <!-- Visa Strategy Card & Live Journey Status Tracker -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl border-2 border-rose-400/40 shadow-lg relative overflow-hidden">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300 text-xs font-bold mb-3">
                             <span class="material-icons text-sm">schedule</span>
-                            Application Window: 30 Days Prior
+                            Application Window: Strictly 30 Days Prior (Nov 1, 2026)
                         </div>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Singapore Tourist e-Visa Guide 📄</h2>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Singapore Tourist e-Visa Journey 📄</h2>
                         <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
-                            Indian passport holders require an **e-Visa** through an Authorised Visa Agent (AVA) or authorized partner. The Singapore Immigration & Checkpoints Authority (ICA) strictly allows submission **within 30 days of arrival**.
+                            Track the entire visa lifecycle for <b>Shaiwal & Shaila</b> from document gathering to agent handoff, ICA processing, and final e-Visa approval.
                         </p>
-                        <div class="mt-4 flex flex-wrap gap-4 text-xs font-semibold">
+                        <div class="mt-4 flex flex-wrap items-center gap-3 text-xs font-semibold">
                             <span class="bg-gray-100 dark:bg-white/10 px-3 py-1.5 rounded-xl">📅 Submit On: <b>{{ honeymoon.visa.apply_date }}</b></span>
                             <span class="bg-gray-100 dark:bg-white/10 px-3 py-1.5 rounded-xl">⚡ Processing: <b>3 to 5 working days</b></span>
                             <span class="bg-gray-100 dark:bg-white/10 px-3 py-1.5 rounded-xl">💰 Fee: <b>{{ honeymoon.visa.fee }}</b></span>
                         </div>
                     </div>
-                    <div class="shrink-0 text-center bg-gradient-to-tr from-rose-500 to-pink-600 text-white p-6 rounded-3xl shadow-xl">
-                        <span class="text-xs uppercase font-bold tracking-widest block opacity-80">Target Submission</span>
-                        <span class="text-3xl sm:text-4xl font-extrabold block my-1">Nov 1</span>
-                        <span class="text-xs font-semibold opacity-90">2026 (Ready by Nov 6)</span>
+                    
+                    <!-- Current Status Display -->
+                    <div class="shrink-0 text-center bg-gradient-to-tr from-rose-500 to-pink-600 text-white p-6 rounded-3xl shadow-xl min-w-[220px]">
+                        <span class="text-xs uppercase font-bold tracking-widest block opacity-80">Current Visa Status</span>
+                        <span class="text-2xl sm:text-3xl font-extrabold block my-1.5 tracking-tight" id="visa-badge-status">
+                            {% if honeymoon.visa.status == 'Approved' or honeymoon.visa.status == 'Approved & Issued' %}
+                                Approved ✅
+                            {% elif honeymoon.visa.status == 'In Progress' or honeymoon.visa.status == 'Processing' %}
+                                In Progress ⏳
+                            {% elif honeymoon.visa.status == 'Submitted' or honeymoon.visa.status == 'Submitted to Agent' %}
+                                Submitted 📬
+                            {% else %}
+                                {{ honeymoon.visa.status or 'In Progress ⏳' }}
+                            {% endif %}
+                        </span>
+                        <span class="text-xs font-semibold opacity-90 block">Target: Nov 1 Submission</span>
+                    </div>
+                </div>
+
+                <!-- Visual Multi-Step Journey Tracker -->
+                <div class="mt-8 pt-8 border-t border-gray-200/60 dark:border-white/10">
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-5 flex items-center gap-1.5">
+                        <span class="material-icons text-sm text-primary">timeline</span> Live Visa Pipeline & Stage Progress
+                    </h3>
+                    
+                    {% set cur_status = honeymoon.visa.status or 'In Progress' %}
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <!-- Step 1: Gathering Documents -->
+                        <div onclick="setVisaStatusQuick('Documents Gathering')" 
+                            class="cursor-pointer p-4 rounded-2xl border transition-all text-center {% if cur_status == 'Documents Gathering' or cur_status == 'In Progress' or cur_status == 'Submitted' or cur_status == 'Submitted to Agent' or cur_status == 'Processing at ICA' or cur_status == 'Processing' or cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-rose-500/10 border-rose-500 text-rose-700 dark:text-rose-300 font-bold{% else %}bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 opacity-60{% endif %}">
+                            <div class="w-8 h-8 mx-auto rounded-full bg-rose-500 text-white flex items-center justify-center text-xs font-bold mb-2 shadow">1</div>
+                            <span class="text-xs font-bold block">1. Gathering Docs</span>
+                            <span class="text-[10px] opacity-80 block mt-0.5">Forms & statements</span>
+                        </div>
+
+                        <!-- Step 2: Submitted to Agent -->
+                        <div onclick="setVisaStatusQuick('Submitted to Agent')" 
+                            class="cursor-pointer p-4 rounded-2xl border transition-all text-center {% if cur_status == 'Submitted to Agent' or cur_status == 'Submitted' or cur_status == 'Processing at ICA' or cur_status == 'Processing' or cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-rose-500/10 border-rose-500 text-rose-700 dark:text-rose-300 font-bold{% else %}bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 opacity-60{% endif %}">
+                            <div class="w-8 h-8 mx-auto rounded-full {% if cur_status == 'Submitted to Agent' or cur_status == 'Submitted' or cur_status == 'Processing at ICA' or cur_status == 'Processing' or cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-rose-500 text-white{% else %}bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300{% endif %} flex items-center justify-center text-xs font-bold mb-2 shadow">2</div>
+                            <span class="text-xs font-bold block">2. Agent Handoff</span>
+                            <span class="text-[10px] opacity-80 block mt-0.5">Sent Nov 1</span>
+                        </div>
+
+                        <!-- Step 3: Processing at ICA -->
+                        <div onclick="setVisaStatusQuick('Processing at ICA')" 
+                            class="cursor-pointer p-4 rounded-2xl border transition-all text-center {% if cur_status == 'Processing at ICA' or cur_status == 'Processing' or cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-amber-500/10 border-amber-500 text-amber-700 dark:text-amber-300 font-bold{% else %}bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 opacity-60{% endif %}">
+                            <div class="w-8 h-8 mx-auto rounded-full {% if cur_status == 'Processing at ICA' or cur_status == 'Processing' or cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-amber-500 text-white{% else %}bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300{% endif %} flex items-center justify-center text-xs font-bold mb-2 shadow">3</div>
+                            <span class="text-xs font-bold block">3. In Processing</span>
+                            <span class="text-[10px] opacity-80 block mt-0.5">3–5 working days</span>
+                        </div>
+
+                        <!-- Step 4: Approved -->
+                        <div onclick="setVisaStatusQuick('Approved & Issued')" 
+                            class="cursor-pointer p-4 rounded-2xl border transition-all text-center {% if cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-emerald-500/10 border-emerald-500 text-emerald-700 dark:text-emerald-300 font-bold{% else %}bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 opacity-60{% endif %}">
+                            <div class="w-8 h-8 mx-auto rounded-full {% if cur_status == 'Approved' or cur_status == 'Approved & Issued' %}bg-emerald-500 text-white{% else %}bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300{% endif %} flex items-center justify-center text-xs font-bold mb-2 shadow">4</div>
+                            <span class="text-xs font-bold block">4. Approved & Ready 🎉</span>
+                            <span class="text-[10px] opacity-80 block mt-0.5">e-Visa downloaded</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Status Changer Controls -->
+                <div class="mt-6 pt-6 border-t border-gray-200/60 dark:border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Update Status</label>
+                        <select id="visa-status-select" onchange="updateVisaStatusLive()" class="w-full text-xs font-semibold px-3 py-2 rounded-xl border border-gray-300 dark:border-white/10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+                            <option value="Documents Gathering" {% if honeymoon.visa.status == 'Documents Gathering' %}selected{% endif %}>1. Documents Gathering</option>
+                            <option value="Submitted to Agent" {% if honeymoon.visa.status == 'Submitted to Agent' or honeymoon.visa.status == 'Submitted' %}selected{% endif %}>2. Submitted to Agent</option>
+                            <option value="In Progress" {% if honeymoon.visa.status == 'In Progress' %}selected{% endif %}>3. In Progress (Under Review)</option>
+                            <option value="Processing at ICA" {% if honeymoon.visa.status == 'Processing at ICA' or honeymoon.visa.status == 'Processing' %}selected{% endif %}>4. Processing at ICA Singapore</option>
+                            <option value="Approved & Issued" {% if honeymoon.visa.status == 'Approved & Issued' or honeymoon.visa.status == 'Approved' %}selected{% endif %}>5. Approved & Issued ✅</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Application Ref / Agent</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="visa-ref-input" value="{{ honeymoon.visa.application_ref or '' }}" placeholder="Ref # or Agent Name" 
+                                class="w-full text-xs px-3 py-2 rounded-xl border border-gray-300 dark:border-white/10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+                            <button onclick="saveVisaDetails()" class="px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all">Save</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Quick Action</label>
+                        <div class="flex gap-2">
+                            <a href="#tab-content-vault" onclick="switchTab('vault')" class="w-full text-center px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-xs font-bold text-gray-800 dark:text-gray-200 transition-all flex items-center justify-center gap-1">
+                                <span class="material-icons text-xs">upload_file</span> Open Document Vault
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Interactive Document Checklist -->
+            <!-- Interactive Document Checklist (Click & Unclick items) -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md">
-                <div class="flex items-center justify-between mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Required Visa Documents Checklist</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Tick items as you gather them. All updates save automatically to the database!</p>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Required Visa Documents Checklist (Click to Tick / Untick)</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Click any document to mark it collected or submitted. Progress updates instantly and saves to database.</p>
                     </div>
-                    <button onclick="triggerConfetti()" class="text-xs text-rose-500 font-bold hover:underline flex items-center gap-1">
-                        <span class="material-icons text-sm">celebration</span> Celebrate
-                    </button>
+                    
+                    <!-- Progress meter -->
+                    {% set done_count = honeymoon.visa.checklist | selectattr('done') | list | length %}
+                    {% set total_count = honeymoon.visa.checklist | length %}
+                    <div class="flex items-center gap-3">
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white block">{{ done_count }} of {{ total_count }} Ready</span>
+                            <span class="text-[10px] text-gray-500">{% if done_count == total_count %}All Done! Ready to Submit 🎉{% else %}{{ total_count - done_count }} pending items{% endif %}</span>
+                        </div>
+                        <div class="w-24 h-2.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald-500 rounded-full transition-all" style="width: {{ (done_count / total_count * 100) | round }}%"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="space-y-3" id="visa-checklist-container">
                     {% for item in honeymoon.visa.checklist %}
                     <div onclick="toggleChecklist('{{ item.id }}', 'visa')" 
-                        class="p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 select-none {% if item.done %}bg-emerald-50/60 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/50{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-rose-300{% endif %}">
-                        <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all {% if item.done %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent{% endif %}">
+                        class="p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 select-none hover:shadow-sm {% if item.done %}bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/50{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-rose-300{% endif %}">
+                        <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all {% if item.done %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent hover:border-rose-400{% endif %}">
                             <span class="material-icons text-base">check</span>
                         </div>
                         <div class="flex-1">
@@ -711,12 +807,12 @@
                                     {{ item.title }}
                                 </h4>
                                 {% if item.due_date %}
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {% if item.done %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400{% else %}bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/40{% endif %} flex items-center gap-1">
-                                    <span class="material-icons text-[11px]">schedule</span> {{ item.due_date }}
+                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full {% if item.done %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20{% else %}bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/40{% endif %} flex items-center gap-1">
+                                    <span class="material-icons text-[11px]">{% if item.done %}check_circle{% else %}schedule{% endif %}</span> {{ item.due_date }}
                                 </span>
                                 {% endif %}
                             </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.detail }}</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">{{ item.detail }}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -1630,7 +1726,20 @@
 
             const activeBtn = document.getElementById(`tab-btn-${tabId}`);
             if (activeBtn) activeBtn.classList.add('active');
+
+            try {
+                sessionStorage.setItem('active_honeymoon_tab', tabId);
+            } catch (e) {}
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const savedTab = sessionStorage.getItem('active_honeymoon_tab');
+                if (savedTab && document.getElementById(`tab-content-${savedTab}`)) {
+                    switchTab(savedTab);
+                }
+            } catch (e) {}
+        });
 
         async function toggleChecklist(itemId, category) {
             try {
@@ -1641,10 +1750,59 @@
                 });
                 const result = await res.json();
                 if (result.status === 'success') {
+                    // Remember active tab as visa if toggling visa
+                    if (category === 'visa') {
+                        sessionStorage.setItem('active_honeymoon_tab', 'visa');
+                    }
                     location.reload();
                 }
             } catch (err) {
                 console.error('Error toggling checklist:', err);
+            }
+        }
+
+        // --- Visa Journey Live Updates ---
+        async function setVisaStatusQuick(statusVal) {
+            try {
+                const res = await fetch('/api/honeymoon/visa/status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: statusVal })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'visa');
+                    if (statusVal.includes('Approved')) triggerConfetti();
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error setting visa status:', err);
+            }
+        }
+
+        async function updateVisaStatusLive() {
+            const select = document.getElementById('visa-status-select');
+            if (select) {
+                await setVisaStatusQuick(select.value);
+            }
+        }
+
+        async function saveVisaDetails() {
+            const refVal = document.getElementById('visa-ref-input').value;
+            try {
+                const res = await fetch('/api/honeymoon/visa/status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ application_ref: refVal })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'visa');
+                    alert('Visa reference details saved!');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error saving visa details:', err);
             }
         }
 
