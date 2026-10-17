@@ -758,6 +758,219 @@
              TAB 5: SINGAPORE RULES, DO'S & DON'TS
              ======================================================== -->
         <section id="tab-content-rules" class="tab-content hidden space-y-8">
+            <!-- Travel Survival Guide Header -->
+            <div class="relative rounded-3xl overflow-hidden p-6 sm:p-8 text-white shadow-xl border border-rose-300/40"
+                 style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4338ca 100%);">
+                <div class="max-w-3xl">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-indigo-200 text-xs font-bold mb-3 border border-white/20">
+                        <span class="material-icons text-sm">explore</span>
+                        <span>Singapore & Disney Cruise Field Guide</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-2">Singapore Survival & Honeymoon Intelligence 🇸🇬✨</h2>
+                    <p class="text-xs sm:text-sm text-indigo-100 leading-relaxed">
+                        Everything you need to know before stepping foot in Changi: from zero-forex cards and e-SIM connectivity, to airport powerbank rules, Grab ride-hailing hacks, must-eat romantic spots, and tourist traps to skip!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Essential Travel Logistics: SIMs, Forex, Powerbanks, Transport -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 1. e-SIM & Connectivity -->
+                {% if honeymoon.travel_survival_guide and honeymoon.travel_survival_guide.esim_and_connectivity %}
+                {% set esim = honeymoon.travel_survival_guide.esim_and_connectivity %}
+                <div class="glass-panel p-6 sm:p-7 rounded-3xl shadow-md border border-sky-300/40 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold">
+                                <span class="material-icons">sim_card</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ esim.title }}</h3>
+                                <p class="text-xs text-sky-600 dark:text-sky-400 font-semibold">{{ esim.best_choice }}</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs text-gray-600 dark:text-gray-300">
+                            {% for opt in esim.options %}
+                            <div class="p-3 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-100 dark:border-white/5">
+                                <div class="flex items-center justify-between font-bold text-gray-900 dark:text-white mb-1">
+                                    <span>{{ opt.name }}</span>
+                                    <span class="text-sky-600 dark:text-sky-400">{{ opt.cost }}</span>
+                                </div>
+                                <p class="leading-relaxed">{{ opt.details }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-xs">
+                        <span class="font-bold text-amber-700 dark:text-amber-300 block mb-0.5">🚢 Cruise Wi-Fi Note:</span>
+                        <p class="text-gray-600 dark:text-gray-300 leading-normal">{{ esim.cruise_note }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 2. Currency, Cards & Payments -->
+                {% if honeymoon.travel_survival_guide and honeymoon.travel_survival_guide.currency_and_payments %}
+                {% set curr = honeymoon.travel_survival_guide.currency_and_payments %}
+                <div class="glass-panel p-6 sm:p-7 rounded-3xl shadow-md border border-emerald-300/40 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+                                <span class="material-icons">credit_card</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ curr.title }}</h3>
+                                <p class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Cash Needed: {{ curr.cash_needed }}</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs text-gray-600 dark:text-gray-300">
+                            <div class="p-3 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-white/5">
+                                <span class="font-bold text-emerald-700 dark:text-emerald-300 block mb-1">💳 Recommended Zero-Forex Cards:</span>
+                                <p class="leading-relaxed">{{ curr.best_cards|join(', ') }}</p>
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">Tap directly for MRT subway gates, buses, Grab, and 95%+ of dining!</p>
+                            </div>
+
+                            <div class="p-3 rounded-2xl bg-white/60 dark:bg-gray-800/40 border border-gray-200 dark:border-white/10">
+                                <span class="font-bold text-gray-900 dark:text-white block mb-1">💵 Cash Strategy:</span>
+                                <p class="leading-relaxed">{{ curr.cash_strategy }}</p>
+                            </div>
+
+                            <div class="p-3 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/40 text-rose-700 dark:text-rose-300">
+                                <span class="font-bold block mb-0.5">⚠️ DCC Warning:</span>
+                                <p class="text-xs text-gray-600 dark:text-gray-300 leading-normal">{{ curr.important_tip }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 3. Powerbanks & Electronics -->
+                {% if honeymoon.travel_survival_guide and honeymoon.travel_survival_guide.powerbanks_and_electronics %}
+                {% set pwb = honeymoon.travel_survival_guide.powerbanks_and_electronics %}
+                <div class="glass-panel p-6 sm:p-7 rounded-3xl shadow-md border border-amber-300/40 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+                                <span class="material-icons">battery_charging_full</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ pwb.title }}</h3>
+                                <p class="text-xs text-amber-600 dark:text-amber-400 font-semibold">{{ pwb.strict_rule }}</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs text-gray-600 dark:text-gray-300">
+                            <div class="p-3 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-white/5">
+                                <span class="font-bold text-amber-800 dark:text-amber-300 block mb-1">🔋 Allowed Limits:</span>
+                                <p class="leading-relaxed">{{ pwb.allowed_capacity }}</p>
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">{{ pwb.max_count }}</p>
+                            </div>
+
+                            <div class="p-3 rounded-2xl bg-white/60 dark:bg-gray-800/40 border border-gray-200 dark:border-white/10">
+                                <span class="font-bold text-gray-900 dark:text-white block mb-1">🔌 Plug Type & Voltage:</span>
+                                <p class="leading-relaxed">{{ pwb.plug_type }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 text-xs">
+                        <span class="font-bold text-rose-700 dark:text-rose-300 block mb-0.5">🚢 Cruise Cabin Warning:</span>
+                        <p class="text-gray-600 dark:text-gray-300 leading-normal">{{ pwb.cruise_cabin_warning }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 4. Transportation & Cars -->
+                {% if honeymoon.travel_survival_guide and honeymoon.travel_survival_guide.transportation_and_cars %}
+                {% set trans = honeymoon.travel_survival_guide.transportation_and_cars %}
+                <div class="glass-panel p-6 sm:p-7 rounded-3xl shadow-md border border-purple-300/40 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+                                <span class="material-icons">local_taxi</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ trans.title }}</h3>
+                                <p class="text-xs text-purple-600 dark:text-purple-400 font-semibold">{{ trans.best_mode }}</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 text-xs text-gray-600 dark:text-gray-300">
+                            {% for mode in trans.modes %}
+                            <div class="p-2.5 rounded-2xl bg-purple-50/40 dark:bg-purple-950/20 border border-purple-100 dark:border-white/5 flex items-start gap-2.5">
+                                <span class="material-icons text-purple-500 text-sm mt-0.5 shrink-0">directions</span>
+                                <div>
+                                    <span class="font-bold text-gray-900 dark:text-white">{{ mode.name }}:</span>
+                                    <span class="leading-relaxed">{{ mode.verdict }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 text-xs">
+                        <span class="font-bold text-rose-700 dark:text-rose-300 block mb-0.5">🚫 Car Rental Advice:</span>
+                        <p class="text-gray-600 dark:text-gray-300 leading-normal">{{ trans.car_rental_verdict }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Must-Eat vs Places to Skip (Curated Honeymoon Filter) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Must Eat Places -->
+                {% if honeymoon.travel_survival_guide and honeymoon.travel_survival_guide.must_eat_places %}
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-rose-300/40">
+                    <div class="flex items-center gap-2 text-rose-600 mb-4">
+                        <span class="material-icons text-2xl">stars</span>
+                        <div>
+                            <h3 class="text-xl font-bold">Honeymoon Food Places NOT To Be Missed 🍽️</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Hand-picked romantic dining experiences for Shaiwal & Shaila</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        {% for food in honeymoon.travel_survival_guide.must_eat_places %}
+                        <div class="p-3.5 rounded-2xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/40">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="text-xs sm:text-sm font-bold text-rose-700 dark:text-rose-300">{{ food.name }}</h4>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 dark:text-rose-300 border border-rose-300/30">{{ food.location }}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ food.why_unmissable }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Tourist Traps & Places Can Be Left Behind -->
+                {% if honeymoon.travel_survival_guide and honeymoon.travel_survival_guide.skip_places %}
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-amber-300/40">
+                    <div class="flex items-center gap-2 text-amber-600 mb-4">
+                        <span class="material-icons text-2xl">visibility_off</span>
+                        <div>
+                            <h3 class="text-xl font-bold">Places That Can Be Left Behind 🚫</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Save energy and avoid overcrowded tourist traps</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        {% for sp in honeymoon.travel_survival_guide.skip_places %}
+                        <div class="p-3.5 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="text-xs sm:text-sm font-bold text-amber-800 dark:text-amber-300">{{ sp.place }}</h4>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-300/30">Skip / Skip Queue</span>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ sp.reason }}</p>
+                            <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mt-1">✨ Better Honeymoon Alternative: {{ sp.better_alternative }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Singapore Legal Rules & Do's / Don'ts -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Strict Don'ts & Fines -->
                 <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-rose-300/40">

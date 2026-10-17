@@ -527,5 +527,72 @@ DEFAULT_HONEYMOON_DATA = {
             {"category": "Swimwear", "count": "2–3 Pairs", "suggestion": "Quick-dry board shorts for cruise swimming pools, Sentosa Siloso beach & Oasia resort pool."},
             {"category": "Footwear", "count": "3 Pairs", "suggestion": "1 pair supportive walking sneakers, 1 pair waterproof pool slides/sandals, 1 pair smart loafers/boat shoes for dinner."}
         ]
+    },
+
+    # Comprehensive Honeymoon Travel Survival Guide
+    "travel_survival_guide": {
+        "esim_and_connectivity": {
+            "title": "e-SIM & Connectivity (Stay Connected Seamlessly)",
+            "options": [
+                {"provider": "Airalo / Nomad e-SIM (Recommended)", "desc": "Buy online before departure (e.g. 10GB for ~₹1,100). Activates automatically as soon as your flight touches down at Changi Airport. No physical SIM swapping needed."},
+                {"provider": "Singtel Tourist SIM (Physical)", "desc": "Available at Changi Airport arrival terminal (Travelex counter). 100GB 4G/5G data for SGD 12 (~₹750) valid for 14 days."},
+                {"provider": "Cruise Note", "desc": "Cellular roaming turns off at sea. The Disney Cruise Line Navigator app works on the ship's FREE onboard Wi-Fi without any paid package."}
+            ]
+        },
+        "currency_and_payments": {
+            "title": "Currency, Forex Cards & Cash Rules",
+            "points": [
+                {"title": "Zero Forex Markup Card (Niyo / Scapia / Fi)", "desc": "95%+ of Singapore transactions are cashless. Tap directly for MRT, Grab, cafes, and shops with zero markup fees."},
+                {"title": "Cash Requirement", "desc": "Carry only SGD 150–200 (~₹9,500–₹12,500) cash in total for hawker centers or small local stalls. Withdraw at any DBS/UOB ATM at Changi Airport."},
+                {"title": "Indian Currency Tip", "desc": "Do not exchange INR to SGD in Singapore city centers at poor rates. Carry a clean debit/forex card or exchange a small amount at Delhi Airport before departure."}
+            ]
+        },
+        "powerbanks_and_electronics": {
+            "title": "Power Banks & Airline Aviation Rules",
+            "rules": [
+                {"rule": "Strict Carry-On Only", "detail": "Power banks are 100% FORBIDDEN in checked baggage by international aviation law (DGCA & Singapore CAAS). If found in checked bags, the bag will be opened and confiscated."},
+                {"rule": "Capacity Limit", "detail": "Maximum 20,000mAh (under 100Wh) per power bank. Up to 2 per person in hand luggage."},
+                {"rule": "Type G UK Plug Adapter", "detail": "Singapore uses standard Type G 3-pin plugs (UK style) at 230V 50Hz. Pack 1 or 2 universal travel adapters for hotels."}
+            ]
+        },
+        "transportation_and_cars": {
+            "title": "Taxis, Grab, Cars & MRT Logistics",
+            "guide": [
+                {"mode": "Grab App (Southeast Asia's Uber)", "desc": "Download & verify the Grab app in India beforehand. Add credit card. Seamless for Changi-to-Carlton, hotel-to-cruise, and evening rides back to Sentosa."},
+                {"mode": "MRT & Public Buses (Contactless Tap)", "desc": "No need for transit cards (EZ-Link)! Simply tap your contactless Visa/Mastercard or Apple Pay directly at the turnstiles."},
+                {"mode": "Sentosa Express Monorail", "desc": "Complimentary unlimited passes provided by Oasia Resort Sentosa during your 4-night stay."},
+                {"mode": "Rental Cars (Do NOT Rent)", "desc": "Avoid self-drive car rentals! Singapore has expensive Electronic Road Pricing (ERP), steep parking fees ($3–$6/hr), and left-hand driving with strict speed cameras."}
+            ]
+        },
+        "must_eat_places": [
+            {"name": "Trapizza (Siloso Beach, Sentosa)", "type": "Italian Wood-fired by the waves", "must_try": "Pizza Quattro Formaggi, Linguine Granchio, sunset spritz on the sand."},
+            {"name": "Cassia (Capella Singapore)", "type": "Heritage Cantonese Fine Dining", "must_try": "Truffle crystal dumplings, dim sum lunch in colonial heritage setting."},
+            {"name": "CHIJMES Courtyards", "type": "Fairytale Gothic Chapel Dining", "must_try": "Tapas, pizza, craft beer right across from Carlton Hotel."},
+            {"name": "Nalan Vegetarian (Capitol Singapore)", "type": "100% Pure Vegetarian Fine Dining", "must_try": "Paneer tikka masala, crispy masala dosas (2 mins from Carlton)."},
+            {"name": "Cultivate Cafe (Maxwell Reserve)", "type": "Candlelit Library Plant-Based", "must_try": "Artisanal pastas & vegan desserts surrounded by antique books."},
+            {"name": "Disney Rotational Dining", "type": "Disney Adventure Cruise", "must_try": "3 distinct themed restaurants with your personal Disney serving team."}
+        ],
+        "skip_places": [
+            {"place": "Singapore Zoo Daytime", "reason": "Skip daytime Zoo; your itinerary features Mandai River Wonders with pandas Jia Jia & Kai Kai which is fully sheltered, shaded, and far more romantic."},
+            {"place": "Orchard Road Mega Malls", "reason": "Skip wasting whole days in generic malls. High prices due to 9% GST. Enjoy Sentosa beach, nature, and scenic spots instead."},
+            {"place": "Night Safari (Late Night Tram)", "reason": "Often overcrowded with 2-hour queue lines in pitch darkness. River Wonders daytime is 10x better."},
+            {"place": "Sentosa Merlion", "reason": "Permanently demolished. The original Merlion Park at Marina Bay Waterfront is where you take couple photos."}
+        ],
+        "singapore_dos_and_donts": {
+            "donts": [
+                "NEVER carry chewing gum, vapes, or e-cigarettes into Singapore (confiscated at customs, heavy fines).",
+                "Do NOT drink water or eat anything inside MRT trains or stations (SGD 500 fine).",
+                "Do NOT jaywalk across roads within 50m of a crossing (SGD 50–1,000 fine).",
+                "Do NOT smoke on stateroom verandahs or public streets (only yellow box Designated Smoking Areas).",
+                "Do NOT connect to unverified open public Wi-Fi networks (illegal under Computer Misuse Act)."
+            ],
+            "dos": [
+                "DO drink the tap water everywhere in Singapore — it is 100% safe, filtered, and higher quality than bottled water.",
+                "DO carry 2 compact windproof umbrellas at all times for December monsoon showers.",
+                "DO pre-submit the electronic SG Arrival Card within 72 hours before landing in Singapore (free at ica.gov.sg).",
+                "DO dress modestly (covered knees/shoulders) when visiting heritage temples in Chinatown or Little India.",
+                "DO book Disney Princess Royal Gathering on the Navigator app the moment you board the cruise!"
+            ]
+        }
     }
 }
