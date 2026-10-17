@@ -722,13 +722,31 @@ DEFAULT_HONEYMOON_DATA = {
         {"id": "exp-3", "category": "Hotels", "item": "Carlton Hotel Singapore (1 Night · Deluxe King Room with Breakfast)", "amount": 23950, "actual_amount": 23950, "currency": "INR", "status": "Booked", "notes": "Booking ID: NH76149509489544 · PNR: 0184752125 · Dec 13-14 · Honeymoon King Bed", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Carlton_Hotel_Singapore_Voucher_NH76149509489544.pdf", "doc_name": "Carlton Hotel Voucher (NH76149509489544)", "doc_id": "doc-carlton-hotel"},
         {"id": "exp-oasia-sentosa", "category": "Hotels", "item": "Oasia Resort Sentosa (4 Nights · Family Suite with Sofa Bed)", "amount": 135804, "actual_amount": 135804, "currency": "INR", "status": "Booked", "notes": "Booking ID: NH77022510686190 · PNR: 0185175700 · Dec 17–21 · Palawan Ridge Sentosa", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Oasia_Resort_Sentosa_Voucher_NH77022510686190.pdf", "doc_name": "Oasia Resort Sentosa Voucher (NH77022510686190)", "doc_id": "doc-oasia-sentosa"},
         {"id": "exp-ins-hotel", "category": "Insurance", "item": "Tata AIG Travel Insurance ($250,000 USD Medical Cover · 2 Adults)", "amount": 886, "actual_amount": 886, "currency": "INR", "status": "Paid", "notes": "Cert No: 50027999 · Order ID: MTMINFIH41529640636128 · Dec 13-14 Singapore", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Tata_AIG_Travel_Insurance_50027999_MTMINFIH41529640636128.pdf", "doc_name": "Tata AIG Insurance Policy (50027999)", "doc_id": "doc-tata-aig-insurance"},
-        {"id": "exp-4", "category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Disney Adventure Sailing"},
+        {"id": "exp-4", "category": "Cruise", "item": "Disney Adventure Cruise (3-Night Deluxe Verandah Stateroom #11680)", "amount": 178000, "actual_amount": 178000, "currency": "INR", "status": "Booked", "notes": "Reservation: 44985264 · $2,115.90 USD (~₹1.78L) · Dec 14–17 · Second Dining 8:15 PM", "doc_url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Disney_Adventure_Cruise_Reservation_44985264.pdf", "doc_name": "Disney Cruise Confirmation (44985264)", "doc_id": "doc-dcl"},
         {"id": "exp-5", "category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "actual_amount": 0, "currency": "INR", "status": "To Book", "notes": "Cable Car, River Wonders, Gardens, MBS"},
         {"id": "exp-6", "category": "Food & Dining", "item": "Romantic Dinners, Cafes, Gelato & Street Food", "amount": 40000, "actual_amount": 0, "currency": "INR", "status": "Budget", "notes": "Trapizza, CHIJMES, Rotational dining tips"}
     ],
 
     # Uploaded Tickets, Vouchers & PDF Documents
     "documents": [
+        {
+            "id": "doc-dcl",
+            "name": "Disney Adventure Cruise Booking Confirmation & Receipt",
+            "category": "Cruise",
+            "filename": "Disney_Adventure_Cruise_Reservation_44985264.pdf",
+            "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Disney_Adventure_Cruise_Reservation_44985264.pdf",
+            "size": "Deluxe Verandah #11680 · Deck 11",
+            "expense_id": "exp-4",
+            "uploaded_at": "04-Aug-2026 · Confirmed",
+            "booking_id": "44985264",
+            "pnr": "11680 (Deck 11)",
+            "dates": "14-Dec-2026 (4 PM) to 17-Dec-2026 (7 AM)",
+            "stateroom": "Stateroom 11680 · Category 06C (Deluxe Oceanview with Verandah)",
+            "meal_plan": "Second Seating: 8:15 PM Rotational Dining",
+            "travellers": "Mr Shaiwal Sachdev (Adult), Ms Shaila Manaktahla (Adult)",
+            "special_requests": "Late Dining 8:15 PM, Verandah Oceanview Deck 11 Aft, Magnetic Door Art, Broadway Shows & Character Greets included",
+            "amount_paid": "$2,115.90 USD (~ ₹1,78,000 Total Paid in Full)"
+        },
         {
             "id": "doc-oasia-sentosa",
             "name": "Oasia Resort Sentosa Official Voucher (4 Nights)",
@@ -737,7 +755,16 @@ DEFAULT_HONEYMOON_DATA = {
             "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Oasia_Resort_Sentosa_Voucher_NH77022510686190.pdf",
             "size": "Family Suite · Dec 17–21",
             "expense_id": "exp-oasia-sentosa",
-            "uploaded_at": "20 Aug 2026 · Confirmed"
+            "uploaded_at": "20 Aug 2026 · Confirmed",
+            "booking_id": "NH77022510686190",
+            "pnr": "0185175700",
+            "dates": "Check-in: Thu, 17 Dec (3 PM) · Check-out: Mon, 21 Dec (12 PM)",
+            "address": "23 Beach View Rd, Palawan Ridge, Sentosa Island, 098679 (+65 6818 3388)",
+            "room_type": "1x Family Suite with Sofa Bed (1 King Bed + 1 Sofa Bed)",
+            "inclusions": "Complimentary welcome drinks (Soft Beverages) on arrival, Wellness & Pool access",
+            "special_requests": "Early Check-in 11:00 AM (Post-cruise docking at 7 AM), Honeymoon celebration cake, Room decoration, Late check-out 1 PM, Non-smoking near lift",
+            "insurance": "Acko General Insurance (MTMINFIH41529691940492)",
+            "amount_paid": "₹1,35,804 (Paid via HDFC Bank ending 8189)"
         },
         {
             "id": "doc-carlton-hotel",
@@ -747,7 +774,16 @@ DEFAULT_HONEYMOON_DATA = {
             "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Carlton_Hotel_Singapore_Voucher_NH76149509489544.pdf",
             "size": "Deluxe Room · Dec 13-14",
             "expense_id": "exp-3",
-            "uploaded_at": "16 Aug 2026 · Confirmed"
+            "uploaded_at": "16 Aug 2026 · Confirmed",
+            "booking_id": "NH76149509489544",
+            "pnr": "0184752125",
+            "dates": "Check-in: Sun, 13 Dec (2 PM) · Check-out: Mon, 14 Dec (11 AM)",
+            "address": "76 Bras Basah Road, Singapore 189558 (+65 6338 8333)",
+            "room_type": "1x Deluxe Room (Guaranteed King Bed)",
+            "meal_plan": "Buffet Breakfast Included for 2 + 10% F&B Discount",
+            "special_requests": "Late Check-out 3 PM (Cruise Departure), Honeymoon Cake & Decor, Higher Floor, Airport Transfer note (Changi SQ 401 landing 6 PM)",
+            "insurance": "Tata AIG Hotel Insurance (MTMINFIH41529640636128)",
+            "amount_paid": "₹23,950 (HDFC Bank: ₹23,450 + Gift Card: ₹500)"
         },
         {
             "id": "doc-sia-flights",
@@ -757,16 +793,33 @@ DEFAULT_HONEYMOON_DATA = {
             "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Singapore_Airlines_DEL_SIN_DVXVBM.pdf",
             "size": "PNR: DVXVBM · SQ 401 / SQ 406",
             "expense_id": "exp-2",
-            "uploaded_at": "6 Aug 2026 · Confirmed"
+            "uploaded_at": "6 Aug 2026 · Confirmed",
+            "booking_id": "NN7AMSIR48944422426",
+            "pnr": "DVXVBM",
+            "dates": "13 Dec 2026 – 21 Dec 2026",
+            "travellers": "Shaila Manaktahla (2479949698), Shaiwal Sachdev (2479949699)",
+            "flight_summary": "DEL (09:45) -> SIN (18:00) [SQ 401] | SIN (16:40) -> DEL (20:00) [SQ 406]",
+            "baggage": "Cabin: 7kg/person · Check-in: 25kg (DEL-SIN) / 30kg (SIN-DEL)",
+            "inclusions": "Tata AIG Travel Insurance (P1C1X1/P2C1X1), Visa Protection Guarantee, Price Drop Protection, Jewel Changi Airport Ticket",
+            "amount_paid": "₹81,696 (Paid via EMI Credit Card)"
         },
         {
-            "id": "doc-dcl",
-            "name": "Disney Adventure Cruise Confirmation",
-            "category": "Cruise",
-            "filename": "Disney_Adventure_Reservation_44985264.pdf",
-            "url": "https://pub-2849c719e70146059d0fc1f31f9b33a5.r2.dev/honeymoon/docs/disney_cruise_confirmation.pdf",
-            "size": "Deluxe Verandah #11680",
-            "uploaded_at": "Paid in Full · Dec 14-17"
+            "id": "doc-tata-aig-insurance",
+            "name": "Tata AIG Travel Insurance Policy Certificate ($250k USD)",
+            "category": "Insurance",
+            "filename": "Tata_AIG_Travel_Insurance_50027999_MTMINFIH41529640636128.pdf",
+            "url": "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/honeymoon/docs/Tata_AIG_Travel_Insurance_50027999_MTMINFIH41529640636128.pdf",
+            "size": "Cert #50027999 · 2 Adults",
+            "expense_id": "exp-ins-hotel",
+            "uploaded_at": "15 Aug 2026 · Active",
+            "policy_no": "Master Policy: 0239870137 · Certificate: 50027999",
+            "order_id": "MTMINFIH41529640636128",
+            "coverage_dates": "13 Dec 2026 to 14 Dec 2026 (2 Travel Days · Single Trip)",
+            "insured_persons": "Shaiwal Sachdev (Primary), Shaila Manaktahla",
+            "sum_insured": "$250,000 USD Medical per person (Includes COVID-19 Inpatient)",
+            "key_benefits": "Emergency Medical Evacuation ($250k), Repatriation ($250k), Personal Liability ($50k), Baggage Loss ($500), Passport Loss ($250), Compassionate Visit ($1,000)",
+            "assistance": "24x7 Global Helpline: +91 22 6822 7600 · WhatsApp: +91 9136160375",
+            "amount_paid": "₹886 (Gross: ₹750.85 + GST: ₹135.15)"
         }
     ],
 
