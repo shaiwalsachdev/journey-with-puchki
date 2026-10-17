@@ -97,20 +97,20 @@
                 {{ honeymoon.overview }}
             </p>
 
-            <!-- Quick Summary Badges -->
+            <!-- Quick Summary Badges (High Visibility & Contrast) -->
             <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm">
-                <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white shadow-md">
+                <button onclick="switchTab('itinerary')" class="bg-black/50 hover:bg-black/70 backdrop-blur-md px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white border border-white/30 shadow-lg transition-all hover:scale-105 cursor-pointer">
                     <span class="material-icons text-rose-400 text-lg">event</span>
-                    <span class="font-bold">{{ honeymoon.dates }}</span>
-                </div>
-                <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white shadow-md">
-                    <span class="material-icons text-amber-400 text-lg">hotel</span>
-                    <span>1N Carlton + 3N Cruise + 4N Oasia Sentosa</span>
-                </div>
-                <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white shadow-md">
+                    <span class="font-bold text-white drop-shadow-sm">{{ honeymoon.dates }}</span>
+                </button>
+                <button onclick="switchTab('itinerary')" class="bg-black/50 hover:bg-black/70 backdrop-blur-md px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white border border-white/30 shadow-lg transition-all hover:scale-105 cursor-pointer">
+                    <span class="material-icons text-amber-300 text-lg">hotel</span>
+                    <span class="font-bold text-white drop-shadow-sm">1N Carlton + 3N Cruise + 4N Oasia Sentosa</span>
+                </button>
+                <button onclick="switchTab('tickets')" class="bg-black/50 hover:bg-black/70 backdrop-blur-md px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white border border-white/30 shadow-lg transition-all hover:scale-105 cursor-pointer">
                     <span class="material-icons text-emerald-400 text-lg">confirmation_number</span>
-                    <span>7 Klook Experiences</span>
-                </div>
+                    <span class="font-bold text-white drop-shadow-sm">7 Klook Experiences</span>
+                </button>
             </div>
         </div>
     </header>
