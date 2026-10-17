@@ -700,6 +700,248 @@ DEFAULT_HONEYMOON_DATA = {
             {"category": "Sightseeing & Active Days", "count": "4 Outfits", "suggestion": "Moisture-wicking tees, comfortable stretch chino shorts, and UV sunglasses for Mandai River Safari & Marina Bay."},
             {"category": "Swimwear", "count": "2–3 Pairs", "suggestion": "Quick-dry board shorts for cruise swimming pools, Sentosa Siloso beach & Oasia resort pool."},
             {"category": "Footwear", "count": "3 Pairs", "suggestion": "1 pair supportive walking sneakers, 1 pair waterproof pool slides/sandals, 1 pair smart loafers/boat shoes for dinner."}
+        ],
+        "daily_outfit_planner": [
+            {
+                "id": "outfit-d1-eve",
+                "day": 1,
+                "date": "Dec 13 (Sun)",
+                "time_slot": "Evening (6:30 PM - 11 PM)",
+                "occasion": "Flight Arrival & CHIJMES Romantic Night Walk",
+                "shaila": {
+                    "dress_type": "Breezy Floral Midi Dress / Linen Co-ord",
+                    "color": "Blush Pink / Lavender Pastel",
+                    "color_hex": "#F472B6",
+                    "footwear": "Comfortable Walking Flats / Smart Espadrilles",
+                    "accessories": "Mini crossbody bag, light pearl studs, delicate hair clip",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Crisp Linen Button-down & Tailored Chino Shorts",
+                    "color": "Soft White Shirt + Olive Chinos",
+                    "color_hex": "#60A5FA",
+                    "footwear": "Breathable White Sneakers / Slip-on Loafers",
+                    "accessories": "Leather-strap watch, compact sling bag with passports",
+                    "photo_url": ""
+                },
+                "style_notes": "Comfortable for 6-hr flight + instant evening dinner glow at Carlton & CHIJMES courtyard."
+            },
+            {
+                "id": "outfit-d2-morn",
+                "day": 2,
+                "date": "Dec 14 (Mon)",
+                "time_slot": "Morning & Afternoon (10 AM - 4 PM)",
+                "occasion": "Marina Bay Terminal & Disney Adventure Embarkation Party",
+                "shaila": {
+                    "dress_type": "Disney Princess Sundress / Nautical Sailor Chic",
+                    "color": "Sky Blue or Polka Dot Red (Minnie Theme)",
+                    "color_hex": "#38BDF8",
+                    "footwear": "Waterproof White Slides or Platform Sneakers",
+                    "accessories": "Disney Minnie Mouse Ears headband, sunglasses, tote bag",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Smart Nautical Polo Shirt & Khaki Chino Shorts",
+                    "color": "Navy Blue Polo + Beige Chino Shorts",
+                    "color_hex": "#1E40AF",
+                    "footwear": "Classic Boat Shoes or Clean White Low-tops",
+                    "accessories": "Polarized sunglasses, DJI Pocket camera wrist strap",
+                    "photo_url": ""
+                },
+                "style_notes": "Wear your cruise check-in outfit ready for embarkation photos and Sailaway party at Imagination Garden!"
+            },
+            {
+                "id": "outfit-d2-night",
+                "day": 2,
+                "date": "Dec 14 (Mon)",
+                "time_slot": "Night (6 PM - 11 PM)",
+                "occasion": "Captain's Gala, Broadway Theatre & Animator's Palate Dinner",
+                "shaila": {
+                    "dress_type": "Elegant Cocktail Dress or Flowing Satin Evening Gown",
+                    "color": "Emerald Green or Royal Navy",
+                    "color_hex": "#059669",
+                    "footwear": "Strappy Block Heels / Chic Dressy Wedges",
+                    "accessories": "Statement pendant necklace, sparkling clutch, diamond-look earrings",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Sharp Tailored Blazer / Crisp Collar Dress Shirt & Trousers",
+                    "color": "Charcoal / Dark Navy Blazer + Crisp White Shirt",
+                    "color_hex": "#334155",
+                    "footwear": "Polished Leather Loafers / Oxford Dress Shoes",
+                    "accessories": "Dress watch, cufflinks, pocket square",
+                    "photo_url": ""
+                },
+                "style_notes": "Formal cruise gala night! Beautiful photos with Mickey & Minnie in captain tuxedos."
+            },
+            {
+                "id": "outfit-d3-day",
+                "day": 3,
+                "date": "Dec 15 (Tue)",
+                "time_slot": "Daytime (9 AM - 5 PM)",
+                "occasion": "Marvel Landing, Rooftop Infinity Pool & Waterslides",
+                "shaila": {
+                    "dress_type": "Chic One-Piece Swimsuit + Breezy Silk Kaftan / Robe",
+                    "color": "Coral Red / Tropical Floral Cover-up",
+                    "color_hex": "#FB7185",
+                    "footwear": "Waterproof Pool Slides (Birkenstock EVA)",
+                    "accessories": "Wide-brim straw sunhat, UV sunglasses, waterproof tote",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Marvel Graphic Rashguard / Quick-dry Board Shorts",
+                    "color": "Cobalt Blue or Marvel Red",
+                    "color_hex": "#2563EB",
+                    "footwear": "Waterproof Deck Slides / Water Shoes",
+                    "accessories": "UV shades, Insta360 selfie pole, waterproof phone pouch",
+                    "photo_url": ""
+                },
+                "style_notes": "Swim-ready for Cantilevered Glass Infinity Pool and Marvel thrill slides on Deck 18!"
+            },
+            {
+                "id": "outfit-d3-night",
+                "day": 3,
+                "date": "Dec 15 (Tue)",
+                "time_slot": "Night (6:30 PM - Midnight)",
+                "occasion": "Palo Trattoria Romantic Dinner & Lion King Sky Fireworks",
+                "shaila": {
+                    "dress_type": "Romantic Tiered Maxi Dress or Italian Resort Chic",
+                    "color": "Sunset Peach / Champagne Gold",
+                    "color_hex": "#F59E0B",
+                    "footwear": "Elegant Kitten Heels or Embellished Sandals",
+                    "accessories": "Dainty gold bracelets, evening shawl (ocean breeze)",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Long-sleeve Linen Shirt & Tailored Grey Chinos",
+                    "color": "Soft Sage Green or Sky Blue Linen",
+                    "color_hex": "#10B981",
+                    "footwear": "Brown Suede Loafers",
+                    "accessories": "Classic chronometer watch, woven leather belt",
+                    "photo_url": ""
+                },
+                "style_notes": "Adult-exclusive fine dining at Palo followed by open ocean fireworks stargazing."
+            },
+            {
+                "id": "outfit-d4-day",
+                "day": 4,
+                "date": "Dec 16 (Wed)",
+                "time_slot": "All Day (9 AM - 6 PM)",
+                "occasion": "Disembarkation & Marina Bay Sands / Cloud Forest Walk",
+                "shaila": {
+                    "dress_type": "Breathable Cotton Co-ord Set (Culottes + Top)",
+                    "color": "Mint Green / Botanical Olive",
+                    "color_hex": "#34D399",
+                    "footwear": "Cushioned Walking Sneakers (All-day walking)",
+                    "accessories": "Crossbody phone bag, light knit cardigan (Cloud Forest is 19°C chilly)",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Moisture-wicking Aeroready Polo & Stretch Travel Shorts",
+                    "color": "Heather Grey Polo + Navy Shorts",
+                    "color_hex": "#64748B",
+                    "footwear": "Ultra-boost Walking Sneakers (15,000 steps)",
+                    "accessories": "Daypack for umbrellas and water bottles, cap",
+                    "photo_url": ""
+                },
+                "style_notes": "Important: Domes are air-conditioned to 19°C with water mist. A light cardigan/shawl is mandatory!"
+            },
+            {
+                "id": "outfit-d5-eve",
+                "day": 5,
+                "date": "Dec 17 (Thu)",
+                "time_slot": "Evening (6 PM - 10 PM)",
+                "occasion": "Oasia Sentosa Check-in & Trapizza Sunset Dinner on Siloso Beach",
+                "shaila": {
+                    "dress_type": "Boho Beach Sundress / Barefoot Resort Glam",
+                    "color": "Sunset Orange / Terracotta",
+                    "color_hex": "#EA580C",
+                    "footwear": "Flat Strappy Beach Sandals (Easy to slip off on sand)",
+                    "accessories": "Seashell earrings, bamboo woven bag, flower hair pin",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Cuban Collar Short-Sleeve Resort Shirt & White Linen Shorts",
+                    "color": "Tropical Print / Clean White Linen",
+                    "color_hex": "#F97316",
+                    "footwear": "Espadrilles / Suede Slides",
+                    "accessories": "Casual braided wristband, aviator sunglasses",
+                    "photo_url": ""
+                },
+                "style_notes": "Cocktails right on the beach sand watching the sunset over the Singapore Strait."
+            },
+            {
+                "id": "outfit-d6-day",
+                "day": 6,
+                "date": "Dec 18 (Fri)",
+                "time_slot": "All Day (10 AM - 7 PM)",
+                "occasion": "Universal Studios Singapore (USS) Thrill Rides & Photo Ops",
+                "shaila": {
+                    "dress_type": "Sporty Athleisure Romper / Tennis Skirt with Built-in Shorts",
+                    "color": "Bright Sunshine Yellow or Pastel Lilac",
+                    "color_hex": "#EAB308",
+                    "footwear": "Broken-in Running / Walking Shoes + Ankle Socks",
+                    "accessories": "Minion headband, waterproof pouch for water rides (Jurassic Rapids)",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Quick-dry Graphic Tee & Active Cargo Shorts with Zipper Pockets",
+                    "color": "Black or Slate Grey Graphic Tee",
+                    "color_hex": "#475569",
+                    "footwear": "Grippy Running Shoes (Secured on rollercoasters)",
+                    "accessories": "Sport cap, sunglasses strap, zipper pockets for phone & wallet",
+                    "photo_url": ""
+                },
+                "style_notes": "Must have zipped pockets or cross-body bag for rollercoasters (Battlestar Galactica)!"
+            },
+            {
+                "id": "outfit-d7-eve",
+                "day": 7,
+                "date": "Dec 19 (Sat)",
+                "time_slot": "Evening (6 PM - 10:30 PM)",
+                "occasion": "Mandai River Wonders / Night Safari & Rainforest Trail",
+                "shaila": {
+                    "dress_type": "Breathable Safari Linen Pants & Light Cotton Shirt",
+                    "color": "Khaki Beige / Olive Green",
+                    "color_hex": "#84CC16",
+                    "footwear": "Closed-toe Cushioned Walking Shoes",
+                    "accessories": "Mosquito repellant bracelet, mini torch, hair tie",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Moisture-wicking Outdoor Crewneck & Cargo Chinos",
+                    "color": "Forest Green or Camo Earth Tones",
+                    "color_hex": "#15803D",
+                    "footwear": "Waterproof Trail / Trekking Sneakers",
+                    "accessories": "Pocket umbrella in backpack, insect spray",
+                    "photo_url": ""
+                },
+                "style_notes": "Comfortable, mosquito-safe earth-tone clothing for evening outdoor zoo and boat rides."
+            },
+            {
+                "id": "outfit-d9-fly",
+                "day": 9,
+                "date": "Dec 21 (Mon)",
+                "time_slot": "Daytime (11 AM - 5 PM)",
+                "occasion": "Jewel Changi Rain Vortex & Return Flight to Delhi",
+                "shaila": {
+                    "dress_type": "Comfortable Co-ord Knit Lounge Set or Stretch Trousers",
+                    "color": "Cream / Almond / Oat Beige",
+                    "color_hex": "#D97706",
+                    "footwear": "Slip-on Travel Sneakers with Cushioned Soles",
+                    "accessories": "Soft cashmere travel shawl (flight cabin is cold), luggage tag",
+                    "photo_url": ""
+                },
+                "shaiwal": {
+                    "dress_type": "Classic Oxford Shirt & Stretch Chino Joggers",
+                    "color": "Clean White Shirt + Charcoal Joggers",
+                    "color_hex": "#4B5563",
+                    "footwear": "Clean Loafers / Easy-off Sneakers for Security",
+                    "accessories": "Noise-cancelling headphones, passport wallet",
+                    "photo_url": ""
+                },
+                "style_notes": "Effortlessly stylish for iconic Jewel waterfall photos, yet maximum comfort for the 6-hr flight home."
+            }
         ]
     },
 

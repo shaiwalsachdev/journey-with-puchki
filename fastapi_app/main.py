@@ -479,6 +479,123 @@ async def save_dining_place(request: Request):
     return {"status": "success", "dining_places": data["dining_places"]}
 
 
+@app.post("/api/honeymoon/outfit/save")
+async def save_outfit(request: Request):
+    import uuid
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    
+    o_id = body.get("id")
+    day = int(body.get("day") or 1)
+    date_str = body.get("date", "")
+    time_slot = body.get("time_slot", "Daytime")
+    occasion = body.get("occasion", "Sightseeing")
+    style_notes = body.get("style_notes", "")
+    
+    shaila_data = body.get("shaila", {})
+    shaiwal_data = body.get("shaiwal", {})
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "packing_and_outfits" not in data:
+        data["packing_and_outfits"] = DEFAULT_HONEYMOON_DATA.get("packing_and_outfits", {})
+    
+    if "daily_outfit_planner" not in data["packing_and_outfits"]:
+        data["packing_and_outfits"]["daily_outfit_planner"] = []
+
+    outfits = data["packing_and_outfits"]["daily_outfit_planner"]
+    updated = False
+    if o_id:
+        for item in outfits:
+            if item.get("id") == o_id:
+                item["day"] = day
+                item["date"] = date_str
+                item["time_slot"] = time_slot
+                item["occasion"] = occasion
+                item["style_notes"] = style_notes
+                item["shaila"] = shaila_data
+                item["shaiwal"] = shaiwal_data
+                updated = True
+                break
+
+    if not updated:
+        new_entry = {
+            "id": o_id or f"outfit-{uuid.uuid4().hex[:8]}",
+            "day": day,
+            "date": date_str,
+            "time_slot": time_slot,
+            "occasion": occasion,
+            "style_notes": style_notes,
+            "shaila": shaila_data,
+            "shaiwal": shaiwal_data
+        }
+        outfits.append(new_entry)
+
+    # Sort outfits by day
+    outfits.sort(key=lambda x: x.get("day", 1))
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "daily_outfits": outfits}
+
+
+@app.post("/api/honeymoon/outfit/photo/upload")
+async def upload_outfit_photo(
+    file: UploadFile = File(...),
+    outfit_id: str = Form(...),
+    person: str = Form("shaila") # "shaila" or "shaiwal"
+):
+    import io
+    import uuid
+    from fastapi_app.storage import upload_file
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    try:
+        file_bytes = await file.read()
+        orig_filename = file.filename or "outfit.jpg"
+        clean_ext = orig_filename.split(".")[-1].lower() if "." in orig_filename else "jpg"
+        r2_key = f"honeymoon/outfits/{outfit_id}_{person}_{uuid.uuid4().hex[:6]}.{clean_ext}"
+        
+        public_url = upload_file(io.BytesIO(file_bytes), r2_key, file.content_type or "image/jpeg")
+
+        data = await get_honeymoon_data()
+        if not data:
+            data = DEFAULT_HONEYMOON_DATA
+
+        if "packing_and_outfits" in data and "daily_outfit_planner" in data["packing_and_outfits"]:
+            for item in data["packing_and_outfits"]["daily_outfit_planner"]:
+                if item.get("id") == outfit_id:
+                    if person in item:
+                        item[person]["photo_url"] = public_url
+                    break
+
+        await save_honeymoon_data(data)
+        return {"status": "success", "photo_url": public_url, "outfit_id": outfit_id, "person": person}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+@app.delete("/api/honeymoon/outfit/{o_id}")
+async def delete_outfit(o_id: str):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "packing_and_outfits" in data and "daily_outfit_planner" in data["packing_and_outfits"]:
+        data["packing_and_outfits"]["daily_outfit_planner"] = [
+            o for o in data["packing_and_outfits"]["daily_outfit_planner"] if o.get("id") != o_id
+        ]
+
+    await save_honeymoon_data(data)
+    return {"status": "success"}
+
+
 @app.delete("/api/honeymoon/dining/{d_id}")
 async def delete_dining_place(d_id: str):
     from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
