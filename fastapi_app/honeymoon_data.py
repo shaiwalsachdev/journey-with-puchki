@@ -386,6 +386,7 @@ DEFAULT_HONEYMOON_DATA = {
 
     # Tickets to Book (Klook Checklist) with Due Dates
     "klook_tickets": [
+        {"id": "t0", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 📱 (Install QR in Delhi)", "name": "Singapore High-Speed 5G Tourist eSIM (Singtel / StarHub)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/80673-singtel-singapore-data-esim/", "booked": False, "price": "~₹950 / person (10–20 GB)"},
         {"id": "t1", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Singapore Cable Car SkyPass", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", "booked": False, "price": "~₹2,200 / person"},
         {"id": "t2", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Wings of Time (Sentosa)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", "booked": False, "price": "~₹1,100 / person"},
         {"id": "t3", "date": "18 Dec 2026", "due_date": "Book by Nov 25, 2026", "name": "Singapore Oceanarium (S.E.A. Aquarium)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/119-sea-aquarium-singapore/", "booked": False, "price": "~₹2,800 / person"},
