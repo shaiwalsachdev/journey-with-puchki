@@ -470,6 +470,66 @@
                             Dance with Mickey, Minnie, and Disney characters on the upper deck under starlight before Disney's signature fireworks light up the night sky over the ocean.
                         </p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Full Deck-by-Deck Disney Adventure Activity Blueprint (From Ship Walking Tour Video) -->
+            {% if honeymoon.cruise_activities %}
+            {% set act = honeymoon.cruise_activities %}
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl border-2 border-pink-400/40 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/10 text-pink-600 dark:text-pink-400 text-xs font-bold mb-2">
+                            <span class="material-icons text-sm">stars</span>
+                            <span>Complete Ship Activities Blueprint</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Deck-by-Deck Disney Adventure Master Guide 🏰🚢</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Everything to see, taste, ride, and experience on board across all decks (with video tour timestamps)</p>
+                    </div>
+                    {% if act.video_url %}
+                    <a href="{{ act.video_url }}" target="_blank" rel="noopener noreferrer" 
+                        class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all self-start md:self-auto shrink-0">
+                        <span class="material-icons text-base">play_circle</span>
+                        <span>Watch Ship Tour Video (2h 45m)</span>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="space-y-6">
+                    {% for deck in act.decks %}
+                    <div class="p-5 sm:p-6 rounded-3xl bg-white/60 dark:bg-gray-800/40 border border-pink-200/50 dark:border-white/10 shadow-sm">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-pink-100 dark:border-white/5">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <span class="material-icons text-pink-500 text-xl">deck</span>
+                                <span>{{ deck.deck }}</span>
+                            </h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-300/30">
+                                {{ deck.badge }}
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                            {% for a in deck.activities %}
+                            <div class="p-3.5 rounded-2xl bg-pink-50/40 dark:bg-pink-950/20 border border-pink-100/80 dark:border-white/5 flex items-start gap-3 hover:-translate-y-0.5 transition-all">
+                                <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center shrink-0">
+                                    <span class="material-icons text-lg">{{ a.icon }}</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ a.name }}</h4>
+                                        <span class="text-[10px] font-semibold text-rose-500 bg-white/80 dark:bg-white/10 px-1.5 py-0.5 rounded-md shrink-0">⏱️ {{ a.time }}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ a.desc }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
             <!-- Verified Booking & Stateroom Showcase Card -->
             {% if honeymoon.cruise_booking %}
             <div class="glass-panel p-6 sm:p-8 rounded-3xl border-2 border-amber-400/40 shadow-xl bg-gradient-to-br from-amber-500/10 via-rose-500/10 to-purple-600/10">

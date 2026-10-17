@@ -122,45 +122,86 @@ DEFAULT_HONEYMOON_DATA = {
         ]
     },
 
-    # Disney Cruise Special Zones & Features
-    "disney_features": [
-        {
-            "zone": "Town Square (Disney Princess Realm) 👑",
-            "desc": "A fairytale realm celebrating Disney Royalty (Cinderella, Belle, Ariel, Jasmine, Rapunzel, Elsa & Anna). Royal shops, magical salons, and enchanting princess meet-and-greets.",
-            "icon": "auto_awesome",
-            "color": "from-purple-500 to-pink-500"
-        },
-        {
-            "zone": "Disney Imagination Garden ✨",
-            "desc": "The enchanted heart of the ship with Sorcerer Mickey, open-air castle courtyard performance stage, and storybook garden walkways.",
-            "icon": "castle",
-            "color": "from-blue-500 to-indigo-600"
-        },
-        {
-            "zone": "Mickey & Minnie Captain's Gala 🐭🎀",
-            "desc": "Meet Mickey and Minnie in their finest maritime captain attire! Take fairytale honeymoon couple photos together on the grand staircase.",
-            "icon": "favorite",
-            "color": "from-rose-500 to-red-600"
-        },
-        {
-            "zone": "Disney Rotational Dining 🍽️",
-            "desc": "Experience Hollywood Spotlight Club, Navigator's Club, and Animator's Palate with dedicated Disney servers traveling with you each night.",
-            "icon": "restaurant",
-            "color": "from-amber-500 to-orange-500"
-        },
-        {
-            "zone": "Remember Stage Musical & Sky Fireworks 🎆",
-            "desc": "Exclusive Broadway-caliber theatrical stage shows at Walt Disney Theatre and fireworks lighting up the open sea starry night.",
-            "icon": "theater_comedy",
-            "color": "from-pink-500 to-rose-500"
-        },
-        {
-            "zone": "Wayfinder Bay & Adults Retreat 🌴",
-            "desc": "Moana-inspired open-air poolside oasis with sweeping ocean vistas, couple daybeds, and tropical cocktails under the stars.",
-            "icon": "pool",
-            "color": "from-teal-500 to-emerald-600"
-        }
-    ],
+    # Comprehensive Disney Adventure Deck-by-Deck Activity Guide (Based on Official Tour)
+    "cruise_activities": {
+        "video_url": "https://youtu.be/dA3clKO6qeY?si=NesYyPfoRNYgZrw-",
+        "video_title": "Disney Adventure Full Ship Walking Tour & Activities Blueprint",
+        "decks": [
+            {
+                "deck": "Deck 18: Marvel Landing, Pools & Upper Thrills",
+                "badge": "Top Deck Adrenaline",
+                "activities": [
+                    {"name": "Groot Galaxy Spin", "time": "15:11 & 1:49:22", "desc": "High-energy spinner ride with upbeat cosmic tunes high above the open sea.", "icon": "toys"},
+                    {"name": "PYM Quantum Racers", "time": "18:18 & 1:48:34", "desc": "Ant-Man & The Wasp themed mini electric race cars on an open-air track with panoramic ocean views.", "icon": "sports_motorsports"},
+                    {"name": "Upper Infinity Pool", "time": "16:47 & 1:50:05", "desc": "Cantilevered glass infinity pool hanging right over the ship's edge overlooking endless ocean horizons.", "icon": "pool"},
+                    {"name": "Waterslides & Waterpark", "time": "1:41:54", "desc": "Multi-story twisting body slides, splash zones, and aqua water coasters for sunny afternoon fun.", "icon": "water"},
+                    {"name": "Wheezy's Freezies", "time": "1:43:45", "desc": "Toy Story poolside soft-serve ice cream and frozen smoothies.", "icon": "icecream"},
+                    {"name": "Pizza Planet", "time": "1:44:55", "desc": "Grab hot fresh slices of pizza right on the pool deck anytime.", "icon": "local_pizza"}
+                ]
+            },
+            {
+                "deck": "Deck 6: Town Square, Princess Hall & Rotational Dining",
+                "badge": "Royal Fairytale & Gala",
+                "activities": [
+                    {"name": "Town Square Grand Hall & Royal Court", "time": "34:35 & 36:36", "desc": "Majestic multi-deck atrium inspired by Disney Castle with crystal chandeliers, grand staircase, and Princess meet & greets.", "icon": "castle"},
+                    {"name": "Spellbound Lounge", "time": "35:36", "desc": "Intimate fairy-godmother / evil queen inspired cocktail parlor for enchanting evening craft drinks.", "icon": "local_bar"},
+                    {"name": "Maximus & Olaf Themed Dining Rooms", "time": "38:18 & 39:28", "desc": "Tangled and Frozen themed companion dining halls filled with storybook artistry and Nordic ice motifs.", "icon": "restaurant"},
+                    {"name": "Navigator's Club", "time": "41:45 & 2:02:14", "desc": "Nautical club celebrating the golden age of seafaring with Captain Mickey maritime portraits.", "icon": "explore"},
+                    {"name": "Buccaneer Bar", "time": "43:21", "desc": "Pirates of the Caribbean themed tavern with craft grog, rum cocktails, and lively sea shanties.", "icon": "sports_bar"},
+                    {"name": "Animator's Palate", "time": "46:45 & 2:01:37", "desc": "Famous Disney dining room where your personal sketches come to life dancing on giant digital walls!", "icon": "draw"},
+                    {"name": "Tiana's Bayou Lounge", "time": "50:42", "desc": "Princess and the Frog New Orleans jazz parlor serving warm powdered beignets, chicory coffee, and southern mocktails.", "icon": "music_note"}
+                ]
+            },
+            {
+                "deck": "Deck 7: Entertainment, San Fransokyo & Baymax",
+                "badge": "Broadway Musicals & Pixar Fun",
+                "activities": [
+                    {"name": "Walt Disney Theatre", "time": "21:50", "desc": "Spectacular 1,200+ seat Broadway showhouse hosting full Disney musical stage productions like 'Remember'.", "icon": "theater_comedy"},
+                    {"name": "San Fransokyo Street", "time": "7:08 & 25:23", "desc": "Big Hero 6 Tokyo-meets-San-Francisco street market with neon signs, interactive street games, and character encounters.", "icon": "storefront"},
+                    {"name": "Baymax Cinemas", "time": "30:14", "desc": "Twin ultra-plush state-of-the-art Dolby cinema screening first-run Disney, Marvel, and Star Wars movies throughout the voyage.", "icon": "movie"},
+                    {"name": "D Lounge", "time": "22:34", "desc": "Family game show studio, couples karaoke, Disney trivia showdowns, and live bingo games.", "icon": "mic"},
+                    {"name": "Marvel Style Studio", "time": "45:08", "desc": "Heroic apparel, couture Marvel jackets, pins, and custom superhero souvenir styling.", "icon": "checkroom"}
+                ]
+            },
+            {
+                "deck": "Deck 11: Imagination Garden & Open-Air Stage",
+                "badge": "Heart of the Ship",
+                "activities": [
+                    {"name": "Disney Imagination Garden & Castle Stage", "time": "1:13:19", "desc": "Enchanted central open-air atrium featuring Sorcerer Mickey topiary and open-air stage for headline productions.", "icon": "park"},
+                    {"name": "LET'S SET SAIL PARTY Show", "time": "8:30", "desc": "Embarkation sail-away musical celebration with Mickey, Minnie, Donald, and Goofy dancing on top deck!", "icon": "celebration"},
+                    {"name": "AVENGERS ASSEMBLE! Live Stunt Show", "time": "1:16:27", "desc": "Live acrobatic rooftop battle featuring Spider-Man, Iron Man, Captain America, and Black Widow.", "icon": "shield"},
+                    {"name": "Mowgli's Eatery", "time": "1:14:22", "desc": "Jungle Book themed quick-service dining serving flavorful Indian-inspired wraps, samosas, curries, and spiced street bites.", "icon": "takeout_dining"},
+                    {"name": "Gramma Tala's Kitchen", "time": "1:15:18", "desc": "Moana Pacific Islander flavors: poke bowls, grilled skewers, and tropical fruit platters.", "icon": "soup_kitchen"},
+                    {"name": "Garden Bar", "time": "1:12:13", "desc": "Alfresco bar overlooking the castle courtyard for chilled beer and floral mocktails.", "icon": "local_cafe"}
+                ]
+            },
+            {
+                "deck": "Decks 12–14: Wayfinder Bay, Discovery Reef & Adult Romance",
+                "badge": "Romantic Adults Oasis",
+                "activities": [
+                    {"name": "Wayfinder Bay Pools & Sunset Amphitheater", "time": "1:26:12", "desc": "Moana open-ocean poolside deck with tiered daybeds and infinity horizon views.", "icon": "wb_twilight"},
+                    {"name": "MOANA: CALL OF THE SEA Live Show", "time": "1:27:40", "desc": "Original island theatrical musical featuring live drumming, water effects, and ocean chants.", "icon": "surfing"},
+                    {"name": "Palo Trattoria", "time": "1:32:51", "desc": "Adult-exclusive upscale Italian fine dining with antipasti carts, handmade pastas, and premium wines.", "icon": "dinner_dining"},
+                    {"name": "Mike & Sulley's Asian Eatery & Omakase Teppanyaki", "time": "1:34:23 & 1:34:49", "desc": "Monsters, Inc. themed Teppanyaki grill with interactive chefs and fresh sushi counters.", "icon": "set_meal"},
+                    {"name": "Cosmic Kebabs & Stitch's 'Ohana Grill", "time": "1:36:05 & 1:37:47", "desc": "Mediterranean shawarma & Hawaiian pineapple burgers by the open ocean breeze.", "icon": "kebab_dining"},
+                    {"name": "Bewitching Boba & Brews", "time": "1:38:45", "desc": "Ursula themed bubble tea bar with popping boba, cold brew teas, and mocktails.", "icon": "emoji_food_beverage"},
+                    {"name": "The Lion King: Celebration in the Sky (Fireworks)", "time": "2:37:20", "desc": "Disney's world-famous fireworks bursting into the midnight sky over the high seas synchronized to Lion King melodies!", "icon": "auto_awesome"}
+                ]
+            },
+            {
+                "deck": "Deck 9 & 10: Wellness, Spa & Midnight Strolls",
+                "badge": "Spa, Serenity & Stateroom",
+                "activities": [
+                    {"name": "Infinite Bliss Spa & Couples Retreat", "time": "1:08:39", "desc": "Aromatherapy steam rooms, dry sauna, heated stone loungers, and private ocean-view couples massage suites.", "icon": "spa"},
+                    {"name": "Oceanfront Fitness Center", "time": "1:09:29", "desc": "State-of-the-art gym with floor-to-ceiling glass windows facing the open ocean waves.", "icon": "fitness_center"},
+                    {"name": "Stateroom 11680 Verandah Stargazing", "time": "2:18:42", "desc": "Private balcony on Deck 11 for midnight ocean breezes, wine, and peaceful couple stargazing.", "icon": "balcony"},
+                    {"name": "Door Magnet Decorating & Pixie Dusting", "time": "2:23:10", "desc": "Disney cruise tradition! Decorate your metallic stateroom door with Disney magnets and participate in fish extender gift exchanges.", "icon": "auto_fix_high"},
+                    {"name": "World of Disney & Treasures Untold Shopping", "time": "2:27:48 & 2:35:50", "desc": "Exclusive maritime Mickey & Minnie ears, Disney Adventure spirit jerseys, and honeymoon keepsakes.", "icon": "card_giftcard"},
+                    {"name": "Character Dance Party at 10:00 PM", "time": "2:05:17", "desc": "Late-night dance party with Disney characters and DJ under open starlight.", "icon": "nightlife"}
+                ]
+            }
+        ]
+    },
 
     # Visa Timeline & Requirements
     "visa": {
