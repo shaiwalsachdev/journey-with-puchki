@@ -520,6 +520,8 @@ async def save_dining_place(request: Request):
     cuisine = body.get("cuisine", "")
     highlight = body.get("highlight", "")
     status = body.get("status", "Shortlisted")
+    day_num = body.get("day_number")
+    day_number = int(day_num) if day_num and str(day_num).isdigit() else None
 
     data = await get_honeymoon_data()
     if not data:
@@ -537,6 +539,7 @@ async def save_dining_place(request: Request):
                 d["cuisine"] = cuisine
                 d["highlight"] = highlight
                 d["status"] = status
+                d["day_number"] = day_number
                 updated = True
                 break
 
@@ -547,7 +550,8 @@ async def save_dining_place(request: Request):
             "area": area,
             "cuisine": cuisine,
             "highlight": highlight,
-            "status": status
+            "status": status,
+            "day_number": day_number
         })
 
     await save_honeymoon_data(data)

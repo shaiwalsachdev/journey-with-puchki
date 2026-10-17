@@ -355,9 +355,44 @@
                     </div>
                     {% endif %}
 
+                    <!-- Romantic Places & Dining for this Day -->
+                    <div class="mt-6 pt-5 border-t border-gray-200/60 dark:border-white/10">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                                <span class="material-icons text-sm text-rose-500">restaurant</span> Romantic Places & Restaurants (Day {{ d.day }})
+                            </h4>
+                            <button onclick="openDiningModalWithDay({{ d.day }})" class="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1">
+                                <span class="material-icons text-xs">add</span> Add Place / Restaurant
+                            </button>
+                        </div>
+
+                        <!-- Filtered Dining Places for Day D -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                            {% for dp in honeymoon.dining_places %}
+                            {% if dp.day_number == d.day %}
+                            <div class="p-3.5 rounded-2xl bg-rose-50/70 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-600 dark:text-rose-300">{{ dp.area }}</span>
+                                        <span class="text-[10px] font-semibold text-amber-600">{{ dp.status }}</span>
+                                    </div>
+                                    <h5 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ dp.name }}</h5>
+                                    <p class="text-[11px] text-rose-500 font-medium">{{ dp.cuisine }}</p>
+                                    <p class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">{{ dp.highlight }}</p>
+                                </div>
+                                <div class="mt-2.5 pt-2 border-t border-rose-200/40 dark:border-white/5 flex items-center justify-end gap-2">
+                                    <button onclick="editDiningPlace('{{ dp.id }}', '{{ dp.name|escape }}', '{{ dp.area|escape }}', '{{ dp.cuisine|escape }}', '{{ dp.highlight|escape }}', '{{ dp.status|escape }}', {{ dp.day_number or 'null' }})" class="text-[10px] font-bold text-gray-500 hover:text-primary">Edit</button>
+                                    <button onclick="deleteDiningPlace('{{ dp.id }}')" class="text-[10px] font-bold text-rose-400 hover:text-rose-600">Remove</button>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
                     <!-- Real-time Choices & Options Box -->
                     {% if d.options and d.options|length > 0 %}
-                    <div class="mt-6 pt-5 border-t border-dashed border-gray-200 dark:border-white/10 bg-rose-50/50 dark:bg-rose-950/20 -mx-6 -mb-6 p-6 rounded-b-3xl">
+                    <div class="mt-3 pt-5 border-t border-dashed border-gray-200 dark:border-white/10 bg-rose-50/50 dark:bg-rose-950/20 -mx-6 -mb-6 p-6 rounded-b-3xl">
                         <div class="flex items-center gap-2 mb-3">
                             <span class="material-icons text-amber-500 text-lg">alt_route</span>
                             <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Curated Options & Romantic Choices</h4>
@@ -1839,7 +1874,22 @@
                     <input type="text" id="dining-name" placeholder="e.g. Trapizza (Siloso Beach)" required 
                         class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Assign to Itinerary Day</label>
+                        <select id="dining-day" class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white font-semibold">
+                            <option value="">No specific day (General)</option>
+                            <option value="1">Day 1 (Dec 13) - City Hall / Arrival</option>
+                            <option value="2">Day 2 (Dec 14) - Cruise Boarding</option>
+                            <option value="3">Day 3 (Dec 15) - Disney Cruise High Seas</option>
+                            <option value="4">Day 4 (Dec 16) - Cruise Disembark</option>
+                            <option value="5">Day 5 (Dec 17) - Sentosa Beach Check-in</option>
+                            <option value="6">Day 6 (Dec 18) - Resorts World & S.E.A.</option>
+                            <option value="7">Day 7 (Dec 19) - Mandai & Little India</option>
+                            <option value="8">Day 8 (Dec 20) - Gardens by the Bay & MBS</option>
+                            <option value="9">Day 9 (Dec 21) - Jewel Changi Airport</option>
+                        </select>
+                    </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Area / Location</label>
                         <input type="text" id="dining-area" placeholder="e.g. Sentosa Beachfront" required 
@@ -2250,10 +2300,11 @@
             }
         }
 
-        // --- Dining CRUD ---
+        // --- Dining CRUD with Day Assignment ---
         function openDiningModal() {
             document.getElementById('dining-id').value = '';
             document.getElementById('dining-name').value = '';
+            document.getElementById('dining-day').value = '';
             document.getElementById('dining-area').value = '';
             document.getElementById('dining-cuisine').value = '';
             document.getElementById('dining-highlight').value = '';
@@ -2264,9 +2315,16 @@
             modal.classList.add('flex');
         }
 
-        function editDiningPlace(id, name, area, cuisine, highlight, status) {
+        function openDiningModalWithDay(dayNum) {
+            openDiningModal();
+            document.getElementById('dining-day').value = dayNum ? String(dayNum) : '';
+            document.getElementById('dining-modal-title').textContent = `Add Romantic Place for Day ${dayNum}`;
+        }
+
+        function editDiningPlace(id, name, area, cuisine, highlight, status, dayNum = null) {
             document.getElementById('dining-id').value = id;
             document.getElementById('dining-name').value = name;
+            document.getElementById('dining-day').value = dayNum ? String(dayNum) : '';
             document.getElementById('dining-area').value = area;
             document.getElementById('dining-cuisine').value = cuisine;
             document.getElementById('dining-highlight').value = highlight;
@@ -2287,6 +2345,7 @@
             e.preventDefault();
             const id = document.getElementById('dining-id').value;
             const name = document.getElementById('dining-name').value;
+            const day_number = document.getElementById('dining-day').value;
             const area = document.getElementById('dining-area').value;
             const cuisine = document.getElementById('dining-cuisine').value;
             const highlight = document.getElementById('dining-highlight').value;
@@ -2296,7 +2355,7 @@
                 const res = await fetch('/api/honeymoon/dining/save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id, name, area, cuisine, highlight, status })
+                    body: JSON.stringify({ id, name, day_number, area, cuisine, highlight, status })
                 });
                 const result = await res.json();
                 if (result.status === 'success') {

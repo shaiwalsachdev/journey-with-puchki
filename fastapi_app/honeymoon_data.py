@@ -584,7 +584,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "Sentosa Beachfront",
             "cuisine": "Italian / Pizza / Casual Beachfront",
             "highlight": "Wood-fired Pizzas & Pastas right on the sand. Perfect for sunset with cocktails.",
-            "status": "Shortlisted"
+            "status": "Must Visit",
+            "day_number": 5
         },
         {
             "id": "d2",
@@ -592,7 +593,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "Sentosa Heritage",
             "cuisine": "Ultra-Luxury Cantonese / Dim Sum",
             "highlight": "Heritage 1880s manor. Exceptional vegetarian black truffle crystal dumplings.",
-            "status": "Must Visit"
+            "status": "Must Visit",
+            "day_number": 6
         },
         {
             "id": "d3",
@@ -600,7 +602,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "Sentosa Marina",
             "cuisine": "Mediterranean & Italian Waterfront",
             "highlight": "Miska Café and Sole Pomodoro facing luxury yachts. Very romantic evening walk.",
-            "status": "Shortlisted"
+            "status": "Shortlisted",
+            "day_number": 5
         },
         {
             "id": "d4",
@@ -608,7 +611,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "City Hall (Opp. Carlton)",
             "cuisine": "Gothic Chapel Outdoor Dining",
             "highlight": "Lit with fairy lights. Great tapas, wood-fired pizza, and craft drinks across from Carlton.",
-            "status": "Day 1 Dinner"
+            "status": "Day 1 Dinner",
+            "day_number": 1
         },
         {
             "id": "d5",
@@ -616,7 +620,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "City Hall",
             "cuisine": "100% Pure Vegetarian Fine Dining",
             "highlight": "2 mins from Carlton Hotel. High quality North & South Indian curries and dosas.",
-            "status": "Shortlisted"
+            "status": "Shortlisted",
+            "day_number": 1
         },
         {
             "id": "d6",
@@ -624,7 +629,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "Downtown Marina Bay",
             "cuisine": "Iconic Street Food & Satay",
             "highlight": "Boon Tat Street shuts down every evening into an open-air Satay grill feast. Spectacular vibe under city skyscrapers.",
-            "status": "Must Visit"
+            "status": "Must Visit",
+            "day_number": 8
         },
         {
             "id": "d7",
@@ -632,7 +638,8 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "Little India / Serangoon Rd",
             "cuisine": "Authentic Pure Vegetarian South & North Indian",
             "highlight": "Gandhi Mess for $2 dosas on banana leaves, MTR for rava idlis, Jaggi's for homestyle Punjabi parathas.",
-            "status": "Shortlisted"
+            "status": "Shortlisted",
+            "day_number": 7
         },
         {
             "id": "d8",
@@ -640,7 +647,17 @@ DEFAULT_HONEYMOON_DATA = {
             "area": "Tanjong Pagar / Chinatown",
             "cuisine": "Candlelit Library Plant-Based",
             "highlight": "Candlelit library setting with artisanal pastas and plant-based fine dining.",
-            "status": "Shortlisted"
+            "status": "Shortlisted",
+            "day_number": 8
+        },
+        {
+            "id": "d9",
+            "name": "Palo Trattoria (Disney Adventure)",
+            "area": "Disney Adventure High Seas",
+            "cuisine": "Adults-Only Northern Italian Fine Dining",
+            "highlight": "Exclusive sunset ocean views, handmade ravioli, and fine wine pairings aboard the ship.",
+            "status": "Must Visit",
+            "day_number": 3
         }
     ],
 
