@@ -658,6 +658,60 @@ DEFAULT_HONEYMOON_DATA = {
             "highlight": "Exclusive sunset ocean views, handmade ravioli, and fine wine pairings aboard the ship.",
             "status": "Must Visit",
             "day_number": 3
+        },
+        {
+            "id": "d10",
+            "name": "Old Chang Kee (Curry Puffs & Skewers)",
+            "area": "Changi Airport & Citywide Kiosks",
+            "cuisine": "Classic Singapore Street Snacks",
+            "highlight": "Crispy golden handmade curry puffs filled with spiced potato & egg, plus satay chicken skewers on the go.",
+            "status": "Must Eat 🥟",
+            "day_number": 1
+        },
+        {
+            "id": "d11",
+            "name": "Ya Kun Kaya Toast (Since 1944)",
+            "area": "Far East Square / Chinatown / Sentosa",
+            "cuisine": "Traditional Nanyang Breakfast",
+            "highlight": "Charcoal-grilled thin toast with fragrant pandan kaya jam & cold butter, soft-boiled runny eggs with dark soy sauce, and hot Kopi/Teh.",
+            "status": "Must Eat ☕",
+            "day_number": 7
+        },
+        {
+            "id": "d12",
+            "name": "Chinatown Complex Hawker (Peking Duck & Popiah)",
+            "area": "Chinatown (Smith Street)",
+            "cuisine": "Michelin Bib Gourmand Hawker Stalls",
+            "highlight": "Freshly rolled Popiah (spring rolls), handmade Dim Sum, and famous soy sauce chicken / vegetarian mushroom noodles ($3–$5 SGD).",
+            "status": "Must Eat 🍜",
+            "day_number": 7
+        },
+        {
+            "id": "d13",
+            "name": "Singapore Iconic 'Ice Cream Sandwich' Cart",
+            "area": "Orchard Road & Waterfront Merlion Park",
+            "cuisine": "Beloved Singapore Street Dessert",
+            "highlight": "Street carts slicing thick blocks of wafer/rainbow bread filled with sweet corn, mint chip, durian, or mango ice cream ($1.50 SGD).",
+            "status": "Must Eat 🍦",
+            "day_number": 8
+        },
+        {
+            "id": "d14",
+            "name": "Roti Prata & Teh Tarik (Little India)",
+            "area": "Serangoon Road / Jalan Besar",
+            "cuisine": "Crispy Flaky Indian-Malay Flatbread",
+            "highlight": "Flaky, hot crispy Roti Canai/Prata dipped in spicy dhal curry or sugar, washed down with frothy pulled 'Teh Tarik' milk tea.",
+            "status": "Must Eat 🫓",
+            "day_number": 7
+        },
+        {
+            "id": "d15",
+            "name": "Jewel Changi Shake Shack & Birds of Paradise Gelato",
+            "area": "Jewel Changi Airport (Level 1)",
+            "cuisine": "Botanical Artisanal Gelato",
+            "highlight": "Michelin-recommended botanical gelato infused with Southeast Asian herbs & fruits (White Chrysanthemum, Pandan, Lychee Raspberry) inside fresh thyme cones.",
+            "status": "Must Eat 🍧",
+            "day_number": 9
         }
     ],
 
