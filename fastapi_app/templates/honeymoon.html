@@ -514,11 +514,147 @@
                     </div>
                     {% endif %}
 
-                    <!-- Romantic Places & Dining for this Day -->
+                    <!-- Daily Outfits (Shaila & Shaiwal) for this Day -->
                     <div class="mt-6 pt-5 border-t border-gray-200/60 dark:border-white/10">
                         <div class="flex items-center justify-between mb-3">
                             <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
-                                <span class="material-icons text-sm text-rose-500">restaurant</span> Romantic Places & Restaurants (Day {{ d.day }})
+                                <span class="material-icons text-sm text-pink-500">styler</span> Today's Chosen Outfits (Day {{ d.day }})
+                            </h4>
+                            <button onclick="switchTab('packing')" class="text-[11px] font-bold text-pink-600 dark:text-pink-400 hover:underline flex items-center gap-1">
+                                <span class="material-icons text-xs">tune</span> Wardrobe Manager
+                            </button>
+                        </div>
+
+                        <!-- Outfits for Day d.day -->
+                        {% set day_outfits = [] %}
+                        {% if honeymoon.packing_and_outfits and honeymoon.packing_and_outfits.daily_outfit_planner %}
+                            {% for outf in honeymoon.packing_and_outfits.daily_outfit_planner %}
+                                {% if outf.day == d.day %}
+                                    {% set _ = day_outfits.append(outf) %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if day_outfits|length > 0 %}
+                        <div class="space-y-3 mb-4">
+                            {% for outf in day_outfits %}
+                            <div class="p-4 rounded-2xl bg-gradient-to-br from-pink-50/50 via-white/80 to-blue-50/50 dark:from-pink-950/20 dark:via-gray-800/60 dark:to-blue-950/20 border border-pink-200/60 dark:border-white/10 shadow-sm">
+                                <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-gray-100 dark:border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-bold text-gray-900 dark:text-white">{{ outf.occasion }}</span>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300">{{ outf.time_slot }}</span>
+                                    </div>
+                                    <button onclick="editOutfit('{{ outf.id }}')" class="text-[10px] font-bold text-gray-500 hover:text-primary flex items-center gap-1">
+                                        <span class="material-icons text-xs">edit</span> Edit Looks
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                    <!-- Shaila -->
+                                    <div class="p-3 rounded-xl bg-pink-50/70 dark:bg-pink-950/30 border border-pink-100 dark:border-pink-900/30">
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="font-bold text-pink-700 dark:text-pink-300 flex items-center gap-1 text-[11px]">
+                                                <span class="material-icons text-xs">face_3</span> Shaila's Look
+                                            </span>
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-gray-600 dark:text-gray-300">
+                                                <span class="w-2.5 h-2.5 rounded-full inline-block border border-black/10" style="background-color: {{ outf.shaila.color_hex or '#f472b6' }};"></span>
+                                                {{ outf.shaila.color }}
+                                            </span>
+                                        </div>
+                                        <p class="font-semibold text-gray-900 dark:text-white text-xs">{{ outf.shaila.dress_type }}</p>
+                                        <div class="mt-1.5 space-y-0.5 text-[11px] text-gray-600 dark:text-gray-300">
+                                            <p><span class="text-gray-400">👟</span> {{ outf.shaila.footwear }}</p>
+                                            <p><span class="text-gray-400">👜</span> {{ outf.shaila.accessories }}</p>
+                                        </div>
+                                        {% if outf.shaila.photo_url %}
+                                        <div class="mt-2 pt-1.5 border-t border-pink-200/40">
+                                            <a href="{{ outf.shaila.photo_url }}" target="_blank" class="inline-flex items-center gap-1.5 text-[10px] font-bold text-pink-600 dark:text-pink-300 hover:underline">
+                                                <img src="{{ outf.shaila.photo_url }}" class="w-6 h-6 rounded-md object-cover border border-pink-300" />
+                                                View Outfit Photo
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <!-- Shaiwal -->
+                                    <div class="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/30">
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="font-bold text-blue-700 dark:text-blue-300 flex items-center gap-1 text-[11px]">
+                                                <span class="material-icons text-xs">face</span> Shaiwal's Look
+                                            </span>
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-gray-600 dark:text-gray-300">
+                                                <span class="w-2.5 h-2.5 rounded-full inline-block border border-black/10" style="background-color: {{ outf.shaiwal.color_hex or '#60a5fa' }};"></span>
+                                                {{ outf.shaiwal.color }}
+                                            </span>
+                                        </div>
+                                        <p class="font-semibold text-gray-900 dark:text-white text-xs">{{ outf.shaiwal.dress_type }}</p>
+                                        <div class="mt-1.5 space-y-0.5 text-[11px] text-gray-600 dark:text-gray-300">
+                                            <p><span class="text-gray-400">👞</span> {{ outf.shaiwal.footwear }}</p>
+                                            <p><span class="text-gray-400">⌚</span> {{ outf.shaiwal.accessories }}</p>
+                                        </div>
+                                        {% if outf.shaiwal.photo_url %}
+                                        <div class="mt-2 pt-1.5 border-t border-blue-200/40">
+                                            <a href="{{ outf.shaiwal.photo_url }}" target="_blank" class="inline-flex items-center gap-1.5 text-[10px] font-bold text-blue-600 dark:text-blue-300 hover:underline">
+                                                <img src="{{ outf.shaiwal.photo_url }}" class="w-6 h-6 rounded-md object-cover border border-blue-300" />
+                                                View Outfit Photo
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="p-3 mb-4 rounded-xl bg-gray-50/80 dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 text-center">
+                            <p class="text-xs text-gray-500 italic">No specific outfit scheduled for this day yet.</p>
+                            <button onclick="openOutfitModal()" class="mt-1.5 text-[11px] font-bold text-pink-600 dark:text-pink-400 hover:underline">+ Schedule Outfit</button>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Day-Specific Luggage & Things to Pack/Carry -->
+                    <div class="mt-4 pt-4 border-t border-gray-200/60 dark:border-white/10">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                                <span class="material-icons text-sm text-sky-500">luggage</span> Gear & Things to Pack for Day {{ d.day }}
+                            </h4>
+                            <button onclick="switchTab('packing')" class="text-[11px] font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
+                                <span class="material-icons text-xs">checklist</span> Full Checklist
+                            </button>
+                        </div>
+
+                        <!-- Filtered Checklist for Day D -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4">
+                            {% set day_items_found = false %}
+                            {% if honeymoon.packing_and_outfits and honeymoon.packing_and_outfits.packing_checklist %}
+                                {% for p in honeymoon.packing_and_outfits.packing_checklist %}
+                                    {% if p.target_days and d.day in p.target_days %}
+                                        {% set day_items_found = true %}
+                                        <div onclick="toggleChecklist('{{ p.id }}', 'packing')" 
+                                            class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-2.5 select-none hover:shadow-sm {% if p.packed %}bg-emerald-50/60 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/40{% else %}bg-white/80 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-sky-300{% endif %}">
+                                            <div class="w-5 h-5 rounded-md flex items-center justify-center transition-all shrink-0 {% if p.packed %}bg-emerald-500 text-white shadow-sm{% else %}border border-gray-300 dark:border-gray-600 text-transparent hover:border-sky-400{% endif %}">
+                                                <span class="material-icons text-xs">check</span>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center justify-between gap-1">
+                                                    <span class="text-xs font-bold text-gray-900 dark:text-white truncate {% if p.packed %}line-through opacity-70{% endif %}">
+                                                        {{ p.item }}
+                                                    </span>
+                                                    <span class="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 shrink-0">{{ p.category }}</span>
+                                                </div>
+                                                <p class="text-[10px] text-gray-500 dark:text-gray-400 truncate">{{ p.rule or p.detail }}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Romantic Places & Dining for this Day -->
+                    <div class="mt-4 pt-4 border-t border-gray-200/60 dark:border-white/10">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                                <span class="material-icons text-sm text-rose-500">restaurant</span> Romantic Places, Food Specialties & Dining (Day {{ d.day }})
                             </h4>
                             <button onclick="openDiningModalWithDay({{ d.day }})" class="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1">
                                 <span class="material-icons text-xs">add</span> Add Place / Restaurant

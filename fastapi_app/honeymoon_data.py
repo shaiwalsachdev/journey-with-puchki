@@ -759,7 +759,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Singapore and Disney Adventure use Type G (UK 3-pin). Bring a multi-plug universal adapter with built-in USB-C fast charging ports.",
                 "rule": "Mandatory for Carlton Hotel & Oasia Sentosa. Pack in cabin or checked luggage.",
                 "icon": "electrical_services",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 5]
             },
             {
                 "id": "p-elec-2",
@@ -768,7 +769,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Strict Airline Rule: Power banks are 100% FORBIDDEN in checked luggage! Must be in HAND LUGGAGE only (< 100Wh).",
                 "rule": "Strict Hand Luggage Only (DGCA / CAAS). Essential for all-day navigation & photos.",
                 "icon": "battery_charging_full",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 6, 7, 8, 9]
             },
             {
                 "id": "p-elec-3",
@@ -777,7 +779,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Charges 2 phones, DJI camera, smartwatch, and power bank simultaneously from a single wall socket.",
                 "rule": "Saves outlet space in hotel rooms & cruise cabin.",
                 "icon": "power",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 5]
             },
             {
                 "id": "p-elec-4",
@@ -786,7 +789,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Wall outlets on cruise staterooms and bedside hotel tables are sometimes positioned away from pillows.",
                 "rule": "Pack 2x 2-meter cables.",
                 "icon": "cable",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 5]
             },
             {
                 "id": "p-elec-5",
@@ -795,7 +799,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Collect on Nov 15 from SharePal. Bring mini tripod, magnetic clip, and extra high-speed U3 MicroSD (128GB+).",
                 "rule": "Carry on board in camera pouch.",
                 "icon": "videocam",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 3, 5, 6, 8]
             },
 
             # Monsoon & Weather Armor
@@ -806,7 +811,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Keep one in Shaiwal's daypack and one in Shaila's handbag at all times. Tropical showers start without warning.",
                 "rule": "Carry-on friendly. Instant rain defense.",
                 "icon": "umbrella",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 4, 6, 7, 8]
             },
             {
                 "id": "p-rain-2",
@@ -815,7 +821,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Far superior to heavy raincoats in 85% humidity. Keeps your clothes and backpacks bone dry at Universal and River Wonders.",
                 "rule": "Reusable, packs into tiny pouch.",
                 "icon": "water_drop",
-                "packed": False
+                "packed": False,
+                "target_days": [6, 7, 8]
             },
             {
                 "id": "p-rain-3",
@@ -824,7 +831,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Essential for Disney Cruise cantilevered infinity pool, waterslides, and Siloso beach swimming.",
                 "rule": "Protects phones and cash from chlorinated pool and sea spray.",
                 "icon": "lock",
-                "packed": False
+                "packed": False,
+                "target_days": [3, 5, 6]
             },
             {
                 "id": "p-rain-4",
@@ -833,7 +841,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Singapore sits 1° north of the equator. UV index frequently hits 11–12 (Extreme). Apply 20 mins before stepping outdoors.",
                 "rule": "Reapply every 2 hours when outdoors.",
                 "icon": "wb_sunny",
-                "packed": False
+                "packed": False,
+                "target_days": [2, 3, 5, 6, 7, 8]
             },
             {
                 "id": "p-rain-5",
@@ -842,7 +851,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Stops internal condensation and lens fogging when moving from cold air-conditioned rooms (19°C) to humid outdoors (31°C).",
                 "rule": "Drop into camera bag and stateroom pouch.",
                 "icon": "inventory_2",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 4, 8]
             },
 
             # Cruise Traditions & Special Items
@@ -853,7 +863,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Disney cruise doors are metal! Cruisers personalize their stateroom doors with custom name magnets (Shaiwal ❤️ Shaila Honeymoon).",
                 "rule": "Beloved Disney cruise tradition. Prepare printed magnets beforehand.",
                 "icon": "door_front",
-                "packed": False
+                "packed": False,
+                "target_days": [2]
             },
             {
                 "id": "p-cruise-2",
@@ -862,7 +873,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Used for holding your Disney 'Key to the World' cabin cards around the ship without carrying bags.",
                 "rule": "Wear comfortably around ship deck.",
                 "icon": "badge",
-                "packed": False
+                "packed": False,
+                "target_days": [2, 3, 4]
             },
             {
                 "id": "p-cruise-3",
@@ -871,7 +883,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Walt Disney Theatre and rotational dining restaurants are air-conditioned to 19°C. A light wrap keeps Shaila warm during Broadway shows.",
                 "rule": "Keep in evening bag.",
                 "icon": "ac_unit",
-                "packed": False
+                "packed": False,
+                "target_days": [2, 3, 4, 8]
             },
 
             # Health, Comfort & Pharmacy
@@ -882,7 +895,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Although the mega ship Disney Adventure has advanced stabilizers, keep a pack handy for high seas.",
                 "rule": "Take 30 mins before boarding if sea-sensitive.",
                 "icon": "medication",
-                "packed": False
+                "packed": False,
+                "target_days": [2, 3]
             },
             {
                 "id": "p-health-2",
@@ -891,7 +905,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "You will walk 12,000 to 18,000 steps daily across Gardens by the Bay, Universal Studios, and cruise decks.",
                 "rule": "Put inside sneakers or sandals on first sign of rubbing.",
                 "icon": "healing",
-                "packed": False
+                "packed": False,
+                "target_days": [6, 7, 8]
             },
             {
                 "id": "p-health-3",
@@ -900,7 +915,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Must-have for evening Mandai Rainforest Wildlife Lumina, Night Safari, and Sentosa coastal trails.",
                 "rule": "Non-aerosol spray (< 100ml for cabin).",
                 "icon": "bug_report",
-                "packed": False
+                "packed": False,
+                "target_days": [5, 7]
             },
             {
                 "id": "p-health-4",
@@ -909,7 +925,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Tropical humidity dehydrates quickly; pack electrolyte fizz tablets. Antacids for spicy hawker satay and chili crab.",
                 "rule": "Keep in original labeled foil strips.",
                 "icon": "medical_services",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 5, 8]
             },
 
             # Hand Luggage Day 1 Criticals
@@ -920,7 +937,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Keep in wallet. Tapped for MRT gates, Grab taxis, and 7-Eleven. Carry SGD 150 cash for hawker stalls.",
                 "rule": "Ensure International Card Usage is toggled ON in your banking app before flying.",
                 "icon": "credit_card",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 9]
             },
             {
                 "id": "p-hand-2",
@@ -929,7 +947,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "Never put travel documents in checked bags! Always in Shaiwal's secure daypack.",
                 "rule": "Keep 2 physical hard-copy sets + saved in your portal Document Vault.",
                 "icon": "folder_shared",
-                "packed": False
+                "packed": False,
+                "target_days": [1, 2, 4, 9]
             },
             {
                 "id": "p-hand-3",
@@ -938,7 +957,8 @@ DEFAULT_HONEYMOON_DATA = {
                 "detail": "On cruise embarkation day, checked luggage takes until 5 PM to arrive at Stateroom 11680. Hand luggage swimwear lets you hit the infinity pool at 1 PM!",
                 "rule": "Essential cruise pro-tip.",
                 "icon": "luggage",
-                "packed": False
+                "packed": False,
+                "target_days": [2]
             }
         ],
         "outfit_count_summary": {
