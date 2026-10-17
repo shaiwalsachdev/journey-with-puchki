@@ -1282,8 +1282,11 @@
                         </div>
                         <div class="pt-3 border-t border-gray-200/60 dark:border-white/10 flex items-center justify-between">
                             <span class="text-[11px] text-gray-500 dark:text-gray-400">Klook India Official</span>
-                            <div class="flex items-center gap-3">
-                                <button onclick="promptTicketActual('{{ t.id }}')" class="text-[11px] font-bold text-gray-500 hover:text-primary flex items-center gap-0.5">
+                            <div class="flex items-center gap-2.5">
+                                <button onclick="promptTicketLink('{{ t.id }}', '{{ t.link }}')" class="text-[11px] font-bold text-gray-400 hover:text-indigo-600 flex items-center gap-0.5" title="Update / Change Klook Link">
+                                    <span class="material-icons text-xs">link</span> Link
+                                </button>
+                                <button onclick="promptTicketActual('{{ t.id }}')" class="text-[11px] font-bold text-gray-500 hover:text-primary flex items-center gap-0.5" title="Update Actual Cost Paid">
                                     <span class="material-icons text-xs">edit</span> Cost
                                 </button>
                                 <a href="{{ t.link }}" target="_blank" rel="noopener noreferrer" 
@@ -2426,9 +2429,12 @@
                             <option value="Estimated">Estimated</option>
                             <option value="Budget">Budget</option>
                             <option value="Pending">Pending</option>
+                            <option value="To Book">To Book</option>
                             <option value="Booked">Booked</option>
                             <option value="Paid">Paid</option>
                         </select>
+                        <input type="url" id="exp-booking-link" placeholder="Klook / Booking Link (e.g. https://www.klook.com/...)" 
+                            class="flex-1 min-w-[200px] px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
                         <button type="submit" id="exp-submit-btn" 
                             class="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow">
                             + Add Expense
@@ -2460,8 +2466,16 @@
                                     <div class="font-medium text-gray-800 dark:text-gray-200">{{ exp.item }}</div>
                                     {% if exp.notes %}<div class="text-[11px] text-gray-400">{{ exp.notes }}</div>{% endif %}
                                     
-                                    <!-- Attached Ticket / Booking PDF -->
-                                    <div class="mt-1 flex items-center gap-2">
+                                    <!-- Attached Ticket / Booking PDF & Booking Link -->
+                                    <div class="mt-1 flex flex-wrap items-center gap-2">
+                                        {% if exp.booking_link %}
+                                        <a href="{{ exp.booking_link }}" target="_blank" rel="noopener noreferrer" 
+                                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-300/40 hover:bg-rose-500/20 transition-all">
+                                            <span class="material-icons text-xs">shopping_bag</span>
+                                            <span>Book on Klook / Online</span>
+                                            <span class="material-icons text-[10px]">open_in_new</span>
+                                        </a>
+                                        {% endif %}
                                         {% if exp.doc_url %}
                                         <a href="{{ exp.doc_url }}" target="_blank" rel="noopener noreferrer" 
                                             class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-300/40 hover:underline">
@@ -2498,7 +2512,7 @@
                                             class="p-1 rounded text-gray-400 hover:text-indigo-600 transition-colors" title="Attach / Replace Ticket PDF">
                                             <span class="material-icons text-sm">attach_file</span>
                                         </button>
-                                        <button onclick="editExpense('{{ exp.id }}', '{{ exp.item|escape }}', '{{ exp.category|escape }}', {{ exp.amount|default(0) }}, {{ exp.actual_amount|default(0) }}, '{{ exp.status|escape }}', '{{ exp.notes|default('')|escape }}')" 
+                                        <button onclick="editExpense('{{ exp.id }}', '{{ exp.item|escape }}', '{{ exp.category|escape }}', {{ exp.amount|default(0) }}, {{ exp.actual_amount|default(0) }}, '{{ exp.status|escape }}', '{{ exp.notes|default('')|escape }}', '{{ exp.booking_link|default('')|escape }}')" 
                                             class="p-1 rounded text-gray-400 hover:text-primary transition-colors" title="Edit Expense">
                                             <span class="material-icons text-sm">edit</span>
                                         </button>
@@ -2959,14 +2973,31 @@
             }
         }
 
+        async function promptTicketLink(ticketId, currentLink) {
+            const newLink = prompt("Enter or update the Klook booking link:", currentLink || "");
+            if (newLink !== null && newLink.trim() !== "") {
+                try {
+                    await fetch('/api/honeymoon/ticket/update', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: ticketId, link: newLink.trim() })
+                    });
+                    location.reload();
+                } catch (err) {
+                    console.error('Error updating ticket link:', err);
+                }
+            }
+        }
+
         // --- Expense CRUD ---
-        function editExpense(id, item, category, amount, actual, status, notes) {
+        function editExpense(id, item, category, amount, actual, status, notes, booking_link) {
             document.getElementById('exp-id').value = id;
             document.getElementById('exp-item').value = item;
             document.getElementById('exp-category').value = category;
             document.getElementById('exp-amount').value = amount;
             document.getElementById('exp-actual').value = actual || '';
             document.getElementById('exp-status').value = status;
+            document.getElementById('exp-booking-link').value = booking_link || '';
             document.getElementById('exp-submit-btn').textContent = "Update Expense";
             document.getElementById('exp-cancel-btn').classList.remove('hidden');
             document.getElementById('exp-item').focus();
@@ -2977,6 +3008,7 @@
             document.getElementById('exp-item').value = '';
             document.getElementById('exp-amount').value = '';
             document.getElementById('exp-actual').value = '';
+            document.getElementById('exp-booking-link').value = '';
             document.getElementById('exp-status').value = 'Estimated';
             document.getElementById('exp-submit-btn').textContent = "+ Add Expense";
             document.getElementById('exp-cancel-btn').classList.add('hidden');
@@ -3006,12 +3038,13 @@
             const amount = document.getElementById('exp-amount').value;
             const actual_amount = document.getElementById('exp-actual').value;
             const status = document.getElementById('exp-status').value;
+            const booking_link = document.getElementById('exp-booking-link').value;
 
             try {
                 const res = await fetch('/api/honeymoon/expense', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id, item, category, amount, actual_amount, status })
+                    body: JSON.stringify({ id, item, category, amount, actual_amount, status, booking_link })
                 });
                 const result = await res.json();
                 if (result.status === 'success') {

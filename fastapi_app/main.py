@@ -424,6 +424,7 @@ async def save_expense(request: Request):
     actual = float(body.get("actual_amount") or 0)
     status = body.get("status", "Estimated")
     notes = body.get("notes", "")
+    booking_link = body.get("booking_link", "").strip()
 
     data = await get_honeymoon_data()
     if not data:
@@ -443,6 +444,7 @@ async def save_expense(request: Request):
                 if "actual_amount" in body: exp["actual_amount"] = actual
                 if "status" in body: exp["status"] = status
                 if "notes" in body: exp["notes"] = notes
+                if "booking_link" in body: exp["booking_link"] = booking_link
                 updated = True
                 break
     
@@ -455,7 +457,8 @@ async def save_expense(request: Request):
             "actual_amount": actual,
             "status": status,
             "currency": "INR",
-            "notes": notes
+            "notes": notes,
+            "booking_link": booking_link
         })
 
     await save_honeymoon_data(data)
@@ -487,6 +490,7 @@ async def update_ticket(request: Request):
     status = body.get("status")
     actual_cost = body.get("actual_cost")
     booked = body.get("booked")
+    link = body.get("link")
 
     data = await get_honeymoon_data()
     if not data:
@@ -501,6 +505,8 @@ async def update_ticket(request: Request):
                     t["booked"] = bool(booked)
                 if actual_cost is not None:
                     t["actual_cost"] = actual_cost
+                if link is not None:
+                    t["link"] = link.strip()
                 break
 
     await save_honeymoon_data(data)
