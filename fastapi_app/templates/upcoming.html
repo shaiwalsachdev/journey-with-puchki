@@ -275,14 +275,28 @@
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
-            <div class="locked-card relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer" style="background: linear-gradient(135deg, #4a0e8f 0%, #c31432 100%);">
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
-                    <span class="material-icons text-5xl mb-3 opacity-50 lock-icon" style="animation-delay:0.5s">lock</span>
-                    <h5 class="font-serif text-2xl font-bold mb-1">Honeymoon</h5>
-                    <p class="text-xs uppercase tracking-widest opacity-50 font-semibold">Unlocks Dec 2026</p>
+            <!-- Honeymoon - UNLOCKED -->
+            <a href="/honeymoon" class="milestone-card relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer block border border-rose-300/40 dark:border-rose-500/20 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all" style="background: linear-gradient(135deg, #4a0e8f 0%, #c31432 100%);">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-30" style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1000&auto=format&fit=crop');"></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center relative z-10">
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-extrabold uppercase tracking-widest text-amber-300 mb-2 border border-white/20">
+                        <span class="material-icons text-xs">auto_awesome</span> Singapore & Disney Cruise
+                    </span>
+                    <h5 class="font-serif text-2xl md:text-3xl font-bold mb-1">Our Honeymoon</h5>
+                    <p class="text-xs uppercase tracking-widest text-pink-200 font-semibold mb-3">13–21 Dec 2026 · 8 Nights</p>
+
+                    <!-- Mini Live Countdown -->
+                    <div class="flex items-center gap-1.5 text-xs font-bold bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20">
+                        <span class="text-amber-400" id="honeymoon-countdown">Calculating...</span>
+                    </div>
+
+                    <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-white bg-white/20 hover:bg-white hover:text-rose-600 px-4 py-1.5 rounded-full transition-all border border-white/30 shadow">
+                        <span>Explore Disney Honeymoon</span>
+                        <span class="material-icons text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </span>
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </div>
+            </a>
         </div>
 
     </main>
@@ -312,6 +326,16 @@
 
             setTime(saganDate, 'sagan-days', 'sagan-hours', 'sagan-minutes', 'sagan-seconds');
             setTime(weddingDate, 'wedding-days', 'wedding-hours', 'wedding-minutes', 'wedding-seconds');
+
+            // Honeymoon countdown
+            const hmDate = new Date('2026-12-13T18:00:00');
+            const hmDiff = hmDate - now;
+            if (hmDiff > 0) {
+                const days = Math.floor(hmDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((hmDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const el = document.getElementById('honeymoon-countdown');
+                if (el) el.innerText = `⏳ ${days} Days, ${hours} Hours to Departure`;
+            }
         }
         setInterval(updateCountdowns, 1000);
         updateCountdowns();
