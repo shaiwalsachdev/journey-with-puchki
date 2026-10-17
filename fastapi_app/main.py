@@ -562,6 +562,85 @@ async def ai_adjust_itinerary(request: Request):
         return {"status": "error", "message": f"AI Agent error: {str(e)}"}
 
 
+@app.post("/api/honeymoon/document/upload")
+async def upload_honeymoon_document(
+    file: UploadFile = File(...),
+    name: str = Form(""),
+    category: str = Form("General")
+):
+    import uuid
+    from datetime import datetime
+    from fastapi_app.storage import upload_file
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    try:
+        # Generate safe filename and R2 key
+        file_bytes = await file.read()
+        file_size_kb = len(file_bytes) / 1024
+        size_str = f"{file_size_kb:.1f} KB" if file_size_kb < 1024 else f"{(file_size_kb/1024):.1f} MB"
+        
+        orig_filename = file.filename or "document.pdf"
+        clean_name = name.strip() or orig_filename
+        extension = orig_filename.split(".")[-1].lower() if "." in orig_filename else "pdf"
+        
+        doc_id = f"doc-{uuid.uuid4().hex[:8]}"
+        r2_key = f"honeymoon/docs/{doc_id}_{orig_filename.replace(' ', '_')}"
+        
+        import io
+        public_url = upload_file(io.BytesIO(file_bytes), r2_key, file.content_type or "application/pdf")
+
+        # Save to MongoDB
+        data = await get_honeymoon_data()
+        if not data:
+            data = DEFAULT_HONEYMOON_DATA
+
+        if "documents" not in data:
+            data["documents"] = []
+
+        new_doc = {
+            "id": doc_id,
+            "name": clean_name,
+            "category": category,
+            "filename": orig_filename,
+            "url": public_url,
+            "key": r2_key,
+            "size": size_str,
+            "uploaded_at": datetime.now().strftime("%d %b %Y, %I:%M %p")
+        }
+        data["documents"].append(new_doc)
+        await save_honeymoon_data(data)
+
+        return {"status": "success", "document": new_doc, "documents": data["documents"]}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+@app.delete("/api/honeymoon/document/{doc_id}")
+async def delete_honeymoon_document(doc_id: str):
+    from fastapi_app.storage import delete_file
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    docs = data.get("documents", [])
+    target = next((d for d in docs if d.get("id") == doc_id), None)
+    if target:
+        # Delete from R2 if key is stored
+        if "key" in target:
+            try:
+                delete_file(target["key"])
+            except Exception:
+                pass
+        data["documents"] = [d for d in docs if d.get("id") != doc_id]
+        await save_honeymoon_data(data)
+
+    return {"status": "success", "documents": data.get("documents", [])}
+
+
 
 @app.get("/birthday", response_class=HTMLResponse)
 async def birthday(request: Request):

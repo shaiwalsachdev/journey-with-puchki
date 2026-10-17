@@ -439,5 +439,18 @@ DEFAULT_HONEYMOON_DATA = {
         {"id": "exp-4", "category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Disney Adventure Sailing"},
         {"id": "exp-5", "category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "actual_amount": 0, "currency": "INR", "status": "To Book", "notes": "Cable Car, River Wonders, Gardens, MBS"},
         {"id": "exp-6", "category": "Food & Dining", "item": "Romantic Dinners, Cafes, Gelato & Street Food", "amount": 40000, "actual_amount": 0, "currency": "INR", "status": "Budget", "notes": "Trapizza, CHIJMES, Rotational dining tips"}
+    ],
+
+    # Uploaded Tickets, Vouchers & PDF Documents
+    "documents": [
+        {
+            "id": "doc-dcl",
+            "name": "Disney Adventure Cruise Confirmation",
+            "category": "Cruise",
+            "filename": "Disney_Adventure_Reservation_44985264.pdf",
+            "url": "https://pub-2849c719e70146059d0fc1f31f9b33a5.r2.dev/honeymoon/docs/disney_cruise_confirmation.pdf",
+            "size": "Deluxe Verandah #11680",
+            "uploaded_at": "Paid in Full · Dec 14-17"
+        }
     ]
 }

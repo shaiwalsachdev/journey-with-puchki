@@ -143,6 +143,10 @@
                 <span class="material-icons text-base">policy</span>
                 <span>Singapore Rules & Tips</span>
             </button>
+            <button onclick="switchTab('documents')" id="tab-btn-documents" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base text-rose-500">folder_shared</span>
+                <span>Document Vault & PDFs 📂</span>
+            </button>
             <button onclick="switchTab('expenses')" id="tab-btn-expenses" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
                 <span class="material-icons text-base">account_balance_wallet</span>
                 <span>Expense Tracker</span>
@@ -721,6 +725,101 @@
         </section>
 
         <!-- ========================================================
+             TAB: DOCUMENT VAULT & PDFS (TICKETS, VISAS, VOUCHERS)
+             ======================================================== -->
+        <section id="tab-content-documents" class="tab-content hidden space-y-8">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-rose-200/60 dark:border-white/10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="flex items-center gap-2 text-rose-500 mb-1">
+                            <span class="material-icons text-2xl">folder_shared</span>
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Tickets, Vouchers & Document Vault 📂</h2>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                            Upload flight e-tickets, hotel booking confirmations, Disney Cruise PDFs, and e-Visas. Access and download anytime anywhere!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Upload New Document Form -->
+                <form id="document-upload-form" onsubmit="handleUploadDocument(event)" class="bg-gray-50 dark:bg-white/5 p-4 sm:p-5 rounded-2xl border border-gray-200 dark:border-white/10 mb-8">
+                    <div class="flex items-center gap-2 mb-3 text-xs font-bold text-gray-700 dark:text-gray-300">
+                        <span class="material-icons text-base text-primary">cloud_upload</span>
+                        <span>Upload New Ticket / PDF / Image Voucher</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 items-center">
+                        <input type="text" id="doc-name" placeholder="Document Label (e.g. Flight Delhi-Singapore Tickets)" required
+                            class="flex-1 w-full px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                        <select id="doc-category"
+                            class="w-full sm:w-44 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
+                            <option value="Cruise">Cruise (Disney)</option>
+                            <option value="Flights">Flights</option>
+                            <option value="Hotels">Hotels (Carlton / Oasia)</option>
+                            <option value="Visa">Singapore Visa</option>
+                            <option value="Attractions">Sightseeing / Klook</option>
+                            <option value="Insurance">Travel Insurance</option>
+                            <option value="General">General</option>
+                        </select>
+                        <input type="file" id="doc-file" accept=".pdf,image/*" required
+                            class="w-full sm:w-64 text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                        <button type="submit" id="doc-upload-btn"
+                            class="w-full sm:w-auto px-5 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-all">
+                            <span class="material-icons text-sm">upload</span>
+                            <span>Upload</span>
+                        </button>
+                    </div>
+                    <div id="doc-upload-status" class="hidden text-xs mt-2 font-semibold"></div>
+                </form>
+
+                <!-- Document Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="documents-grid">
+                    {% for doc in honeymoon.documents %}
+                    <div class="p-5 rounded-3xl bg-white/70 dark:bg-gray-800/50 border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-300/30">
+                                    {{ doc.category }}
+                                </span>
+                                <span class="text-[10px] text-gray-400">{{ doc.size }}</span>
+                            </div>
+                            <div class="flex items-start gap-3 my-2">
+                                <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0">
+                                    <span class="material-icons text-xl">description</span>
+                                </div>
+                                <div class="overflow-hidden">
+                                    <h3 class="text-sm font-bold text-gray-900 dark:text-white truncate" title="{{ doc.name }}">{{ doc.name }}</h3>
+                                    <p class="text-[11px] text-gray-500 dark:text-gray-400 truncate">{{ doc.filename }}</p>
+                                </div>
+                            </div>
+                            {% if doc.uploaded_at %}
+                            <p class="text-[10px] text-gray-400 mt-1">Uploaded: {{ doc.uploaded_at }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="mt-4 pt-3 border-t border-gray-100 dark:border-white/5 flex items-center justify-between">
+                            <a href="{{ doc.url }}" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline">
+                                <span class="material-icons text-sm">visibility</span> View / Open
+                            </a>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ doc.url }}" download="{{ doc.filename }}"
+                                    class="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-xs flex items-center gap-1" title="Download to device">
+                                    <span class="material-icons text-sm">download</span> Download
+                                </a>
+                                <button onclick="deleteDocument('{{ doc.id }}')"
+                                    class="p-1.5 rounded-lg text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs" title="Delete">
+                                    <span class="material-icons text-sm">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
              TAB 6: LIVE EXPENSE TRACKER
              ======================================================== -->
         <section id="tab-content-expenses" class="tab-content hidden space-y-8">
@@ -1114,6 +1213,66 @@
                 msgBox.textContent = "Error connecting to AI planner agent.";
                 btn.disabled = false;
                 btn.innerHTML = `<span class="material-icons text-base">auto_fix_high</span><span>Adjust Itinerary</span>`;
+            }
+        }
+
+        // --- Document Vault Upload & Delete ---
+        async function handleUploadDocument(e) {
+            e.preventDefault();
+            const name = document.getElementById('doc-name').value.trim();
+            const category = document.getElementById('doc-category').value;
+            const fileInput = document.getElementById('doc-file');
+            const btn = document.getElementById('doc-upload-btn');
+            const statusBox = document.getElementById('doc-upload-status');
+
+            if (!fileInput.files || fileInput.files.length === 0) return;
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('name', name);
+            formData.append('category', category);
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-icons animate-spin text-sm">sync</span> Uploading...`;
+            statusBox.className = "text-xs mt-2 font-semibold text-blue-500 block";
+            statusBox.textContent = "Encrypting & uploading document to Cloudflare R2 Vault...";
+
+            try {
+                const res = await fetch('/api/honeymoon/document/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    statusBox.className = "text-xs mt-2 font-semibold text-emerald-500 block";
+                    statusBox.textContent = "Uploaded successfully!";
+                    triggerConfetti();
+                    setTimeout(() => location.reload(), 1200);
+                } else {
+                    statusBox.className = "text-xs mt-2 font-semibold text-rose-500 block";
+                    statusBox.textContent = result.message || "Upload failed.";
+                    btn.disabled = false;
+                    btn.innerHTML = `<span class="material-icons text-sm">upload</span><span>Upload</span>`;
+                }
+            } catch (err) {
+                console.error('Error uploading doc:', err);
+                statusBox.className = "text-xs mt-2 font-semibold text-rose-500 block";
+                statusBox.textContent = "Error uploading file. Please try again.";
+                btn.disabled = false;
+                btn.innerHTML = `<span class="material-icons text-sm">upload</span><span>Upload</span>`;
+            }
+        }
+
+        async function deleteDocument(docId) {
+            if (!confirm("Are you sure you want to remove this document from your vault?")) return;
+            try {
+                const res = await fetch(`/api/honeymoon/document/${docId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error deleting doc:', err);
             }
         }
 
