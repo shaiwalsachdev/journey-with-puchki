@@ -228,13 +228,21 @@ DEFAULT_HONEYMOON_DATA = {
         ]
     },
 
-    # Day-by-Day Itinerary with Real-time Options
+    # Day-by-Day Itinerary with Real-time Options & MRT Station Routing
     "days": [
         {
             "day": 1,
             "date": "Sunday, 13 December 2026",
             "title": "Welcome to Singapore & City Lights",
             "location": "Changi Airport ➔ Carlton Hotel",
+            "mrt_guide": {
+                "start": "Changi Airport Station (CG2)",
+                "end": "City Hall MRT (EW13 / NS25) or Bras Basah (CC2)",
+                "lines": "East-West Line (Green) ➔ Transfer at Tanah Merah to City Hall",
+                "route_desc": "Changi Airport MRT (CG2) ➔ Tanah Merah (EW4) cross platform ➔ City Hall MRT (EW13) Exit A. Carlton Hotel is directly a 4-minute walk (350m) across Bras Basah Rd.",
+                "fare": "~SGD 2.05 (Tap zero-forex card directly)",
+                "taxi_alternative": "Grab/Taxi ~20 mins (SGD 22–28) recommended with heavy honeymoon luggage."
+            },
             "schedule": [
                 {"time": "6:00 PM", "title": "Touchdown at Changi Airport", "desc": "Clear immigration, collect luggage, grab physical local SIM / eSIM or activate international roaming.", "icon": "flight_land"},
                 {"time": "6:45 PM – 7:15 PM", "title": "Transfer to Carlton Hotel", "desc": "Take taxi or Grab to Carlton Hotel (City Hall area). Check-in and freshen up.", "icon": "local_taxi"},
@@ -251,6 +259,14 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Monday, 14 December 2026",
             "title": "Boarding the Disney Adventure Cruise! 🚢🏰",
             "location": "Marina Bay Cruise Centre ➔ High Seas",
+            "mrt_guide": {
+                "start": "City Hall MRT (EW13 / NS25)",
+                "end": "Marina South Pier MRT (NS28) - Exit B",
+                "lines": "North-South Line (Red Line Direct)",
+                "route_desc": "Board North-South Line (Red) southbound at City Hall ➔ Ride 4 stops directly to Marina South Pier (NS28, terminal stop). Follow the sheltered, air-conditioned linkway (approx. 600m / 7-8 min walk) directly to Marina Bay Cruise Centre Singapore (MBCCS).",
+                "fare": "~SGD 1.60 per person",
+                "taxi_alternative": "Grab Taxi ~12 mins (SGD 12–16) directly to passenger drop-off portico."
+            },
             "schedule": [
                 {"time": "9:30 AM – 11:30 AM", "title": "Breakfast & Morning Leisure", "desc": "Enjoy breakfast at Carlton, leisurely stroll near National Gallery or Fort Canning Park.", "icon": "free_breakfast"},
                 {"time": "12:00 PM – 2:00 PM", "title": "Transfer to Marina Bay Cruise Terminal", "desc": "Arrive at terminal. Check-in, drop bags, and walk the red carpet onto the Disney Adventure!", "icon": "directions_boat"},
@@ -268,6 +284,12 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Tuesday, 15 December 2026",
             "title": "Disney Magic at Sea — Princesses, Romance & Thrills 👑✨",
             "location": "Disney Adventure High Seas",
+            "mrt_guide": {
+                "start": "High Seas (At Sea)",
+                "end": "Disney Adventure 7 Themed Realms",
+                "lines": "Ship Elevators & Grand Staircase",
+                "route_desc": "Sailing open international waters! No MRT today — navigate between Deck 4 Town Square, Deck 7 Wayfinder Bay, and Deck 11 Stateroom 11680."
+            },
             "schedule": [
                 {"time": "Morning", "title": "Fairytale Breakfast on Balcony / Buffet", "desc": "Wake up to endless ocean views. Indulge in Mickey waffles and fresh pastries.", "icon": "wb_sunny"},
                 {"time": "10:30 AM – 1:00 PM", "title": "Royal Meet & Greet with Disney Princesses", "desc": "Meet Cinderella, Belle, Jasmine, Rapunzel, and Ariel. Capture dream fairytale photos for Puchki!", "icon": "auto_awesome"},
@@ -284,6 +306,12 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Wednesday, 16 December 2026",
             "title": "Disney Sea Voyage & Pixar Magic 💫",
             "location": "High Seas Returning to Singapore",
+            "mrt_guide": {
+                "start": "High Seas (At Sea)",
+                "end": "Walt Disney Theatre & San Fransokyo",
+                "lines": "Ship Decks 3 to 14",
+                "route_desc": "Cruising smoothly back towards Singapore waters. Pack large luggage by midnight with Disney baggage tags."
+            },
             "schedule": [
                 {"time": "Daytime", "title": "Discovery Reef, Toy Story Place & Trivia", "desc": "Walk under the Little Mermaid coral ceilings, enjoy Toy Story slides, Disney movie marathons & trivia games.", "icon": "celebration"},
                 {"time": "Evening", "title": "Farewell Magical Dinner with Disney Friends", "desc": "Final evening rotational dining where characters bid personal farewells to guests.", "icon": "dinner_dining"},
@@ -298,6 +326,14 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Thursday, 17 December 2026",
             "title": "Sentosa Island, Cable Car & Wings of Time",
             "location": "Oasia Resort Sentosa & Siloso/Palawan Beach",
+            "mrt_guide": {
+                "start": "Marina South Pier MRT (NS28)",
+                "end": "Imbiah Station (Sentosa Express) / HarbourFront MRT (NE1 / CC29)",
+                "lines": "North-South Line ➔ Dhoby Ghaut ➔ North-East Line (Purple) to HarbourFront ➔ Sentosa Express Monorail",
+                "route_desc": "From Cruise Centre walk to Marina South Pier (NS28) ➔ Take North-South Line to Dhoby Ghaut (NS24) ➔ Transfer to North-East Line (Purple) to HarbourFront (NE1, VivoCity) ➔ Board Sentosa Express monorail to Imbiah Station (Oasia Resort Sentosa is right outside the station exit!).",
+                "fare": "~SGD 2.10 MRT + Monorail (Free Monorail once checked in at Oasia).",
+                "taxi_alternative": "Grab/Taxi ~18 mins (SGD 16–22) with suitcases directly to Oasia Resort lobby."
+            },
             "schedule": [
                 {"time": "7:00 AM – 8:30 AM", "title": "Cruise Disembarkation", "desc": "Follow cruise exit instructions. Clear customs at Marina Bay Cruise Centre.", "icon": "exit_to_app"},
                 {"time": "8:30 AM – 9:30 AM", "title": "Taxi to Oasia Resort Sentosa", "desc": "Arrive at Oasia Resort Sentosa. Leave luggage with concierge (check-in at 3 PM).", "icon": "hotel"},
@@ -317,6 +353,13 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Friday, 18 December 2026",
             "title": "Oceanarium Wonders & Harry Potter Magic",
             "location": "Resorts World Sentosa",
+            "mrt_guide": {
+                "start": "Imbiah Station (Sentosa Express, outside Oasia)",
+                "end": "Resorts World Station (Sentosa Express)",
+                "lines": "Sentosa Express Monorail (1 stop, 2 mins)",
+                "route_desc": "Hop on Sentosa Express at Imbiah Station ➔ Ride 1 stop (2 mins) to Resorts World Station. Walk 3 mins through the festive plaza to S.E.A. Aquarium & Harry Potter: Visions of Magic exhibition.",
+                "fare": "Free with Oasia Resort Sentosa guest pass!"
+            },
             "schedule": [
                 {"time": "9:30 AM – 12:30 PM", "title": "Singapore Oceanarium (S.E.A. Aquarium)", "desc": "Walk through giant glass tunnels surrounded by manta rays, sharks, and vibrant coral reefs.", "icon": "water"},
                 {"time": "12:30 PM – 2:00 PM", "title": "Lunch Break at Resorts World", "desc": "Enjoy lunch at Malaysian Food Street or Din Tai Fung / gourmet burger spots.", "icon": "restaurant"},
@@ -333,6 +376,13 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Saturday, 19 December 2026",
             "title": "River Wonders Pandas & Culture Shopping",
             "location": "Mandai Wildlife Reserve ➔ Little India ➔ Chinatown",
+            "mrt_guide": {
+                "start": "HarbourFront MRT (NE1)",
+                "end": "Khatib MRT (NS14) ➔ Mandai Shuttle ➔ Farrer Park (NE8) ➔ Chinatown (NE4)",
+                "lines": "North-East Line (Purple) ➔ North-South Line (Red) ➔ Mandai Khatib Shuttle Bus",
+                "route_desc": "1. To Mandai: Monorail to HarbourFront (NE1) ➔ Purple line to Dhoby Ghaut ➔ Red line northbound to Khatib (NS14 Exit A) ➔ Mandai Khatib Shuttle (SGD 1, every 10 min) directly to River Wonders. (Grab ~25 mins is very convenient here!).\n2. To Little India: Red Line south from Khatib ➔ Dhoby Ghaut ➔ Purple line to Farrer Park (NE8 Exit I for Mustafa Centre) or Little India (NE7).\n3. To Chinatown: Purple line direct from Little India (NE7) ➔ Chinatown MRT (NE4 Exit A directly into Pagoda Street market).",
+                "fare": "~SGD 2.20 per MRT leg."
+            },
             "schedule": [
                 {"time": "8:00 AM – 9:00 AM", "title": "Taxi to Mandai Wildlife Reserve", "desc": "Head north to Mandai for the river safari experience.", "icon": "directions_car"},
                 {"time": "9:00 AM – 12:00 PM", "title": "River Wonders & Giant Panda Forest", "desc": "Visit adorable Kai Kai and Jia Jia in their climate-controlled forest, Amazon Flooded Forest, and reservoir cruise.", "icon": "pets"},
@@ -351,6 +401,13 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Sunday, 20 December 2026",
             "title": "Gardens by the Bay, Marina Bay SkyPark & Light Show",
             "location": "Marina Bay & Gardens by the Bay",
+            "mrt_guide": {
+                "start": "HarbourFront MRT (NE1 / CC29)",
+                "end": "Gardens by the Bay MRT (TE22) & Bayfront MRT (CE1 / DT16)",
+                "lines": "Circle Line (Yellow) to Marina Bay (CE2) ➔ Thomson-East Coast Line (Brown) to TE22 OR Downtown Line (Blue)",
+                "route_desc": "Monorail from Oasia to VivoCity / HarbourFront ➔ Circle Line (Yellow) to Marina Bay (CE2) ➔ Transfer 1 stop on Thomson-East Coast Line to Gardens by the Bay MRT (TE22 Exit 1 right outside Flower Dome!). For evening SkyPark & Spectra: Walk through Dragonfly Bridge to Bayfront MRT (DT16/CE1 Exit B). Returning to Sentosa: Bayfront (Downtown line) ➔ Chinatown (Purple line) ➔ HarbourFront.",
+                "fare": "~SGD 1.90 each way."
+            },
             "schedule": [
                 {"time": "10:00 AM – 1:00 PM", "title": "Flower Dome & Cloud Forest", "desc": "World's largest glass greenhouse with indoor waterfall and mist walk.", "icon": "local_florist"},
                 {"time": "1:00 PM – 2:00 PM", "title": "Lunch at Marina Bay Sands", "desc": "Dine at The Shoppes at Marina Bay Sands or waterfront dining.", "icon": "restaurant"},
@@ -371,6 +428,14 @@ DEFAULT_HONEYMOON_DATA = {
             "date": "Monday, 21 December 2026",
             "title": "Jewel Changi Rain Vortex & Flight Home",
             "location": "Oasia Resort ➔ Jewel Changi ➔ Delhi",
+            "mrt_guide": {
+                "start": "HarbourFront MRT (NE1)",
+                "end": "Changi Airport MRT (CG2)",
+                "lines": "North-East Line (Purple) ➔ Outram Park ➔ East-West Line (Green) to Tanah Merah ➔ Changi Airport",
+                "route_desc": "Sentosa Express to HarbourFront ➔ North-East Line to Outram Park (NE3) ➔ East-West Line (Green) eastbound to Tanah Merah (EW4) ➔ Cross platform to Changi Airport (CG2). Directly connects to Jewel Changi Rain Vortex & Terminal 1/2/3.",
+                "fare": "~SGD 2.30 per person (approx. 50 mins).",
+                "taxi_alternative": "Grab/Taxi ~28 mins (SGD 26–32) highly recommended for luggage-free comfort."
+            },
             "schedule": [
                 {"time": "9:00 AM", "title": "Check-out of Oasia Resort Sentosa", "desc": "Take taxi to Changi Airport (~25–35 min).", "icon": "luggage"},
                 {"time": "10:00 AM – 12:30 PM", "title": "Jewel Changi & Rain Vortex", "desc": "Marvel at the world's tallest indoor waterfall (HSBC Rain Vortex) and lush Shiseido Forest Valley.", "icon": "water_drop"},
