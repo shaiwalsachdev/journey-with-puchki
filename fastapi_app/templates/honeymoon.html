@@ -1353,7 +1353,7 @@
                         <thead>
                             <tr class="border-b border-gray-200 dark:border-white/10 text-gray-400">
                                 <th class="pb-3 font-semibold">Category</th>
-                                <th class="pb-3 font-semibold">Item & Notes</th>
+                                <th class="pb-3 font-semibold">Item & Attached Ticket / Voucher</th>
                                 <th class="pb-3 font-semibold">Status</th>
                                 <th class="pb-3 font-semibold text-right">Estimated</th>
                                 <th class="pb-3 font-semibold text-right">Actual Spent</th>
@@ -1367,6 +1367,24 @@
                                 <td class="py-3">
                                     <div class="font-medium text-gray-800 dark:text-gray-200">{{ exp.item }}</div>
                                     {% if exp.notes %}<div class="text-[11px] text-gray-400">{{ exp.notes }}</div>{% endif %}
+                                    
+                                    <!-- Attached Ticket / Booking PDF -->
+                                    <div class="mt-1 flex items-center gap-2">
+                                        {% if exp.doc_url %}
+                                        <a href="{{ exp.doc_url }}" target="_blank" rel="noopener noreferrer" 
+                                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-300/40 hover:underline">
+                                            <span class="material-icons text-xs">attachment</span>
+                                            <span>{{ exp.doc_name|default('View Ticket / Voucher PDF') }}</span>
+                                            <span class="material-icons text-[10px]">open_in_new</span>
+                                        </a>
+                                        {% else %}
+                                        <button onclick="openAttachExpenseDoc('{{ exp.id }}', '{{ exp.item|escape }}', '{{ exp.category|escape }}')" 
+                                            class="inline-flex items-center gap-0.5 text-[10px] font-bold text-indigo-500 hover:text-indigo-600 hover:underline">
+                                            <span class="material-icons text-xs">upload_file</span>
+                                            <span>+ Attach Ticket / Booking PDF</span>
+                                        </button>
+                                        {% endif %}
+                                    </div>
                                 </td>
                                 <td class="py-3">
                                     <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {% if exp.status in ['Booked', 'Paid'] %}bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300{% elif exp.status == 'Pending' %}bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300{% else %}bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300{% endif %}">
@@ -1379,6 +1397,10 @@
                                 </td>
                                 <td class="py-3 text-right">
                                     <div class="flex items-center justify-end gap-1">
+                                        <button onclick="openAttachExpenseDoc('{{ exp.id }}', '{{ exp.item|escape }}', '{{ exp.category|escape }}')" 
+                                            class="p-1 rounded text-gray-400 hover:text-indigo-600 transition-colors" title="Attach / Replace Ticket PDF">
+                                            <span class="material-icons text-sm">attach_file</span>
+                                        </button>
                                         <button onclick="editExpense('{{ exp.id }}', '{{ exp.item|escape }}', '{{ exp.category|escape }}', {{ exp.amount|default(0) }}, {{ exp.actual_amount|default(0) }}, '{{ exp.status|escape }}', '{{ exp.notes|default('')|escape }}')" 
                                             class="p-1 rounded text-gray-400 hover:text-primary transition-colors" title="Edit Expense">
                                             <span class="material-icons text-sm">edit</span>
@@ -1397,6 +1419,55 @@
             </div>
         </section>
     </main>
+
+    <!-- Attach Document to Expense Modal -->
+    <div id="attach-doc-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+            <div class="flex items-center gap-2 text-primary font-bold text-lg mb-1">
+                <span class="material-icons text-xl">upload_file</span>
+                <h3>Attach Ticket / Booking PDF</h3>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4" id="attach-doc-subtitle">Upload your flight, hotel, or attraction ticket for this expense.</p>
+            
+            <form onsubmit="handleAttachExpenseDoc(event)" class="space-y-4">
+                <input type="hidden" id="attach-exp-id" value="" />
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Expense Item</label>
+                    <input type="text" id="attach-exp-name" readonly 
+                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Document Label</label>
+                    <input type="text" id="attach-doc-name" placeholder="e.g. Flight Air India Tickets / Carlton Voucher" required 
+                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Category</label>
+                    <select id="attach-doc-category" class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
+                        <option value="Flights">Flights</option>
+                        <option value="Hotels">Hotels (Carlton / Oasia)</option>
+                        <option value="Cruise">Cruise (Disney)</option>
+                        <option value="Attractions">Attractions / Klook</option>
+                        <option value="Visa">Visa</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Select File (PDF or Image)</label>
+                    <input type="file" id="attach-doc-file" accept=".pdf,image/*" required 
+                        class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                </div>
+                <div id="attach-doc-status" class="hidden text-xs font-semibold"></div>
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeAttachDocModal()" class="px-4 py-2 text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 font-semibold">Cancel</button>
+                    <button type="submit" id="attach-doc-btn" class="px-5 py-2 text-xs font-bold bg-primary hover:bg-primary-dark text-white rounded-xl shadow transition-all flex items-center gap-1">
+                        <span class="material-icons text-sm">cloud_upload</span>
+                        <span>Upload & Attach</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Dining Place Modal -->
     <div id="dining-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
@@ -1733,6 +1804,82 @@
                 statusBox.textContent = "Error uploading file. Please try again.";
                 btn.disabled = false;
                 btn.innerHTML = `<span class="material-icons text-sm">upload</span><span>Upload</span>`;
+            }
+        }
+
+        // --- Attach Document to Expense Modal Handlers ---
+        function openAttachExpenseDoc(expId, expItem, expCategory) {
+            document.getElementById('attach-exp-id').value = expId;
+            document.getElementById('attach-exp-name').value = expItem;
+            document.getElementById('attach-doc-name').value = `${expItem} - Ticket / Booking`;
+            
+            // Auto match category if possible
+            const catSelect = document.getElementById('attach-doc-category');
+            if (expCategory && Array.from(catSelect.options).some(o => o.value === expCategory)) {
+                catSelect.value = expCategory;
+            } else {
+                catSelect.value = 'General';
+            }
+
+            document.getElementById('attach-doc-file').value = '';
+            document.getElementById('attach-doc-status').className = 'hidden';
+            
+            const modal = document.getElementById('attach-doc-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAttachDocModal() {
+            const modal = document.getElementById('attach-doc-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function handleAttachExpenseDoc(e) {
+            e.preventDefault();
+            const expId = document.getElementById('attach-exp-id').value;
+            const name = document.getElementById('attach-doc-name').value.trim();
+            const category = document.getElementById('attach-doc-category').value;
+            const fileInput = document.getElementById('attach-doc-file');
+            const btn = document.getElementById('attach-doc-btn');
+            const statusBox = document.getElementById('attach-doc-status');
+
+            if (!fileInput.files || fileInput.files.length === 0) return;
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('name', name);
+            formData.append('category', category);
+            formData.append('expense_id', expId);
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-icons animate-spin text-sm">sync</span> Uploading...`;
+            statusBox.className = "text-xs mt-2 font-semibold text-blue-500 block";
+            statusBox.textContent = "Uploading to Cloudflare R2 and linking to expense...";
+
+            try {
+                const res = await fetch('/api/honeymoon/document/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    statusBox.className = "text-xs mt-2 font-semibold text-emerald-500 block";
+                    statusBox.textContent = "Attached successfully!";
+                    triggerConfetti();
+                    setTimeout(() => location.reload(), 1200);
+                } else {
+                    statusBox.className = "text-xs mt-2 font-semibold text-rose-500 block";
+                    statusBox.textContent = result.message || "Upload failed.";
+                    btn.disabled = false;
+                    btn.innerHTML = `<span class="material-icons text-sm">cloud_upload</span><span>Upload & Attach</span>`;
+                }
+            } catch (err) {
+                console.error('Error attaching doc to expense:', err);
+                statusBox.className = "text-xs mt-2 font-semibold text-rose-500 block";
+                statusBox.textContent = "Error uploading file. Please try again.";
+                btn.disabled = false;
+                btn.innerHTML = `<span class="material-icons text-sm">cloud_upload</span><span>Upload & Attach</span>`;
             }
         }
 

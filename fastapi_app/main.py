@@ -566,7 +566,8 @@ async def ai_adjust_itinerary(request: Request):
 async def upload_honeymoon_document(
     file: UploadFile = File(...),
     name: str = Form(""),
-    category: str = Form("General")
+    category: str = Form("General"),
+    expense_id: str = Form("")
 ):
     import uuid
     from datetime import datetime
@@ -606,12 +607,23 @@ async def upload_honeymoon_document(
             "url": public_url,
             "key": r2_key,
             "size": size_str,
+            "expense_id": expense_id or None,
             "uploaded_at": datetime.now().strftime("%d %b %Y, %I:%M %p")
         }
         data["documents"].append(new_doc)
+
+        # If expense_id provided, attach document link directly to that expense
+        if expense_id and "expenses" in data:
+            for exp in data["expenses"]:
+                if exp.get("id") == expense_id:
+                    exp["doc_url"] = public_url
+                    exp["doc_name"] = clean_name
+                    exp["doc_id"] = doc_id
+                    break
+
         await save_honeymoon_data(data)
 
-        return {"status": "success", "document": new_doc, "documents": data["documents"]}
+        return {"status": "success", "document": new_doc, "documents": data["documents"], "expenses": data.get("expenses", [])}
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
