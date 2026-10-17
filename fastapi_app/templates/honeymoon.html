@@ -2290,13 +2290,38 @@
              ======================================================== -->
         <section id="tab-content-expenses" class="tab-content hidden space-y-8">
             <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                {% set total_estimated = honeymoon.expenses | map(attribute='amount') | sum %}
+                {% set total_actual = honeymoon.expenses | map(attribute='actual_amount') | sum %}
+                {% set remaining_budget = total_estimated - total_actual %}
+
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Honeymoon Budget & Expense Tracker</h2>
-                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Keep track of flights, hotels, activities, food, and shopping.</p>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Honeymoon Budget & Live Expense Tracker 💳</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Track total estimated budget vs actual money paid across flights, hotels, cruise, and insurance.</p>
                     </div>
-                    <div class="bg-gradient-to-r from-rose-500 to-amber-500 text-white px-5 py-2.5 rounded-2xl shadow font-bold text-sm">
-                        Total Estimated: <span id="total-expense-display">₹2,90,500</span>
+
+                    <!-- Summary Stats: Actual Spent vs Estimated Budget -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <!-- Actual Spent Till Now -->
+                        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white px-4 py-3 rounded-2xl shadow-md border border-emerald-400/40">
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-100 block">Actual Spent Till Now</span>
+                            <span class="text-lg sm:text-xl font-black block" id="total-actual-display">₹{{ "{:,.0f}".format(total_actual) }}</span>
+                            <span class="text-[10px] text-emerald-100">Paid in Full (Confirmed)</span>
+                        </div>
+
+                        <!-- Total Estimated Budget -->
+                        <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white px-4 py-3 rounded-2xl shadow-md border border-rose-400/40">
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider text-rose-100 block">Total Est. Budget</span>
+                            <span class="text-lg sm:text-xl font-black block" id="total-expense-display">₹{{ "{:,.0f}".format(total_estimated) }}</span>
+                            <span class="text-[10px] text-rose-100">Planned Honeymoon Cap</span>
+                        </div>
+
+                        <!-- Remaining to Pay / Unspent Budget -->
+                        <div class="col-span-2 sm:col-span-1 bg-gradient-to-br from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-2xl shadow-md border border-indigo-400/40">
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-100 block">Remaining to Spend</span>
+                            <span class="text-lg sm:text-xl font-black block">₹{{ "{:,.0f}".format(remaining_budget if remaining_budget > 0 else 0) }}</span>
+                            <span class="text-[10px] text-indigo-100">Visas, Passes & Dining</span>
+                        </div>
                     </div>
                 </div>
 
@@ -2407,6 +2432,22 @@
                             </tr>
                             {% endfor %}
                         </tbody>
+                        <tfoot class="border-t-2 border-gray-300 dark:border-white/20 bg-gray-50/70 dark:bg-white/5 font-extrabold text-xs sm:text-sm">
+                            <tr>
+                                <td colspan="3" class="py-3 px-1 text-gray-900 dark:text-white uppercase tracking-wider">
+                                    Total Spend Overview
+                                </td>
+                                <td class="py-3 text-right text-gray-900 dark:text-white">
+                                    ₹{{ "{:,.0f}".format(total_estimated) }}
+                                </td>
+                                <td class="py-3 text-right text-emerald-600 dark:text-emerald-400">
+                                    ₹{{ "{:,.0f}".format(total_actual) }}
+                                </td>
+                                <td class="py-3 text-right text-[10px] text-gray-400">
+                                    Confirmed
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
