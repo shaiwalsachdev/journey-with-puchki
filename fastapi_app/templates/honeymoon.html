@@ -65,11 +65,170 @@
             background: #f43f5e;
             border-radius: 9999px;
         }
+
+        /* Floating Disney Characters & Magical Particles */
+        .disney-character-float {
+            position: fixed;
+            pointer-events: auto;
+            cursor: pointer;
+            z-index: 45;
+            user-select: none;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.18));
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+        }
+        .disney-character-float:hover {
+            transform: scale(1.3) rotate(8deg) !important;
+            filter: drop-shadow(0 15px 25px rgba(244, 63, 94, 0.5));
+        }
+
+        @keyframes floatDriftA {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(35px, -45px) rotate(6deg); }
+            50% { transform: translate(-25px, -90px) rotate(-4deg); }
+            75% { transform: translate(40px, -40px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        @keyframes floatDriftB {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            30% { transform: translate(-40px, 40px) rotate(-8deg); }
+            60% { transform: translate(30px, 80px) rotate(6deg); }
+            85% { transform: translate(-20px, 35px) rotate(-4deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        @keyframes floatAcrossScreen {
+            0% { transform: translateX(-120px) translateY(0) rotate(0deg); }
+            50% { transform: translateX(calc(50vw)) translateY(-60px) rotate(10deg); }
+            100% { transform: translateX(calc(100vw + 120px)) translateY(0) rotate(0deg); }
+        }
+
+        @keyframes floatAcrossReverse {
+            0% { transform: translateX(calc(100vw + 120px)) translateY(0) rotate(0deg); }
+            50% { transform: translateX(calc(50vw)) translateY(70px) rotate(-10deg); }
+            100% { transform: translateX(-120px) translateY(0) rotate(0deg); }
+        }
+
+        @keyframes pixieSparkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 0.9; transform: scale(1.3) rotate(180deg); }
+        }
+
+        .pixie-sparkle {
+            animation: pixieSparkle 3s ease-in-out infinite;
+        }
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display transition-colors duration-300 min-h-screen">
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display transition-colors duration-300 min-h-screen relative overflow-x-hidden">
     {% include 'partials/navbar.html' %}
+
+    <!-- ========================================================
+         FLOATING DISNEY CHARACTERS & FAIRYTALE ANIMATIONS
+         ======================================================== -->
+    <div id="disney-floating-realm" class="pointer-events-none fixed inset-0 z-40 overflow-hidden">
+        <!-- Floating Disney Character 1: Mickey Mouse (Classic Sailor / Captain) -->
+        <div onclick="disneyCharacterClick('Mickey Mouse', 'Oh boy! Welcome aboard the Disney Adventure, Shaila & Shaiwal! 🚢✨')" 
+             class="disney-character-float absolute left-[4%] top-[18%]"
+             style="animation: floatDriftA 11s ease-in-out infinite; width: 68px;" title="Mickey Mouse (Click me!)">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/889/889140.png';" 
+                 class="hidden" />
+            <div class="relative group cursor-pointer pointer-events-auto">
+                <span class="text-4xl sm:text-5xl block transform group-hover:scale-125 transition-transform duration-300">🐭</span>
+                <span class="absolute -bottom-2 -right-1 text-xs">⭐</span>
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[9px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Mickey</span>
+            </div>
+        </div>
+
+        <!-- Floating Disney Character 2: Minnie Mouse (Princess Bow & Gown) -->
+        <div onclick="disneyCharacterClick('Minnie Mouse', 'Yoo-hoo! Have the most magical and romantic honeymoon, Shaila! 🎀💖')" 
+             class="disney-character-float absolute right-[5%] top-[24%]"
+             style="animation: floatDriftB 13s ease-in-out infinite; animation-delay: -2s; width: 68px;" title="Minnie Mouse (Click me!)">
+            <div class="relative group cursor-pointer pointer-events-auto">
+                <span class="text-4xl sm:text-5xl block transform group-hover:scale-125 transition-transform duration-300">🎀</span>
+                <span class="absolute -top-1 -left-2 text-2xl">✨</span>
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-pink-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Minnie</span>
+            </div>
+        </div>
+
+        <!-- Floating Disney Princess 1: Cinderella (Glass Slipper & Ball Gown) -->
+        <div onclick="disneyCharacterClick('Cinderella', 'A dream is a wish your heart makes! Congratulations to Shaiwal & Shaila! 👑💙')" 
+             class="disney-character-float absolute left-[6%] top-[52%]"
+             style="animation: floatDriftB 14s ease-in-out infinite; animation-delay: -5s;" title="Cinderella (Click me!)">
+            <div class="relative group cursor-pointer pointer-events-auto">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-sky-400 to-blue-600 flex items-center justify-center text-white text-2xl shadow-xl border-2 border-white/60">
+                    👸🏼
+                </div>
+                <span class="absolute -top-1 -right-1 text-base">👠</span>
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-sky-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Cinderella</span>
+            </div>
+        </div>
+
+        <!-- Floating Disney Princess 2: Belle (Enchanted Rose) -->
+        <div onclick="disneyCharacterClick('Belle', 'Tale as old as time, true as it can be! Cherish every moment together! 🌹💛')" 
+             class="disney-character-float absolute right-[6%] top-[60%]"
+             style="animation: floatDriftA 12s ease-in-out infinite; animation-delay: -3s;" title="Belle (Click me!)">
+            <div class="relative group cursor-pointer pointer-events-auto">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-300 to-yellow-500 flex items-center justify-center text-white text-2xl shadow-xl border-2 border-white/60">
+                    👸🏽
+                </div>
+                <span class="absolute -bottom-1 -left-1 text-base">🌹</span>
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-amber-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Belle</span>
+            </div>
+        </div>
+
+        <!-- Floating Disney Princess 3: Rapunzel (Sun Kingdom & Lanterns) -->
+        <div onclick="disneyCharacterClick('Rapunzel', 'And at last I see the light! Your fairytale adventure has begun! ☀️💜')" 
+             class="disney-character-float absolute left-[8%] top-[80%]"
+             style="animation: floatDriftA 15s ease-in-out infinite; animation-delay: -7s;" title="Rapunzel (Click me!)">
+            <div class="relative group cursor-pointer pointer-events-auto">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-400 to-pink-500 flex items-center justify-center text-white text-2xl shadow-xl border-2 border-white/60">
+                    🌸
+                </div>
+                <span class="absolute -top-1 -right-1 text-base">🏮</span>
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Rapunzel</span>
+            </div>
+        </div>
+
+        <!-- Floating Disney Princess 4: Ariel (The Little Mermaid) -->
+        <div onclick="disneyCharacterClick('Ariel', 'Life is the bubbles under the sea on Disney Adventure! 🧜‍♀️🌊')" 
+             class="disney-character-float absolute right-[7%] top-[84%]"
+             style="animation: floatDriftB 13s ease-in-out infinite; animation-delay: -4s;" title="Ariel (Click me!)">
+            <div class="relative group cursor-pointer pointer-events-auto">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-600 flex items-center justify-center text-white text-2xl shadow-xl border-2 border-white/60">
+                    🧜‍♀️
+                </div>
+                <span class="absolute -bottom-1 -right-1 text-base">🐚</span>
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Ariel</span>
+            </div>
+        </div>
+
+        <!-- Moving Across Screen: Baymax (San Fransokyo Realm Fly-by) -->
+        <div onclick="disneyCharacterClick('Baymax', 'Hello. I am Baymax, your personal healthcare companion. I rate your honeymoon happiness 10 out of 10! 🤍')"
+             class="disney-character-float absolute top-[40%] pointer-events-auto"
+             style="animation: floatAcrossScreen 38s linear infinite; width: 70px;" title="Baymax flying across (Click me!)">
+            <div class="flex items-center gap-1.5 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-2xl border border-red-500/40">
+                <span class="text-2xl animate-bounce">🤖</span>
+                <span class="text-[10px] font-extrabold text-red-500 uppercase tracking-wider">Baymax</span>
+            </div>
+        </div>
+
+        <!-- Moving Across Screen (Reverse): Tinkerbell & Pixie Dust -->
+        <div onclick="disneyCharacterClick('Tinker Bell', 'Faith, trust, and a little bit of pixie dust for Shaiwal & Shaila! 🧚‍♀️✨')"
+             class="disney-character-float absolute top-[68%] pointer-events-auto"
+             style="animation: floatAcrossReverse 42s linear infinite; animation-delay: -10s; width: 80px;" title="Tinkerbell (Click me!)">
+            <div class="flex items-center gap-1 bg-amber-400/90 text-amber-950 px-3 py-1 rounded-full shadow-2xl border border-white font-bold text-[10px] animate-pulse">
+                <span class="text-xl">🧚‍♀️</span>
+                <span>Pixie Dust</span>
+            </div>
+        </div>
+
+        <!-- Ambient Floating Sparkles -->
+        <div class="absolute left-[20%] top-[35%] text-2xl pixie-sparkle opacity-40">✨</div>
+        <div class="absolute right-[22%] top-[45%] text-xl pixie-sparkle opacity-50" style="animation-delay: 1.5s;">💖</div>
+        <div class="absolute left-[30%] top-[70%] text-xl pixie-sparkle opacity-40" style="animation-delay: 2.2s;">🌟</div>
+        <div class="absolute right-[35%] top-[85%] text-2xl pixie-sparkle opacity-40" style="animation-delay: 0.8s;">✨</div>
+    </div>
 
     <!-- Honeymoon Hero Banner -->
     <header class="relative pt-32 pb-16 sm:pb-24 px-4 overflow-hidden">
@@ -2735,6 +2894,35 @@
             } catch (err) {
                 console.error('Error deleting packing item:', err);
             }
+        }
+
+        // --- Disney Character Interactive Speech & Sparkle ---
+        function disneyCharacterClick(name, quote) {
+            triggerConfetti();
+            
+            // Remove existing toast if any
+            const oldToast = document.getElementById('disney-speech-toast');
+            if (oldToast) oldToast.remove();
+
+            const toast = document.createElement('div');
+            toast.id = 'disney-speech-toast';
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 text-white px-6 py-3.5 rounded-full shadow-2xl border-2 border-white/60 flex items-center gap-3 animate-bounce max-w-[90vw] sm:max-w-md';
+            toast.innerHTML = `
+                <span class="text-2xl shrink-0">✨</span>
+                <div class="text-xs sm:text-sm font-bold leading-tight">
+                    <span class="text-amber-200 block text-[10px] uppercase tracking-wider">${name} says:</span>
+                    <span>"${quote}"</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                if (toast && toast.parentNode) {
+                    toast.classList.remove('animate-bounce');
+                    toast.classList.add('transition-opacity', 'duration-500', 'opacity-0');
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 5500);
         }
 
         function triggerConfetti() {
