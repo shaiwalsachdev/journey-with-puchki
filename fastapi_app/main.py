@@ -303,14 +303,19 @@ async def toggle_honeymoon_checklist(request: Request):
 
 
 @app.post("/api/honeymoon/expense")
-async def add_or_update_expense(request: Request):
+async def save_expense(request: Request):
+    import uuid
     from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
     from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
     body = await request.json()
-    item = body.get("item")
-    amount = float(body.get("amount", 0))
+    
+    exp_id = body.get("id")
+    item = body.get("item", "").strip()
     category = body.get("category", "General")
+    estimated = float(body.get("amount") or body.get("estimated_amount") or 0)
+    actual = float(body.get("actual_amount") or 0)
     status = body.get("status", "Estimated")
+    notes = body.get("notes", "")
 
     data = await get_honeymoon_data()
     if not data:
@@ -319,16 +324,242 @@ async def add_or_update_expense(request: Request):
     if "expenses" not in data:
         data["expenses"] = []
 
-    data["expenses"].append({
-        "item": item,
-        "amount": amount,
-        "category": category,
-        "status": status,
-        "currency": "INR"
-    })
+    # Update if exp_id exists, else add
+    updated = False
+    if exp_id:
+        for exp in data["expenses"]:
+            if exp.get("id") == exp_id:
+                exp["item"] = item
+                exp["category"] = category
+                exp["amount"] = estimated
+                exp["actual_amount"] = actual
+                exp["status"] = status
+                exp["notes"] = notes
+                updated = True
+                break
+    
+    if not updated:
+        data["expenses"].append({
+            "id": exp_id or f"exp-{uuid.uuid4().hex[:8]}",
+            "item": item,
+            "category": category,
+            "amount": estimated,
+            "actual_amount": actual,
+            "status": status,
+            "currency": "INR",
+            "notes": notes
+        })
 
     await save_honeymoon_data(data)
     return {"status": "success", "expenses": data["expenses"]}
+
+
+@app.delete("/api/honeymoon/expense/{exp_id}")
+async def delete_expense(exp_id: str):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "expenses" in data:
+        data["expenses"] = [e for e in data["expenses"] if e.get("id") != exp_id]
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "expenses": data.get("expenses", [])}
+
+
+@app.post("/api/honeymoon/ticket/update")
+async def update_ticket(request: Request):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    ticket_id = body.get("id")
+    status = body.get("status")
+    actual_cost = body.get("actual_cost")
+    booked = body.get("booked")
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "klook_tickets" in data:
+        for t in data["klook_tickets"]:
+            if t.get("id") == ticket_id:
+                if status is not None:
+                    t["status"] = status
+                if booked is not None:
+                    t["booked"] = bool(booked)
+                if actual_cost is not None:
+                    t["actual_cost"] = actual_cost
+                break
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "tickets": data.get("klook_tickets", [])}
+
+
+@app.post("/api/honeymoon/dining/save")
+async def save_dining_place(request: Request):
+    import uuid
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    
+    d_id = body.get("id")
+    name = body.get("name", "").strip()
+    area = body.get("area", "")
+    cuisine = body.get("cuisine", "")
+    highlight = body.get("highlight", "")
+    status = body.get("status", "Shortlisted")
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "dining_places" not in data:
+        data["dining_places"] = []
+
+    updated = False
+    if d_id:
+        for d in data["dining_places"]:
+            if d.get("id") == d_id:
+                d["name"] = name
+                d["area"] = area
+                d["cuisine"] = cuisine
+                d["highlight"] = highlight
+                d["status"] = status
+                updated = True
+                break
+
+    if not updated:
+        data["dining_places"].append({
+            "id": d_id or f"d-{uuid.uuid4().hex[:8]}",
+            "name": name,
+            "area": area,
+            "cuisine": cuisine,
+            "highlight": highlight,
+            "status": status
+        })
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "dining_places": data["dining_places"]}
+
+
+@app.delete("/api/honeymoon/dining/{d_id}")
+async def delete_dining_place(d_id: str):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "dining_places" in data:
+        data["dining_places"] = [d for d in data["dining_places"] if d.get("id") != d_id]
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "dining_places": data.get("dining_places", [])}
+
+
+@app.post("/api/honeymoon/ai-adjust")
+async def ai_adjust_itinerary(request: Request):
+    import os
+    import json
+    from google import genai
+    from google.genai import types
+    from dotenv import load_dotenv
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    load_dotenv()
+    body = await request.json()
+    user_prompt = body.get("prompt", "").strip()
+    selected_day = body.get("day") # optional day number (1-9)
+
+    if not user_prompt:
+        return {"status": "error", "message": "Please provide your request or choice for the day."}
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    if not api_key:
+        return {"status": "error", "message": "Gemini API key is not configured."}
+
+    # Context about the trip
+    current_days = data.get("days", [])
+    
+    system_instruction = (
+        "You are an expert Singapore & Disney Cruise honeymoon planner AI agent. "
+        "The user is currently on or planning their honeymoon (Dec 13-21, 2026 for Shaiwal & Shaila). "
+        "They have made a choice or want to adjust their schedule (e.g., 'We went to Sentosa beach in morning and want Italian lunch now', "
+        "'It is raining today, change afternoon plan', 'We want to skip River Wonders and go to Chinatown instead', "
+        "'Adjust Day 5 schedule to include Trapizza for dinner'). "
+        "Your task is to smartly update the specific day's schedule items, time slots, and curated options while preserving the overall trip flow and romantic Disney/Singapore honeymoon vibe. "
+        "Return a JSON object containing: "
+        "1. 'summary': A warm, concise explanation of the adjustments made for the couple. "
+        "2. 'updated_day': The complete updated Day object with keys: 'day' (integer), 'date' (string), 'title' (string), 'location' (string), 'schedule' (array of {time, title, desc, icon}), 'options' (array of {title, desc}). "
+        "3. 'suggested_expense': (optional object with {item, amount, category, status} if the adjustment involves a new cost, e.g. taxi or dining)."
+    )
+
+    user_message = (
+        f"Trip Context: Singapore & Disney Cruise Honeymoon (Dec 13-21, 2026).\n"
+        f"Target Day: Day {selected_day if selected_day else 'Appropriate day based on context'}\n"
+        f"User Choice / Real-time Update: \"{user_prompt}\"\n\n"
+        f"Current Days Itinerary Snapshot:\n{json.dumps(current_days, indent=2)}\n\n"
+        f"Please update the schedule seamlessly and respond strictly in valid JSON matching the schema."
+    )
+
+    try:
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=user_message,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                response_mime_type="application/json",
+                temperature=0.4,
+            ),
+        )
+        ai_result = json.loads(response.text)
+        
+        # Merge updated day into honeymoon data
+        updated_day = ai_result.get("updated_day")
+        if updated_day and "day" in updated_day:
+            day_num = updated_day["day"]
+            for idx, d in enumerate(data.get("days", [])):
+                if d.get("day") == day_num:
+                    data["days"][idx] = updated_day
+                    break
+            
+            # Optionally add suggested expense
+            suggested_exp = ai_result.get("suggested_expense")
+            if suggested_exp and isinstance(suggested_exp, dict) and suggested_exp.get("item"):
+                import uuid
+                data.setdefault("expenses", []).append({
+                    "id": f"exp-{uuid.uuid4().hex[:8]}",
+                    "item": suggested_exp.get("item"),
+                    "amount": float(suggested_exp.get("amount", 0)),
+                    "actual_amount": float(suggested_exp.get("actual_amount", 0)),
+                    "category": suggested_exp.get("category", "General"),
+                    "status": suggested_exp.get("status", "Logged"),
+                    "currency": "INR",
+                    "notes": "Added via AI Itinerary Adjustment"
+                })
+
+            await save_honeymoon_data(data)
+
+        return {
+            "status": "success",
+            "summary": ai_result.get("summary", "Itinerary updated successfully!"),
+            "updated_day": updated_day,
+            "days": data.get("days", [])
+        }
+
+    except Exception as e:
+        return {"status": "error", "message": f"AI Agent error: {str(e)}"}
 
 
 

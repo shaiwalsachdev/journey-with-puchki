@@ -168,6 +168,55 @@
                 {% endfor %}
             </div>
 
+            <!-- AI Real-Time Itinerary Copilot Banner -->
+            <div class="glass-panel p-6 sm:p-7 rounded-3xl border-2 border-primary/30 shadow-xl relative overflow-hidden bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-amber-500/10 dark:from-rose-950/30 dark:via-pink-950/30 dark:to-amber-950/20">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center text-white shadow-lg animate-pulse">
+                            <span class="material-icons text-2xl">smart_toy</span>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 text-[11px] font-bold uppercase tracking-wider mb-0.5">
+                                <span class="material-icons text-xs">auto_awesome</span> Real-Time AI Agent
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Adjust Today's Honeymoon Plan on the Go</h3>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">Tell the AI where you actually went, if plans changed, or what you feel like doing now!</span>
+                </div>
+
+                <!-- Input Box -->
+                <form onsubmit="handleAiAdjust(event)" class="space-y-3">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <select id="ai-target-day" class="sm:w-44 px-3.5 py-2.5 text-xs font-bold rounded-xl bg-white dark:bg-gray-800 border border-rose-200 dark:border-white/10 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-primary">
+                            <option value="">Auto-detect Day</option>
+                            {% for d in honeymoon.days %}
+                            <option value="{{ d.day }}">Day {{ d.day }}: {{ d.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" id="ai-prompt-input" 
+                            placeholder="e.g. 'We finished beach early, now want authentic Italian lunch near Sentosa' or 'It is raining in afternoon'" 
+                            required
+                            class="flex-1 px-4 py-2.5 text-xs sm:text-sm rounded-xl bg-white dark:bg-gray-800 border border-rose-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary shadow-inner" />
+                        <button type="submit" id="ai-submit-btn" 
+                            class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg shadow-rose-500/25 transition-all">
+                            <span class="material-icons text-base">auto_fix_high</span>
+                            <span>Adjust Itinerary</span>
+                        </button>
+                    </div>
+
+                    <!-- Preset Quick Prompts -->
+                    <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                        <span class="text-[11px] font-bold text-gray-400">Quick Prompts:</span>
+                        <button type="button" onclick="setAiPrompt(5, 'We slept in and want a relaxed brunch at Trapizza before doing cable car in late afternoon')" class="text-[11px] px-2.5 py-1 rounded-lg bg-white/70 dark:bg-white/5 border border-rose-200/50 hover:border-primary text-gray-700 dark:text-gray-300 transition-all">🏖️ Day 5: Relaxed brunch at Trapizza</button>
+                        <button type="button" onclick="setAiPrompt(6, 'Skip afternoon safari and go for foot reflexology and romantic cafe in Chinatown')" class="text-[11px] px-2.5 py-1 rounded-lg bg-white/70 dark:bg-white/5 border border-rose-200/50 hover:border-primary text-gray-700 dark:text-gray-300 transition-all">☕ Day 6: Chinatown cafe & foot massage</button>
+                        <button type="button" onclick="setAiPrompt(7, 'It is raining today, shift outdoor Marina Bay stroll to indoor Cloud Forest and shopping')" class="text-[11px] px-2.5 py-1 rounded-lg bg-white/70 dark:bg-white/5 border border-rose-200/50 hover:border-primary text-gray-700 dark:text-gray-300 transition-all">🌧️ Day 7: Rain backup plan</button>
+                    </div>
+
+                    <div id="ai-status-message" class="hidden text-xs font-semibold p-3 rounded-xl"></div>
+                </form>
+            </div>
+
             <!-- Days Timeline -->
             <div class="space-y-6">
                 {% for d in honeymoon.days %}
@@ -401,25 +450,39 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {% for t in honeymoon.klook_tickets %}
-                    <div class="p-5 rounded-3xl border transition-all flex flex-col justify-between {% if t.booked %}bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:shadow-lg{% endif %}">
+                    <div class="p-5 rounded-3xl border transition-all flex flex-col justify-between {% if t.booked or t.status == 'Booked ✅' %}bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:shadow-lg{% endif %}">
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <span class="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full">{{ t.date }}</span>
-                                <button onclick="toggleChecklist('{{ t.id }}', 'tickets')" 
-                                    class="text-xs font-bold px-3 py-1 rounded-full transition-all {% if t.booked %}bg-emerald-500 text-white shadow{% else %}bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300{% endif %}">
-                                    {{ t.status }}
-                                </button>
+                                <div class="flex items-center gap-1.5">
+                                    <select onchange="updateTicketStatus('{{ t.id }}', this.value)" 
+                                        class="text-xs font-bold px-2.5 py-1 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-1 focus:ring-primary">
+                                        <option value="To Book" {% if t.status == 'To Book' %}selected{% endif %}>To Book</option>
+                                        <option value="In Progress" {% if t.status == 'In Progress' %}selected{% endif %}>In Progress ⏳</option>
+                                        <option value="Booked ✅" {% if t.status == 'Booked ✅' or t.booked %}selected{% endif %}>Booked ✅</option>
+                                    </select>
+                                </div>
                             </div>
                             <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ t.name }}</h3>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold mb-4">{{ t.price }}</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 font-semibold mb-2">
+                                <span>Est: {{ t.price }}</span>
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold">
+                                    {% if t.actual_cost %}Actual: ₹{{ t.actual_cost }}{% else %}<button onclick="promptTicketActual('{{ t.id }}')" class="hover:underline text-[11px] text-gray-400">+ Add actual cost</button>{% endif %}
+                                </span>
+                            </div>
                         </div>
                         <div class="pt-3 border-t border-gray-200/60 dark:border-white/10 flex items-center justify-between">
-                            <span class="text-[11px] text-gray-500 dark:text-gray-400">Klook India official</span>
-                            <a href="{{ t.link }}" target="_blank" rel="noopener noreferrer" 
-                                class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 hover:text-rose-700 hover:underline">
-                                <span>Book on Klook</span>
-                                <span class="material-icons text-sm">open_in_new</span>
-                            </a>
+                            <span class="text-[11px] text-gray-500 dark:text-gray-400">Klook India Official</span>
+                            <div class="flex items-center gap-3">
+                                <button onclick="promptTicketActual('{{ t.id }}')" class="text-[11px] font-bold text-gray-500 hover:text-primary flex items-center gap-0.5">
+                                    <span class="material-icons text-xs">edit</span> Cost
+                                </button>
+                                <a href="{{ t.link }}" target="_blank" rel="noopener noreferrer" 
+                                    class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 hover:text-rose-700 hover:underline">
+                                    <span>Book on Klook</span>
+                                    <span class="material-icons text-sm">open_in_new</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
@@ -444,58 +507,54 @@
         </section>
 
         <!-- ========================================================
-             TAB 4: ROMANTIC DINING & VEGETARIAN OPTIONS
+             TAB 4: ROMANTIC DINING & VEGETARIAN OPTIONS (EDITABLE)
              ======================================================== -->
         <section id="tab-content-dining" class="tab-content hidden space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Sentosa Island Romantic Spots -->
-                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200/60 dark:border-white/10">
-                    <div class="flex items-center gap-2 text-rose-500 mb-4">
-                        <span class="material-icons">beach_access</span>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sentosa & Beachfront Romantic Spots</h3>
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200/60 dark:border-white/10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="flex items-center gap-2 text-rose-500 mb-1">
+                            <span class="material-icons">restaurant</span>
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Curated Romantic Dining & Places to Eat</h2>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Add, edit, or customize any restaurants and romantic places you want to visit.</p>
                     </div>
-                    <div class="space-y-4">
-                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Trapizza (Siloso Beach, Sentosa)</h4>
-                            <p class="text-xs text-rose-500 font-semibold mb-1">Wood-fired Pizzas & Pastas by the Sea</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-300">Casual-chic Italian right on the sand. Perfect for an afternoon or sunset meal with Pizza Quattro Formaggi, Gnocchi, and refreshing mocktails.</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Cassia (Capella Singapore)</h4>
-                            <p class="text-xs text-rose-500 font-semibold mb-1">Ultra-Luxury Cantonese in Heritage Manor</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-300">One of Singapore's most romantic venues. Exceptional vegetarian dim sum (black truffle crystal dumplings) and bespoke menus upon advance request.</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Quayside Isle (Sentosa Cove)</h4>
-                            <p class="text-xs text-rose-500 font-semibold mb-1">Yacht Marina Dining & Mediterranean Delights</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-300">Stroll past multi-million dollar yachts. Miska Café (falafels, shakshuka) and Sole Pomodoro (authentic Italian pizzas & risottos).</p>
-                        </div>
-                    </div>
+                    <button onclick="openDiningModal()" 
+                        class="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-rose-500/20 transition-all self-start sm:self-auto">
+                        <span class="material-icons text-base">add</span>
+                        <span>+ Add Restaurant / Place</span>
+                    </button>
                 </div>
 
-                <!-- City Hall & Marina Bay Spots -->
-                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200/60 dark:border-white/10">
-                    <div class="flex items-center gap-2 text-amber-500 mb-4">
-                        <span class="material-icons">location_city</span>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Carlton Hotel & Marina Bay Spots</h3>
+                <!-- Dining Places Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="dining-places-grid">
+                    {% for d in honeymoon.dining_places %}
+                    <div class="p-5 rounded-3xl bg-white/70 dark:bg-gray-800/50 border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-300/30">
+                                    {{ d.area }}
+                                </span>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                                    {{ d.status }}
+                                </span>
+                            </div>
+                            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ d.name }}</h3>
+                            <p class="text-xs text-rose-500 font-semibold mb-2">{{ d.cuisine }}</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ d.highlight }}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-gray-100 dark:border-white/5 flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100">
+                            <button onclick="editDiningPlace('{{ d.id }}', '{{ d.name|escape }}', '{{ d.area|escape }}', '{{ d.cuisine|escape }}', '{{ d.highlight|escape }}', '{{ d.status|escape }}')" 
+                                class="p-1.5 rounded-lg text-gray-500 hover:text-primary hover:bg-gray-100 dark:hover:bg-white/5 text-xs flex items-center gap-1" title="Edit">
+                                <span class="material-icons text-sm">edit</span> Edit
+                            </button>
+                            <button onclick="deleteDiningPlace('{{ d.id }}')" 
+                                class="p-1.5 rounded-lg text-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs flex items-center gap-1" title="Delete">
+                                <span class="material-icons text-sm">delete</span> Delete
+                            </button>
+                        </div>
                     </div>
-                    <div class="space-y-4">
-                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">CHIJMES Courtyards (Opposite Carlton)</h4>
-                            <p class="text-xs text-amber-500 font-semibold mb-1">Fairytale Gothic Chapel & Outdoor Dining</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-300">Lit by fairy lights under the 19th-century chapel. Great Italian, craft beer, and tapas right across the street from your hotel.</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Nalan Vegetarian (Capitol Singapore)</h4>
-                            <p class="text-xs text-amber-500 font-semibold mb-1">100% Pure Vegetarian Fine Indian Dining</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-300">Just 2 minutes walk from Carlton Hotel. High quality North & South Indian dishes, paneer curries, and dosas in clean comfort.</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Cultivate Cafe (Maxwell Reserve)</h4>
-                            <p class="text-xs text-amber-500 font-semibold mb-1">Candlelit Colonial Library Plant-Based Dining</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-300">An extraordinary honeymoon ambiance nestled among antique bookshelves. 100% plant-based artisanal pastas, vegan caviart, and gourmet desserts.</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -554,25 +613,44 @@
                     </div>
                 </div>
 
-                <!-- Add New Expense Form -->
-                <form id="expense-form" onsubmit="addExpense(event)" class="bg-gray-50 dark:bg-white/5 p-4 rounded-2xl border border-gray-200 dark:border-white/10 mb-6 flex flex-wrap gap-3 items-center">
-                    <input type="text" id="exp-item" placeholder="Item name (e.g. Sentosa Dinner)" required 
-                        class="flex-1 min-w-[200px] px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
-                    <input type="number" id="exp-amount" placeholder="Amount (INR)" required 
-                        class="w-32 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
-                    <select id="exp-category" 
-                        class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
-                        <option value="Food & Dining">Food & Dining</option>
-                        <option value="Activities">Activities</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Transport">Transport</option>
-                        <option value="Hotels">Hotels</option>
-                        <option value="General">General</option>
-                    </select>
-                    <button type="submit" 
-                        class="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow">
-                        + Add Expense
-                    </button>
+                <!-- Add / Edit Expense Form -->
+                <form id="expense-form" onsubmit="handleSaveExpense(event)" class="bg-gray-50 dark:bg-white/5 p-4 rounded-2xl border border-gray-200 dark:border-white/10 mb-6 space-y-3">
+                    <input type="hidden" id="exp-id" value="" />
+                    <div class="flex flex-wrap gap-2.5 items-center">
+                        <input type="text" id="exp-item" placeholder="Expense description (e.g. Trapizza Sunset Dinner)" required 
+                            class="flex-1 min-w-[220px] px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                        <select id="exp-category" 
+                            class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
+                            <option value="Food & Dining">Food & Dining</option>
+                            <option value="Activities">Activities</option>
+                            <option value="Hotels">Hotels</option>
+                            <option value="Cruise">Cruise</option>
+                            <option value="Flights">Flights</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Visa">Visa</option>
+                            <option value="General">General</option>
+                        </select>
+                        <input type="number" id="exp-amount" placeholder="Est. Amount (₹)" required 
+                            class="w-32 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                        <input type="number" id="exp-actual" placeholder="Actual Spent (₹)" 
+                            class="w-32 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                        <select id="exp-status" 
+                            class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
+                            <option value="Estimated">Estimated</option>
+                            <option value="Budget">Budget</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Booked">Booked</option>
+                            <option value="Paid">Paid</option>
+                        </select>
+                        <button type="submit" id="exp-submit-btn" 
+                            class="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow">
+                            + Add Expense
+                        </button>
+                        <button type="button" id="exp-cancel-btn" onclick="resetExpenseForm()" class="hidden text-xs text-gray-500 hover:text-gray-700 underline px-2">
+                            Cancel
+                        </button>
+                    </div>
                 </form>
 
                 <!-- Expenses Table -->
@@ -581,22 +659,42 @@
                         <thead>
                             <tr class="border-b border-gray-200 dark:border-white/10 text-gray-400">
                                 <th class="pb-3 font-semibold">Category</th>
-                                <th class="pb-3 font-semibold">Item</th>
+                                <th class="pb-3 font-semibold">Item & Notes</th>
                                 <th class="pb-3 font-semibold">Status</th>
-                                <th class="pb-3 font-semibold text-right">Amount (INR)</th>
+                                <th class="pb-3 font-semibold text-right">Estimated</th>
+                                <th class="pb-3 font-semibold text-right">Actual Spent</th>
+                                <th class="pb-3 font-semibold text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="expenses-tbody" class="divide-y divide-gray-100 dark:divide-white/5">
                             {% for exp in honeymoon.expenses %}
-                            <tr>
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02]">
                                 <td class="py-3 font-semibold text-rose-500">{{ exp.category }}</td>
-                                <td class="py-3 text-gray-800 dark:text-gray-200 font-medium">{{ exp.item }}</td>
                                 <td class="py-3">
-                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {% if exp.status == 'Booked' %}bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300{% elif exp.status == 'Pending' %}bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300{% else %}bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300{% endif %}">
+                                    <div class="font-medium text-gray-800 dark:text-gray-200">{{ exp.item }}</div>
+                                    {% if exp.notes %}<div class="text-[11px] text-gray-400">{{ exp.notes }}</div>{% endif %}
+                                </td>
+                                <td class="py-3">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {% if exp.status in ['Booked', 'Paid'] %}bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300{% elif exp.status == 'Pending' %}bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300{% else %}bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300{% endif %}">
                                         {{ exp.status }}
                                     </span>
                                 </td>
                                 <td class="py-3 text-right font-bold text-gray-900 dark:text-white">₹{{ "{:,.0f}".format(exp.amount) }}</td>
+                                <td class="py-3 text-right font-bold {% if exp.actual_amount and exp.actual_amount > 0 %}text-emerald-600 dark:text-emerald-400{% else %}text-gray-400{% endif %}">
+                                    {% if exp.actual_amount and exp.actual_amount > 0 %}₹{{ "{:,.0f}".format(exp.actual_amount) }}{% else %}—{% endif %}
+                                </td>
+                                <td class="py-3 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="editExpense('{{ exp.id }}', '{{ exp.item|escape }}', '{{ exp.category|escape }}', {{ exp.amount|default(0) }}, {{ exp.actual_amount|default(0) }}, '{{ exp.status|escape }}', '{{ exp.notes|default('')|escape }}')" 
+                                            class="p-1 rounded text-gray-400 hover:text-primary transition-colors" title="Edit Expense">
+                                            <span class="material-icons text-sm">edit</span>
+                                        </button>
+                                        <button onclick="deleteExpense('{{ exp.id }}')" 
+                                            class="p-1 rounded text-gray-400 hover:text-rose-500 transition-colors" title="Delete Expense">
+                                            <span class="material-icons text-sm">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -606,6 +704,51 @@
         </section>
     </main>
 
+    <!-- Dining Place Modal -->
+    <div id="dining-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4" id="dining-modal-title">Add Restaurant / Place</h3>
+            <form onsubmit="handleSaveDining(event)" class="space-y-4">
+                <input type="hidden" id="dining-id" value="" />
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Name</label>
+                    <input type="text" id="dining-name" placeholder="e.g. Trapizza (Siloso Beach)" required 
+                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Area / Location</label>
+                        <input type="text" id="dining-area" placeholder="e.g. Sentosa Beachfront" required 
+                            class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Status</label>
+                        <select id="dining-status" class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
+                            <option value="Shortlisted">Shortlisted</option>
+                            <option value="Must Visit">Must Visit</option>
+                            <option value="Reserved">Reserved</option>
+                            <option value="Visited">Visited</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Cuisine / Style</label>
+                    <input type="text" id="dining-cuisine" placeholder="e.g. Italian / Wood-fired Pizzas / Cocktails" required 
+                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Highlight / Notes</label>
+                    <textarea id="dining-highlight" rows="3" placeholder="What to order or special instructions..." required 
+                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white"></textarea>
+                </div>
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeDiningModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-500 hover:text-gray-700">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold shadow-md">Save Place</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-12 border-t border-gray-200/60 dark:border-white/10 text-center text-xs text-gray-500">
         <p>Made with endless love for Shaila by Shaiwal · Singapore Honeymoon 2026 ❤️</p>
@@ -614,11 +757,9 @@
     <!-- Tab Switching & Interactive Scripts -->
     <script>
         function switchTab(tabId) {
-            // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
-            // Show selected tab content
             const target = document.getElementById(`tab-content-${tabId}`);
             if (target) target.classList.remove('hidden');
 
@@ -635,7 +776,6 @@
                 });
                 const result = await res.json();
                 if (result.status === 'success') {
-                    // Quick reload or celebration
                     location.reload();
                 }
             } catch (err) {
@@ -643,24 +783,215 @@
             }
         }
 
-        async function addExpense(e) {
-            e.preventDefault();
-            const item = document.getElementById('exp-item').value;
-            const amount = document.getElementById('exp-amount').value;
-            const category = document.getElementById('exp-category').value;
-
+        // --- Ticket Status & Actual Cost ---
+        async function updateTicketStatus(ticketId, newStatus) {
             try {
-                const res = await fetch('/api/honeymoon/expense', {
+                const booked = newStatus.includes('Booked');
+                const res = await fetch('/api/honeymoon/ticket/update', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ item, amount, category, status: 'Logged' })
+                    body: JSON.stringify({ id: ticketId, status: newStatus, booked: booked })
                 });
                 const result = await res.json();
                 if (result.status === 'success') {
                     location.reload();
                 }
             } catch (err) {
-                console.error('Error adding expense:', err);
+                console.error('Error updating ticket:', err);
+            }
+        }
+
+        async function promptTicketActual(ticketId) {
+            const cost = prompt("Enter actual cost paid in INR (e.g. 4500):");
+            if (cost !== null) {
+                const num = parseFloat(cost) || 0;
+                try {
+                    await fetch('/api/honeymoon/ticket/update', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: ticketId, actual_cost: num, booked: true, status: 'Booked ✅' })
+                    });
+                    location.reload();
+                } catch (err) {
+                    console.error('Error updating ticket actual cost:', err);
+                }
+            }
+        }
+
+        // --- Expense CRUD ---
+        function editExpense(id, item, category, amount, actual, status, notes) {
+            document.getElementById('exp-id').value = id;
+            document.getElementById('exp-item').value = item;
+            document.getElementById('exp-category').value = category;
+            document.getElementById('exp-amount').value = amount;
+            document.getElementById('exp-actual').value = actual || '';
+            document.getElementById('exp-status').value = status;
+            document.getElementById('exp-submit-btn').textContent = "Update Expense";
+            document.getElementById('exp-cancel-btn').classList.remove('hidden');
+            document.getElementById('exp-item').focus();
+        }
+
+        function resetExpenseForm() {
+            document.getElementById('exp-id').value = '';
+            document.getElementById('exp-item').value = '';
+            document.getElementById('exp-amount').value = '';
+            document.getElementById('exp-actual').value = '';
+            document.getElementById('exp-status').value = 'Estimated';
+            document.getElementById('exp-submit-btn').textContent = "+ Add Expense";
+            document.getElementById('exp-cancel-btn').classList.add('hidden');
+        }
+
+        async function handleSaveExpense(e) {
+            e.preventDefault();
+            const id = document.getElementById('exp-id').value;
+            const item = document.getElementById('exp-item').value;
+            const category = document.getElementById('exp-category').value;
+            const amount = document.getElementById('exp-amount').value;
+            const actual_amount = document.getElementById('exp-actual').value;
+            const status = document.getElementById('exp-status').value;
+
+            try {
+                const res = await fetch('/api/honeymoon/expense', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, item, category, amount, actual_amount, status })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error saving expense:', err);
+            }
+        }
+
+        async function deleteExpense(expId) {
+            if (!confirm('Are you sure you want to remove this expense item?')) return;
+            try {
+                const res = await fetch(`/api/honeymoon/expense/${expId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error deleting expense:', err);
+            }
+        }
+
+        // --- Dining CRUD ---
+        function openDiningModal() {
+            document.getElementById('dining-id').value = '';
+            document.getElementById('dining-name').value = '';
+            document.getElementById('dining-area').value = '';
+            document.getElementById('dining-cuisine').value = '';
+            document.getElementById('dining-highlight').value = '';
+            document.getElementById('dining-status').value = 'Shortlisted';
+            document.getElementById('dining-modal-title').textContent = 'Add Restaurant / Place';
+            const modal = document.getElementById('dining-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function editDiningPlace(id, name, area, cuisine, highlight, status) {
+            document.getElementById('dining-id').value = id;
+            document.getElementById('dining-name').value = name;
+            document.getElementById('dining-area').value = area;
+            document.getElementById('dining-cuisine').value = cuisine;
+            document.getElementById('dining-highlight').value = highlight;
+            document.getElementById('dining-status').value = status;
+            document.getElementById('dining-modal-title').textContent = 'Edit Restaurant / Place';
+            const modal = document.getElementById('dining-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDiningModal() {
+            const modal = document.getElementById('dining-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function handleSaveDining(e) {
+            e.preventDefault();
+            const id = document.getElementById('dining-id').value;
+            const name = document.getElementById('dining-name').value;
+            const area = document.getElementById('dining-area').value;
+            const cuisine = document.getElementById('dining-cuisine').value;
+            const highlight = document.getElementById('dining-highlight').value;
+            const status = document.getElementById('dining-status').value;
+
+            try {
+                const res = await fetch('/api/honeymoon/dining/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, name, area, cuisine, highlight, status })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error saving dining place:', err);
+            }
+        }
+
+        async function deleteDiningPlace(dId) {
+            if (!confirm('Remove this place from your honeymoon list?')) return;
+            try {
+                const res = await fetch(`/api/honeymoon/dining/${dId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error deleting dining place:', err);
+            }
+        }
+
+        // --- AI Real-Time Itinerary Adjustment Agent ---
+        function setAiPrompt(day, text) {
+            document.getElementById('ai-target-day').value = day;
+            document.getElementById('ai-prompt-input').value = text;
+        }
+
+        async function handleAiAdjust(e) {
+            e.preventDefault();
+            const prompt = document.getElementById('ai-prompt-input').value.trim();
+            const day = document.getElementById('ai-target-day').value;
+            const btn = document.getElementById('ai-submit-btn');
+            const msgBox = document.getElementById('ai-status-message');
+
+            if (!prompt) return;
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-icons animate-spin text-base">sync</span> Thinking & Adjusting...`;
+            msgBox.className = "text-xs font-semibold p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 border border-blue-200 block";
+            msgBox.textContent = "AI Agent is optimizing your schedule with live timings, romantic options, and routing...";
+
+            try {
+                const res = await fetch('/api/honeymoon/ai-adjust', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt, day: day ? parseInt(day) : null })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    msgBox.className = "text-xs font-semibold p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 border border-emerald-200 block";
+                    msgBox.textContent = `✨ ${result.summary}`;
+                    triggerConfetti();
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    msgBox.className = "text-xs font-semibold p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 border border-rose-200 block";
+                    msgBox.textContent = result.message || "Failed to adjust itinerary.";
+                    btn.disabled = false;
+                    btn.innerHTML = `<span class="material-icons text-base">auto_fix_high</span><span>Adjust Itinerary</span>`;
+                }
+            } catch (err) {
+                console.error('AI adjust error:', err);
+                msgBox.className = "text-xs font-semibold p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 border border-rose-200 block";
+                msgBox.textContent = "Error connecting to AI planner agent.";
+                btn.disabled = false;
+                btn.innerHTML = `<span class="material-icons text-base">auto_fix_high</span><span>Adjust Itinerary</span>`;
             }
         }
 

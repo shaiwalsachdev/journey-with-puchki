@@ -330,13 +330,65 @@ DEFAULT_HONEYMOON_DATA = {
         ]
     },
 
-    # Live Expense Tracker Items (Defaults)
+    # Curated Romantic Dining & Places to Eat (Fully Editable)
+    "dining_places": [
+        {
+            "id": "d1",
+            "name": "Trapizza (Siloso Beach, Sentosa)",
+            "area": "Sentosa Beachfront",
+            "cuisine": "Italian / Pizza / Casual Beachfront",
+            "highlight": "Wood-fired Pizzas & Pastas right on the sand. Perfect for sunset with cocktails.",
+            "status": "Shortlisted"
+        },
+        {
+            "id": "d2",
+            "name": "Cassia (Capella Singapore)",
+            "area": "Sentosa Heritage",
+            "cuisine": "Ultra-Luxury Cantonese / Dim Sum",
+            "highlight": "Heritage 1880s manor. Exceptional vegetarian black truffle crystal dumplings.",
+            "status": "Must Visit"
+        },
+        {
+            "id": "d3",
+            "name": "Quayside Isle (Sentosa Cove)",
+            "area": "Sentosa Marina",
+            "cuisine": "Mediterranean & Italian Waterfront",
+            "highlight": "Miska Café and Sole Pomodoro facing luxury yachts. Very romantic evening walk.",
+            "status": "Shortlisted"
+        },
+        {
+            "id": "d4",
+            "name": "CHIJMES Courtyards",
+            "area": "City Hall (Opp. Carlton)",
+            "cuisine": "Gothic Chapel Outdoor Dining",
+            "highlight": "Lit with fairy lights. Great tapas, wood-fired pizza, and craft drinks across from Carlton.",
+            "status": "Day 1 Dinner"
+        },
+        {
+            "id": "d5",
+            "name": "Nalan Vegetarian (Capitol Singapore)",
+            "area": "City Hall",
+            "cuisine": "100% Pure Vegetarian Fine Dining",
+            "highlight": "2 mins from Carlton Hotel. High quality North & South Indian curries and dosas.",
+            "status": "Shortlisted"
+        },
+        {
+            "id": "d6",
+            "name": "Cultivate Cafe (Maxwell Reserve)",
+            "area": "Tanjong Pagar / Chinatown",
+            "cuisine": "Candlelit Library Plant-Based",
+            "highlight": "Candlelit library setting with artisanal pastas and plant-based fine dining.",
+            "status": "Shortlisted"
+        }
+    ],
+
+    # Live Expense Tracker Items (Fully Editable with actual expense tracking)
     "expenses": [
-        {"category": "Visa", "item": "Singapore e-Visa (2 Adults)", "amount": 6500, "currency": "INR", "status": "Pending"},
-        {"category": "Flights", "item": "Roundtrip Delhi - Singapore (Air India / Singapore Airlines)", "amount": 65000, "currency": "INR", "status": "Estimated"},
-        {"category": "Hotels", "item": "Carlton Hotel (1 Night) + Oasia Resort Sentosa (4 Nights)", "amount": 85000, "currency": "INR", "status": "Booked"},
-        {"category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "currency": "INR", "status": "Booked"},
-        {"category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "currency": "INR", "status": "To Book"},
-        {"category": "Food & Dining", "item": "Romantic Dinners, Cafes, Gelato & Street Food", "amount": 40000, "currency": "INR", "status": "Budget"}
+        {"id": "exp-1", "category": "Visa", "item": "Singapore e-Visa (2 Adults)", "amount": 6500, "actual_amount": 0, "currency": "INR", "status": "Pending", "notes": "Submit Nov 1"},
+        {"id": "exp-2", "category": "Flights", "item": "Roundtrip Delhi - Singapore (Air India / Singapore Airlines)", "amount": 65000, "actual_amount": 64200, "currency": "INR", "status": "Booked", "notes": "Confirmed roundtrip"},
+        {"id": "exp-3", "category": "Hotels", "item": "Carlton Hotel (1 Night) + Oasia Resort Sentosa (4 Nights)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Carlton + Oasia Deluxe"},
+        {"id": "exp-4", "category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "actual_amount": 85000, "currency": "INR", "status": "Booked", "notes": "Disney Adventure Sailing"},
+        {"id": "exp-5", "category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "actual_amount": 0, "currency": "INR", "status": "To Book", "notes": "Cable Car, River Wonders, Gardens, MBS"},
+        {"id": "exp-6", "category": "Food & Dining", "item": "Romantic Dinners, Cafes, Gelato & Street Food", "amount": 40000, "actual_amount": 0, "currency": "INR", "status": "Budget", "notes": "Trapizza, CHIJMES, Rotational dining tips"}
     ]
 }
