@@ -1409,5 +1409,54 @@ DEFAULT_HONEYMOON_DATA = {
                 "DO book Disney Princess Royal Gathering on the Navigator app the moment you board the cruise!"
             ]
         }
-    }
+    },
+
+    # Generic Honeymoon Things to Do / Master Task Tracker (Fully Editable)
+    "things_to_do": [
+        {
+            "id": "todo-1",
+            "title": "Buy Singtel 5G Singapore Tourist eSIM",
+            "category": "Connectivity",
+            "link": "https://www.klook.com/en-IN/activity/176809-singtel-singapore-data-esim/",
+            "notes": "Install QR code while on home Wi-Fi in Delhi before departure so it activates immediately at Changi.",
+            "due_date": "Dec 5, 2026",
+            "status": "Pending"
+        },
+        {
+            "id": "todo-2",
+            "title": "Fill & Submit Electronic SG Arrival Card (ICA)",
+            "category": "Immigration",
+            "link": "https://eservices.ica.gov.sg/sgarrivalcard/",
+            "notes": "100% Free online submission strictly within 72 hours before arrival in Singapore.",
+            "due_date": "Dec 10–12, 2026",
+            "status": "Pending"
+        },
+        {
+            "id": "todo-3",
+            "title": "Book SharePal DJI Osmo Pocket 3 Camera Gear",
+            "category": "Photography",
+            "link": "https://www.sharepal.in",
+            "notes": "Zero-deposit Delhi doorstep delivery on Dec 12 for high quality romantic low-light videos.",
+            "due_date": "Nov 15, 2026",
+            "status": "Pending"
+        },
+        {
+            "id": "todo-4",
+            "title": "Download Disney Cruise Navigator App",
+            "category": "Cruise",
+            "link": "https://disneycruise.disney.go.com/guest-services/navigator-app/",
+            "notes": "Download and link reservation #44985264. Book Royal Gathering Princess meet the moment you connect to ship Wi-Fi.",
+            "due_date": "Dec 1, 2026",
+            "status": "Pending"
+        },
+        {
+            "id": "todo-5",
+            "title": "Book Gardens by the Bay & MBS SkyPark on Klook",
+            "category": "Attractions",
+            "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/",
+            "notes": "Reserve prime sunset slot (5:30 PM - 6:00 PM) for Flower Dome & Cloud Forest.",
+            "due_date": "Nov 20, 2026",
+            "status": "Pending"
+        }
+    ]
 }

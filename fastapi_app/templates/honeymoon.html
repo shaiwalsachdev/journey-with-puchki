@@ -384,6 +384,10 @@
                 <span class="material-icons text-base text-rose-500">folder_shared</span>
                 <span>Document Vault & PDFs 📂</span>
             </button>
+            <button onclick="switchTab('todo')" id="tab-btn-todo" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base text-amber-500">checklist</span>
+                <span>Things to Do & Tasks ✅</span>
+            </button>
             <button onclick="switchTab('expenses')" id="tab-btn-expenses" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
                 <span class="material-icons text-base">account_balance_wallet</span>
                 <span>Expense Tracker</span>
@@ -1200,23 +1204,46 @@
 
                 <div class="space-y-3" id="visa-checklist-container">
                     {% for item in honeymoon.visa.checklist %}
-                    <div onclick="toggleChecklist('{{ item.id }}', 'visa')" 
-                        class="p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 select-none hover:shadow-sm {% if item.done %}bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/50{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-rose-300{% endif %}">
-                        <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all {% if item.done %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent hover:border-rose-400{% endif %}">
-                            <span class="material-icons text-base">check</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white {% if item.done %}line-through opacity-70{% endif %}">
-                                    {{ item.title }}
-                                </h4>
-                                {% if item.due_date %}
-                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full {% if item.done %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20{% else %}bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/40{% endif %} flex items-center gap-1">
-                                    <span class="material-icons text-[11px]">{% if item.done %}check_circle{% else %}schedule{% endif %}</span> {{ item.due_date }}
-                                </span>
-                                {% endif %}
+                    <div class="p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 {% if item.done %}bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/50{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-rose-300{% endif %}">
+                        <div class="flex items-start gap-4 flex-1 cursor-pointer select-none" onclick="toggleChecklist('{{ item.id }}', 'visa')">
+                            <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all shrink-0 {% if item.done %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent hover:border-rose-400{% endif %}">
+                                <span class="material-icons text-base">check</span>
                             </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">{{ item.detail }}</p>
+                            <div class="flex-1">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white {% if item.done %}line-through opacity-70{% endif %}">
+                                        {{ item.title }}
+                                    </h4>
+                                    {% if item.due_date %}
+                                    <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full {% if item.done %}bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20{% else %}bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/40{% endif %} flex items-center gap-1">
+                                        <span class="material-icons text-[11px]">{% if item.done %}check_circle{% else %}schedule{% endif %}</span> {{ item.due_date }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">{{ item.detail }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Attached Document or Upload Button -->
+                        <div class="pt-2 sm:pt-0 sm:pl-4 border-t sm:border-t-0 sm:border-l border-gray-200/50 dark:border-white/5 flex items-center gap-2 shrink-0">
+                            {% if item.doc_url %}
+                            <a href="{{ item.doc_url }}" target="_blank" rel="noopener noreferrer" 
+                                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-300/50 hover:bg-emerald-500/20 transition-all">
+                                <span class="material-icons text-sm">description</span>
+                                <span>{{ item.doc_name|default('View PDF') }}</span>
+                                <span class="material-icons text-xs">open_in_new</span>
+                            </a>
+                            <button onclick="openAttachVisaDoc('{{ item.id }}', '{{ item.title|escape }}')" 
+                                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 transition-colors" title="Replace Attached Document">
+                                <span class="material-icons text-xs">sync</span>
+                            </button>
+                            {% else %}
+                            <button onclick="openAttachVisaDoc('{{ item.id }}', '{{ item.title|escape }}')" 
+                                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-300/40 hover:bg-rose-500/20 transition-all">
+                                <span class="material-icons text-xs">upload_file</span>
+                                <span>Upload & Attach Document</span>
+                            </button>
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
@@ -2545,37 +2572,185 @@
                 </div>
             </div>
         </section>
+
+        <!-- ========================================================
+             TAB 7: THINGS TO DO & MASTER TASK TRACKER (FULLY EDITABLE)
+             ======================================================== -->
+        <section id="tab-content-todo" class="tab-content hidden space-y-8">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-amber-200/60 dark:border-white/10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="flex items-center gap-2 text-amber-500 mb-1">
+                            <span class="material-icons text-2xl">checklist</span>
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Things to Do & Master Honeymoon Tasks 📋</h2>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                            Keep track of all pending errands, purchases, online forms, links, notes, and task statuses in one clean checklist!
+                        </p>
+                    </div>
+                    {% set pending_todos = honeymoon.things_to_do | default([]) | selectattr('status', 'ne', 'Completed ✅') | list | length %}
+                    {% set total_todos = honeymoon.things_to_do | default([]) | length %}
+                    <div class="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 px-4 py-2 rounded-2xl text-xs font-bold text-amber-700 dark:text-amber-300">
+                        ⚡ {{ pending_todos }} Pending / {{ total_todos }} Tasks
+                    </div>
+                </div>
+
+                <!-- Add / Edit Task Form -->
+                <form id="todo-form" onsubmit="handleSaveTodo(event)" class="bg-gray-50 dark:bg-white/5 p-4 sm:p-5 rounded-2xl border border-gray-200 dark:border-white/10 mb-8 space-y-3">
+                    <input type="hidden" id="todo-id" value="" />
+                    <div class="flex items-center gap-2 text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                        <span class="material-icons text-sm text-amber-500">add_task</span>
+                        <span id="todo-form-heading">Add New Task / Thing to Do</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                        <input type="text" id="todo-title" placeholder="Task Title (e.g. Buy universal plug converter)" required 
+                            class="lg:col-span-2 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                        
+                        <select id="todo-category" 
+                            class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
+                            <option value="General">General</option>
+                            <option value="Connectivity">Connectivity & SIM</option>
+                            <option value="Immigration">Immigration & Visa</option>
+                            <option value="Cruise">Cruise & Boarding</option>
+                            <option value="Photography">Photography & Gear</option>
+                            <option value="Attractions">Attractions & Tickets</option>
+                            <option value="Shopping">Shopping & Essentials</option>
+                            <option value="Finance">Forex & Cards</option>
+                        </select>
+
+                        <select id="todo-status" 
+                            class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
+                            <option value="Pending">Pending ⏳</option>
+                            <option value="In Progress">In Progress 🔄</option>
+                            <option value="Booked">Booked 🎟️</option>
+                            <option value="Completed ✅">Completed ✅</option>
+                        </select>
+
+                        <input type="url" id="todo-link" placeholder="Reference Link (e.g. https://www.klook.com/...)" 
+                            class="lg:col-span-2 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+
+                        <input type="text" id="todo-due" placeholder="Due Date / Window (e.g. Nov 20, 2026)" 
+                            class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+
+                        <input type="text" id="todo-notes" placeholder="Notes / Reminders" 
+                            class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                    </div>
+                    <div class="flex items-center justify-end gap-2 pt-2">
+                        <button type="button" id="todo-cancel-btn" onclick="resetTodoForm()" class="hidden text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 underline px-3">
+                            Cancel
+                        </button>
+                        <button type="submit" id="todo-submit-btn" 
+                            class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-5 py-2 rounded-xl transition-all shadow flex items-center gap-1">
+                            <span class="material-icons text-sm">add</span>
+                            <span>Save Task</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Tasks List -->
+                <div class="space-y-3" id="todos-container">
+                    {% for item in honeymoon.things_to_do | default([]) %}
+                    <div class="p-4 sm:p-5 rounded-2xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 {% if item.status == 'Completed ✅' %}bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300/50 dark:border-emerald-800/40 opacity-80{% else %}bg-white/70 dark:bg-gray-800/50 border-gray-200 dark:border-white/10 hover:shadow-md{% endif %}">
+                        <div class="flex items-start gap-3.5 flex-1">
+                            <button onclick="toggleTodoQuick('{{ item.id }}')" 
+                                class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-all {% if item.status == 'Completed ✅' %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent hover:border-amber-400{% endif %}" title="Toggle Completed">
+                                <span class="material-icons text-base">check</span>
+                            </button>
+                            <div class="flex-1 overflow-hidden">
+                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/30">
+                                        {{ item.category|default('General') }}
+                                    </span>
+                                    {% if item.due_date %}
+                                    <span class="text-[10px] font-semibold text-gray-500 dark:text-gray-400 flex items-center gap-0.5">
+                                        <span class="material-icons text-xs">alarm</span> {{ item.due_date }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white {% if item.status == 'Completed ✅' %}line-through text-gray-400{% endif %}">
+                                    {{ item.title }}
+                                </h3>
+                                {% if item.notes %}
+                                <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">{{ item.notes }}</p>
+                                {% endif %}
+
+                                {% if item.link %}
+                                <div class="mt-2">
+                                    <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" 
+                                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline bg-primary/5 dark:bg-primary/10 px-2.5 py-1 rounded-lg border border-primary/20">
+                                        <span class="material-icons text-xs">link</span>
+                                        <span>Open Link / Klook Activity</span>
+                                        <span class="material-icons text-[10px]">open_in_new</span>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Status Dropdown & Actions -->
+                        <div class="flex items-center justify-between md:justify-end gap-3 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-gray-100 dark:border-white/5">
+                            <select onchange="updateTodoStatusDirect('{{ item.id }}', this.value)" 
+                                class="cursor-pointer text-xs font-bold px-3 py-1.5 rounded-xl border outline-none transition-all {% if item.status == 'Completed ✅' %}bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800{% elif item.status == 'In Progress' %}bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-950/70 dark:text-blue-300 dark:border-blue-800{% elif item.status == 'Booked' %}bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-950/70 dark:text-indigo-300 dark:border-indigo-800{% else %}bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800{% endif %}">
+                                <option value="Pending" {% if item.status == 'Pending' %}selected{% endif %}>Pending ⏳</option>
+                                <option value="In Progress" {% if item.status == 'In Progress' %}selected{% endif %}>In Progress 🔄</option>
+                                <option value="Booked" {% if item.status == 'Booked' %}selected{% endif %}>Booked 🎟️</option>
+                                <option value="Completed ✅" {% if item.status == 'Completed ✅' %}selected{% endif %}>Completed ✅</option>
+                            </select>
+
+                            <div class="flex items-center gap-1">
+                                <button onclick="editTodo('{{ item.id }}', '{{ item.title|escape }}', '{{ item.category|default('General')|escape }}', '{{ item.link|default('')|escape }}', '{{ item.notes|default('')|escape }}', '{{ item.due_date|default('')|escape }}', '{{ item.status|default('Pending')|escape }}')" 
+                                    class="p-1.5 rounded-lg text-gray-400 hover:text-primary transition-colors" title="Edit Task">
+                                    <span class="material-icons text-base">edit</span>
+                                </button>
+                                <button onclick="deleteTodo('{{ item.id }}')" 
+                                    class="p-1.5 rounded-lg text-gray-400 hover:text-rose-500 transition-colors" title="Delete Task">
+                                    <span class="material-icons text-base">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-12 text-gray-400">
+                        <span class="material-icons text-4xl block mb-2 opacity-50">checklist</span>
+                        <p class="text-xs">No custom tasks yet. Add your first item using the form above!</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Attach Document to Expense Modal -->
+    <!-- Attach Document to Expense / Visa Modal -->
     <div id="attach-doc-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
             <div class="flex items-center gap-2 text-primary font-bold text-lg mb-1">
                 <span class="material-icons text-xl">upload_file</span>
-                <h3>Attach Ticket / Booking PDF</h3>
+                <h3 id="attach-doc-title">Attach Document / PDF</h3>
             </div>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4" id="attach-doc-subtitle">Upload your flight, hotel, or attraction ticket for this expense.</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4" id="attach-doc-subtitle">Upload your document to attach to this item.</p>
             
             <form onsubmit="handleAttachExpenseDoc(event)" class="space-y-4">
                 <input type="hidden" id="attach-exp-id" value="" />
+                <input type="hidden" id="attach-visa-id" value="" />
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Expense Item</label>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1" id="attach-item-label">Item / Requirement</label>
                     <input type="text" id="attach-exp-name" readonly 
                         class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold" />
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Document Label</label>
-                    <input type="text" id="attach-doc-name" placeholder="e.g. Flight Air India Tickets / Carlton Voucher" required 
+                    <input type="text" id="attach-doc-name" placeholder="e.g. Completed Form 14A / Bank Statement" required 
                         class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white" />
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Category</label>
                     <select id="attach-doc-category" class="w-full px-3.5 py-2 text-xs rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
+                        <option value="Visa">Singapore Visa</option>
                         <option value="Flights">Flights</option>
                         <option value="Hotels">Hotels (Carlton / Oasia)</option>
                         <option value="Cruise">Cruise (Disney)</option>
                         <option value="Attractions">Attractions / Klook</option>
-                        <option value="Visa">Visa</option>
+                        <option value="Insurance">Travel Insurance</option>
                         <option value="General">General</option>
                     </select>
                 </div>
@@ -3241,9 +3416,13 @@
             }
         }
 
-        // --- Attach Document to Expense Modal Handlers ---
+        // --- Attach Document to Expense / Visa Modal Handlers ---
         function openAttachExpenseDoc(expId, expItem, expCategory) {
             document.getElementById('attach-exp-id').value = expId;
+            document.getElementById('attach-visa-id').value = '';
+            document.getElementById('attach-item-label').textContent = 'Expense Item';
+            document.getElementById('attach-doc-title').textContent = 'Attach Ticket / Booking PDF';
+            document.getElementById('attach-doc-subtitle').textContent = 'Upload your flight, hotel, or attraction ticket for this expense.';
             document.getElementById('attach-exp-name').value = expItem;
             document.getElementById('attach-doc-name').value = `${expItem} - Ticket / Booking`;
             
@@ -3263,6 +3442,24 @@
             modal.classList.add('flex');
         }
 
+        function openAttachVisaDoc(visaItemId, visaTitle) {
+            document.getElementById('attach-exp-id').value = '';
+            document.getElementById('attach-visa-id').value = visaItemId;
+            document.getElementById('attach-item-label').textContent = 'Visa Requirement';
+            document.getElementById('attach-doc-title').textContent = 'Upload & Attach Visa Document';
+            document.getElementById('attach-doc-subtitle').textContent = 'Upload this document to your safe vault and mark the checklist requirement as collected.';
+            document.getElementById('attach-exp-name').value = visaTitle;
+            document.getElementById('attach-doc-name').value = visaTitle;
+            document.getElementById('attach-doc-category').value = 'Visa';
+
+            document.getElementById('attach-doc-file').value = '';
+            document.getElementById('attach-doc-status').className = 'hidden';
+
+            const modal = document.getElementById('attach-doc-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
         function closeAttachDocModal() {
             const modal = document.getElementById('attach-doc-modal');
             modal.classList.add('hidden');
@@ -3272,6 +3469,7 @@
         async function handleAttachExpenseDoc(e) {
             e.preventDefault();
             const expId = document.getElementById('attach-exp-id').value;
+            const visaId = document.getElementById('attach-visa-id').value;
             const name = document.getElementById('attach-doc-name').value.trim();
             const category = document.getElementById('attach-doc-category').value;
             const fileInput = document.getElementById('attach-doc-file');
@@ -3284,12 +3482,13 @@
             formData.append('file', fileInput.files[0]);
             formData.append('name', name);
             formData.append('category', category);
-            formData.append('expense_id', expId);
+            if (expId) formData.append('expense_id', expId);
+            if (visaId) formData.append('visa_item_id', visaId);
 
             btn.disabled = true;
             btn.innerHTML = `<span class="material-icons animate-spin text-sm">sync</span> Uploading...`;
             statusBox.className = "text-xs mt-2 font-semibold text-blue-500 block";
-            statusBox.textContent = "Uploading to Cloudflare R2 and linking to expense...";
+            statusBox.textContent = "Uploading to Cloudflare R2 and linking to document vault...";
 
             try {
                 const res = await fetch('/api/honeymoon/document/upload', {
@@ -3301,6 +3500,7 @@
                     statusBox.className = "text-xs mt-2 font-semibold text-emerald-500 block";
                     statusBox.textContent = "Attached successfully!";
                     triggerConfetti();
+                    if (visaId) sessionStorage.setItem('active_honeymoon_tab', 'visa');
                     setTimeout(() => location.reload(), 1200);
                 } else {
                     statusBox.className = "text-xs mt-2 font-semibold text-rose-500 block";
@@ -3309,12 +3509,11 @@
                     btn.innerHTML = `<span class="material-icons text-sm">cloud_upload</span><span>Upload & Attach</span>`;
                 }
             } catch (err) {
-                console.error('Error attaching doc to expense:', err);
+                console.error('Error attaching doc:', err);
                 statusBox.className = "text-xs mt-2 font-semibold text-rose-500 block";
                 statusBox.textContent = "Error uploading file. Please try again.";
                 btn.disabled = false;
                 btn.innerHTML = `<span class="material-icons text-sm">cloud_upload</span><span>Upload & Attach</span>`;
-            }
         }
 
         async function deleteDocument(docId) {
@@ -3532,6 +3731,108 @@
                     setTimeout(() => toast.remove(), 500);
                 }
             }, 5500);
+        }
+
+        // --- Things to Do & Task Tracker Handlers ---
+        function editTodo(id, title, category, link, notes, dueDate, status) {
+            document.getElementById('todo-id').value = id;
+            document.getElementById('todo-title').value = title;
+            document.getElementById('todo-category').value = category || 'General';
+            document.getElementById('todo-link').value = link || '';
+            document.getElementById('todo-notes').value = notes || '';
+            document.getElementById('todo-due').value = dueDate || '';
+            document.getElementById('todo-status').value = status || 'Pending';
+            document.getElementById('todo-form-heading').textContent = "Edit Task";
+            document.getElementById('todo-submit-btn').innerHTML = `<span class="material-icons text-sm">save</span><span>Update Task</span>`;
+            document.getElementById('todo-cancel-btn').classList.remove('hidden');
+            document.getElementById('todo-title').focus();
+        }
+
+        function resetTodoForm() {
+            document.getElementById('todo-id').value = '';
+            document.getElementById('todo-title').value = '';
+            document.getElementById('todo-category').value = 'General';
+            document.getElementById('todo-link').value = '';
+            document.getElementById('todo-notes').value = '';
+            document.getElementById('todo-due').value = '';
+            document.getElementById('todo-status').value = 'Pending';
+            document.getElementById('todo-form-heading').textContent = "Add New Task / Thing to Do";
+            document.getElementById('todo-submit-btn').innerHTML = `<span class="material-icons text-sm">add</span><span>Save Task</span>`;
+            document.getElementById('todo-cancel-btn').classList.add('hidden');
+        }
+
+        async function handleSaveTodo(e) {
+            e.preventDefault();
+            const id = document.getElementById('todo-id').value;
+            const title = document.getElementById('todo-title').value.trim();
+            const category = document.getElementById('todo-category').value;
+            const link = document.getElementById('todo-link').value.trim();
+            const notes = document.getElementById('todo-notes').value.trim();
+            const due_date = document.getElementById('todo-due').value.trim();
+            const status = document.getElementById('todo-status').value;
+
+            try {
+                const res = await fetch('/api/honeymoon/todo/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, title, category, link, notes, due_date, status })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'todo');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error saving task:', err);
+            }
+        }
+
+        async function updateTodoStatusDirect(todoId, newStatus) {
+            try {
+                const res = await fetch('/api/honeymoon/todo/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: todoId, status: newStatus })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'todo');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error updating task status:', err);
+            }
+        }
+
+        async function toggleTodoQuick(todoId) {
+            try {
+                const res = await fetch('/api/honeymoon/todo/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: todoId })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'todo');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error toggling task:', err);
+            }
+        }
+
+        async function deleteTodo(todoId) {
+            if (!confirm('Are you sure you want to remove this task?')) return;
+            try {
+                const res = await fetch(`/api/honeymoon/todo/${todoId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    sessionStorage.setItem('active_honeymoon_tab', 'todo');
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error deleting task:', err);
+            }
         }
 
         function triggerConfetti() {

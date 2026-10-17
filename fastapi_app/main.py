@@ -626,6 +626,98 @@ async def save_outfit(request: Request):
     return {"status": "success", "daily_outfits": outfits}
 
 
+@app.post("/api/honeymoon/todo/save")
+async def save_honeymoon_todo(request: Request):
+    import uuid
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+
+    todo_id = body.get("id")
+    title = body.get("title", "").strip()
+    category = body.get("category", "General").strip()
+    link = body.get("link", "").strip()
+    notes = body.get("notes", "").strip()
+    due_date = body.get("due_date", "").strip()
+    status = body.get("status", "Pending").strip()
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "things_to_do" not in data:
+        data["things_to_do"] = []
+
+    todos = data["things_to_do"]
+    updated = False
+    if todo_id:
+        for t in todos:
+            if t.get("id") == todo_id:
+                if title: t["title"] = title
+                if "category" in body: t["category"] = category
+                if "link" in body: t["link"] = link
+                if "notes" in body: t["notes"] = notes
+                if "due_date" in body: t["due_date"] = due_date
+                if "status" in body: t["status"] = status
+                updated = True
+                break
+
+    if not updated and title:
+        todos.append({
+            "id": f"todo-{uuid.uuid4().hex[:8]}",
+            "title": title,
+            "category": category,
+            "link": link,
+            "notes": notes,
+            "due_date": due_date,
+            "status": status
+        })
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "things_to_do": todos}
+
+
+@app.post("/api/honeymoon/todo/toggle")
+async def toggle_honeymoon_todo(request: Request):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    todo_id = body.get("id")
+    new_status = body.get("status")
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    todos = data.get("things_to_do", [])
+    for t in todos:
+        if t.get("id") == todo_id:
+            if new_status:
+                t["status"] = new_status
+            else:
+                t["status"] = "Completed ✅" if t.get("status") != "Completed ✅" else "Pending"
+            break
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "things_to_do": todos}
+
+
+@app.delete("/api/honeymoon/todo/{todo_id}")
+async def delete_honeymoon_todo(todo_id: str):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "things_to_do" in data:
+        data["things_to_do"] = [t for t in data["things_to_do"] if t.get("id") != todo_id]
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "things_to_do": data.get("things_to_do", [])}
+
+
 @app.post("/api/honeymoon/outfit/photo/upload")
 async def upload_outfit_photo(
     file: UploadFile = File(...),
@@ -802,7 +894,8 @@ async def upload_honeymoon_document(
     file: UploadFile = File(...),
     name: str = Form(""),
     category: str = Form("General"),
-    expense_id: str = Form("")
+    expense_id: str = Form(""),
+    visa_item_id: str = Form("")
 ):
     import uuid
     from datetime import datetime
@@ -843,6 +936,7 @@ async def upload_honeymoon_document(
             "key": r2_key,
             "size": size_str,
             "expense_id": expense_id or None,
+            "visa_item_id": visa_item_id or None,
             "uploaded_at": datetime.now().strftime("%d %b %Y, %I:%M %p")
         }
         data["documents"].append(new_doc)
@@ -854,6 +948,15 @@ async def upload_honeymoon_document(
                     exp["doc_url"] = public_url
                     exp["doc_name"] = clean_name
                     exp["doc_id"] = doc_id
+                    break
+
+        # If visa_item_id provided, attach document link to that visa checklist item and mark as done
+        if visa_item_id and "visa" in data and "checklist" in data["visa"]:
+            for v_item in data["visa"]["checklist"]:
+                if v_item.get("id") == visa_item_id:
+                    v_item["doc_url"] = public_url
+                    v_item["doc_name"] = clean_name
+                    v_item["done"] = True
                     break
 
         await save_honeymoon_data(data)
