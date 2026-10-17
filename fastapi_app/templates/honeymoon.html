@@ -1576,37 +1576,136 @@
                 {% endif %}
             </div>
 
-            <!-- Singapore Legal Rules & Do's / Don'ts -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Strict Don'ts & Fines -->
-                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-rose-300/40">
-                    <div class="flex items-center gap-2 text-rose-600 mb-4">
-                        <span class="material-icons">gavel</span>
-                        <h3 class="text-xl font-bold">Strict Laws & Fines ("The Fine City")</h3>
-                    </div>
-                    <div class="space-y-3">
-                        {% for item in honeymoon.rules.donts %}
-                        <div class="p-3.5 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/40">
-                            <h4 class="text-sm font-bold text-rose-700 dark:text-rose-300">{{ item.title }}</h4>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+            <!-- Oasia Resort Sentosa Official House Rules & Stay Policies -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl border-2 border-emerald-300/50 bg-gradient-to-br from-emerald-50/40 via-white/80 to-teal-50/40 dark:from-emerald-950/20 dark:via-gray-800/60 dark:to-teal-950/20">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-gray-200/60 dark:border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-md">
+                            <span class="material-icons text-2xl">hotel</span>
                         </div>
-                        {% endfor %}
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">
+                                Official Resort Guidelines
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Oasia Resort Sentosa · Essential House Rules & Policies 🏝️</h3>
+                        </div>
                     </div>
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300">
+                        Family Suite (Dec 17–21)
+                    </span>
                 </div>
 
-                <!-- Helpful Travel Do's -->
-                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-emerald-300/40">
-                    <div class="flex items-center gap-2 text-emerald-600 mb-4">
-                        <span class="material-icons">tips_and_updates</span>
-                        <h3 class="text-xl font-bold">Helpful Tourist Hacks & Do's</h3>
-                    </div>
-                    <div class="space-y-3">
-                        {% for item in honeymoon.rules.dos %}
-                        <div class="p-3.5 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40">
-                            <h4 class="text-sm font-bold text-emerald-700 dark:text-emerald-300">{{ item.title }}</h4>
-                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                    <!-- 1. Check-in & Security Deposit -->
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-emerald-200/60 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-300 mb-2">
+                                <span class="material-icons text-base">payments</span>
+                                <span>Check-in & Security Deposit</span>
+                            </div>
+                            <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <li>• <b>Mandatory Deposit:</b> <b>SGD 50 per room/night</b> (collected at check-in for incidentals, refundable at check-out).</li>
+                                <li>• <b>Cashless Property:</b> Credit card is required. <b>Cash is strictly NOT accepted</b> for check-in deposits.</li>
+                                <li>• <b>Primary Cardholder:</b> Credit card name must match primary guest (<b>Shaiwal Sachdev</b>).</li>
+                                <li>• <b>ID Proof:</b> <b>Original Passport</b> is strictly required for both guests.</li>
+                            </ul>
                         </div>
-                        {% endfor %}
+                        <div class="mt-3 pt-2 border-t border-gray-100 dark:border-white/5 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                            💡 Use your zero-forex credit card for zero markup.
+                        </div>
+                    </div>
+
+                    <!-- 2. Timings & Requested Slots -->
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-emerald-200/60 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-300 mb-2">
+                                <span class="material-icons text-base">schedule</span>
+                                <span>Check-in & Check-out Timings</span>
+                            </div>
+                            <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <li>• <b>Standard Check-in:</b> 03:00 PM onwards.</li>
+                                <li>• <b>Requested Early Check-in:</b> <b>11:00 AM</b> (returning from Disney Cruise at 7:00 AM). Concierge can securely hold your luggage if room is undergoing final prep.</li>
+                                <li>• <b>Standard Check-out:</b> Before 12:00 PM.</li>
+                                <li>• <b>Requested Late Check-out:</b> <b>01:00 PM</b> (subject to room availability).</li>
+                            </ul>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-gray-100 dark:border-white/5 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                            ✨ You can relax at the pool or Palawan beach while waiting!
+                        </div>
+                    </div>
+
+                    <!-- 3. Food, Alcohol & Dining Rules -->
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-emerald-200/60 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-300 mb-2">
+                                <span class="material-icons text-base">restaurant_menu</span>
+                                <span>Food & Beverage Rules</span>
+                            </div>
+                            <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <li>• <b>Outside Food / Delivery:</b> <b>Outside food is NOT allowed</b> and third-party food delivery is not supported to rooms.</li>
+                                <li>• <b>Dining Options:</b> Non-veg food allowed. On-site Bedrock Origin restaurant & Sentosa dining available.</li>
+                                <li>• <b>Alcohol:</b> <b>No restrictions</b> on alcohol consumption in your suite.</li>
+                                <li>• <b>Welcome Inclusions:</b> Complimentary welcome soft drinks upon arrival.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-gray-100 dark:border-white/5 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                            🍷 Enjoy cocktails on your private balcony!
+                        </div>
+                    </div>
+
+                    <!-- 4. Smoking & Cleanliness -->
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-emerald-200/60 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400 mb-2">
+                                <span class="material-icons text-base">smoke_free</span>
+                                <span>Strict 100% Smoke-Free Policy</span>
+                            </div>
+                            <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <li>• <b>Smoking / Vaping:</b> <b>STRICTLY PROHIBITED</b> anywhere inside suites, balconies, or public indoor areas. Heavy cleaning fines apply.</li>
+                                <li>• <b>Designated Zones:</b> Outdoor smoking zones exist at designated resort perimeter spots.</li>
+                                <li>• <b>Vaping Warning:</b> Remember e-cigarettes/vapes are <b>illegal in all of Singapore</b> (up to SGD 2,000 fine).</li>
+                            </ul>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-gray-100 dark:border-white/5 text-[10px] text-rose-500 font-bold">
+                            ⚠️ Smoke detectors are ultra-sensitive in Sentosa resorts.
+                        </div>
+                    </div>
+
+                    <!-- 5. Guest Profile & Visitors -->
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-emerald-200/60 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-300 mb-2">
+                                <span class="material-icons text-base">group</span>
+                                <span>Visitors & Peaceful Stay</span>
+                            </div>
+                            <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <li>• <b>Unmarried Couples:</b> Completely allowed and welcomed.</li>
+                                <li>• <b>Age Requirement:</b> Primary guest must be 18+ years of age.</li>
+                                <li>• <b>Outside Visitors:</b> Guests are requested <b>not to invite unregistered outside visitors</b> into suites.</li>
+                                <li>• <b>Quiet Hours:</b> No private parties or loud events to preserve tranquil wellness ambiance.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-gray-100 dark:border-white/5 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                            🕊️ Perfect for your serene romantic getaway!
+                        </div>
+                    </div>
+
+                    <!-- 6. Pets & Sentosa Island Transport -->
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-emerald-200/60 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-300 mb-2">
+                                <span class="material-icons text-base">pets</span>
+                                <span>Pets & Sentosa Access</span>
+                            </div>
+                            <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <li>• <b>Pets:</b> Pets are only permitted in Courtyard Premier Rooms with prior fee (not in Family Suites or resort pool/gym).</li>
+                                <li>• <b>Sentosa Express Monorail:</b> Resort guests get complimentary Sentosa Express monorail passes to/from VivoCity!</li>
+                                <li>• <b>Beach Tram:</b> Free tram directly to Siloso, Palawan, and Tanjong beaches.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-gray-100 dark:border-white/5 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                            🚝 Free monorail travel across the whole island.
+                        </div>
                     </div>
                 </div>
             </div>
