@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ honeymoon.title }} - Journey with Puchki</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/static/js/theme.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec131e",
+                        "primary-dark": "#b00e16",
+                        "background-light": "#fdfaf9",
+                        "background-dark": "#160d0e",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "cursive": ["Great Vibes", "cursive"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .dark .glass-panel {
+            background: rgba(26, 17, 18, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #ec131e 0%, #db2777 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(236, 19, 30, 0.35);
+        }
+        .tab-btn:not(.active) {
+            background: transparent;
+            color: #64748b;
+        }
+        .dark .tab-btn:not(.active) {
+            color: #94a3b8;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f43f5e;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display transition-colors duration-300 min-h-screen">
+    {% include 'partials/navbar.html' %}
+
+    <!-- Honeymoon Hero Banner -->
+    <header class="relative pt-32 pb-16 sm:pb-24 px-4 overflow-hidden">
+        <!-- Background Imagery -->
+        <div class="absolute inset-0 bg-cover bg-center -z-10 brightness-[0.38] scale-105 transition-transform duration-1000"
+            style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=2000&auto=format&fit=crop');">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background-light dark:to-background-dark -z-10"></div>
+
+        <div class="max-w-6xl mx-auto text-center relative z-10 px-4">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs sm:text-sm font-semibold mb-6 shadow-lg">
+                <span class="text-rose-400">💍</span>
+                <span>Our Dream Honeymoon Journey</span>
+                <span class="text-rose-400">🇸🇬</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-white mb-4 drop-shadow-lg tracking-tight">
+                Singapore & Cruise
+            </h1>
+            <p class="text-xl sm:text-2xl text-rose-200 font-cursive mb-4 drop-shadow">
+                {{ honeymoon.subtitle }}
+            </p>
+            <p class="text-sm sm:text-base text-white/80 max-w-2xl mx-auto font-medium leading-relaxed mb-8">
+                {{ honeymoon.overview }}
+            </p>
+
+            <!-- Quick Summary Badges -->
+            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm">
+                <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white shadow-md">
+                    <span class="material-icons text-rose-400 text-lg">event</span>
+                    <span class="font-bold">{{ honeymoon.dates }}</span>
+                </div>
+                <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white shadow-md">
+                    <span class="material-icons text-amber-400 text-lg">hotel</span>
+                    <span>1N Carlton + 3N Cruise + 4N Oasia Sentosa</span>
+                </div>
+                <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white shadow-md">
+                    <span class="material-icons text-emerald-400 text-lg">confirmation_number</span>
+                    <span>7 Klook Experiences</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Interactive Navigation Tabs -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 -mt-8 relative z-20 pb-24">
+        <!-- Floating Tabs Bar -->
+        <div class="glass-panel rounded-2xl p-1.5 sm:p-2 shadow-2xl mb-8 flex flex-wrap gap-1 sm:gap-2 justify-center border border-white/40 dark:border-white/10">
+            <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base">calendar_month</span>
+                <span>Day-by-Day Itinerary</span>
+            </button>
+            <button onclick="switchTab('disney')" id="tab-btn-disney" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base text-amber-400">auto_awesome</span>
+                <span>Disney Adventure Cruise 🚢👑</span>
+            </button>
+            <button onclick="switchTab('visa')" id="tab-btn-visa" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base">assignment</span>
+                <span>Visa & Documents (Nov 1)</span>
+            </button>
+            <button onclick="switchTab('tickets')" id="tab-btn-tickets" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base">local_activity</span>
+                <span>Klook Tickets & Links</span>
+            </button>
+            <button onclick="switchTab('dining')" id="tab-btn-dining" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base">restaurant</span>
+                <span>Romantic Dining & Options</span>
+            </button>
+            <button onclick="switchTab('rules')" id="tab-btn-rules" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base">policy</span>
+                <span>Singapore Rules & Tips</span>
+            </button>
+            <button onclick="switchTab('expenses')" id="tab-btn-expenses" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base">account_balance_wallet</span>
+                <span>Expense Tracker</span>
+            </button>
+        </div>
+
+        <!-- ========================================================
+             TAB 1: DAY-BY-DAY ITINERARY WITH OPTIONS
+             ======================================================== -->
+        <section id="tab-content-itinerary" class="tab-content space-y-8">
+            <!-- Stays Overview Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
+                {% for stay in honeymoon.stays %}
+                <div class="glass-panel p-5 rounded-3xl shadow-sm border border-rose-100 dark:border-white/5 relative overflow-hidden group hover:-translate-y-1 transition-all">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">{{ stay.type }}</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300 text-xs font-semibold">{{ stay.badge }}</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">{{ stay.hotel }}</h3>
+                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">{{ stay.dates }}</p>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ stay.notes }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Days Timeline -->
+            <div class="space-y-6">
+                {% for d in honeymoon.days %}
+                <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-md border border-slate-200/60 dark:border-white/10 hover:border-rose-300 dark:hover:border-rose-500/30 transition-all">
+                    <!-- Day Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-gray-200/60 dark:border-white/10 gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 to-pink-600 flex flex-col items-center justify-center text-white font-bold shadow-md">
+                                <span class="text-[10px] uppercase tracking-wider">Day</span>
+                                <span class="text-lg leading-none">{{ d.day }}</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ d.title }}</h3>
+                                <p class="text-xs sm:text-sm text-rose-600 dark:text-rose-400 font-semibold">{{ d.date }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-3 py-1.5 rounded-full w-fit">
+                            <span class="material-icons text-sm text-primary">place</span>
+                            <span>{{ d.location }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Day Timeline Schedule -->
+                    <div class="mt-6 space-y-4 pl-2 sm:pl-4 border-l-2 border-rose-300/40 dark:border-rose-900/60 ml-3">
+                        {% for item in d.schedule %}
+                        <div class="relative pl-6 group">
+                            <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-gray-900 bg-rose-500 shadow-sm group-hover:scale-125 transition-transform"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                                <span class="text-xs font-bold text-rose-600 dark:text-rose-400 whitespace-nowrap bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-rose-200/60 dark:border-rose-800/40">{{ item.time }}</span>
+                                <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white">{{ item.title }}</h4>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">{{ item.desc }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Real-time Choices & Options Box -->
+                    {% if d.options and d.options|length > 0 %}
+                    <div class="mt-6 pt-5 border-t border-dashed border-gray-200 dark:border-white/10 bg-rose-50/50 dark:bg-rose-950/20 -mx-6 -mb-6 p-6 rounded-b-3xl">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="material-icons text-amber-500 text-lg">alt_route</span>
+                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Curated Options & Romantic Choices</h4>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            {% for opt in d.options %}
+                            <div class="bg-white/80 dark:bg-gray-800/80 p-3.5 rounded-2xl border border-rose-200/50 dark:border-white/10 shadow-sm">
+                                <p class="text-xs font-bold text-rose-600 dark:text-rose-300 mb-1">{{ opt.title }}</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-300 leading-normal">{{ opt.desc }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB: DISNEY ADVENTURE CRUISE - PRINCESS & MICKEY/MINNIE
+             ======================================================== -->
+        <section id="tab-content-disney" class="tab-content hidden space-y-8">
+            <!-- Fairytale Banner -->
+            <div class="relative rounded-3xl overflow-hidden p-8 sm:p-12 text-white shadow-2xl border border-pink-300/40"
+                 style="background: linear-gradient(135deg, #2b0938 0%, #4a154b 40%, #831843 80%, #be123c 100%);">
+                <!-- Sparkle overlays -->
+                <div class="absolute -top-12 -right-12 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -left-12 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-amber-300 text-xs font-bold mb-4">
+                        <span class="material-icons text-sm">auto_awesome</span>
+                        <span>Where Magic Meets the Sea · 14–17 Dec 2026</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-serif font-bold mb-3 tracking-tight">
+                        Disney Adventure Cruise 🚢✨
+                    </h2>
+                    <p class="text-base sm:text-lg text-pink-200 font-cursive mb-4">
+                        A once-in-a-lifetime fairytale for Shaiwal & Shaila
+                    </p>
+                    <p class="text-xs sm:text-sm text-white/90 leading-relaxed">
+                        Step aboard the brand-new <b>Disney Adventure</b> sailing directly from Marina Bay Cruise Centre Singapore. Experience 7 breathtaking themed realms, Disney Princess magic, Mickey & Minnie captain encounters, Broadway-caliber musicals, and fireworks bursting over the open ocean.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Themed Highlights Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {% for feat in honeymoon.disney_features %}
+                <div class="glass-panel p-6 rounded-3xl shadow-sm border border-pink-200/50 dark:border-white/10 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr {{ feat.color }} flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform">
+                        <span class="material-icons">{{ feat.icon }}</span>
+                    </div>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">{{ feat.zone }}</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ feat.desc }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Princesses & Mickey Encounter Planner -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-rose-200 dark:border-rose-900/40">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 to-rose-600 flex items-center justify-center text-white shadow">
+                        <span class="material-icons text-xl">favorite</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Disney Fairytale Honeymoon Moments</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Must-do memories to capture together on board</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-pink-50/80 to-purple-50/80 dark:bg-white/5 border border-pink-200/60 dark:border-white/10">
+                        <div class="flex items-center gap-2 text-pink-600 dark:text-pink-400 font-bold text-sm mb-1">
+                            <span>👑</span>
+                            <h4>Disney Princess Royal Meet & Greet</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Reserve the Royal Gathering on the Disney Cruise Navigator app on embarkation day. Dress up for royal photos with Cinderella, Belle, Ariel, Jasmine, and Rapunzel at the Town Square Grand Hall.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-rose-50/80 to-red-50/80 dark:bg-white/5 border border-rose-200/60 dark:border-white/10">
+                        <div class="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-sm mb-1">
+                            <span>🐭🎀</span>
+                            <h4>Captain Mickey & Captain Minnie Gala</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Couple photo shoot with Mickey and Minnie in their signature maritime captain uniforms. A cherished keepsake for your honeymoon album!
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 to-yellow-50/80 dark:bg-white/5 border border-amber-200/60 dark:border-white/10">
+                        <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-sm mb-1">
+                            <span>🍽️</span>
+                            <h4>Disney Rotational Dining</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Rotate between 3 different themed restaurants each evening while keeping your personal Disney serving team who remember your dietary preferences and honeymoon surprises.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-50/80 to-indigo-50/80 dark:bg-white/5 border border-blue-200/60 dark:border-white/10">
+                        <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm mb-1">
+                            <span>🎆</span>
+                            <h4>Deck Party & Open Ocean Fireworks</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Dance with Mickey, Minnie, and Disney characters on the upper deck under starlight before Disney's signature fireworks light up the night sky over the ocean.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB 2: VISA & DOCUMENT CAPTURE (APPLYING NOV 1)
+             ======================================================== -->
+        <section id="tab-content-visa" class="tab-content hidden space-y-8">
+            <!-- Visa Strategy Card -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border-2 border-rose-400/40 shadow-lg relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300 text-xs font-bold mb-3">
+                            <span class="material-icons text-sm">schedule</span>
+                            Application Window: 30 Days Prior
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Singapore Tourist e-Visa Guide 📄</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
+                            Indian passport holders require an **e-Visa** through an Authorised Visa Agent (AVA) or authorized partner. The Singapore Immigration & Checkpoints Authority (ICA) strictly allows submission **within 30 days of arrival**.
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-4 text-xs font-semibold">
+                            <span class="bg-gray-100 dark:bg-white/10 px-3 py-1.5 rounded-xl">📅 Submit On: <b>{{ honeymoon.visa.apply_date }}</b></span>
+                            <span class="bg-gray-100 dark:bg-white/10 px-3 py-1.5 rounded-xl">⚡ Processing: <b>3 to 5 working days</b></span>
+                            <span class="bg-gray-100 dark:bg-white/10 px-3 py-1.5 rounded-xl">💰 Fee: <b>{{ honeymoon.visa.fee }}</b></span>
+                        </div>
+                    </div>
+                    <div class="shrink-0 text-center bg-gradient-to-tr from-rose-500 to-pink-600 text-white p-6 rounded-3xl shadow-xl">
+                        <span class="text-xs uppercase font-bold tracking-widest block opacity-80">Target Submission</span>
+                        <span class="text-3xl sm:text-4xl font-extrabold block my-1">Nov 1</span>
+                        <span class="text-xs font-semibold opacity-90">2026 (Ready by Nov 6)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Document Checklist -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Required Visa Documents Checklist</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Tick items as you gather them. All updates save automatically to the database!</p>
+                    </div>
+                    <button onclick="triggerConfetti()" class="text-xs text-rose-500 font-bold hover:underline flex items-center gap-1">
+                        <span class="material-icons text-sm">celebration</span> Celebrate
+                    </button>
+                </div>
+
+                <div class="space-y-3" id="visa-checklist-container">
+                    {% for item in honeymoon.visa.checklist %}
+                    <div onclick="toggleChecklist('{{ item.id }}', 'visa')" 
+                        class="p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-4 select-none {% if item.done %}bg-emerald-50/60 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800/50{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:border-rose-300{% endif %}">
+                        <div class="mt-0.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all {% if item.done %}bg-emerald-500 text-white shadow{% else %}border-2 border-gray-300 dark:border-gray-600 text-transparent{% endif %}">
+                            <span class="material-icons text-base">check</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm sm:text-base font-bold text-gray-900 dark:text-white {% if item.done %}line-through opacity-70{% endif %}">
+                                {{ item.title }}
+                            </h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.detail }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB 3: KLOOK TICKETS & BOOKINGS
+             ======================================================== -->
+        <section id="tab-content-tickets" class="tab-content hidden space-y-8">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Experiences & Tickets to Book (2 Adults)</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Direct booking links to Klook India. Book exact dates in advance for timed slots.</p>
+                    </div>
+                    <div class="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 px-4 py-2 rounded-2xl text-xs font-bold text-rose-600 dark:text-rose-300">
+                        🎟️ 7 Major Experiences
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for t in honeymoon.klook_tickets %}
+                    <div class="p-5 rounded-3xl border transition-all flex flex-col justify-between {% if t.booked %}bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-800{% else %}bg-white/60 dark:bg-gray-800/40 border-gray-200 dark:border-white/10 hover:shadow-lg{% endif %}">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full">{{ t.date }}</span>
+                                <button onclick="toggleChecklist('{{ t.id }}', 'tickets')" 
+                                    class="text-xs font-bold px-3 py-1 rounded-full transition-all {% if t.booked %}bg-emerald-500 text-white shadow{% else %}bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300{% endif %}">
+                                    {{ t.status }}
+                                </button>
+                            </div>
+                            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ t.name }}</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold mb-4">{{ t.price }}</p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200/60 dark:border-white/10 flex items-center justify-between">
+                            <span class="text-[11px] text-gray-500 dark:text-gray-400">Klook India official</span>
+                            <a href="{{ t.link }}" target="_blank" rel="noopener noreferrer" 
+                                class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 hover:text-rose-700 hover:underline">
+                                <span>Book on Klook</span>
+                                <span class="material-icons text-sm">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Free Attractions Section -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-sm border border-emerald-200/50 dark:border-emerald-900/30">
+                <div class="flex items-center gap-2 mb-4 text-emerald-600 dark:text-emerald-400">
+                    <span class="material-icons text-2xl">savings</span>
+                    <h3 class="text-xl font-bold">Unforgettable Free Romantic Experiences</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    {% for free in honeymoon.free_attractions %}
+                    <div class="flex items-start gap-2.5 bg-emerald-50/40 dark:bg-white/5 p-3 rounded-2xl border border-emerald-100 dark:border-white/5">
+                        <span class="text-emerald-500 font-bold">✓</span>
+                        <span>{{ free }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB 4: ROMANTIC DINING & VEGETARIAN OPTIONS
+             ======================================================== -->
+        <section id="tab-content-dining" class="tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Sentosa Island Romantic Spots -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200/60 dark:border-white/10">
+                    <div class="flex items-center gap-2 text-rose-500 mb-4">
+                        <span class="material-icons">beach_access</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sentosa & Beachfront Romantic Spots</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Trapizza (Siloso Beach, Sentosa)</h4>
+                            <p class="text-xs text-rose-500 font-semibold mb-1">Wood-fired Pizzas & Pastas by the Sea</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">Casual-chic Italian right on the sand. Perfect for an afternoon or sunset meal with Pizza Quattro Formaggi, Gnocchi, and refreshing mocktails.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Cassia (Capella Singapore)</h4>
+                            <p class="text-xs text-rose-500 font-semibold mb-1">Ultra-Luxury Cantonese in Heritage Manor</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">One of Singapore's most romantic venues. Exceptional vegetarian dim sum (black truffle crystal dumplings) and bespoke menus upon advance request.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Quayside Isle (Sentosa Cove)</h4>
+                            <p class="text-xs text-rose-500 font-semibold mb-1">Yacht Marina Dining & Mediterranean Delights</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">Stroll past multi-million dollar yachts. Miska Café (falafels, shakshuka) and Sole Pomodoro (authentic Italian pizzas & risottos).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- City Hall & Marina Bay Spots -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200/60 dark:border-white/10">
+                    <div class="flex items-center gap-2 text-amber-500 mb-4">
+                        <span class="material-icons">location_city</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Carlton Hotel & Marina Bay Spots</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">CHIJMES Courtyards (Opposite Carlton)</h4>
+                            <p class="text-xs text-amber-500 font-semibold mb-1">Fairytale Gothic Chapel & Outdoor Dining</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">Lit by fairy lights under the 19th-century chapel. Great Italian, craft beer, and tapas right across the street from your hotel.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Nalan Vegetarian (Capitol Singapore)</h4>
+                            <p class="text-xs text-amber-500 font-semibold mb-1">100% Pure Vegetarian Fine Indian Dining</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">Just 2 minutes walk from Carlton Hotel. High quality North & South Indian dishes, paneer curries, and dosas in clean comfort.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white">Cultivate Cafe (Maxwell Reserve)</h4>
+                            <p class="text-xs text-amber-500 font-semibold mb-1">Candlelit Colonial Library Plant-Based Dining</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300">An extraordinary honeymoon ambiance nestled among antique bookshelves. 100% plant-based artisanal pastas, vegan caviart, and gourmet desserts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB 5: SINGAPORE RULES, DO'S & DON'TS
+             ======================================================== -->
+        <section id="tab-content-rules" class="tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Strict Don'ts & Fines -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-rose-300/40">
+                    <div class="flex items-center gap-2 text-rose-600 mb-4">
+                        <span class="material-icons">gavel</span>
+                        <h3 class="text-xl font-bold">Strict Laws & Fines ("The Fine City")</h3>
+                    </div>
+                    <div class="space-y-3">
+                        {% for item in honeymoon.rules.donts %}
+                        <div class="p-3.5 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/40">
+                            <h4 class="text-sm font-bold text-rose-700 dark:text-rose-300">{{ item.title }}</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Helpful Travel Do's -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-emerald-300/40">
+                    <div class="flex items-center gap-2 text-emerald-600 mb-4">
+                        <span class="material-icons">tips_and_updates</span>
+                        <h3 class="text-xl font-bold">Helpful Tourist Hacks & Do's</h3>
+                    </div>
+                    <div class="space-y-3">
+                        {% for item in honeymoon.rules.dos %}
+                        <div class="p-3.5 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40">
+                            <h4 class="text-sm font-bold text-emerald-700 dark:text-emerald-300">{{ item.title }}</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB 6: LIVE EXPENSE TRACKER
+             ======================================================== -->
+        <section id="tab-content-expenses" class="tab-content hidden space-y-8">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Honeymoon Budget & Expense Tracker</h2>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Keep track of flights, hotels, activities, food, and shopping.</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-rose-500 to-amber-500 text-white px-5 py-2.5 rounded-2xl shadow font-bold text-sm">
+                        Total Estimated: <span id="total-expense-display">₹2,90,500</span>
+                    </div>
+                </div>
+
+                <!-- Add New Expense Form -->
+                <form id="expense-form" onsubmit="addExpense(event)" class="bg-gray-50 dark:bg-white/5 p-4 rounded-2xl border border-gray-200 dark:border-white/10 mb-6 flex flex-wrap gap-3 items-center">
+                    <input type="text" id="exp-item" placeholder="Item name (e.g. Sentosa Dinner)" required 
+                        class="flex-1 min-w-[200px] px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                    <input type="number" id="exp-amount" placeholder="Amount (INR)" required 
+                        class="w-32 px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary" />
+                    <select id="exp-category" 
+                        class="px-3.5 py-2 text-xs rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary">
+                        <option value="Food & Dining">Food & Dining</option>
+                        <option value="Activities">Activities</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Hotels">Hotels</option>
+                        <option value="General">General</option>
+                    </select>
+                    <button type="submit" 
+                        class="bg-primary hover:bg-primary-dark text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow">
+                        + Add Expense
+                    </button>
+                </form>
+
+                <!-- Expenses Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-white/10 text-gray-400">
+                                <th class="pb-3 font-semibold">Category</th>
+                                <th class="pb-3 font-semibold">Item</th>
+                                <th class="pb-3 font-semibold">Status</th>
+                                <th class="pb-3 font-semibold text-right">Amount (INR)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenses-tbody" class="divide-y divide-gray-100 dark:divide-white/5">
+                            {% for exp in honeymoon.expenses %}
+                            <tr>
+                                <td class="py-3 font-semibold text-rose-500">{{ exp.category }}</td>
+                                <td class="py-3 text-gray-800 dark:text-gray-200 font-medium">{{ exp.item }}</td>
+                                <td class="py-3">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {% if exp.status == 'Booked' %}bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300{% elif exp.status == 'Pending' %}bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300{% else %}bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300{% endif %}">
+                                        {{ exp.status }}
+                                    </span>
+                                </td>
+                                <td class="py-3 text-right font-bold text-gray-900 dark:text-white">₹{{ "{:,.0f}".format(exp.amount) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-200/60 dark:border-white/10 text-center text-xs text-gray-500">
+        <p>Made with endless love for Shaila by Shaiwal · Singapore Honeymoon 2026 ❤️</p>
+    </footer>
+
+    <!-- Tab Switching & Interactive Scripts -->
+    <script>
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab content
+            const target = document.getElementById(`tab-content-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+
+        async function toggleChecklist(itemId, category) {
+            try {
+                const res = await fetch('/api/honeymoon/toggle-checklist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: itemId, category: category })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    // Quick reload or celebration
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error toggling checklist:', err);
+            }
+        }
+
+        async function addExpense(e) {
+            e.preventDefault();
+            const item = document.getElementById('exp-item').value;
+            const amount = document.getElementById('exp-amount').value;
+            const category = document.getElementById('exp-category').value;
+
+            try {
+                const res = await fetch('/api/honeymoon/expense', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ item, amount, category, status: 'Logged' })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    location.reload();
+                }
+            } catch (err) {
+                console.error('Error adding expense:', err);
+            }
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 50,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

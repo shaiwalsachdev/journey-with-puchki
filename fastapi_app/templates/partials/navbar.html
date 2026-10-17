@@ -64,6 +64,17 @@
             color: #f42559 !important;
         }
 
+        #navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .dark #navbar {
+            background: rgba(20, 10, 12, 0.88);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
         .birthday-mode #navbar {
             background: rgba(255, 240, 243, 0.95) !important;
             backdrop-filter: blur(12px);
@@ -119,47 +130,79 @@
     {% include 'partials/lightbox_css.html' %}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-            <a href="/" class="flex items-center gap-2">
-                <span class="font-bold text-2xl tracking-tight text-primary">ShaiX2</span>
+            <!-- Brand Logo -->
+            <a href="/" class="flex items-center gap-2 group shrink-0">
+                <span class="font-bold text-2xl tracking-tight text-primary group-hover:scale-105 transition-transform">ShaiX2</span>
             </a>
-            <div class="hidden md:flex space-x-6 items-center">
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
+
+            <!-- Desktop Links Bar with Responsive Overflow -->
+            <div class="hidden lg:flex items-center space-x-1 xl:space-x-3">
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'home' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/">Home</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'timeline' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/timeline">Timeline</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'gallery' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/gallery">Gallery</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
-                    href="/music">Music</a>
-                {% if not settings.private_mode %}
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
-                    href="/coupons">Coupons</a>
-                {% endif %}
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-primary hover:text-primary-dark{% endif %} transition-colors {% if page == 'birthday' %}border-b-2 border-primary font-bold{% endif %}"
-                    href="/birthday">🎂 Birthday ✨</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white font-bold border-b-2 border-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'roka' %}text-white font-bold bg-white/20{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/roka">Roka</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
-                    href="/wishlist">Wishlist</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
-                    href="/guestbook">Guestbook</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
-                    href="/upcoming">Upcoming</a>
-                <a class="text-sm font-medium {% if page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors"
-                    href="/dictionary">Dictionary</a>
-                <a class="text-sm font-medium {% if page == 'planner' %}border-b-2 border-primary font-bold text-primary{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary{% endif %} transition-colors flex items-center gap-1"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'birthday' %}bg-pink-500 text-white font-bold shadow-md shadow-pink-500/30{% else %}text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-950/40{% endif %}"
+                    href="/birthday">🎂 Birthday ✨</a>
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'planner' %}bg-primary/10 text-primary font-bold{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/planner">✈️ AI Planner</a>
+
+                <!-- Special Honeymoon Tab -->
+                <a class="px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 {% if page == 'honeymoon' %}bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/30{% else %}bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-300/60 dark:border-rose-800/60 hover:bg-rose-100{% endif %}"
+                    href="/honeymoon">
+                    <span>🏰 Disney Honeymoon 🇸🇬</span>
+                </a>
+
+                <!-- More Dropdown Menu -->
+                <div class="relative group/more">
+                    <button class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary flex items-center gap-1 hover:bg-black/5 dark:hover:bg-white/5 transition-all">
+                        <span>More</span>
+                        <span class="material-icons text-sm group-hover/more:rotate-180 transition-transform">expand_more</span>
+                    </button>
+                    <div class="absolute right-0 top-full pt-2 w-48 hidden group-hover/more:block z-50">
+                        <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/80 dark:border-white/10 p-2 space-y-1">
+                            <a href="/music" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-white/10 hover:text-primary transition-all">
+                                <span class="material-icons text-sm text-primary">library_music</span> Music
+                            </a>
+                            <a href="/wishlist" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-white/10 hover:text-primary transition-all">
+                                <span class="material-icons text-sm text-primary">stars</span> Wishlist
+                            </a>
+                            <a href="/guestbook" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-white/10 hover:text-primary transition-all">
+                                <span class="material-icons text-sm text-primary">import_contacts</span> Guestbook
+                            </a>
+                            <a href="/upcoming" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-white/10 hover:text-primary transition-all">
+                                <span class="material-icons text-sm text-primary">event</span> Upcoming
+                            </a>
+                            <a href="/dictionary" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-white/10 hover:text-primary transition-all">
+                                <span class="material-icons text-sm text-primary">book</span> Dictionary
+                            </a>
+                            {% if not settings.private_mode %}
+                            <a href="/coupons" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-white/10 hover:text-primary transition-all">
+                                <span class="material-icons text-sm text-primary">card_giftcard</span> Coupons
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Play Theme Button (Global) -->
-            <button id="play-theme-btn"
-                class="hidden md:flex items-center space-x-2 bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-full transition-all group ml-4">
-                <span class="material-icons text-primary text-sm group-hover:animate-pulse">music_note</span>
-                <span class="text-xs font-semibold uppercase tracking-wider">Play Theme</span>
-            </button>
+
+            <!-- Play Theme Button & Mobile Toggle -->
+            <div class="flex items-center gap-2">
+                <button id="play-theme-btn"
+                    class="hidden sm:flex items-center space-x-1.5 bg-primary/10 hover:bg-primary/20 text-primary px-3.5 py-1.5 rounded-full transition-all group border border-primary/20">
+                    <span class="material-icons text-sm group-hover:animate-pulse">music_note</span>
+                    <span class="text-xs font-bold uppercase tracking-wider">Play Theme</span>
+                </button>
+            </div>
+
             <!-- Mobile Menu Button (Hamburger) -->
-            <div class="md:hidden flex items-center">
+            <div class="lg:hidden flex items-center">
                 <button
-                    class="text-gray-600 dark:text-gray-300 hover:text-primary focus:outline-none mobile-menu-button">
+                    class="p-2 rounded-xl text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none mobile-menu-button"
+                    aria-label="Toggle menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -171,38 +214,41 @@
     </div>
     <!-- Mobile Menu -->
     <div
-        class="md:hidden hidden mobile-menu bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 absolute w-full left-0 top-20 shadow-lg">
-        <a href="/" class="block py-4 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5">Home</a>
-        <a href="/timeline" class="block py-4 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5">Timeline</a>
-        <a href="/gallery" class="block py-4 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5">Gallery</a>
-        <div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
-        <a href="/music" class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">music_note</span> Music</a>
-        {% if not settings.private_mode %}
-        <a href="/coupons"
-            class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">card_giftcard</span> Coupons</a>
-        {% endif %}
-        <a href="/birthday"
-            class="block py-3 px-6 text-primary font-bold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">cake</span> Birthday ✨</a>
-        <a href="/roka" class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+        class="lg:hidden hidden mobile-menu bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 absolute w-full left-0 top-20 shadow-2xl py-2 px-4 space-y-1">
+        <a href="/" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Home</a>
+        <a href="/timeline" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Timeline</a>
+        <a href="/gallery" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Gallery</a>
+        <a href="/roka" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">favorite</span> Roka</a>
-        <a href="/wishlist"
-            class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">stars</span> Wishlist</a>
-        <a href="/guestbook"
-            class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">import_contacts</span> Guestbook</a>
-        <a href="/upcoming"
-            class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">event</span> Upcoming</a>
-        <a href="/dictionary"
-            class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">book</span> Dictionary</a>
+        <a href="/birthday"
+            class="block py-2.5 px-4 rounded-xl text-primary font-bold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                class="material-icons text-sm mr-3 text-primary">cake</span> Birthday ✨</a>
         <a href="/planner"
-            class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+            class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">flight_takeoff</span> AI Planner</a>
+        <a href="/honeymoon"
+            class="block py-2.5 px-4 rounded-xl text-sm font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 flex items-center border border-rose-300/40"><span
+                class="material-icons text-sm mr-3 text-rose-500">castle</span> 🏰 Disney Honeymoon 🇸🇬</a>
+        
+        <div class="border-t border-gray-100 dark:border-gray-800 my-2 pt-2">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-4 block mb-1">More Features</span>
+            <div class="grid grid-cols-2 gap-1">
+                <a href="/music" class="block py-2 px-3 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                        class="material-icons text-xs mr-2 text-primary">music_note</span> Music</a>
+                <a href="/wishlist" class="block py-2 px-3 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                        class="material-icons text-xs mr-2 text-primary">stars</span> Wishlist</a>
+                <a href="/guestbook" class="block py-2 px-3 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                        class="material-icons text-xs mr-2 text-primary">import_contacts</span> Guestbook</a>
+                <a href="/upcoming" class="block py-2 px-3 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                        class="material-icons text-xs mr-2 text-primary">event</span> Upcoming</a>
+                <a href="/dictionary" class="block py-2 px-3 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                        class="material-icons text-xs mr-2 text-primary">book</span> Dictionary</a>
+                {% if not settings.private_mode %}
+                <a href="/coupons" class="block py-2 px-3 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                        class="material-icons text-xs mr-2 text-primary">card_giftcard</span> Coupons</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <!-- Global Music Player (Hidden Logic) -->
     <audio id="global-theme-audio" loop>

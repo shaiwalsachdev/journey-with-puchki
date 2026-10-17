@@ -1,0 +1,342 @@
+"""
+Default structured itinerary, visa guide, dining options, and checklists for Singapore Honeymoon (Dec 13-21, 2026)
+Featuring Disney Adventure Cruise, Disney Princess & Mickey & Minnie Magic!
+"""
+
+DEFAULT_HONEYMOON_DATA = {
+    "title": "Singapore & Disney Princess Honeymoon 🇸🇬✨🏰",
+    "subtitle": "13–21 December 2026 · Shaiwal & Shaila (Our Fairytale Magic)",
+    "dates": "Dec 13 - Dec 21, 2026 (8 Nights / 9 Days)",
+    "overview": "Disney Adventure Cruise (Mickey, Minnie, Princess Fairytale & Marvel at sea!), 4 nights at Oasia Resort Sentosa, Pandas at River Wonders, Cable Car SkyPass, Gardens by the Bay, Marina Bay Sands SkyPark & Romantic Dining.",
+    
+    # Stay Plan
+    "stays": [
+        {
+            "dates": "13 December 2026 (1 Night)",
+            "hotel": "Carlton Hotel Singapore",
+            "type": "City Hotel",
+            "notes": "Arrive at Changi ~6 PM, taxi transfer to hotel, romantic dinner & good night's rest.",
+            "badge": "1 Night"
+        },
+        {
+            "dates": "14–16 December 2026 (3 Nights)",
+            "hotel": "Disney Adventure Cruise Line 🚢✨",
+            "type": "Disney Magic at Sea",
+            "notes": "Disney Princesses, Mickey & Minnie, 7 Magical Themed Zones, Broadway Shows, and Disney Rotational Dining. Disembarkation on 17 Dec at 7:00 AM.",
+            "badge": "3 Nights · Disney Cruise"
+        },
+        {
+            "dates": "17–21 December 2026 (4 Nights)",
+            "hotel": "Oasia Resort Sentosa",
+            "type": "Island Luxury Resort",
+            "notes": "Base for Sentosa Island, Universal Studios / Oceanarium, beach strolls, and city sightseeing.",
+            "badge": "4 Nights · Base Resort"
+        }
+    ],
+
+    # Disney Cruise Special Zones & Features
+    "disney_features": [
+        {
+            "zone": "Town Square (Disney Princess Realm) 👑",
+            "desc": "A fairytale realm celebrating Disney Royalty (Cinderella, Belle, Ariel, Jasmine, Rapunzel, Elsa & Anna). Royal shops, magical salons, and enchanting princess meet-and-greets.",
+            "icon": "auto_awesome",
+            "color": "from-purple-500 to-pink-500"
+        },
+        {
+            "zone": "Disney Imagination Garden ✨",
+            "desc": "The enchanted heart of the ship with Sorcerer Mickey, open-air castle courtyard performance stage, and storybook garden walkways.",
+            "icon": "castle",
+            "color": "from-blue-500 to-indigo-600"
+        },
+        {
+            "zone": "Mickey & Minnie Captain's Gala 🐭🎀",
+            "desc": "Meet Mickey and Minnie in their finest maritime captain attire! Take fairytale honeymoon couple photos together on the grand staircase.",
+            "icon": "favorite",
+            "color": "from-rose-500 to-red-600"
+        },
+        {
+            "zone": "Disney Rotational Dining 🍽️",
+            "desc": "Experience Hollywood Spotlight Club, Navigator's Club, and Animator's Palate with dedicated Disney servers traveling with you each night.",
+            "icon": "restaurant",
+            "color": "from-amber-500 to-orange-500"
+        },
+        {
+            "zone": "Remember Stage Musical & Sky Fireworks 🎆",
+            "desc": "Exclusive Broadway-caliber theatrical stage shows at Walt Disney Theatre and fireworks lighting up the open sea starry night.",
+            "icon": "theater_comedy",
+            "color": "from-pink-500 to-rose-500"
+        },
+        {
+            "zone": "Wayfinder Bay & Adults Retreat 🌴",
+            "desc": "Moana-inspired open-air poolside oasis with sweeping ocean vistas, couple daybeds, and tropical cocktails under the stars.",
+            "icon": "pool",
+            "color": "from-teal-500 to-emerald-600"
+        }
+    ],
+
+    # Visa Timeline & Requirements
+    "visa": {
+        "apply_date": "November 1, 2026",
+        "target_decision": "Within 3–5 working days (issued as e-Visa)",
+        "processing_window": "Must apply within 30 days of arrival (Nov 1 is the perfect date!)",
+        "fee": "SGD 30 ICA fee + authorized visa agent service fee (~₹1,200 - ₹1,800)",
+        "checklist": [
+            {
+                "id": "v1",
+                "title": "Original Indian Passports",
+                "detail": "Must have min. 6 months validity from Dec 13, 2026 (at least 2 blank pages).",
+                "done": True
+            },
+            {
+                "id": "v2",
+                "title": "Completed & Signed Form 14A",
+                "detail": "Official Singapore visa application form for both Shaiwal and Shaila.",
+                "done": False
+            },
+            {
+                "id": "v3",
+                "title": "Passport-sized Photos (ICA Spec)",
+                "detail": "35mm x 45mm, matte finish, white background, 80% face coverage, taken within last 3 months.",
+                "done": False
+            },
+            {
+                "id": "v4",
+                "title": "Confirmed Flight Tickets",
+                "detail": "Roundtrip Delhi - Singapore (Dec 13 arrival 6 PM, Dec 21 departure 4:40 PM).",
+                "done": True
+            },
+            {
+                "id": "v5",
+                "title": "Hotel & Disney Cruise Confirmations",
+                "detail": "Vouchers for Carlton Hotel (13 Dec), Disney Adventure Cruise (14-16 Dec), Oasia Resort Sentosa (17-21 Dec).",
+                "done": True
+            },
+            {
+                "id": "v6",
+                "title": "Bank Statements (Last 3–6 Months)",
+                "detail": "Original or stamped bank statements showing sufficient funds for the honeymoon.",
+                "done": False
+            },
+            {
+                "id": "v7",
+                "title": "Cover Letter & Employment Details",
+                "detail": "Honeymoon cover letter detailing travel dates + salary slips / company leave approval.",
+                "done": False
+            },
+            {
+                "id": "v8",
+                "title": "SG Arrival Card (Electronic)",
+                "detail": "Submit online at ica.gov.sg strictly within 3 days (72 hours) before landing in Singapore (Dec 10-12). Free of cost.",
+                "done": False
+            }
+        ]
+    },
+
+    # Day-by-Day Itinerary with Real-time Options
+    "days": [
+        {
+            "day": 1,
+            "date": "Sunday, 13 December 2026",
+            "title": "Welcome to Singapore & City Lights",
+            "location": "Changi Airport ➔ Carlton Hotel",
+            "schedule": [
+                {"time": "6:00 PM", "title": "Touchdown at Changi Airport", "desc": "Clear immigration, collect luggage, grab physical local SIM / eSIM or activate international roaming.", "icon": "flight_land"},
+                {"time": "6:45 PM – 7:15 PM", "title": "Transfer to Carlton Hotel", "desc": "Take taxi or Grab to Carlton Hotel (City Hall area). Check-in and freshen up.", "icon": "local_taxi"},
+                {"time": "8:00 PM – 10:00 PM", "title": "Romantic First Dinner & Stroll", "desc": "Enjoy a delicious dinner near City Hall / CHIJMES and a relaxed romantic evening walk.", "icon": "restaurant"}
+            ],
+            "options": [
+                {"title": "Dinner Option A (Romantic Italian):", "desc": "Dine at the illuminated courtyards of CHIJMES (right opposite Carlton Hotel) — delicious pizza, pasta, and wines in a fairytale heritage setting."},
+                {"title": "Dinner Option B (Pure Vegetarian Fine Dining):", "desc": "Nalan Restaurant at Capitol Singapore (2 min walk) for authentic, high-end North & South Indian delicacies."},
+                {"title": "Late Night Sweet Treat:", "desc": "Grab artisan gelato or dessert at Mr. Stork (Andaz rooftop) overlooking the skyline."}
+            ]
+        },
+        {
+            "day": 2,
+            "date": "Monday, 14 December 2026",
+            "title": "Boarding the Disney Adventure Cruise! 🚢🏰",
+            "location": "Marina Bay Cruise Centre ➔ High Seas",
+            "schedule": [
+                {"time": "9:30 AM – 11:30 AM", "title": "Breakfast & Morning Leisure", "desc": "Enjoy breakfast at Carlton, leisurely stroll near National Gallery or Fort Canning Park.", "icon": "free_breakfast"},
+                {"time": "12:00 PM – 2:00 PM", "title": "Transfer to Marina Bay Cruise Terminal", "desc": "Arrive at terminal. Check-in, drop bags, and walk the red carpet onto the Disney Adventure!", "icon": "directions_boat"},
+                {"time": "2:00 PM – 4:00 PM", "title": "Explore the 7 Disney Worlds", "desc": "Explore Disney Imagination Garden, Town Square (Disney Princess realm), and San Fransokyo Street.", "icon": "castle"},
+                {"time": "4:00 PM", "title": "Sailing Party with Mickey & Minnie!", "desc": "Top-deck sailaway musical party with Mickey, Minnie, Donald, and Goofy in full cruise celebration!", "icon": "sailing"},
+                {"time": "Evening", "title": "Disney Rotational Dining & Broadway Show", "desc": "First royal dinner at Hollywood Spotlight Club or Animator's Palate, followed by a Broadway-caliber Disney musical.", "icon": "theater_comedy"}
+            ],
+            "options": [
+                {"title": "Disney Character Photo:", "desc": "Take your first official honeymoon portrait with Mickey & Minnie in the Grand Atrium!"},
+                {"title": "Princess Greeting:", "desc": "Visit Town Square for royal meet-and-greets with Disney Princesses."}
+            ]
+        },
+        {
+            "day": 3,
+            "date": "Tuesday, 15 December 2026",
+            "title": "Disney Magic at Sea — Princesses, Romance & Thrills 👑✨",
+            "location": "Disney Adventure High Seas",
+            "schedule": [
+                {"time": "Morning", "title": "Fairytale Breakfast on Balcony / Buffet", "desc": "Wake up to endless ocean views. Indulge in Mickey waffles and fresh pastries.", "icon": "wb_sunny"},
+                {"time": "10:30 AM – 1:00 PM", "title": "Royal Meet & Greet with Disney Princesses", "desc": "Meet Cinderella, Belle, Jasmine, Rapunzel, and Ariel. Capture dream fairytale photos for Puchki!", "icon": "auto_awesome"},
+                {"time": "Afternoon", "title": "Wayfinder Bay Pool & Marvel Landing", "desc": "Relax on Moana's Wayfinder Bay daybeds, enjoy adult-only quiet cove pool, or ride the Ironcycle rollercoaster!", "icon": "pool"},
+                {"time": "Night", "title": "Gala Royal Night & Celebration in the Sky", "desc": "Dress up in royal cocktail attire for gala dinner, followed by fireworks and Lion King musical extravaganza under the stars.", "icon": "nightlife"}
+            ],
+            "options": [
+                {"title": "Couples Romance:", "desc": "Book Senses Spa couples' sea-view massage or private jacuzzi retreat."},
+                {"title": "Evening Cocktails:", "desc": "Spellbound Lounge or Captain's Bar for Disney-themed signature honeymoon cocktails."}
+            ]
+        },
+        {
+            "day": 4,
+            "date": "Wednesday, 16 December 2026",
+            "title": "Disney Sea Voyage & Pixar Magic 💫",
+            "location": "High Seas Returning to Singapore",
+            "schedule": [
+                {"time": "Daytime", "title": "Discovery Reef, Toy Story Place & Trivia", "desc": "Walk under the Little Mermaid coral ceilings, enjoy Toy Story slides, Disney movie marathons & trivia games.", "icon": "celebration"},
+                {"time": "Evening", "title": "Farewell Magical Dinner with Disney Friends", "desc": "Final evening rotational dining where characters bid personal farewells to guests.", "icon": "dinner_dining"},
+                {"time": "Night", "title": "Packing Protocol & Stargazing", "desc": "Stargaze from the top deck. Tag main luggage and place outside cabin door by midnight for seamless morning exit.", "icon": "luggage"}
+            ],
+            "options": [
+                {"title": "Disney Souvenirs:", "desc": "Pick up exclusive Disney Adventure Singapore commemorative Mickey & Minnie plushies and honeymoon pins!"}
+            ]
+        },
+        {
+            "day": 5,
+            "date": "Thursday, 17 December 2026",
+            "title": "Sentosa Island, Cable Car & Wings of Time",
+            "location": "Oasia Resort Sentosa & Siloso/Palawan Beach",
+            "schedule": [
+                {"time": "7:00 AM – 8:30 AM", "title": "Cruise Disembarkation", "desc": "Follow cruise exit instructions. Clear customs at Marina Bay Cruise Centre.", "icon": "exit_to_app"},
+                {"time": "8:30 AM – 9:30 AM", "title": "Taxi to Oasia Resort Sentosa", "desc": "Arrive at Oasia Resort Sentosa. Leave luggage with concierge (check-in at 3 PM).", "icon": "hotel"},
+                {"time": "10:00 AM – 12:00 PM", "title": "Singapore Cable Car SkyPass", "desc": "Ride the Mount Faber Line & Sentosa Line. Panoramic 360-degree aerial views of the harbor.", "icon": "flight_takeoff"},
+                {"time": "12:00 PM – 3:00 PM", "title": "Beachside Lunch & Siloso / Palawan Beach", "desc": "Cross the rope bridge to the Southernmost Point of Continental Asia. Relax on pristine sand.", "icon": "beach_access"},
+                {"time": "3:00 PM – 5:00 PM", "title": "Check-in at Oasia Resort & Unwind", "desc": "Settle into your sanctuary room at Oasia. Refresh and take romantic resort photos.", "icon": "bed"},
+                {"time": "7:40 PM / 8:40 PM", "title": "Wings of Time Night Show", "desc": "Spectacular multi-sensory laser, fire, water, and music show set against the open sea.", "icon": "auto_awesome"}
+            ],
+            "options": [
+                {"title": "Lunch Option A (Beachfront Italian):", "desc": "Trapizza on Siloso Beach — wood-fired pizza and cocktails right by the waves."},
+                {"title": "Lunch Option B (Chic Beach Club):", "desc": "Tipsy Unicorn or Ola Beach Club for tropical mocktails and relaxing beach loungers."},
+                {"title": "Dinner Option:", "desc": "Quayside Isle waterfront dining at Sentosa Cove (overlooking private yachts)."}
+            ]
+        },
+        {
+            "day": 6,
+            "date": "Friday, 18 December 2026",
+            "title": "Oceanarium Wonders & Harry Potter Magic",
+            "location": "Resorts World Sentosa",
+            "schedule": [
+                {"time": "9:30 AM – 12:30 PM", "title": "Singapore Oceanarium (S.E.A. Aquarium)", "desc": "Walk through giant glass tunnels surrounded by manta rays, sharks, and vibrant coral reefs.", "icon": "water"},
+                {"time": "12:30 PM – 2:00 PM", "title": "Lunch Break at Resorts World", "desc": "Enjoy lunch at Malaysian Food Street or Din Tai Fung / gourmet burger spots.", "icon": "restaurant"},
+                {"time": "2:00 PM – 4:30 PM", "title": "Harry Potter: Visions of Magic", "desc": "Step into the magical interactive wizarding world art experience (timed entry).", "icon": "magic_button"},
+                {"time": "5:30 PM – Late", "title": "Evening at Leisure in Sentosa", "desc": "Stroll around the island, ride the Sentosa Express, or book a sunset cocktail.", "icon": "nightlife"}
+            ],
+            "options": [
+                {"title": "Alternative Thrill:", "desc": "Skyline Luge Sentosa (4 exhilarating downhill tracks) if you finish Harry Potter early!"},
+                {"title": "Romantic Dinner Choice:", "desc": "Cassia at Capella Singapore for upscale Cantonese fine dining in a colonial manor."}
+            ]
+        },
+        {
+            "day": 7,
+            "date": "Saturday, 19 December 2026",
+            "title": "River Wonders Pandas & Culture Shopping",
+            "location": "Mandai Wildlife Reserve ➔ Little India ➔ Chinatown",
+            "schedule": [
+                {"time": "8:00 AM – 9:00 AM", "title": "Taxi to Mandai Wildlife Reserve", "desc": "Head north to Mandai for the river safari experience.", "icon": "directions_car"},
+                {"time": "9:00 AM – 12:00 PM", "title": "River Wonders & Giant Panda Forest", "desc": "Visit adorable Kai Kai and Jia Jia in their climate-controlled forest, Amazon Flooded Forest, and reservoir cruise.", "icon": "pets"},
+                {"time": "12:00 PM – 1:00 PM", "title": "Lunch at Mandai", "desc": "Cute panda bao and snacks at Mama Panda Kitchen.", "icon": "lunch_dining"},
+                {"time": "1:00 PM – 3:30 PM", "title": "Taxi to Little India & Mustafa Centre", "desc": "Mustafa Centre (24/7 shopping for electronics, chocolates, perfumes) and colorful Serangoon Road.", "icon": "shopping_bag"},
+                {"time": "3:30 PM – 6:30 PM", "title": "Chinatown Street Market & Souvenirs", "desc": "Pagoda Street, Buddha Tooth Relic Temple, authentic bubble tea, gifts and souvenirs.", "icon": "storefront"},
+                {"time": "7:30 PM", "title": "Return to Sentosa & Rest", "desc": "Dinner and peaceful night at Oasia Resort.", "icon": "night_shelter"}
+            ],
+            "options": [
+                {"title": "Shopping Alternative:", "desc": "If tired of street shopping, head to Bugis Junction or Orchard Road malls for luxury & fashion brands."},
+                {"title": "Foodie Treat in Chinatown:", "desc": "Chinatown Complex Hawker Centre for Michelin-rated street food."}
+            ]
+        },
+        {
+            "day": 8,
+            "date": "Sunday, 20 December 2026",
+            "title": "Gardens by the Bay, Marina Bay SkyPark & Light Show",
+            "location": "Marina Bay & Gardens by the Bay",
+            "schedule": [
+                {"time": "10:00 AM – 1:00 PM", "title": "Flower Dome & Cloud Forest", "desc": "World's largest glass greenhouse with indoor waterfall and mist walk.", "icon": "local_florist"},
+                {"time": "1:00 PM – 2:00 PM", "title": "Lunch at Marina Bay Sands", "desc": "Dine at The Shoppes at Marina Bay Sands or waterfront dining.", "icon": "restaurant"},
+                {"time": "2:00 PM – 3:30 PM", "title": "Outdoor Gardens & Supertree Boardwalk", "desc": "Walk among the towering 50-meter Supertrees and sculpture gardens.", "icon": "park"},
+                {"time": "5:00 PM – 6:15 PM", "title": "Marina Bay Sands SkyPark Observation Deck", "desc": "57 levels high! Catch the golden hour sunset over Singapore skyline.", "icon": "apartment"},
+                {"time": "6:15 PM – 7:15 PM", "title": "Merlion Park & Waterfront Photos", "desc": "Iconic photos with the Singapore Merlion against the skyline.", "icon": "photo_camera"},
+                {"time": "7:45 PM – 8:15 PM", "title": "Garden Rhapsody Light & Sound Show", "desc": "Lie under the Supertrees as they dance with synchronized lights and music (free to watch!).", "icon": "auto_awesome"},
+                {"time": "8:30 PM – Late", "title": "Grand Honeymoon Finale Dinner", "desc": "Romantic waterfront dinner celebrating your final night.", "icon": "celebration"}
+            ],
+            "options": [
+                {"title": "Light Show Bonus:", "desc": "Catch the Spectra Marina Bay water-and-laser fountain show at 9:00 PM from the MBS Event Plaza!"},
+                {"title": "Dining Option A (Rooftop):", "desc": "CÉ LA VI or Spago atop Marina Bay Sands for jaw-dropping skyline drinks."},
+                {"title": "Dining Option B (Colonial Library Vegan Fine Dining):", "desc": "Cultivate Cafe at Maxwell Reserve — intimate, candlelit library setting."}
+            ]
+        },
+        {
+            "day": 9,
+            "date": "Monday, 21 December 2026",
+            "title": "Jewel Changi Rain Vortex & Flight Home",
+            "location": "Oasia Resort ➔ Jewel Changi ➔ Delhi",
+            "schedule": [
+                {"time": "9:00 AM", "title": "Check-out of Oasia Resort Sentosa", "desc": "Take taxi to Changi Airport (~25–35 min).", "icon": "luggage"},
+                {"time": "10:00 AM – 12:30 PM", "title": "Jewel Changi & Rain Vortex", "desc": "Marvel at the world's tallest indoor waterfall (HSBC Rain Vortex) and lush Shiseido Forest Valley.", "icon": "water_drop"},
+                {"time": "1:00 PM", "title": "Check-in at Terminal & Baggage Drop", "desc": "Complete airline check-in for flight to Delhi.", "icon": "how_to_reg"},
+                {"time": "1:30 PM – 3:30 PM", "title": "Duty-Free Shopping & Airport Lunch", "desc": "Bengawan Solo pandan cakes, TWG tea, cosmetics, and duty-free gifts.", "icon": "shopping_cart"},
+                {"time": "4:40 PM", "title": "Flight to Delhi", "desc": "Board flight. Estimated landing at Delhi IGI Airport around 8:00 PM IST.", "icon": "flight_takeoff"}
+            ],
+            "options": [
+                {"title": "Luggage Tip at Jewel:", "desc": "Use Early Check-in (if your airline supports it) or the Left Baggage counter on Level 1 to walk around hands-free!"}
+            ]
+        }
+    ],
+
+    # Tickets to Book (Klook Checklist)
+    "klook_tickets": [
+        {"id": "t1", "date": "17 Dec 2026", "name": "Singapore Cable Car SkyPass", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", "booked": False, "price": "~₹2,200 / person"},
+        {"id": "t2", "date": "17 Dec 2026", "name": "Wings of Time (Sentosa)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", "booked": False, "price": "~₹1,100 / person"},
+        {"id": "t3", "date": "18 Dec 2026", "name": "Singapore Oceanarium (S.E.A. Aquarium)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/119-sea-aquarium-singapore/", "booked": False, "price": "~₹2,800 / person"},
+        {"id": "t4", "date": "18 Dec 2026", "name": "Harry Potter: Visions of Magic", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/112678-harry-potter-visions-of-magic-singapore/", "booked": False, "price": "~₹3,200 / person"},
+        {"id": "t5", "date": "19 Dec 2026", "name": "River Wonders (with Giant Panda Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/123-river-safari-singapore/", "booked": False, "price": "~₹2,600 / person"},
+        {"id": "t6", "date": "20 Dec 2026", "name": "Gardens by the Bay (Flower Dome + Cloud Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", "booked": False, "price": "~₹3,100 / person"},
+        {"id": "t7", "date": "20 Dec 2026", "name": "Marina Bay Sands SkyPark Observation Deck", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/148-skypark-observation-deck-singapore/", "booked": False, "price": "~₹2,100 / person"}
+    ],
+
+    # Free Romantic Attractions
+    "free_attractions": [
+        "Siloso Beach & Palawan Beach (Sentosa rope bridge to southernmost point of Asia)",
+        "Garden Rhapsody Light & Sound Show at Supertree Grove (Nightly 7:45 PM & 8:45 PM)",
+        "Spectra Light & Water Show at Marina Bay Sands Event Plaza (Nightly 8:00 PM & 9:00 PM)",
+        "Merlion Park & Marina Bay Waterfront Promenade",
+        "Jewel Changi Rain Vortex indoor waterfall and Shiseido Forest Valley",
+        "Little India & Chinatown vibrant heritage streets and temples",
+        "Fort Canning Park Tree Tunnel and Spice Garden (near Carlton Hotel)"
+    ],
+
+    # Strict Rules, Do's & Don'ts (The Fine City)
+    "rules": {
+        "donts": [
+            {"title": "No Chewing Gum", "desc": "Importing or carrying bulk chewing gum is strictly illegal. Fines up to SGD 1,000."},
+            {"title": "No Eating or Drinking on MRT / Buses", "desc": "Strictly no snacks or drinks (even plain water) inside MRT stations and trains. Fine: SGD 500."},
+            {"title": "No Vapes / E-Cigarettes", "desc": "Completely prohibited and confiscated at customs. Fines up to SGD 2,000."},
+            {"title": "No Smoking Outside Designated Areas", "desc": "Only smoke in yellow box Designated Smoking Areas (DSAs). Fine: SGD 200 - SGD 1,000."},
+            {"title": "No Littering or Spitting", "desc": "Dropping tissue or trash carries a SGD 300 first-time on-the-spot fine."},
+            {"title": "No Jaywalking", "desc": "Always use pedestrian crossings or overhead bridges within 50m of traffic. Fine: SGD 50+."},
+            {"title": "No Connecting to Open Unsecured Wi-Fi", "desc": "Legally considered unauthorized network access under Computer Misuse Act."}
+        ],
+        "dos": [
+            {"title": "Tap Water is 100% Safe", "desc": "Singapore tap water is cleaner than bottled water. Carry reusable insulated flasks."},
+            {"title": "Tap Credit/Debit Card for MRT", "desc": "No need to buy transit cards! Simply tap any contactless Visa/Mastercard directly at MRT gates."},
+            {"title": "Tipping is NOT Customary", "desc": "10% service charge and 9% GST are already included in hotel and restaurant bills."},
+            {"title": "Modest Temple Attire", "desc": "Cover shoulders and knees when entering Hindu, Buddhist, or Muslim places of worship."},
+            {"title": "Download Grab App", "desc": "Grab is Southeast Asia's Uber. Seamless for booking taxis and island rides."}
+        ]
+    },
+
+    # Live Expense Tracker Items (Defaults)
+    "expenses": [
+        {"category": "Visa", "item": "Singapore e-Visa (2 Adults)", "amount": 6500, "currency": "INR", "status": "Pending"},
+        {"category": "Flights", "item": "Roundtrip Delhi - Singapore (Air India / Singapore Airlines)", "amount": 65000, "currency": "INR", "status": "Estimated"},
+        {"category": "Hotels", "item": "Carlton Hotel (1 Night) + Oasia Resort Sentosa (4 Nights)", "amount": 85000, "currency": "INR", "status": "Booked"},
+        {"category": "Cruise", "item": "Disney Adventure Cruise (3-Night Balcony Stateroom)", "amount": 85000, "currency": "INR", "status": "Booked"},
+        {"category": "Activities", "item": "All 7 Klook Sightseeing Passes (2 Adults)", "amount": 34000, "currency": "INR", "status": "To Book"},
+        {"category": "Food & Dining", "item": "Romantic Dinners, Cafes, Gelato & Street Food", "amount": 40000, "currency": "INR", "status": "Budget"}
+    ]
+}

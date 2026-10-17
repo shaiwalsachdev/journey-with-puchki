@@ -255,6 +255,83 @@ async def home(request: Request):
     })
 
 
+@app.get("/honeymoon", response_class=HTMLResponse)
+async def honeymoon_page(request: Request):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    settings = request.state.settings
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+        await save_honeymoon_data(data)
+
+    return templates.TemplateResponse("honeymoon.html", {
+        "request": request,
+        "page": "honeymoon",
+        "settings": settings,
+        "honeymoon": data
+    })
+
+
+@app.post("/api/honeymoon/toggle-checklist")
+async def toggle_honeymoon_checklist(request: Request):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    item_id = body.get("id")
+    category = body.get("category", "visa") # visa or tickets
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if category == "visa" and "visa" in data and "checklist" in data["visa"]:
+        for item in data["visa"]["checklist"]:
+            if item.get("id") == item_id:
+                item["done"] = not item.get("done", False)
+                break
+    elif category == "tickets" and "klook_tickets" in data:
+        for t in data["klook_tickets"]:
+            if t.get("id") == item_id:
+                t["booked"] = not t.get("booked", False)
+                t["status"] = "Booked ✅" if t["booked"] else "To Book"
+                break
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "data": data}
+
+
+@app.post("/api/honeymoon/expense")
+async def add_or_update_expense(request: Request):
+    from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
+    from fastapi_app.honeymoon_data import DEFAULT_HONEYMOON_DATA
+    body = await request.json()
+    item = body.get("item")
+    amount = float(body.get("amount", 0))
+    category = body.get("category", "General")
+    status = body.get("status", "Estimated")
+
+    data = await get_honeymoon_data()
+    if not data:
+        data = DEFAULT_HONEYMOON_DATA
+
+    if "expenses" not in data:
+        data["expenses"] = []
+
+    data["expenses"].append({
+        "item": item,
+        "amount": amount,
+        "category": category,
+        "status": status,
+        "currency": "INR"
+    })
+
+    await save_honeymoon_data(data)
+    return {"status": "success", "expenses": data["expenses"]}
+
+
+
 @app.get("/birthday", response_class=HTMLResponse)
 async def birthday(request: Request):
     settings = request.state.settings

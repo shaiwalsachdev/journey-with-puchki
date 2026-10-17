@@ -281,3 +281,16 @@ async def get_story_data():
 async def save_story_data(data: dict):
     db = get_db()
     await db.story_data.replace_one({}, data, upsert=True)
+
+# --- Honeymoon Itinerary & Tracker ---
+async def get_honeymoon_data():
+    db = get_db()
+    data = await db.honeymoon.find_one({}, {"_id": 0})
+    return data
+
+async def save_honeymoon_data(data: dict):
+    db = get_db()
+    import datetime
+    data["updated_at"] = datetime.datetime.utcnow().isoformat()
+    await db.honeymoon.replace_one({}, data, upsert=True)
+
