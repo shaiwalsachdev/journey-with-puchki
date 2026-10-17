@@ -498,6 +498,7 @@ DEFAULT_HONEYMOON_DATA = {
     # Tickets to Book (Klook Checklist) with Due Dates
     "klook_tickets": [
         {"id": "t0", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 📱 (Install QR in Delhi)", "name": "Singtel Singapore 5G High-Speed Data Tourist eSIM", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/176809-singtel-singapore-data-esim/", "booked": False, "price": "~₹950 / person (10–20 GB)"},
+        {"id": "t0-sea", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 (Multi-Country / Cruise Waters)", "name": "South East Asia Multi-Country High-Speed Data eSIM (Singapore, Malaysia, Thailand, Indonesia)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/105381-south-east-asia-esim/", "booked": False, "price": "~₹450 - ₹1,200 / person (Flexible Data/Days)"},
         {"id": "t0-physical", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 (Pickup at Changi T1/T2/T3/T4)", "name": "Singtel 4G/5G Physical Tourist SIM Card (Changi Airport Pickup)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/77287-4g-travel-sim-card-singtel-singapore/?spm=SearchResult.SearchResult_LIST&clickId=752b002a05", "booked": False, "price": "~₹750 - ₹950 / person (100 GB)"},
         {"id": "t1", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Singapore Cable Car SkyPass", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", "booked": False, "price": "~₹2,200 / person"},
         {"id": "t2", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Wings of Time (Sentosa)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", "booked": False, "price": "~₹1,100 / person"},
@@ -1429,6 +1430,15 @@ DEFAULT_HONEYMOON_DATA = {
             "category": "Connectivity",
             "link": "https://www.klook.com/en-IN/activity/77287-4g-travel-sim-card-singtel-singapore/?spm=SearchResult.SearchResult_LIST&clickId=752b002a05",
             "notes": "Collect at Changi Airport Terminal 1, 2, 3, or 4 arrival hall. 100GB high-speed local data.",
+            "due_date": "Dec 5, 2026",
+            "status": "Pending"
+        },
+        {
+            "id": "todo-1c",
+            "title": "Alternative: South East Asia Multi-Country eSIM (Singapore, Malaysia, Thailand)",
+            "category": "Connectivity",
+            "link": "https://www.klook.com/en-IN/activity/105381-south-east-asia-esim/",
+            "notes": "Instant digital QR delivery. Works across South East Asia and international cruise waters near Malaysia/Indonesia.",
             "due_date": "Dec 5, 2026",
             "status": "Pending"
         },
