@@ -452,5 +452,41 @@ DEFAULT_HONEYMOON_DATA = {
             "size": "Deluxe Verandah #11680",
             "uploaded_at": "Paid in Full · Dec 14-17"
         }
-    ]
+    ],
+
+    # Rainy Season Packing Essentials & Outfit Planner (Dec 13-21)
+    "packing_and_outfits": {
+        "weather_insight": "December is Singapore's Northeast Monsoon season. Expect frequent, short tropical rain showers and thunderstorms (usually 45–90 mins, often in afternoons), warm temperatures (27°C–31°C), and high humidity (80%+). Strong indoor air conditioning on Disney Cruise and malls contrasts with outdoor warmth.",
+        "rainy_essentials": [
+            {"item": "2x Compact Windproof Umbrellas", "desc": "Tuck one into Shaiwal's daypack and one in Shaila's bag. Essential for sudden tropical showers.", "icon": "umbrella"},
+            {"item": "Lightweight Breathable Rain Ponchos", "desc": "Far more breathable than heavy winter raincoats. Keeps you dry at River Wonders, Universal, and Sentosa without sweating.", "icon": "water_drop"},
+            {"item": "Waterproof Phone Pouch / Dry Bag (10L)", "desc": "Keep phones, passports, and cameras bone-dry at Sentosa beach, water slides, and river safari.", "icon": "lock"},
+            {"item": "Quick-Drying Fabrics (Linen, Poly-Blend)", "desc": "Avoid heavy denim or thick cotton that stays damp for hours in tropical humidity.", "icon": "checkroom"},
+            {"item": "Waterproof Sandals & Comfortable Walking Shoes", "desc": "Birkenstock EVA / waterproof sandals for rainy streets + 1 pair ultra-comfy broken-in sneakers each (12,000–18,000 steps daily).", "icon": "hiking"},
+            {"item": "Light Cardigan / Shawl for Cruise & Indoors", "desc": "Walt Disney Theatre, Rotational Dining rooms, and Cloud Forest run at chilly 19°C–21°C air-conditioning.", "icon": "ac_unit"},
+            {"item": "Silica Gel Packs / Ziploc Bags", "desc": "Place silica gel packets in luggage and camera bags to prevent lens moisture during humid-to-cold transitions.", "icon": "inventory_2"}
+        ],
+        "outfit_count_summary": {
+            "trip_duration": "9 Days / 8 Nights (Dec 13–21, 2026)",
+            "shaila_total": "12–14 Outfits (Daywear, Cruise Glamour, Resort Casual, Swimwear)",
+            "shaiwal_total": "11–13 Outfits (Smart Casual, Cruise Gala, Resort Linens, Swimwear)",
+            "swimwear_count": "2–3 Sets each (Allows one to dry while wearing the other)"
+        },
+        "shaila_outfits": [
+            {"category": "Disney Cruise Formal / Gala", "count": "1–2 Outfits", "suggestion": "Cocktail dress, elegant maxi, or fairytale dress for Captain Mickey Gala & Walt Disney Theatre."},
+            {"category": "Disney Daywear & Princess Meet", "count": "2–3 Outfits", "suggestion": "Cute Disney-themed or pastel sundresses/rompers for daytime ship exploration and Town Square Princess meet."},
+            {"category": "Romantic Dinners (City & Sentosa)", "count": "3 Outfits", "suggestion": "Classy resort-chic dresses or linen sets for CHIJMES (Day 1), Cassia Capella (Day 5), and Trapizza sunset."},
+            {"category": "Sightseeing & Active Days", "count": "4 Outfits", "suggestion": "Lightweight breathable cotton/linen co-ords, breathable culottes, UV sun-hat for River Wonders, Gardens by the Bay & Universal."},
+            {"category": "Swimwear & Beach Resort", "count": "2–3 Sets", "suggestion": "Swimsuits/bikinis + 2 stylish breezy kimonos/kaftan cover-ups for Wayfinder Bay cruise pool & Sentosa beaches."},
+            {"category": "Footwear", "count": "3 Pairs", "suggestion": "1 pair comfy walking sneakers, 1 pair waterproof sandals (beach/rain), 1 pair elegant dinner wedges/flats."}
+        ],
+        "shaiwal_outfits": [
+            {"category": "Disney Cruise Gala / Evening", "count": "1–2 Outfits", "suggestion": "Crisp dress shirt (or blazer/chinos combo) with formal leather loafers for Captain's Gala & Rotational Dining."},
+            {"category": "Cruise Daywear & Pool Deck", "count": "2–3 Outfits", "suggestion": "Smart polo shirts, lightweight cotton shorts, linen button-downs for Imagination Garden & pool deck."},
+            {"category": "Romantic Island & City Dinners", "count": "3 Outfits", "suggestion": "Linen shirts (white, sky blue, sage), tailored chinos, smart leather slip-ons for CHIJMES, Trapizza, and Quayside Isle."},
+            {"category": "Sightseeing & Walking Days", "count": "4 Outfits", "suggestion": "Moisture-wicking tees, comfortable stretch chino shorts, and UV sunglasses for Mandai River Safari & Marina Bay."},
+            {"category": "Swimwear", "count": "2–3 Pairs", "suggestion": "Quick-dry board shorts for cruise swimming pools, Sentosa Siloso beach & Oasia resort pool."},
+            {"category": "Footwear", "count": "3 Pairs", "suggestion": "1 pair supportive walking sneakers, 1 pair waterproof pool slides/sandals, 1 pair smart loafers/boat shoes for dinner."}
+        ]
+    }
 }

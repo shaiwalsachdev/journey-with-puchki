@@ -143,6 +143,10 @@
                 <span class="material-icons text-base">policy</span>
                 <span>Singapore Rules & Tips</span>
             </button>
+            <button onclick="switchTab('packing')" id="tab-btn-packing" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                <span class="material-icons text-base text-sky-500">checkroom</span>
+                <span>Packing & Outfits 👗👔</span>
+            </button>
             <button onclick="switchTab('documents')" id="tab-btn-documents" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
                 <span class="material-icons text-base text-rose-500">folder_shared</span>
                 <span>Document Vault & PDFs 📂</span>
@@ -717,6 +721,117 @@
                         <div class="p-3.5 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40">
                             <h4 class="text-sm font-bold text-emerald-700 dark:text-emerald-300">{{ item.title }}</h4>
                             <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             TAB: RAINY WEATHER PACKING & OUTFIT PLANNER
+             ======================================================== -->
+        <section id="tab-content-packing" class="tab-content hidden space-y-8">
+            <!-- Weather Monsoon Insight Banner -->
+            <div class="relative rounded-3xl overflow-hidden p-6 sm:p-8 text-white shadow-xl border border-sky-300/40"
+                 style="background: linear-gradient(135deg, #0f172a 0%, #0369a1 50%, #0284c7 100%);">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-sky-200 text-xs font-bold mb-3 border border-white/20">
+                            <span class="material-icons text-sm">thunderstorm</span>
+                            <span>Singapore Northeast Monsoon Season (Dec 13–21)</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-2">Rain-Smart Packing & Fairytale Outfits 👗👔</h2>
+                        <p class="text-xs sm:text-sm text-sky-100 max-w-2xl leading-relaxed">
+                            {{ honeymoon.packing_and_outfits.weather_insight }}
+                        </p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center min-w-[200px] shrink-0">
+                        <span class="text-[11px] uppercase tracking-widest text-sky-200 block font-bold">Trip Duration</span>
+                        <span class="text-xl font-extrabold my-0.5 block">8 Nights / 9 Days</span>
+                        <span class="text-xs text-sky-200">1N City + 3N Cruise + 4N Sentosa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monsoon Rainy Season Essentials Grid -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-sky-200/60 dark:border-white/10">
+                <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 mb-4">
+                    <span class="material-icons text-2xl">beach_access</span>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Rainy Season Must-Packs</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {% for item in honeymoon.packing_and_outfits.rainy_essentials %}
+                    <div class="p-4 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-100 dark:border-white/5 flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-sky-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+                            <span class="material-icons text-lg">{{ item.icon }}</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ item.item }}</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">{{ item.desc }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Outfit Count Recommendations (Shaila vs Shaiwal) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Shaila's Outfits -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-pink-300/50 dark:border-pink-900/30">
+                    <div class="flex items-center justify-between pb-4 border-b border-pink-200/50 dark:border-white/10 mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-600 flex items-center justify-center text-white shadow-md">
+                                <span class="material-icons text-2xl">woman</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Shaila's Outfit Planner 🌸</h3>
+                                <p class="text-xs text-rose-500 font-bold">Total: {{ honeymoon.packing_and_outfits.outfit_count_summary.shaila_total }}</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300">
+                            {{ honeymoon.packing_and_outfits.outfit_count_summary.swimwear_count }}
+                        </span>
+                    </div>
+
+                    <div class="space-y-3.5">
+                        {% for o in honeymoon.packing_and_outfits.shaila_outfits %}
+                        <div class="p-3.5 rounded-2xl bg-white/70 dark:bg-white/5 border border-pink-100 dark:border-white/5">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ o.category }}</h4>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-300/30">{{ o.count }}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ o.suggestion }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Shaiwal's Outfits -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border border-blue-300/50 dark:border-blue-900/30">
+                    <div class="flex items-center justify-between pb-4 border-b border-blue-200/50 dark:border-white/10 mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md">
+                                <span class="material-icons text-2xl">man</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Shaiwal's Outfit Planner 👔</h3>
+                                <p class="text-xs text-blue-500 font-bold">Total: {{ honeymoon.packing_and_outfits.outfit_count_summary.shaiwal_total }}</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
+                            {{ honeymoon.packing_and_outfits.outfit_count_summary.swimwear_count }}
+                        </span>
+                    </div>
+
+                    <div class="space-y-3.5">
+                        {% for o in honeymoon.packing_and_outfits.shaiwal_outfits %}
+                        <div class="p-3.5 rounded-2xl bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/5">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ o.category }}</h4>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-300/30">{{ o.count }}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{{ o.suggestion }}</p>
                         </div>
                         {% endfor %}
                     </div>
