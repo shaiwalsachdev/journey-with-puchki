@@ -9,28 +9,67 @@ DEFAULT_HONEYMOON_DATA = {
     "dates": "Dec 13 - Dec 21, 2026 (8 Nights / 9 Days)",
     "overview": "Disney Adventure Cruise (Mickey, Minnie, Princess Fairytale & Marvel at sea!), 4 nights at Oasia Resort Sentosa, Pandas at River Wonders, Cable Car SkyPass, Gardens by the Bay, Marina Bay Sands SkyPark & Romantic Dining.",
     
-    # Stay Plan
+    # Stay Plan with Verified Hotel Policies, Photos & Booking Rules
     "stays": [
         {
-            "dates": "13 December 2026 (1 Night)",
+            "id": "stay-carlton",
+            "dates": "13–14 December 2026 (1 Night)",
             "hotel": "Carlton Hotel Singapore",
-            "type": "City Hotel",
-            "notes": "Arrive at Changi ~6 PM, taxi transfer to hotel, romantic dinner & good night's rest.",
-            "badge": "1 Night"
+            "type": "City Luxury Hotel (Opposite CHIJMES & Raffles)",
+            "address": "76 Bras Basah Road, City Hall, Singapore 189558",
+            "website": "https://www.carltonhotel.sg/",
+            "photo": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+            "checkin": "3:00 PM",
+            "checkout": "12:00 PM (Noon)",
+            "deposit": "SGD 100 per night (Credit Card pre-authorization on arrival, refunded upon room check)",
+            "policies": [
+                "Strictly Non-Smoking property (SGD 500 deep-cleaning penalty for in-room smoking)",
+                "Minimum age 18 for primary guest (Original Indian Passport matching booking name mandatory)",
+                "Early luggage drop available free of charge at concierge on arrival",
+                "Complimentary high-speed Wi-Fi, swimming pool with sun-loungers & 24/7 fitness center"
+            ],
+            "notes": "Arrive at Changi Airport around 6:00 PM. Take Grab taxi (~20 mins, ~SGD 25–35) to Carlton. Perfect location across the street from historic CHIJMES courtyards for an enchanting first night dinner.",
+            "badge": "1 Night · City Center"
         },
         {
-            "dates": "14–16 December 2026 (3 Nights)",
+            "id": "stay-disney",
+            "dates": "14–17 December 2026 (3 Nights)",
             "hotel": "Disney Adventure Cruise Line 🚢✨",
-            "type": "Disney Magic at Sea",
-            "notes": "Disney Princesses, Mickey & Minnie, 7 Magical Themed Zones, Broadway Shows, and Disney Rotational Dining. Disembarkation on 17 Dec at 7:00 AM.",
+            "type": "Disney Magic at Sea (Singapore Roundtrip)",
+            "address": "Marina Bay Cruise Centre Singapore (MBCCS), 61 Marina Coastal Drive",
+            "website": "https://disneycruise.disney.go.com/en-in/ships/adventure/",
+            "photo": "https://images.unsplash.com/photo-1548574505-5e239809ee19?q=80&w=1200&auto=format&fit=crop",
+            "checkin": "All Aboard: 4:00 PM (Ship sails at 5:00 PM on 14 Dec)",
+            "checkout": "Debarkation: 7:00 AM (17 Dec)",
+            "deposit": "Stateroom 11680 Paid in Full ✅ (Credit card pre-authorization for onboard incidental purchases)",
+            "policies": [
+                "Online Check-In begins 14 November 2026 (select earliest Port Arrival Time / PAT window)",
+                "Strictly NO garment steamers, electric irons, heating appliances or extension cords",
+                "NO smoking or vaping on verandahs (strictly allowed only in designated open-air deck smoking zones)",
+                "Alcohol policy: Max 2 unopened bottles of wine/champagne (750ml) or 6 beers per adult (21+) strictly in carry-on hand luggage"
+            ],
+            "notes": "Stateroom 11680 (Category 06C Deluxe Oceanview with Verandah, Deck 11 Midship). Reservation #44985264. Broadway shows at 5:45 PM & Rotational Main Dining at 8:15 PM.",
             "badge": "3 Nights · Disney Cruise"
         },
         {
+            "id": "stay-oasia",
             "dates": "17–21 December 2026 (4 Nights)",
             "hotel": "Oasia Resort Sentosa",
-            "type": "Island Luxury Resort",
-            "notes": "Base for Sentosa Island, Universal Studios / Oceanarium, beach strolls, and city sightseeing.",
-            "badge": "4 Nights · Base Resort"
+            "type": "Luxury Island Sanctuary by Far East Hospitality",
+            "address": "23 Beach View, Palawan Ridge, Sentosa Island, Singapore 098679",
+            "website": "https://www.fareasthospitality.com/en/Hotels-and-Serviced-Residences/Hotels/Oasia-Resort-Sentosa",
+            "photo": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+            "checkin": "3:00 PM (Early luggage storage free upon arrival from cruise)",
+            "checkout": "12:00 PM (Noon)",
+            "deposit": "SGD 50 per room, per night (SGD 200 total for 4 nights, credit/debit card pre-auth, refunded at checkout)",
+            "policies": [
+                "Strict No-Name-Change policy (Original passport matching reservation name required)",
+                "Strictly Non-Smoking property across all guest rooms",
+                "Complimentary Sentosa Express monorail pass & free island transit throughout your stay",
+                "Direct 2-minute walk to Imbiah Monorail Station (easy access to Universal, S.E.A. Aquarium & Beaches)"
+            ],
+            "notes": "Base resort for Sentosa Island. Disembark Disney Cruise at 7:00 AM on 17 Dec, take taxi straight to Oasia Resort, drop luggage with concierge, refresh, and start Sentosa exploration!",
+            "badge": "4 Nights · Island Luxury"
         }
     ],
 
