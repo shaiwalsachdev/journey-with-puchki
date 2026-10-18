@@ -806,6 +806,95 @@
             setTimeout(() => playNextSong(), 500);
         }
 
+        // Background Mobile Audio Engine (Keeps audio session alive when minimized / screen locked)
+        let bgAudioAnchor = null;
+        function initBackgroundAudioEngine() {
+            if (!bgAudioAnchor) {
+                bgAudioAnchor = new Audio();
+                // Extremely quiet 0.001 vol generated silent audio wave loop (RFC standard data URI for silence)
+                bgAudioAnchor.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+                bgAudioAnchor.loop = true;
+                bgAudioAnchor.volume = 0.01;
+            }
+            try {
+                bgAudioAnchor.play().catch(e => console.log("Audio anchor autoplay policy handled:", e));
+            } catch(e) {}
+        }
+
+        function stopBackgroundAudioEngine() {
+            if (bgAudioAnchor) {
+                try { bgAudioAnchor.pause(); } catch(e) {}
+            }
+        }
+
+        // MediaSession API: Controls on Mobile Lock Screen & Notification Shade
+        function updateMediaSession(song) {
+            if (!('mediaSession' in navigator) || !song) return;
+
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: song.title || 'ShaiX2 Exclusive Track',
+                artist: song.artist || 'ShaiX2 Lounge',
+                album: `Journey with Puchki • ${song.vibe || 'Music Lounge'}`,
+                artwork: [
+                    { src: song.thumbnail || 'https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg', sizes: '96x96', type: 'image/jpeg' },
+                    { src: song.thumbnail || 'https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg', sizes: '128x128', type: 'image/jpeg' },
+                    { src: song.thumbnail || 'https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg', sizes: '256x256', type: 'image/jpeg' },
+                    { src: song.thumbnail || 'https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg', sizes: '512x512', type: 'image/jpeg' }
+                ]
+            });
+
+            // Set media action handlers for lockscreen / headphone / car controls
+            try {
+                navigator.mediaSession.setActionHandler('play', () => {
+                    if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+                    initBackgroundAudioEngine();
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+                    stopBackgroundAudioEngine();
+                });
+                navigator.mediaSession.setActionHandler('previoustrack', () => playPrevSong());
+                navigator.mediaSession.setActionHandler('nexttrack', () => playNextSong());
+                navigator.mediaSession.setActionHandler('seekto', (details) => {
+                    if (details.seekTime && ytPlayer && typeof ytPlayer.seekTo === 'function') {
+                        ytPlayer.seekTo(details.seekTime, true);
+                    }
+                });
+            } catch(e) {
+                console.warn("MediaSession action handler setup error:", e);
+            }
+        }
+
+        function updateMediaSessionPlaybackState(state) {
+            if (!('mediaSession' in navigator)) return;
+            try {
+                navigator.mediaSession.playbackState = state; // 'playing', 'paused', 'none'
+            } catch(e) {}
+        }
+
+        // Visibility Change Handler: prevent background tab throttling from pausing music
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Window/tab minimized or phone screen locked
+                if (isPlaying) {
+                    initBackgroundAudioEngine();
+                    if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                        // Ensure video remains unpaused in background
+                        if (ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+                            try { ytPlayer.playVideo(); } catch(e) {}
+                        }
+                    }
+                }
+            } else {
+                // User came back to tab
+                if (isPlaying && ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                    if (ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+                        try { ytPlayer.playVideo(); } catch(e) {}
+                    }
+                }
+            }
+        });
+
         // 1. YouTube API Ready
         function onYouTubeIframeAPIReady() {
             if (flatPlaylist.length === 0) return;
@@ -847,6 +936,8 @@
                 // Clear watchdog when playback successfully starts
                 clearTimeout(playbackWatchdog);
                 isPlaying = true;
+                initBackgroundAudioEngine();
+                updateMediaSessionPlaybackState('playing');
                 if (playIcon) playIcon.textContent = 'pause';
                 if (fullPlayIcon) fullPlayIcon.textContent = 'pause';
                 if (bannerHoverIcon) bannerHoverIcon.textContent = 'pause';
@@ -865,6 +956,10 @@
                 startProgressTracker();
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
+                updateMediaSessionPlaybackState('paused');
+                if (event.data === YT.PlayerState.PAUSED) {
+                    stopBackgroundAudioEngine();
+                }
                 if (playIcon) playIcon.textContent = 'play_arrow';
                 if (fullPlayIcon) fullPlayIcon.textContent = 'play_arrow';
                 if (bannerHoverIcon) bannerHoverIcon.textContent = 'play_arrow';
@@ -1014,6 +1109,15 @@
             if (fullTime) fullTime.textContent = duration;
             if (fullYtBtn) fullYtBtn.href = `https://music.youtube.com/watch?v=${id}`;
             if (fullPlaylistName) fullPlaylistName.textContent = vibe || 'ShaiX2 Lounge';
+
+            // Update System MediaSession for Mobile Notifications, Lock Screen, & Headset Controls
+            updateMediaSession({
+                id: id,
+                title: title,
+                artist: artist,
+                vibe: vibe,
+                thumbnail: thumbnail
+            });
 
             // Refresh Full Player Queue
             renderFullPlayerQueue();
