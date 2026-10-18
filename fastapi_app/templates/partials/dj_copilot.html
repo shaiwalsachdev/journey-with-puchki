@@ -206,6 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Toggle DJ Window
     function toggleDJWindow() {
         if (djWindow.classList.contains('hidden') || djWindow.classList.contains('opacity-0')) {
+            // Re-sync currently playing song whenever DJ window is opened
+            try {
+                const raw = localStorage.getItem('shaix2_current_song');
+                if (raw) {
+                    const song = JSON.parse(raw);
+                    updateDJPillUI(song);
+                }
+            } catch(e) {}
+
             djWindow.classList.remove('hidden');
             requestAnimationFrame(() => {
                 djWindow.classList.remove('opacity-0', 'scale-0', 'translate-y-10');
@@ -614,7 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Global DJ Pill & Playback Control (Merged with DJ Kiara) ---
-    function updateDJPillUI(songData) {
+    window.updateDJPillUI = function(songData) {
         const pill = document.getElementById('dj-track-floating-pill');
         const pillTitle = document.getElementById('dj-pill-track-title');
         const pillArtist = document.getElementById('dj-pill-track-artist');
@@ -631,14 +640,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Show pill
-        pill.classList.remove('hidden');
-        pill.classList.add('flex');
+        // Show pill (only on non-music pages to avoid overlapping the bottom player bar)
+        if (window.location.pathname.startsWith('/music')) {
+            pill.classList.add('hidden');
+            pill.classList.remove('flex');
+        } else {
+            pill.classList.remove('hidden');
+            pill.classList.add('flex');
+        }
         if (pillTitle) pillTitle.textContent = songData.title || 'Playing Song';
         if (pillArtist) pillArtist.textContent = songData.artist || 'DJ Kiara';
 
         // Update Turntable Strip in DJ chat window
-        const stripContainer = document.getElementById('dj-turntable-strip');
         const stripTitle = document.getElementById('dj-strip-title');
         const stripImg = document.getElementById('dj-strip-img');
         const stripStatus = document.getElementById('dj-strip-status');

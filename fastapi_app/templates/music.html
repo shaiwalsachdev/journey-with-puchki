@@ -927,6 +927,9 @@
                     updatedAt: Date.now()
                 };
                 localStorage.setItem('shaix2_current_song', JSON.stringify(payload));
+                if (typeof updateDJPillUI === 'function') {
+                    updateDJPillUI(payload);
+                }
             } catch(e) {
                 console.warn("Storage sync error:", e);
             }
