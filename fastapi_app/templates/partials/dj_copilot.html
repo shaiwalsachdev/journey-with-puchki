@@ -238,19 +238,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let songCardHTML = '';
         if (song && song.id) {
+            const cardId = 'dj-confirm-' + Math.random().toString(36).substring(2, 9);
             songCardHTML = `
-                <div onclick="playSongFromDJ('${song.id}', '${(song.title || '').replace(/'/g, "\\'")}', '${(song.artist || '').replace(/'/g, "\\'")}', '${(song.vibe || '').replace(/'/g, "\\'")}', '${song.thumbnail || ''}')"
-                    class="mt-2.5 p-2 rounded-xl bg-black/40 border border-rose-500/30 hover:border-gaana-red flex items-center gap-3 cursor-pointer group transition-all hover:scale-[1.02]">
-                    <div class="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 shadow bg-stone-900">
-                        <img src="${song.thumbnail || 'https://img.youtube.com/vi/' + song.id + '/hqdefault.jpg'}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 flex items-center justify-center transition-all">
-                            <span class="material-icons text-white text-base">play_arrow</span>
+                <div id="${cardId}" class="mt-2.5 p-3 rounded-2xl bg-black/60 border border-amber-500/40 shadow-xl flex flex-col gap-2.5 transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 shadow bg-stone-900 border border-white/10">
+                            <img src="${song.thumbnail || 'https://img.youtube.com/vi/' + song.id + '/hqdefault.jpg'}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="text-[9px] uppercase tracking-wider font-extrabold text-amber-400 flex items-center gap-1">
+                                <span class="material-icons text-[11px]">headphones</span>
+                                DJ KIARA RECOMMENDS
+                            </span>
+                            <h4 class="text-xs font-bold text-white truncate">${song.title || 'Track'}</h4>
+                            <p class="text-[10px] text-stone-400 truncate">${song.artist || 'Artist'}</p>
                         </div>
                     </div>
-                    <div class="min-w-0 flex-1">
-                        <span class="text-[9px] uppercase tracking-wider font-extrabold text-amber-400">DJ'S CHOICE • PLAYING</span>
-                        <h4 class="text-xs font-bold text-white truncate group-hover:text-gaana-red">${song.title || 'Track'}</h4>
-                        <p class="text-[10px] text-stone-400 truncate">${song.artist || 'Artist'}</p>
+
+                    <!-- Confirmation Controls -->
+                    <div class="flex items-center gap-2 pt-1 border-t border-white/10">
+                        <button onclick="confirmAndPlayDJTrack('${cardId}', '${song.id}', '${(song.title || '').replace(/'/g, "\\'")}', '${(song.artist || '').replace(/'/g, "\\'")}', '${(song.vibe || '').replace(/'/g, "\\'")}', '${song.thumbnail || ''}')"
+                            class="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+                            <span class="material-icons text-xs">play_arrow</span>
+                            <span>Play Now</span>
+                        </button>
+                        <button onclick="cancelDJTrack('${cardId}')"
+                            class="py-1.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-stone-300 font-semibold text-xs transition-all">
+                            Cancel
+                        </button>
                     </div>
                 </div>
             `;
@@ -303,6 +318,46 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stripImg && thumbnail) stripImg.src = thumbnail;
     };
 
+    // Confirmation Play Handlers
+    window.confirmAndPlayDJTrack = function(cardId, id, title, artist, vibe, thumbnail) {
+        // Change card to active playing state
+        const card = document.getElementById(cardId);
+        if (card) {
+            card.classList.replace('border-amber-500/40', 'border-emerald-500/50');
+            card.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="relative w-10 h-10 rounded-xl overflow-hidden shrink-0 shadow bg-stone-900 border border-emerald-500/40">
+                        <img src="${thumbnail || 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg'}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-[9px] uppercase tracking-wider font-extrabold text-emerald-400 flex items-center gap-1">
+                            <span class="material-icons text-[11px] animate-pulse">volume_up</span>
+                            NOW PLAYING
+                        </span>
+                        <h4 class="text-xs font-bold text-white truncate">${title}</h4>
+                        <p class="text-[10px] text-stone-400 truncate">${artist}</p>
+                    </div>
+                </div>
+            `;
+        }
+        playSongFromDJ(id, title, artist, vibe, thumbnail);
+    };
+
+    window.cancelDJTrack = function(cardId) {
+        const card = document.getElementById(cardId);
+        if (card) {
+            card.innerHTML = `
+                <div class="py-1 px-2 text-stone-400 text-[11px] italic flex items-center gap-1.5">
+                    <span class="material-icons text-xs text-stone-500">block</span>
+                    <span>Track skipped. Tell DJ Kiara what you want instead!</span>
+                </div>
+            `;
+            setTimeout(() => {
+                if (card) card.classList.add('opacity-50');
+            }, 300);
+        }
+    };
+
     // Chat Submission
     if (djForm) {
         djForm.addEventListener('submit', async (e) => {
@@ -336,17 +391,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!res.ok) throw new Error("DJ Kiara is tuning the records...");
                 const data = await res.json();
 
-                const replyText = data.text || "Spinning your track right now!";
+                const replyText = data.text || "Here is what I picked for your vibe!";
                 const song = data.song;
 
+                // Add message with confirmation card (Does NOT auto-play directly)
                 addDJMessage(replyText, false, song);
                 djChatHistory.push({ role: 'assistant', content: replyText });
                 saveDJHistory();
-
-                // If song recommended, update strip and play!
-                if (song && song.id) {
-                    playSongFromDJ(song.id, song.title, song.artist, song.vibe, song.thumbnail);
-                }
 
             } catch (err) {
                 if (djTyping) djTyping.classList.add('hidden');
