@@ -107,6 +107,9 @@
                     <span class="w-0.5 h-2 bg-amber-400 rounded-full animate-pulse delay-75"></span>
                     <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
                 </div>
+                <button id="dj-strip-play-btn" onclick="toggleGlobalDJPlayback(event)" class="w-6 h-6 rounded-full bg-gaana-red hover:scale-110 active:scale-95 text-white flex items-center justify-center transition-all shadow" title="Play / Pause">
+                    <span class="material-icons text-sm" id="dj-strip-play-icon">pause</span>
+                </button>
                 <button id="dj-next-btn" onclick="playNextGlobalSong(event)" class="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all" title="Skip to Next Track">
                     <span class="material-icons text-sm">skip_next</span>
                 </button>
@@ -663,8 +666,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stripTitle) stripTitle.textContent = songData.title || 'Track';
         if (stripImg && songData.thumbnail) stripImg.src = songData.thumbnail;
 
+        const stripPlayIcon = document.getElementById('dj-strip-play-icon');
         if (songData.isPlaying) {
             if (pillIcon) pillIcon.textContent = 'pause';
+            if (stripPlayIcon) stripPlayIcon.textContent = 'pause';
             if (toggleDisc) {
                 toggleDisc.classList.add('animate-spin');
                 toggleDisc.classList.remove('text-white');
@@ -679,6 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             if (pillIcon) pillIcon.textContent = 'play_arrow';
+            if (stripPlayIcon) stripPlayIcon.textContent = 'play_arrow';
             if (toggleDisc) {
                 toggleDisc.classList.remove('animate-spin');
                 toggleDisc.classList.remove('text-amber-300');
@@ -697,6 +703,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleGlobalDJPlayback = function(event) {
         if (event) event.stopPropagation();
         try {
+            // If on /music page, use its dedicated togglePlayPause() directly!
+            if (typeof togglePlayPause === 'function') {
+                togglePlayPause();
+                return;
+            }
+
             const raw = localStorage.getItem('shaix2_current_song');
             if (!raw) return;
             const song = JSON.parse(raw);
@@ -705,10 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
             song.updatedAt = Date.now();
             localStorage.setItem('shaix2_current_song', JSON.stringify(song));
 
-            // If on /music page, toggle local player
-            if (typeof togglePlay === 'function') {
-                togglePlay();
-            } else if (window.globalYtPlayer) {
+            if (window.globalYtPlayer) {
                 if (newState && typeof window.globalYtPlayer.playVideo === 'function') {
                     window.globalYtPlayer.playVideo();
                 } else if (!newState && typeof window.globalYtPlayer.pauseVideo === 'function') {
