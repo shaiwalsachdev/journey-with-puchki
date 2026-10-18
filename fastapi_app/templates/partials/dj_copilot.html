@@ -215,10 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function bindDJSuggestions() {
         document.querySelectorAll('.dj-suggestion-btn').forEach(btn => {
             btn.onclick = () => {
-                const text = btn.innerText.replace(/["\n]/g, '').trim();
+                const span = btn.querySelector('span');
+                const text = span ? span.innerText.replace(/["\n]/g, '').trim() : btn.innerText.replace(/["\n]/g, '').trim();
                 if (text && djInput) {
                     djInput.value = text;
-                    djForm.dispatchEvent(new Event('submit'));
+                    djForm.requestSubmit ? djForm.requestSubmit() : djForm.dispatchEvent(new Event('submit'));
                 }
             };
         });
