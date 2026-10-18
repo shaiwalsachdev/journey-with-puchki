@@ -555,13 +555,18 @@
 
     <!-- Hero Section -->
     <header class="relative w-full min-h-screen py-24 sm:py-28 flex items-center justify-center overflow-hidden z-10">
-        <!-- Hero Background Image -->
+        <!-- Hero Ambient Gradient Underlay for Instant Display -->
+        <div class="absolute inset-0 bg-gradient-to-br from-rose-950 via-slate-950 to-stone-950 z-0"></div>
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-rose-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+
+        <!-- Hero Background Image Container with Ken Burns effect & Smooth Fade -->
         <div id="hero-bg-container"
-            class="absolute inset-0 w-full h-full bg-cover bg-[center_25%] bg-no-repeat transition-transform duration-[10s] hover:scale-105"
-            style="background-image: url('{{ r2_url }}/images/favourites/IMG_8915.jpg');">
+            class="absolute inset-0 w-full h-full bg-cover bg-[center_25%] bg-no-repeat transition-opacity duration-1000 ease-in-out opacity-0 animate-[kenburns_24s_ease-in-out_infinite_alternate]"
+            style="will-change: transform, opacity;">
         </div>
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/60 z-10"></div>
+        <!-- Romantic Vignette Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/60 z-10"></div>
 
         <!-- Flip Image Button -->
         <button onclick="flipHeroImage()"
@@ -621,6 +626,14 @@
         </div>
     </header>
 
+    <style>
+        @keyframes kenburns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.08) translate(-1%, -1%); }
+            100% { transform: scale(1.04) translate(1%, 0.5%); }
+        }
+    </style>
+
     <script>
         const fallbackHeroImages = [
             "{{ r2_url }}/images/favourites/IMG_8895%20(1).jpg",
@@ -640,21 +653,35 @@
 
         function setRandomHeroImage() {
             let newIndex = Math.floor(Math.random() * heroImages.length);
-            // Avoid picking the exact same image twice in a row, unless there's only one element
             if (heroImages.length > 1 && newIndex === currentHeroImageIndex) {
                 newIndex = (newIndex + 1) % heroImages.length;
             }
             currentHeroImageIndex = newIndex;
             const bgContainer = document.getElementById('hero-bg-container');
             if (bgContainer) {
-                // Remove the transition locally to avoid it lagging when changing images, 
-                // or keep the transition to make it a crossfade? Better stick to direct set.
-                bgContainer.style.backgroundImage = `url('${heroImages[newIndex]}')`;
+                const targetUrl = heroImages[newIndex];
+                // Preload in memory first so image never stutters or shows blank
+                const img = new Image();
+                img.src = targetUrl;
+                img.onload = () => {
+                    bgContainer.style.backgroundImage = `url('${targetUrl}')`;
+                    bgContainer.classList.remove('opacity-0');
+                    bgContainer.classList.add('opacity-100');
+                };
             }
         }
 
         function flipHeroImage() {
-            setRandomHeroImage();
+            const bgContainer = document.getElementById('hero-bg-container');
+            if (bgContainer) {
+                bgContainer.classList.remove('opacity-100');
+                bgContainer.classList.add('opacity-0');
+                setTimeout(() => {
+                    setRandomHeroImage();
+                }, 400);
+            } else {
+                setRandomHeroImage();
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {

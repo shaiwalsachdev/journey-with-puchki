@@ -243,8 +243,10 @@ async def home(request: Request):
         {"filename": "images/favourites/IMG_9457.jpg"}
     ]
     
-    carousel_photos = old_photos + roka_photos[:100]
+    # Pick 20 random curated moments to ensure lightning-fast page load
+    carousel_photos = old_photos + roka_photos[:12]
     random.shuffle(carousel_photos)
+    carousel_photos = carousel_photos[:20]
     
     return templates.TemplateResponse("index.html", {
         "request": request, 
