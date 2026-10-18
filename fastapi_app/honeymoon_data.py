@@ -1792,7 +1792,7 @@ DEFAULT_HONEYMOON_DATA = {
     "reference_video": {
         "title": "India to Singapore: 6-Day Detailed Itinerary & Total Cost Breakdown",
         "channel": "YouTube Travel Guide",
-        "url": "https://youtu.be/UITG7PTmgk4?si=LVUPqbjQe1qAEyun",
+        "url": "https://youtu.be/UITG7PTmgk4?si=ib582oVRTud8I00g",
         "embed_url": "https://www.youtube.com/embed/UITG7PTmgk4",
         "description": "Essential Indian traveler reference guide breaking down flights, visas, MRT local transit via contactless cards, must-see sights (Universal Studios, S.E.A. Aquarium, Gardens by the Bay, Fort Siloso Skywalk, Jewel Changi Rain Vortex), and authentic food budgets.",
         "key_highlights": [
