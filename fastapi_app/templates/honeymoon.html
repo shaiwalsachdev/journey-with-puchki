@@ -1471,11 +1471,249 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
 
-                <!-- Form 14A Passport Exact Matching Guide & Verification Helper -->
-                <div class="mt-8 pt-6 border-t border-gray-200/80 dark:border-white/10">
+                <!-- ==========================================
+                     OFFICIAL SINGAPORE VISA RESOURCES & IMPORTANT LINKS
+                     ========================================== -->
+                <div class="mt-8 pt-6 border-t border-gray-200/80 dark:border-white/10" id="visa-official-links">
+                    <div class="p-6 rounded-3xl bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-purple-500/10 border border-sky-300/40 dark:border-sky-800/40 shadow-md mb-8">
+                        <div class="flex items-center gap-2.5 mb-3">
+                            <span class="material-icons text-sky-600 dark:text-sky-400 text-2xl">link</span>
+                            <h4 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">Official Singapore Visa Resources &amp; Important Links</h4>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-300 mb-4">Direct official portals from the Singapore Immigration &amp; Checkpoints Authority (ICA) and the High Commission of Singapore in New Delhi:</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <!-- Link 1: Photo Guidelines -->
+                            <a href="https://www.ica.gov.sg/photo-guidelines" target="_blank" rel="noopener noreferrer"
+                                class="p-4 rounded-2xl bg-white/90 dark:bg-gray-800/90 border border-sky-200/80 dark:border-sky-900/50 hover:border-sky-400 hover:shadow-md transition-all group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="text-xs font-bold text-sky-700 dark:text-sky-300 flex items-center gap-1.5">
+                                            <span class="material-icons text-sm">photo_camera</span> ICA Photo Guidelines
+                                        </span>
+                                        <span class="material-icons text-xs text-gray-400 group-hover:text-sky-500 transition-colors">open_in_new</span>
+                                    </div>
+                                    <p class="text-[11px] text-gray-500 leading-snug">35x45mm matte, 70% face size, white background, no reflection or glare.</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-sky-600 dark:text-sky-400 mt-2 block">www.ica.gov.sg/photo-guidelines →</span>
+                            </a>
+
+                            <!-- Link 2: Form 14A Download -->
+                            <a href="https://www.ica.gov.sg/docs/default-source/ica/forms/form14a.pdf?sfvrsn=b201f1d9_32" target="_blank" rel="noopener noreferrer"
+                                class="p-4 rounded-2xl bg-white/90 dark:bg-gray-800/90 border border-indigo-200/80 dark:border-indigo-900/50 hover:border-indigo-400 hover:shadow-md transition-all group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="text-xs font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                                            <span class="material-icons text-sm">picture_as_pdf</span> ICA Form 14A Download
+                                        </span>
+                                        <span class="material-icons text-xs text-gray-400 group-hover:text-indigo-500 transition-colors">file_download</span>
+                                    </div>
+                                    <p class="text-[11px] text-gray-500 leading-snug">Official 4-page application for Singapore Tourist Visa (PDF).</p>
+                                </div>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">Download from ICA (or local copy) →</span>
+                                </div>
+                            </a>
+
+                            <!-- Link 3: MFA Authorised Agents Portal -->
+                            <a href="https://new-delhi.mfa.gov.sg/consular-services/visa-information/authorised-visa-agents/" target="_blank" rel="noopener noreferrer"
+                                class="p-4 rounded-2xl bg-white/90 dark:bg-gray-800/90 border border-purple-200/80 dark:border-purple-900/50 hover:border-purple-400 hover:shadow-md transition-all group flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="text-xs font-bold text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+                                            <span class="material-icons text-sm">verified</span> Singapore MFA Portal
+                                        </span>
+                                        <span class="material-icons text-xs text-gray-400 group-hover:text-purple-500 transition-colors">open_in_new</span>
+                                    </div>
+                                    <p class="text-[11px] text-gray-500 leading-snug">Singapore High Commission New Delhi official list of appointed agents.</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-purple-600 dark:text-purple-400 mt-2 block">new-delhi.mfa.gov.sg →</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ==========================================
+                         AUTHORISED VISA AGENTS (AVA) DIRECTORY
+                         ========================================== -->
+                    <div class="p-6 sm:p-7 rounded-3xl bg-white/90 dark:bg-gray-900/80 border border-gray-200/90 dark:border-white/10 shadow-lg mb-8">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="material-icons text-emerald-600 text-3xl">support_agent</span>
+                                <div>
+                                    <h4 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">Singapore High Commission Authorised Visa Agents (Delhi NCR)</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Official list updated by Singapore High Commission New Delhi (Standard Service Fee: <b>₹1,300/-</b> per applicant)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a href="/static/Singapore_Authorised_Visa_Agents_List_MFA.pdf" target="_blank" rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-gray-200 font-bold text-xs shadow-sm transition-all">
+                                    <span class="material-icons text-sm text-red-500">picture_as_pdf</span>
+                                    <span>Download Full PDF (5 Pages)</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Filter / Search input -->
+                        <div class="mb-4">
+                            <div class="relative">
+                                <span class="material-icons absolute left-3.5 top-2.5 text-gray-400 text-sm">search</span>
+                                <input type="text" id="ava-search-input" onkeyup="filterAVAs()" placeholder="Search agent name, address, or locality (e.g. Noida, Gurugram, Connaught Place)..."
+                                    class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-gray-300 dark:border-white/10 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                            </div>
+                        </div>
+
+                        <!-- Agents Table -->
+                        <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-white/10">
+                            <table class="w-full text-left border-collapse text-xs" id="ava-table">
+                                <thead>
+                                    <tr class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-bold">
+                                        <th class="p-3 border-b border-gray-200 dark:border-white/10 w-12 text-center">#</th>
+                                        <th class="p-3 border-b border-gray-200 dark:border-white/10">Authorised Visa Agent</th>
+                                        <th class="p-3 border-b border-gray-200 dark:border-white/10">Address &amp; Location</th>
+                                        <th class="p-3 border-b border-gray-200 dark:border-white/10">Phone / Contact</th>
+                                        <th class="p-3 border-b border-gray-200 dark:border-white/10">Website</th>
+                                        <th class="p-3 border-b border-gray-200 dark:border-white/10 text-center">Service Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 dark:divide-white/5 text-gray-700 dark:text-gray-300">
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">1</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">D.Pauls Travel &amp; Tours Ltd.</td>
+                                        <td class="p-3 text-[11px]">B-38, (Basement) Shivalik, Malviya Nagar, New Delhi-110017</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-66777258 / 59 / 60</td>
+                                        <td class="p-3"><a href="http://www.dpauls.com" target="_blank" class="text-indigo-600 hover:underline">dpauls.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors bg-indigo-50/30 dark:bg-indigo-950/20">
+                                        <td class="p-3 text-center font-bold text-gray-400">2</td>
+                                        <td class="p-3 font-bold text-indigo-700 dark:text-indigo-400">FCM Travel Solutions (India)</td>
+                                        <td class="p-3 text-[11px]">7th Floor, IT Tower, FC-24, Film City, Sector 16A, Noida - 201301, Uttar Pradesh</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">0120-6839300 / +91-9871003789</td>
+                                        <td class="p-3"><a href="https://www.fcmtravel.com/en-in" target="_blank" class="text-indigo-600 hover:underline">fcmtravel.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">3</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Jetsave India Tours Pvt. Ltd.</td>
+                                        <td class="p-3 text-[11px]">30/28, 3rd Floor, East Patel Nagar, New Delhi-110008</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-41199100</td>
+                                        <td class="p-3"><a href="https://www.jetsavetours.com" target="_blank" class="text-indigo-600 hover:underline">jetsavetours.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">4</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">M.K. International</td>
+                                        <td class="p-3 text-[11px]">305, Manchanda Building, 2600/5 Beadon Pura, Near Post Office, Karol Bagh, New Delhi-110005</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-40110666 / 41547368</td>
+                                        <td class="p-3"><a href="https://www.mktravelservices.com" target="_blank" class="text-indigo-600 hover:underline">mktravelservices.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors bg-indigo-50/30 dark:bg-indigo-950/20">
+                                        <td class="p-3 text-center font-bold text-gray-400">5</td>
+                                        <td class="p-3 font-bold text-indigo-700 dark:text-indigo-400">Make My Trip (India) Pvt. Ltd.</td>
+                                        <td class="p-3 text-[11px]">18th Floor, Block-B, Epitome Building No. 5, DLF Cyber City, Phase III, Gurugram, Haryana-122002</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">0124-4395374</td>
+                                        <td class="p-3"><a href="https://www.makemytrip.com" target="_blank" class="text-indigo-600 hover:underline">makemytrip.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">6</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Rajesh Suri &amp; Co.</td>
+                                        <td class="p-3 text-[11px]">1A, 2nd Floor, Arjun Nagar, Safdarjung Enclave, New Delhi-110029</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-41016620 / 21</td>
+                                        <td class="p-3"><a href="http://www.rajeshsuriandco.in" target="_blank" class="text-indigo-600 hover:underline">rajeshsuriandco.in</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">7</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Ria International</td>
+                                        <td class="p-3 text-[11px]">Room No. 102 &amp; 104, 2nd Floor, 6/79 W.E.A., Gurudwara Road, Karol Bagh, New Delhi-110005</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-45064377 / 88 / 42502001</td>
+                                        <td class="p-3"><a href="http://www.riavisas.in" target="_blank" class="text-indigo-600 hover:underline">riavisas.in</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors bg-indigo-50/30 dark:bg-indigo-950/20">
+                                        <td class="p-3 text-center font-bold text-gray-400">8</td>
+                                        <td class="p-3 font-bold text-indigo-700 dark:text-indigo-400">Riya Travel &amp; Tours (India)</td>
+                                        <td class="p-3 text-[11px]">119, 1st Floor, New Delhi House, Barakhamba Road, Connaught Place, New Delhi-110001</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-61608080</td>
+                                        <td class="p-3"><a href="https://www.riya.travel" target="_blank" class="text-indigo-600 hover:underline">riya.travel</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">9</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Royalee India Tours &amp; Travels</td>
+                                        <td class="p-3 text-[11px]">Malhan Falcon Plaza, T-16, 3rd Floor, Plot No. 4, Pocket-7, Sector-12 Dwarka, New Delhi-110075</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-45537992 / 93 / 74</td>
+                                        <td class="p-3"><a href="http://www.royaleeindiavisa.com" target="_blank" class="text-indigo-600 hover:underline">royaleeindiavisa.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">10</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Saavi Travel Centre Pvt. Ltd.</td>
+                                        <td class="p-3 text-[11px]">907, Arunachal Building-19, Barakhamba Road, Connaught Place, New Delhi-110001</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-41511832</td>
+                                        <td class="p-3"><a href="http://www.saavitravels.com" target="_blank" class="text-indigo-600 hover:underline">saavitravels.com</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">11</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Sharp Travels (India) Ltd.</td>
+                                        <td class="p-3 text-[11px]">111-113, Somdutt Chambers-II, 9 Bhikaji Cama Place, New Delhi-110066</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-46005555 / 40696914</td>
+                                        <td class="p-3"><a href="https://www.sharpholidays.in" target="_blank" class="text-indigo-600 hover:underline">sharpholidays.in</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">12</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Skyline India Travels Pvt. Ltd.</td>
+                                        <td class="p-3 text-[11px]">14-C, 14th Floor, Atma Ram House, 1 Tolstoy Marg, Connaught Place, New Delhi-110001</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-41563741 / 42 / 43</td>
+                                        <td class="p-3"><a href="http://www.skylines.co.in" target="_blank" class="text-indigo-600 hover:underline">skylines.co.in</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors">
+                                        <td class="p-3 text-center font-bold text-gray-400">13</td>
+                                        <td class="p-3 font-bold text-gray-900 dark:text-white">Skyline Visa &amp; Travel Management</td>
+                                        <td class="p-3 text-[11px]">A-219, 2nd Floor Naurang House, 21 Kasturba Gandhi Marg, Connaught Place, New Delhi-110001</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">011-43302247 / 48 / 43001635</td>
+                                        <td class="p-3"><a href="http://www.skylinetravel.in" target="_blank" class="text-indigo-600 hover:underline">skylinetravel.in</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/70 dark:hover:bg-white/5 transition-colors bg-indigo-50/30 dark:bg-indigo-950/20">
+                                        <td class="p-3 text-center font-bold text-gray-400">14</td>
+                                        <td class="p-3 font-bold text-indigo-700 dark:text-indigo-400">Thomas Cook (India) Ltd.</td>
+                                        <td class="p-3 text-[11px]">WoCO1, Plot No. 388, 9th Floor, Udyog Vihar Phase 3, Gurgaon-122016, Haryana</td>
+                                        <td class="p-3 whitespace-nowrap text-[11px] font-mono">0124-4457164 / 70</td>
+                                        <td class="p-3"><a href="https://www.thomascook.in" target="_blank" class="text-indigo-600 hover:underline">thomascook.in</a></td>
+                                        <td class="p-3 text-center font-bold text-emerald-600">₹1,300/-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Live Filter Script -->
+                        <script>
+                        function filterAVAs() {
+                            const input = document.getElementById("ava-search-input");
+                            const filter = input.value.toLowerCase();
+                            const table = document.getElementById("ava-table");
+                            const tr = table.getElementsByTagName("tr");
+                            for (let i = 1; i < tr.length; i++) {
+                                const rowText = tr[i].textContent || tr[i].innerText;
+                                if (rowText.toLowerCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                        </script>
+                    </div>
+
+                    <!-- Form 14A Passport Exact Matching Guide & Verification Helper -->
                     <div class="bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-indigo-500/10 border border-amber-400/40 rounded-3xl p-6 sm:p-7 shadow-lg">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                             <div class="flex items-center gap-2.5">
