@@ -537,7 +537,14 @@
                     'onStateChange': onPlayerStateChange,
                     'onError': (e) => {
                         console.warn("YouTube player error:", e.data);
-                        playNextSong();
+                        // Show temporary alert banner if a specific track is restricted by music labels
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed top-24 right-4 z-50 bg-stone-900/95 text-white border border-rose-500/40 px-4 py-2.5 rounded-2xl shadow-2xl text-xs flex items-center gap-2 backdrop-blur-md animate-bounce';
+                        toast.innerHTML = `<span class="material-icons text-amber-400 text-sm">warning</span><span>Skipping embed-restricted track...</span>`;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 2500);
+
+                        setTimeout(() => playNextSong(), 800);
                     }
                 }
             });
