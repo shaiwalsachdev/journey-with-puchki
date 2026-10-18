@@ -1371,12 +1371,111 @@
     </script>
     {% endif %}
 
+    <!-- Global Hidden YouTube Audio Engine for Homepage -->
+    <div id="global-hidden-yt-container" style="position: fixed; top: -9999px; left: -9999px; width: 1px; height: 1px; opacity: 0.01; pointer-events: none; z-index: -999;">
+        <div id="global-navbar-yt-player"></div>
+    </div>
+
     <!-- Inject Memory Copilot -->
     {% include 'partials/copilot.html' %}
 
     <!-- Inject DJ Kiara - Personal AI DJ & Now Playing Hub -->
     {% include 'partials/dj_copilot.html' %}
 
+    <script>
+        // Global Music Player Engine for Home Page
+        (function() {
+            window.globalYtPlayer = null;
+            window.syncGlobalMusicAudio = function() {
+                try {
+                    const raw = localStorage.getItem('shaix2_current_song');
+                    if (!raw) return;
+                    const data = JSON.parse(raw);
+
+                    if (data && data.id && data.isPlaying) {
+                        const savedTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                        if (!window.globalYtPlayer) {
+                            if (!window.YT || !window.YT.Player) {
+                                if (!document.getElementById('yt-iframe-api-tag')) {
+                                    const tag = document.createElement('script');
+                                    tag.id = 'yt-iframe-api-tag';
+                                    tag.src = "https://www.youtube.com/iframe_api";
+                                    document.head.appendChild(tag);
+                                }
+                                const prevReady = window.onYouTubeIframeAPIReady;
+                                window.onYouTubeIframeAPIReady = function() {
+                                    if (typeof prevReady === 'function') prevReady();
+                                    createGlobalPlayer(data.id, savedTime);
+                                };
+                            } else {
+                                createGlobalPlayer(data.id, savedTime);
+                            }
+                        } else if (typeof window.globalYtPlayer.loadVideoById === 'function') {
+                            window.globalYtPlayer.loadVideoById({
+                                videoId: data.id,
+                                startSeconds: savedTime
+                            });
+                            window.globalYtPlayer.playVideo();
+                        }
+                    } else if (data && !data.isPlaying && window.globalYtPlayer && typeof window.globalYtPlayer.pauseVideo === 'function') {
+                        window.globalYtPlayer.pauseVideo();
+                    }
+                } catch(e) {
+                    console.error("Home global music sync error:", e);
+                }
+            };
+
+            function createGlobalPlayer(videoId, startSeconds = 0) {
+                const container = document.getElementById('global-navbar-yt-player');
+                if (!container || !window.YT || !window.YT.Player) return;
+                try {
+                    window.globalYtPlayer = new YT.Player('global-navbar-yt-player', {
+                        height: '1',
+                        width: '1',
+                        videoId: videoId,
+                        playerVars: {
+                            'autoplay': 1,
+                            'playsinline': 1,
+                            'controls': 0,
+                            'start': Math.floor(startSeconds)
+                        },
+                        events: {
+                            'onReady': (e) => {
+                                if (startSeconds > 0) {
+                                    try { e.target.seekTo(startSeconds, true); } catch(err) {}
+                                }
+                                e.target.playVideo();
+                                setInterval(() => {
+                                    if (window.globalYtPlayer && typeof window.globalYtPlayer.getCurrentTime === 'function') {
+                                        try {
+                                            const ct = window.globalYtPlayer.getCurrentTime();
+                                            if (ct > 0) localStorage.setItem('shaix2_song_time', ct.toFixed(1));
+                                        } catch(err) {}
+                                    }
+                                }, 1000);
+                            }
+                        }
+                    });
+                } catch(err) {
+                    console.warn("Home global player creation error:", err);
+                }
+            }
+
+            // Sync on storage change (from another tab or music page)
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'shaix2_current_song') {
+                    window.syncGlobalMusicAudio();
+                }
+            });
+
+            // Sync on load
+            window.addEventListener('DOMContentLoaded', () => {
+                window.syncGlobalMusicAudio();
+            });
+            // Also trigger immediately in case DOM is already ready
+            setTimeout(() => window.syncGlobalMusicAudio(), 100);
+        })();
+    </script>
 </body>
 
 </html>
