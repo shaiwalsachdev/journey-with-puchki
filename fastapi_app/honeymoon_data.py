@@ -238,16 +238,16 @@ DEFAULT_HONEYMOON_DATA = {
             },
             {
                 "id": "v4",
-                "title": "Confirmed Flight Tickets",
-                "due_date": "Done ✅",
-                "detail": "Roundtrip Delhi - Singapore (Dec 13 arrival 6 PM, Dec 21 departure 4:40 PM).",
+                "title": "Confirmed Roundtrip Flight Tickets",
+                "due_date": "Ready / Confirmed ✅",
+                "detail": "Confirmed roundtrip flight e-tickets: Delhi (DEL) ➔ Singapore (SIN) on Dec 13 (Arrival 6:00 PM), and Singapore (SIN) ➔ Delhi (DEL) on Dec 21 (Departure 4:40 PM).",
                 "done": True
             },
             {
                 "id": "v5",
-                "title": "Hotel & Disney Cruise Confirmations",
-                "due_date": "Done ✅",
-                "detail": "Vouchers for Carlton Hotel (13 Dec), Disney Adventure Cruise (14-16 Dec), Oasia Resort Sentosa (17-21 Dec).",
+                "title": "Hotel & Disney Cruise Confirmed Bookings",
+                "due_date": "Ready / Confirmed ✅",
+                "detail": "Confirmed accommodation vouchers covering all 8 nights: Carlton Hotel (Dec 13–14), Disney Adventure Cruise (Dec 14–17, Stateroom 11680), and Oasia Resort Sentosa (Dec 17–21).",
                 "done": True
             },
             {
