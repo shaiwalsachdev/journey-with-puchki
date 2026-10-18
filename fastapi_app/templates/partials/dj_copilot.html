@@ -638,25 +638,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const pillTitle = document.getElementById('dj-pill-track-title');
         const pillArtist = document.getElementById('dj-pill-track-artist');
         const pillIcon = document.getElementById('dj-pill-play-icon');
-        const toggleDisc = document.getElementById('dj-toggle-disc-icon');
         const toggleEq = document.getElementById('dj-toggle-eq');
-
         const stripContainer = document.getElementById('dj-turntable-strip');
-        if (!pill || !songData || !songData.id) {
-            if (pill) pill.classList.add('hidden');
-            if (stripContainer) stripContainer.classList.add('hidden');
-            if (toggleDisc) toggleDisc.classList.remove('animate-spin');
+
+        if (!songData || !songData.id) {
+            if (pill) {
+                pill.classList.add('hidden');
+                pill.classList.remove('flex');
+            }
+            if (stripContainer) {
+                stripContainer.classList.add('hidden');
+                stripContainer.classList.remove('flex');
+            }
             if (toggleEq) toggleEq.classList.add('hidden');
             return;
         }
 
         // Show pill (only on non-music pages to avoid overlapping the bottom player bar)
-        if (window.location.pathname.startsWith('/music')) {
-            pill.classList.add('hidden');
-            pill.classList.remove('flex');
-        } else {
-            pill.classList.remove('hidden');
-            pill.classList.add('flex');
+        if (pill) {
+            if (window.location.pathname.startsWith('/music')) {
+                pill.classList.add('hidden');
+                pill.classList.remove('flex');
+            } else {
+                pill.classList.remove('hidden');
+                pill.classList.add('flex');
+            }
         }
         if (pillTitle) pillTitle.textContent = songData.title || 'Playing Song';
         if (pillArtist) pillArtist.textContent = songData.artist || 'DJ Kiara';
@@ -666,6 +672,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const stripImg = document.getElementById('dj-strip-img');
         const stripStatus = document.getElementById('dj-strip-status');
         const stripEq = document.getElementById('dj-strip-eq');
+        const stripPlayIcon = document.getElementById('dj-strip-play-icon');
+
         if (stripContainer) {
             stripContainer.classList.remove('hidden');
             stripContainer.classList.add('flex');
@@ -673,16 +681,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stripTitle) stripTitle.textContent = songData.title || 'Track';
         if (stripImg && songData.thumbnail) stripImg.src = songData.thumbnail;
 
-        const stripPlayIcon = document.getElementById('dj-strip-play-icon');
         if (songData.isPlaying) {
             if (pillIcon) pillIcon.textContent = 'pause';
             if (stripPlayIcon) stripPlayIcon.textContent = 'pause';
-            if (toggleDisc) {
-                toggleDisc.classList.add('animate-spin');
-                toggleDisc.classList.remove('text-white');
-                toggleDisc.classList.add('text-amber-300');
+            if (toggleEq) {
+                toggleEq.classList.remove('hidden');
+                toggleEq.classList.add('flex');
             }
-            if (toggleEq) toggleEq.classList.remove('hidden');
             if (stripImg) stripImg.classList.add('animate-spin-slow');
             if (stripEq) stripEq.classList.remove('opacity-0');
             if (stripStatus) {
@@ -692,12 +697,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             if (pillIcon) pillIcon.textContent = 'play_arrow';
             if (stripPlayIcon) stripPlayIcon.textContent = 'play_arrow';
-            if (toggleDisc) {
-                toggleDisc.classList.remove('animate-spin');
-                toggleDisc.classList.remove('text-amber-300');
-                toggleDisc.classList.add('text-white');
+            if (toggleEq) {
+                toggleEq.classList.add('hidden');
+                toggleEq.classList.remove('flex');
             }
-            if (toggleEq) toggleEq.classList.add('hidden');
             if (stripImg) stripImg.classList.remove('animate-spin-slow');
             if (stripEq) stripEq.classList.add('opacity-0');
             if (stripStatus) {
@@ -705,17 +708,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 stripStatus.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-stone-500"></span><span>Paused</span>`;
             }
         }
-    }
+    };
 
     window.toggleGlobalDJPlayback = function(event) {
         if (event) event.stopPropagation();
         try {
-            // If on /music page, use its dedicated togglePlayPause() directly!
+            // 1. If on /music page, check if window.togglePlayPause is defined
+            if (typeof window.togglePlayPause === 'function') {
+                window.togglePlayPause();
+                return;
+            }
             if (typeof togglePlayPause === 'function') {
                 togglePlayPause();
                 return;
             }
 
+            // 2. Fallback for non-music pages or before music script mounts
             const raw = localStorage.getItem('shaix2_current_song');
             if (!raw) return;
             const song = JSON.parse(raw);
@@ -723,6 +731,9 @@ document.addEventListener('DOMContentLoaded', () => {
             song.isPlaying = newState;
             song.updatedAt = Date.now();
             localStorage.setItem('shaix2_current_song', JSON.stringify(song));
+
+            // Notify same-tab listeners (such as music page if active)
+            window.dispatchEvent(new CustomEvent('shaix2_song_state_changed', { detail: song }));
 
             if (window.globalYtPlayer) {
                 if (newState && typeof window.globalYtPlayer.playVideo === 'function') {
@@ -734,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.syncGlobalMusicAudio();
             }
 
-            updateDJPillUI(song);
+            window.updateDJPillUI(song);
         } catch(e) {
             console.error("toggleGlobalDJPlayback error:", e);
         }
@@ -742,6 +753,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.playNextGlobalSong = function(event) {
         if (event) event.stopPropagation();
+        if (typeof window.playNextSong === 'function') {
+            window.playNextSong();
+            return;
+        }
         if (typeof playNextSong === 'function') {
             playNextSong();
             return;
@@ -773,6 +788,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const song = JSON.parse(e.newValue);
                 updateDJPillUI(song);
             } catch(err) {}
+        }
+    });
+
+    // Listen for same-window custom events
+    window.addEventListener('shaix2_song_state_changed', (e) => {
+        if (e.detail) {
+            updateDJPillUI(e.detail);
         }
     });
 

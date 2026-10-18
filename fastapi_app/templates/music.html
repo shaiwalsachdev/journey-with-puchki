@@ -1793,6 +1793,30 @@
         // Initialize loved songs on start
         loadLovedSongs();
 
+        // Expose critical player functions to window for DJ Kiara and external widgets
+        window.togglePlayPause = togglePlayPause;
+        window.playNextSong = playNextSong;
+        window.playPrevSong = playPrevSong;
+        window.selectSong = selectSong;
+
+        // Custom event listener for same-tab events dispatched by DJ Kiara
+        window.addEventListener('shaix2_song_state_changed', (e) => {
+            const song = e.detail;
+            if (song && song.id) {
+                const curSong = flatPlaylist[currentSongIndex];
+                if (curSong && curSong.id === song.id && ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                    const curState = ytPlayer.getPlayerState();
+                    if (song.isPlaying && curState !== YT.PlayerState.PLAYING) {
+                        ytPlayer.playVideo();
+                    } else if (!song.isPlaying && curState === YT.PlayerState.PLAYING) {
+                        ytPlayer.pauseVideo();
+                    }
+                } else if (song.isPlaying) {
+                    selectSong(song.id, song.title, song.artist, song.vibe, "Queued by DJ Kiara", song.thumbnail, song.duration || '', false);
+                }
+            }
+        });
+
         // Listen for storage events (e.g., when a song is queued/selected from DJ Kiara or another tab)
         window.addEventListener('storage', (e) => {
             if (e.key === 'shaix2_current_song' && e.newValue) {
