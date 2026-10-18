@@ -912,6 +912,27 @@
             } catch(e) {}
         }
 
+        // Global Cross-Tab & Cross-Page State Synchronizer
+        function syncCurrentSongToStorage(playingState) {
+            const currentSong = flatPlaylist[currentSongIndex];
+            if (!currentSong) return;
+            try {
+                const payload = {
+                    id: currentSong.id,
+                    title: currentSong.title,
+                    artist: currentSong.artist,
+                    vibe: currentSong.vibe,
+                    thumbnail: currentSong.thumbnail,
+                    duration: currentSong.duration,
+                    isPlaying: !!playingState,
+                    updatedAt: Date.now()
+                };
+                localStorage.setItem('shaix2_current_song', JSON.stringify(payload));
+            } catch(e) {
+                console.warn("Storage sync error:", e);
+            }
+        }
+
         // Visibility Change Handler: prevent background tab throttling from pausing music
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
@@ -994,8 +1015,10 @@
                     eqBars.classList.add('flex');
                 }
                 startProgressTracker();
+                syncCurrentSongToStorage(true);
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
+                syncCurrentSongToStorage(false);
                 updateMediaSessionPlaybackState('paused');
                 if (event.data === YT.PlayerState.PAUSED) {
                     stopBackgroundAudioEngine();
@@ -1158,6 +1181,9 @@
                 vibe: vibe,
                 thumbnail: thumbnail
             });
+
+            // Sync current song selection across website tabs & pages
+            syncCurrentSongToStorage(true);
 
             // Refresh Full Player Queue
             renderFullPlayerQueue();

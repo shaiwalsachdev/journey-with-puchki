@@ -218,6 +218,40 @@
             class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">flight_takeoff</span> AI Planner</a>
     </div>
+    <!-- Global Floating Now Playing Indicator (Appears when any song is playing across tabs or anywhere on the website) -->
+    <div id="global-music-floating-pill" class="hidden fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 transition-all duration-300 transform translate-y-2 opacity-0 select-none">
+        <a href="/music" class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/95 dark:bg-[#181820]/95 text-white backdrop-blur-xl border border-rose-500/30 shadow-2xl hover:border-gaana-red hover:scale-105 active:scale-95 transition-all group">
+            <!-- Pulsing/Spinning Mini Disc -->
+            <div class="relative w-8 h-8 rounded-full bg-black border border-white/20 flex items-center justify-center shrink-0 overflow-hidden shadow-inner">
+                <img id="global-pill-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-full h-full object-cover rounded-full animate-spin-slow">
+                <div class="absolute w-2 h-2 rounded-full bg-black border border-white/60 inset-0 m-auto"></div>
+            </div>
+
+            <!-- Track Info -->
+            <div class="min-w-0 max-w-[140px] sm:max-w-[200px]">
+                <div class="flex items-center gap-1.5">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <h4 id="global-pill-title" class="text-xs font-bold text-white truncate group-hover:text-gaana-red transition-colors">
+                        Playing Song
+                    </h4>
+                </div>
+                <p id="global-pill-artist" class="text-[10px] text-slate-400 truncate">
+                    ShaiX2 Music
+                </p>
+            </div>
+
+            <!-- Mini Audio Equalizer Animation -->
+            <div class="flex items-center gap-0.5 h-3 shrink-0 px-1">
+                <span class="w-0.5 h-full bg-rose-500 rounded-full animate-pulse"></span>
+                <span class="w-0.5 h-2 bg-rose-400 rounded-full animate-pulse delay-75"></span>
+                <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
+            </div>
+
+            <!-- Open Icon -->
+            <span class="material-icons text-sm text-slate-400 group-hover:text-white transition-colors">open_in_new</span>
+        </a>
+    </div>
+
     <!-- Global Music Player (Hidden Logic) -->
     <audio id="global-theme-audio" loop>
         <source src="{{ r2_url }}/theme_new.mp3" type="audio/mpeg">
@@ -326,8 +360,7 @@
                     }
                 });
             });
-            updateButtonState(false);
-            localStorage.setItem('themeAudioPlaying', 'false');
+
             audio.addEventListener('timeupdate', () => {
                 localStorage.setItem('themeAudioTime', audio.currentTime);
             });
@@ -343,7 +376,6 @@
                 if (event.key === 'themeAudioPlaying') {
                     const shouldPlay = event.newValue === 'true';
                     if (shouldPlay && audio.paused) {
-                        // Sync time before playing if available
                         const savedTime = localStorage.getItem('themeAudioTime');
                         if (savedTime) audio.currentTime = parseFloat(savedTime);
 
@@ -356,14 +388,62 @@
                     }
                 }
 
-                // Sync time if significantly drifted (e.g. > 2 seconds)
                 if (event.key === 'themeAudioTime') {
                     const newTime = parseFloat(event.newValue);
                     if (Math.abs(audio.currentTime - newTime) > 2) {
                         audio.currentTime = newTime;
                     }
                 }
+
+                // Global Music Track Sync for Floating Indicator
+                if (event.key === 'shaix2_current_song') {
+                    updateGlobalFloatingPill();
+                }
             });
+
+            // Global Music Floating Pill Controller
+            function updateGlobalFloatingPill() {
+                const pill = document.getElementById('global-music-floating-pill');
+                if (!pill) return;
+
+                // Don't show pill on the /music page itself (since it already has the full player bar)
+                if (window.location.pathname.startsWith('/music')) {
+                    pill.classList.add('hidden');
+                    return;
+                }
+
+                try {
+                    const raw = localStorage.getItem('shaix2_current_song');
+                    if (!raw) {
+                        pill.classList.add('hidden');
+                        return;
+                    }
+                    const data = JSON.parse(raw);
+                    // Show pill only if music is active or playing within the last 15 minutes
+                    if (data && data.isPlaying) {
+                        const titleEl = document.getElementById('global-pill-title');
+                        const artistEl = document.getElementById('global-pill-artist');
+                        const imgEl = document.getElementById('global-pill-img');
+
+                        if (titleEl) titleEl.textContent = data.title || 'Playing Music';
+                        if (artistEl) artistEl.textContent = data.artist || 'ShaiX2 Music';
+                        if (imgEl && data.thumbnail) imgEl.src = data.thumbnail;
+
+                        pill.classList.remove('hidden');
+                        setTimeout(() => {
+                            pill.classList.remove('translate-y-2', 'opacity-0');
+                        }, 50);
+                    } else {
+                        pill.classList.add('translate-y-2', 'opacity-0');
+                        setTimeout(() => pill.classList.add('hidden'), 300);
+                    }
+                } catch(e) {
+                    console.error("Error updating global floating pill:", e);
+                }
+            }
+
+            // Check and update pill on page load
+            updateGlobalFloatingPill();
         });
     </script>
 
