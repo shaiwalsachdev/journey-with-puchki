@@ -112,7 +112,10 @@
 
                 <div class="flex items-center gap-2 text-xs font-semibold shrink-0">
                     <button onclick="filterVibe('all', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-gaana-red text-white shadow-sm transition-all">
-                        All Tracks (153)
+                        All Tracks (175)
+                    </button>
+                    <button onclick="filterVibe('retro', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                        📻 Old Bollywood (SANAM)
                     </button>
                     <button onclick="filterVibe('wedding-couple', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
                         💍 Couple Dance
@@ -151,12 +154,12 @@
             <div class="flex items-center gap-3 shrink-0">
                 <div class="relative hidden md:block">
                     <span class="material-icons text-slate-400 absolute left-3 top-2 text-sm">search</span>
-                    <input id="songSearchInput" onkeyup="handleSearchSongs(this.value)" type="text" placeholder="Search 153 songs..."
+                    <input id="songSearchInput" onkeyup="handleSearchSongs(this.value)" type="text" placeholder="Search 175 songs..."
                         class="w-48 lg:w-64 pl-8 pr-3 py-1.5 text-xs rounded-full bg-slate-100 dark:bg-white/10 border-transparent focus:border-gaana-red focus:bg-white dark:focus:bg-gaana-card text-slate-800 dark:text-white transition-all">
                 </div>
                 <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 text-rose-500 text-xs font-bold border border-rose-500/20">
                     <span class="material-icons text-sm text-rose-500">album</span>
-                    <span id="likedCountText">153 Songs</span>
+                    <span id="likedCountText">175 Songs</span>
                 </div>
             </div>
 
