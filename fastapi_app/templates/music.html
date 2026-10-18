@@ -514,6 +514,22 @@
         let isPlaying = false;
         let isRepeat = false;
         let progressInterval = null;
+        let playbackWatchdog = null;
+
+        function handleSongError(errorCode) {
+            console.warn("Song encountered error or restriction (code:", errorCode, "). Skipping to next song...");
+            clearTimeout(playbackWatchdog);
+
+            // Toast alert
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-24 right-4 z-50 bg-stone-900/95 text-white border border-rose-500/40 px-4 py-2.5 rounded-2xl shadow-2xl text-xs flex items-center gap-2 backdrop-blur-md animate-bounce';
+            toast.innerHTML = `<span class="material-icons text-amber-400 text-sm">warning</span><span>Song unavailable in embeds. Playing next...</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2200);
+
+            // Move to next song
+            setTimeout(() => playNextSong(), 500);
+        }
 
         // 1. YouTube API Ready
         function onYouTubeIframeAPIReady() {
@@ -535,20 +551,11 @@
                 events: {
                     'onReady': () => console.log("Music Engine Ready"),
                     'onStateChange': onPlayerStateChange,
-                    'onError': (e) => {
-                        console.warn("YouTube player error:", e.data);
-                        // Show temporary alert banner if a specific track is restricted by music labels
-                        const toast = document.createElement('div');
-                        toast.className = 'fixed top-24 right-4 z-50 bg-stone-900/95 text-white border border-rose-500/40 px-4 py-2.5 rounded-2xl shadow-2xl text-xs flex items-center gap-2 backdrop-blur-md animate-bounce';
-                        toast.innerHTML = `<span class="material-icons text-amber-400 text-sm">warning</span><span>Skipping embed-restricted track...</span>`;
-                        document.body.appendChild(toast);
-                        setTimeout(() => toast.remove(), 2500);
-
-                        setTimeout(() => playNextSong(), 800);
-                    }
+                    'onError': (e) => handleSongError(e.data)
                 }
             });
         }
+
 
         function onPlayerStateChange(event) {
             const playIcon = document.getElementById('player-play-icon');
@@ -558,6 +565,8 @@
             const bannerHoverIcon = document.getElementById('banner-hover-play-icon');
 
             if (event.data === YT.PlayerState.PLAYING) {
+                // Clear watchdog when playback successfully starts
+                clearTimeout(playbackWatchdog);
                 isPlaying = true;
                 playIcon.textContent = 'pause';
                 if (bannerHoverIcon) bannerHoverIcon.textContent = 'pause';
@@ -602,6 +611,9 @@
             const idx = flatPlaylist.findIndex(s => s.id === id);
             if (idx !== -1) currentSongIndex = idx;
 
+            // Clear any previous watchdog
+            clearTimeout(playbackWatchdog);
+
             // Update Player Bar
             document.getElementById('player-track-title').textContent = title;
             document.getElementById('player-track-artist').textContent = artist;
@@ -615,6 +627,16 @@
             if (bannerDiscImg) bannerDiscImg.src = thumbnail;
             if (bannerBg) bannerBg.style.backgroundImage = `url('${thumbnail}')`;
 
+            // Start Watchdog: If playback does not start within 4.5 seconds (stuck or unplayable), auto advance!
+            playbackWatchdog = setTimeout(() => {
+                if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                    const st = ytPlayer.getPlayerState();
+                    if (st !== YT.PlayerState.PLAYING && st !== YT.PlayerState.BUFFERING) {
+                        handleSongError("TIMEOUT_STUCK");
+                    }
+                }
+            }, 4500);
+
             // Load & Play in YouTube
             if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
                 try {
@@ -622,11 +644,12 @@
                     ytPlayer.playVideo();
                 } catch(err) {
                     console.error("Error playing video:", err);
+                    handleSongError(err);
                 }
             } else if (!ytPlayer && window.YT && window.YT.Player) {
                 ytPlayer = new YT.Player('yt-player', {
-                    height: '120',
-                    width: '200',
+                    height: '100%',
+                    width: '100%',
                     videoId: id,
                     playerVars: {
                         'autoplay': 1,
@@ -635,7 +658,8 @@
                     },
                     events: {
                         'onReady': (e) => e.target.playVideo(),
-                        'onStateChange': onPlayerStateChange
+                        'onStateChange': onPlayerStateChange,
+                        'onError': (e) => handleSongError(e.data)
                     }
                 });
             }
