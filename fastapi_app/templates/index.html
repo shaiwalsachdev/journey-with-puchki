@@ -1453,6 +1453,13 @@
                                         } catch(err) {}
                                     }
                                 }, 1000);
+                            },
+                            'onStateChange': (e) => {
+                                if (e.data === YT.PlayerState.ENDED) {
+                                    if (typeof window.playNextGlobalSong === 'function') {
+                                        window.playNextGlobalSong();
+                                    }
+                                }
                             }
                         }
                     });

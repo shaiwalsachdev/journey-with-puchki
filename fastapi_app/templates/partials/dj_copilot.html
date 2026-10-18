@@ -88,23 +88,28 @@
         </div>
 
         <!-- Turntable Visualizer Strip (Shows when track is being queued/played) -->
-        <div id="dj-turntable-strip" class="bg-black/60 border-b border-white/5 px-4 py-2 flex items-center justify-between gap-3 shrink-0">
+        <div id="dj-turntable-strip" class="hidden bg-black/60 border-b border-white/5 px-4 py-2 items-center justify-between gap-3 shrink-0">
             <div class="flex items-center gap-2.5 min-w-0">
                 <div class="w-7 h-7 rounded-full cd-vinyl flex items-center justify-center shrink-0 border border-white/20">
-                    <img id="dj-strip-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-4 h-4 rounded-full object-cover animate-spin-slow">
+                    <img id="dj-strip-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-4 h-4 rounded-full object-cover">
                 </div>
                 <div class="min-w-0">
                     <p id="dj-strip-status" class="text-[9px] uppercase tracking-wider text-emerald-400 font-extrabold truncate flex items-center gap-1">
                         <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span>Currently Playing</span>
                     </p>
-                    <p id="dj-strip-title" class="text-xs font-bold text-white truncate">Tum Ho Toh</p>
+                    <p id="dj-strip-title" class="text-xs font-bold text-white truncate"></p>
                 </div>
             </div>
-            <div id="dj-strip-eq" class="flex items-center gap-0.5 h-3 shrink-0">
-                <span class="w-0.5 h-full bg-gaana-red rounded-full animate-pulse"></span>
-                <span class="w-0.5 h-2 bg-amber-400 rounded-full animate-pulse delay-75"></span>
-                <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
+            <div class="flex items-center gap-2 shrink-0">
+                <div id="dj-strip-eq" class="flex items-center gap-0.5 h-3 shrink-0">
+                    <span class="w-0.5 h-full bg-gaana-red rounded-full animate-pulse"></span>
+                    <span class="w-0.5 h-2 bg-amber-400 rounded-full animate-pulse delay-75"></span>
+                    <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
+                </div>
+                <button id="dj-next-btn" onclick="playNextGlobalSong(event)" class="w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all" title="Skip to Next Track">
+                    <span class="material-icons text-sm">skip_next</span>
+                </button>
             </div>
         </div>
 
@@ -617,8 +622,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const toggleDisc = document.getElementById('dj-toggle-disc-icon');
         const toggleEq = document.getElementById('dj-toggle-eq');
 
+        const stripContainer = document.getElementById('dj-turntable-strip');
         if (!pill || !songData || !songData.id) {
             if (pill) pill.classList.add('hidden');
+            if (stripContainer) stripContainer.classList.add('hidden');
             if (toggleDisc) toggleDisc.classList.remove('animate-spin');
             if (toggleEq) toggleEq.classList.add('hidden');
             return;
@@ -631,10 +638,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pillArtist) pillArtist.textContent = songData.artist || 'DJ Kiara';
 
         // Update Turntable Strip in DJ chat window
+        const stripContainer = document.getElementById('dj-turntable-strip');
         const stripTitle = document.getElementById('dj-strip-title');
         const stripImg = document.getElementById('dj-strip-img');
         const stripStatus = document.getElementById('dj-strip-status');
         const stripEq = document.getElementById('dj-strip-eq');
+        if (stripContainer) {
+            stripContainer.classList.remove('hidden');
+            stripContainer.classList.add('flex');
+        }
         if (stripTitle) stripTitle.textContent = songData.title || 'Track';
         if (stripImg && songData.thumbnail) stripImg.src = songData.thumbnail;
 
@@ -697,6 +709,32 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch(e) {
             console.error("toggleGlobalDJPlayback error:", e);
         }
+    };
+
+    window.playNextGlobalSong = function(event) {
+        if (event) event.stopPropagation();
+        if (typeof playNextSong === 'function') {
+            playNextSong();
+            return;
+        }
+        // If on another page, fetch music catalog or next track
+        fetch('/api/music/sections')
+            .then(res => res.json())
+            .then(data => {
+                const songs = [];
+                (data.sections || []).forEach(sec => (sec.songs || []).forEach(s => songs.push(s)));
+                if (songs.length === 0) return;
+                const raw = localStorage.getItem('shaix2_current_song');
+                let curId = '';
+                if (raw) {
+                    try { curId = JSON.parse(raw).id; } catch(e) {}
+                }
+                const idx = songs.findIndex(s => s.id === curId);
+                const nextIdx = (idx + 1) % songs.length;
+                const nextSong = songs[nextIdx];
+                playSongFromDJ(nextSong.id, nextSong.title, nextSong.artist, nextSong.vibe, nextSong.thumbnail);
+            })
+            .catch(err => console.error("playNextGlobalSong error:", err));
     };
 
     // Listen for storage events (cross-tab / cross-page changes)

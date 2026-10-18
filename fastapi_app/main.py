@@ -1464,11 +1464,18 @@ async def read_music(request: Request):
     music_data = await get_music_data()
     settings = request.state.settings
     return templates.TemplateResponse("music.html", {
-        "request": request, 
+        "request": request,
         "settings": settings,
         "music_data": music_data,
         "page": "music"
     })
+
+
+@app.get("/api/music/sections")
+async def get_music_sections_api():
+    from fastapi_app.database import get_music_data
+    music_data = await get_music_data()
+    return music_data or {"sections": []}
 
 
 # --- Guestbook ---

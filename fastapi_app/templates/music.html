@@ -975,14 +975,66 @@
                 events: {
                     'onReady': () => {
                         console.log("Music Engine Ready");
-                        // Auto-play song if ?play=id parameter is present in URL
+                        // 1. Check if ?play=id parameter is present in URL
                         const urlParams = new URLSearchParams(window.location.search);
                         const playId = urlParams.get('play');
                         if (playId) {
                             const song = flatPlaylist.find(s => s.id === playId);
                             if (song) {
                                 selectSong(song.id, song.title, song.artist, song.vibe, song.note, song.thumbnail, song.duration, true);
+                                return;
                             }
+                        }
+
+                        // 2. Check if there was already a currently selected / playing song from DJ Kiara or previous navigation
+                        try {
+                            const raw = localStorage.getItem('shaix2_current_song');
+                            if (raw) {
+                                const currentSaved = JSON.parse(raw);
+                                if (currentSaved && currentSaved.id) {
+                                    const matched = flatPlaylist.find(s => s.id === currentSaved.id);
+                                    const savedTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                                    const sTitle = matched ? matched.title : currentSaved.title;
+                                    const sArtist = matched ? matched.artist : currentSaved.artist;
+                                    const sVibe = matched ? matched.vibe : currentSaved.vibe;
+                                    const sThumbnail = matched ? matched.thumbnail : currentSaved.thumbnail;
+                                    const sDuration = matched ? matched.duration : (currentSaved.duration || '');
+                                    const sNote = matched ? matched.note : '';
+
+                                    // Update Bottom Player Bar & overlays
+                                    const playerTitle = document.getElementById('player-track-title');
+                                    const playerArtist = document.getElementById('player-track-artist');
+                                    const playerImg = document.getElementById('player-track-img');
+                                    const playerTime = document.getElementById('player-total-time');
+                                    const playerLink = document.getElementById('player-yt-link');
+                                    if (playerTitle) playerTitle.textContent = sTitle;
+                                    if (playerArtist) playerArtist.textContent = sArtist;
+                                    if (playerImg) playerImg.src = sThumbnail;
+                                    if (playerTime && sDuration) playerTime.textContent = sDuration;
+                                    if (playerLink) playerLink.href = `https://music.youtube.com/watch?v=${currentSaved.id}`;
+
+                                    const idx = flatPlaylist.findIndex(s => s.id === currentSaved.id);
+                                    if (idx !== -1) currentSongIndex = idx;
+                                    renderFullPlayerQueue();
+
+                                    if (currentSaved.isPlaying) {
+                                        if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                                            ytPlayer.loadVideoById({
+                                                videoId: currentSaved.id,
+                                                startSeconds: savedTime
+                                            });
+                                            ytPlayer.playVideo();
+                                        }
+                                    } else if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
+                                        ytPlayer.cueVideoById({
+                                            videoId: currentSaved.id,
+                                            startSeconds: savedTime
+                                        });
+                                    }
+                                }
+                            }
+                        } catch(err) {
+                            console.warn("Restore saved song on music page load error:", err);
                         }
                     },
                     'onStateChange': onPlayerStateChange,
@@ -1673,6 +1725,18 @@
 
         // Initialize loved songs on start
         loadLovedSongs();
+
+        // Listen for storage events (e.g., when a song is queued/selected from DJ Kiara)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shaix2_current_song' && e.newValue) {
+                try {
+                    const song = JSON.parse(e.newValue);
+                    if (song && song.id) {
+                        selectSong(song.id, song.title, song.artist, song.vibe, "Queued by DJ Kiara", song.thumbnail, song.duration || '', false);
+                    }
+                } catch(err) {}
+            }
+        });
     </script>
 </body>
 

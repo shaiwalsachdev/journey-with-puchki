@@ -448,9 +448,9 @@
                             },
                             'onStateChange': (e) => {
                                 if (e.data === YT.PlayerState.ENDED) {
-                                    // Move to next song in DJ queue if available
-                                    const djNextBtn = document.getElementById('dj-next-btn');
-                                    if (djNextBtn) djNextBtn.click();
+                                    if (typeof window.playNextGlobalSong === 'function') {
+                                        window.playNextGlobalSong();
+                                    }
                                 }
                             }
                         }
