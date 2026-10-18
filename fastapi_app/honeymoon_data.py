@@ -233,7 +233,7 @@ DEFAULT_HONEYMOON_DATA = {
                 "id": "v3",
                 "title": "Passport size photo (Matte finish, White background)",
                 "due_date": "Due: Oct 28, 2026",
-                "detail": "Passport size photo (35mm x 45mm), matte finish, pure white background, 80% face coverage, neutral expression, no spectacles or borders.",
+                "detail": "Passport size photo (35mm x 45mm), matte finish, 70% face coverage & 30% white background, neutral expression, no spectacles or borders.",
                 "done": False
             },
             {
@@ -1370,7 +1370,7 @@ DEFAULT_HONEYMOON_DATA = {
                 "id": "p-hand-2b",
                 "category": "Hand Luggage Day 1",
                 "item": "Passport size photo (Matte finish, White background)",
-                "detail": "Keep 4 spare physical copies each: 35mm x 45mm, matte finish, pure white background for backup immigration/cruise desk.",
+                "detail": "Keep 4 spare physical copies each: 35mm x 45mm, matte finish, 70% face coverage & 30% white background for backup immigration/cruise desk.",
                 "rule": "Keep safe inside the passport organizer folder.",
                 "icon": "portrait",
                 "packed": False,
