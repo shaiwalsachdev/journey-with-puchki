@@ -154,6 +154,10 @@
                     <span class="material-icons text-xs">music_note</span>
                     <span>All Tracks (203)</span>
                 </button>
+                <button onclick="filterVibe('favorites', this)" id="pill-favorites" class="vibe-filter-btn px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30 hover:bg-rose-500 hover:text-white transition-all shrink-0 flex items-center gap-1.5">
+                    <span class="material-icons text-xs text-rose-500">favorite</span>
+                    <span>Loved Songs (<span id="loved-badge-count">0</span>)</span>
+                </button>
                 <button onclick="filterVibe('romantic', this)" class="vibe-filter-btn px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all shrink-0 flex items-center gap-1">
                     <span>💖</span>
                     <span>Most Loved</span>
@@ -256,6 +260,45 @@
                 </div>
             </div>
         </div>
+
+        <!-- ==============================================
+             DEDICATED "MY LOVED SONGS" PLAYLIST SECTION
+             ============================================== -->
+        <section class="section-container mb-12" id="sec-favorites" data-vibe="favorites" style="display: none;">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-rose-500/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white shadow-md shadow-rose-500/30">
+                        <span class="material-icons text-lg">favorite</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                                My Loved Songs ❤️
+                            </h2>
+                            <span id="fav-count-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-500">
+                                0 songs
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+                            Your handpicked love collection across all vibes & songs
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="playAllFavorites()" id="fav-play-all-btn"
+                        class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-rose-500 to-red-600 text-white font-bold text-xs shadow-md hover:shadow-rose-500/30 flex items-center gap-1.5 transition-all active:scale-95">
+                        <span class="material-icons text-sm">play_arrow</span>
+                        <span>Play Loved Songs</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loved Songs Grid -->
+            <div id="grid-favorites" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Dynamically populated or empty state -->
+            </div>
+        </section>
 
         <!-- ==============================================
              STREAMING SECTIONS (Gaana / Spotify Rows with Top 5 Random + Pagination)
@@ -385,7 +428,7 @@
                 </div>
 
                 <!-- Heart Like Button -->
-                <button onclick="event.stopPropagation(); togglePlayerLike(this)" class="text-rose-500 hover:scale-110 transition-transform hidden sm:block">
+                <button id="player-like-btn" onclick="event.stopPropagation(); togglePlayerLike(this)" class="song-like-btn text-slate-400 hover:text-rose-500 hover:scale-110 transition-all hidden sm:block" title="Save to Loved Songs">
                     <span class="material-icons text-xl">favorite</span>
                 </button>
             </div>
@@ -517,16 +560,21 @@
                 </div>
 
                 <!-- Song Titles & Note -->
-                <div class="mt-6 max-w-md w-full">
-                    <h2 id="full-song-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">
-                        Tum Ho Toh
-                    </h2>
-                    <p id="full-song-artist" class="text-sm sm:text-base text-stone-300 font-medium truncate mt-1">
-                        Vishal Mishra (Saiyaara)
-                    </p>
-                    <p id="full-song-note" class="text-xs text-rose-300/80 italic mt-2 truncate">
-                        "The soundtrack to our favorite memories"
-                    </p>
+                <div class="mt-6 max-w-md w-full flex items-center justify-between gap-4">
+                    <div class="min-w-0 text-left">
+                        <h2 id="full-song-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">
+                            Tum Ho Toh
+                        </h2>
+                        <p id="full-song-artist" class="text-sm sm:text-base text-stone-300 font-medium truncate mt-1">
+                            Vishal Mishra (Saiyaara)
+                        </p>
+                        <p id="full-song-note" class="text-xs text-rose-300/80 italic mt-1 truncate">
+                            "The soundtrack to our favorite memories"
+                        </p>
+                    </div>
+                    <button id="full-player-like-btn" onclick="togglePlayerLike(this)" class="song-like-btn p-3 rounded-full bg-white/10 hover:bg-white/20 text-slate-400 hover:text-rose-500 hover:scale-110 transition-all shrink-0 shadow-lg" title="Add to Loved Songs">
+                        <span class="material-icons text-2xl">favorite</span>
+                    </button>
                 </div>
 
                 <!-- Interactive Scrubber Bar in Full Player -->
@@ -611,6 +659,21 @@
             });
         });
 
+        // Loved Songs / Favorites State (Persisted in localStorage)
+        const FAVORITES_STORAGE_KEY = 'shaix2_loved_songs';
+        let lovedSongIds = new Set();
+        try {
+            const stored = localStorage.getItem(FAVORITES_STORAGE_KEY);
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed)) {
+                    lovedSongIds = new Set(parsed);
+                }
+            }
+        } catch(e) {
+            console.error("Failed to load loved songs on init:", e);
+        }
+
         // Pagination State per Section: Stores shuffled songs & current page
         const SECTION_STATE = {};
         const PAGE_SIZE = 5;
@@ -663,9 +726,9 @@
                             ${song.vibe || 'MUSIC'}
                         </span>
 
-                        <!-- Like Heart Button on Hover -->
-                        <button onclick="event.stopPropagation(); toggleLikeSong('${song.id}', this)" 
-                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 text-rose-400 hover:text-rose-500 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow">
+                        <!-- Like Heart Button on Hover (Always visible if loved) -->
+                        <button onclick="event.stopPropagation(); toggleLikeSong('${song.id}', this)" data-song-id="${song.id}" 
+                            class="song-like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 ${lovedSongIds.has(song.id) ? 'text-rose-500 opacity-100' : 'text-slate-300 opacity-0 group-hover:opacity-100'} hover:text-rose-500 hover:scale-110 flex items-center justify-center transition-all shadow" title="Add to Loved Songs">
                             <span class="material-icons text-sm">favorite</span>
                         </button>
 
@@ -1142,16 +1205,169 @@
             });
         }
 
-        // 10. Like Toggle
+        // 10. Loved Songs / Favorites System (Persisted in localStorage)
+        function loadLovedSongs() {
+            try {
+                const stored = localStorage.getItem(FAVORITES_STORAGE_KEY);
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed)) {
+                        lovedSongIds = new Set(parsed);
+                    }
+                }
+            } catch(e) {
+                console.error("Failed to load loved songs from storage:", e);
+            }
+            updateFavoritesUI();
+            renderFavoritesSection();
+        }
+
+        function saveLovedSongs() {
+            try {
+                localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(lovedSongIds)));
+            } catch(e) {
+                console.error("Failed to save loved songs to storage:", e);
+            }
+            updateFavoritesUI();
+            renderFavoritesSection();
+        }
+
         function toggleLikeSong(id, btn) {
-            btn.classList.toggle('text-rose-500');
-            btn.classList.toggle('text-slate-400');
+            const isLoved = lovedSongIds.has(id);
+            if (isLoved) {
+                lovedSongIds.delete(id);
+            } else {
+                lovedSongIds.add(id);
+                // Trigger quick celebration pulse
+                if (typeof confetti === 'function' && !document.getElementById('full-player-modal').classList.contains('flex')) {
+                    confetti({ particleCount: 25, spread: 45, origin: { y: 0.8 } });
+                }
+            }
+            saveLovedSongs();
         }
 
         function togglePlayerLike(btn) {
-            btn.classList.toggle('text-rose-500');
-            btn.classList.toggle('text-slate-400');
+            const song = flatPlaylist[currentSongIndex];
+            if (!song) return;
+            toggleLikeSong(song.id, btn);
         }
+
+        function updateFavoritesUI() {
+            const count = lovedSongIds.size;
+            
+            // Badge in header pill
+            const badgeCount = document.getElementById('loved-badge-count');
+            if (badgeCount) badgeCount.textContent = count;
+
+            // Section count badge
+            const favCountBadge = document.getElementById('fav-count-badge');
+            if (favCountBadge) favCountBadge.textContent = `${count} ${count === 1 ? 'song' : 'songs'}`;
+
+            // Sync like buttons in cards
+            document.querySelectorAll('.song-like-btn').forEach(btn => {
+                const songId = btn.getAttribute('data-song-id');
+                if (lovedSongIds.has(songId)) {
+                    btn.classList.add('text-rose-500');
+                    btn.classList.remove('text-slate-400', 'text-white/70');
+                } else {
+                    btn.classList.remove('text-rose-500');
+                    btn.classList.add('text-slate-400');
+                }
+            });
+
+            // Sync bottom player like button
+            const playerLikeBtn = document.getElementById('player-like-btn');
+            const fullPlayerLikeBtn = document.getElementById('full-player-like-btn');
+            const currentSong = flatPlaylist[currentSongIndex];
+            if (currentSong) {
+                const isCurrentLoved = lovedSongIds.has(currentSong.id);
+                [playerLikeBtn, fullPlayerLikeBtn].forEach(btn => {
+                    if (!btn) return;
+                    if (isCurrentLoved) {
+                        btn.classList.add('text-rose-500');
+                        btn.classList.remove('text-slate-400');
+                        btn.setAttribute('title', 'Remove from Loved Songs');
+                    } else {
+                        btn.classList.remove('text-rose-500');
+                        btn.classList.add('text-slate-400');
+                        btn.setAttribute('title', 'Save to Loved Songs');
+                    }
+                });
+            }
+        }
+
+        function renderFavoritesSection() {
+            const grid = document.getElementById('grid-favorites');
+            if (!grid) return;
+
+            const lovedSongs = flatPlaylist.filter(s => lovedSongIds.has(s.id));
+
+            if (lovedSongs.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 px-4 rounded-3xl bg-slate-50 dark:bg-white/5 border border-dashed border-slate-300 dark:border-white/10 text-center">
+                        <span class="material-icons text-4xl text-rose-400 mb-2">favorite_border</span>
+                        <h4 class="font-extrabold text-base text-slate-900 dark:text-white">Your Loved Collection is Empty</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+                            Click the heart symbol on any track across all vibes to add it here and build your personal favorites playlist!
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = lovedSongs.map(song => `
+                <div onclick="selectSong('${song.id}', '${(song.title || '').replace(/'/g, "\\'")}', '${(song.artist || '').replace(/'/g, "\\'")}', '${(song.vibe || '').replace(/'/g, "\\'")}', '${(song.note || '').replace(/'/g, "\\'")}', '${song.thumbnail}', '${song.duration || ''}')"
+                    class="song-card group relative p-3 rounded-2xl bg-white dark:bg-gaana-card hover:bg-slate-50 dark:hover:bg-[#252530] border border-rose-500/20 hover:border-gaana-red/50 transition-all duration-300 hover:-translate-y-1.5 shadow-sm hover:shadow-xl cursor-pointer flex flex-col justify-between"
+                    data-title="${(song.title || '').toLowerCase()}" data-artist="${(song.artist || '').toLowerCase()}">
+
+                    <!-- Thumbnail Container with Floating Play Button -->
+                    <div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-md bg-black">
+                        <img src="${song.thumbnail}" alt="${song.title}" 
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        
+                        <!-- Floating Badge -->
+                        <span class="absolute top-2 left-2 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-rose-600 text-white backdrop-blur-md">
+                            ${song.vibe || 'LOVED'}
+                        </span>
+
+                        <!-- Like Heart Button -->
+                        <button onclick="event.stopPropagation(); toggleLikeSong('${song.id}', this)" data-song-id="${song.id}" 
+                            class="song-like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 text-rose-500 hover:scale-110 flex items-center justify-center transition-all shadow">
+                            <span class="material-icons text-sm">favorite</span>
+                        </button>
+
+                        <!-- Hover Play Pill -->
+                        <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-gaana-red text-white flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="material-icons text-xl">play_arrow</span>
+                        </div>
+                    </div>
+
+                    <!-- Song Metadata -->
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-gaana-red transition-colors">
+                            ${song.title}
+                        </h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                            ${song.artist}
+                        </p>
+                        ${song.note ? `<p class="text-[10px] text-slate-400 dark:text-slate-500 italic truncate mt-1">"${song.note}"</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function playAllFavorites() {
+            const lovedSongs = flatPlaylist.filter(s => lovedSongIds.has(s.id));
+            if (lovedSongs.length === 0) {
+                alert("No loved songs yet! Click the heart on any song to add it to your loved playlist.");
+                return;
+            }
+            const first = lovedSongs[0];
+            selectSong(first.id, first.title, first.artist, first.vibe, first.note, first.thumbnail, first.duration);
+        }
+
+        // Initialize loved songs on start
+        loadLovedSongs();
     </script>
 </body>
 
