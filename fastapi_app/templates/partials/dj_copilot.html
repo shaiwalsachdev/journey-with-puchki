@@ -1,15 +1,41 @@
 <!-- DJ Kiara - Personal AI DJ Widget -->
 <div id="dj-copilot-widget" class="fixed bottom-6 right-24 sm:right-28 z-[99998] font-sans">
     
-    <!-- DJ Toggle Button -->
-    <button id="dj-toggle" class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-3.5 sm:p-4 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border border-white/20" title="Open DJ Kiara - Your Personal DJ">
-        <!-- DJ Vinyl & Headphones Icon -->
-        <span class="material-icons text-xl sm:text-2xl animate-spin-slow">album</span>
-        <!-- Floating mini headphones badge -->
-        <span class="material-icons text-[12px] absolute top-1 right-1 text-amber-300">headphones</span>
-        <!-- Wave Glow effect -->
-        <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500"></div>
-    </button>
+    <!-- DJ Toggle & Floating Player Indicator -->
+    <div class="relative flex items-center">
+        <!-- Floating Track Pill (Visible when song is playing) -->
+        <div id="dj-track-floating-pill" class="hidden mr-2 items-center gap-2 px-3 py-1.5 rounded-full bg-black/90 text-white backdrop-blur-xl border border-rose-500/40 shadow-xl max-w-[160px] sm:max-w-[220px] transition-all">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0"></span>
+            <div class="min-w-0 flex-1">
+                <p id="dj-pill-track-title" class="text-[11px] font-bold truncate text-white">Song Title</p>
+                <p id="dj-pill-track-artist" class="text-[9px] text-stone-400 truncate">Artist</p>
+            </div>
+            <!-- Quick Play / Pause Button directly on pill -->
+            <button id="dj-pill-play-pause-btn" onclick="toggleGlobalDJPlayback(event)" class="w-6 h-6 rounded-full bg-gaana-red text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shrink-0">
+                <span class="material-icons text-[14px]" id="dj-pill-play-icon">play_arrow</span>
+            </button>
+        </div>
+
+        <!-- DJ Toggle Button -->
+        <button id="dj-toggle" class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-3.5 sm:p-4 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border border-white/20 shrink-0" title="Open DJ Kiara - Your Personal DJ">
+            <!-- Thinking aura ring around DJ toggle -->
+            <div id="dj-toggle-thinking-ring" class="hidden absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 via-rose-500 to-purple-500 animate-spin blur-xs opacity-75"></div>
+            <!-- DJ Vinyl & Headphones Icon -->
+            <span class="material-icons text-xl sm:text-2xl animate-spin-slow relative z-10" id="dj-toggle-disc-icon">album</span>
+            <!-- Floating mini headphones badge -->
+            <span class="material-icons text-[12px] absolute top-1 right-1 text-amber-300 z-10">headphones</span>
+            <!-- DJ Thinking badge -->
+            <span id="dj-toggle-thinking-badge" class="hidden absolute -top-1 -left-1 w-4 h-4 rounded-full bg-amber-400 text-black text-[9px] font-black items-center justify-center animate-bounce z-20 shadow">💭</span>
+            <!-- Equalizer bar indicator when song is playing -->
+            <div id="dj-toggle-eq" class="hidden absolute bottom-1.5 inset-x-0 justify-center items-end gap-0.5 h-2 z-10">
+                <span class="w-0.5 h-full bg-white rounded-full animate-pulse"></span>
+                <span class="w-0.5 h-1.5 bg-white rounded-full animate-pulse delay-75"></span>
+                <span class="w-0.5 h-2 bg-white rounded-full animate-pulse delay-150"></span>
+            </div>
+            <!-- Wave Glow effect -->
+            <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500 z-10"></div>
+        </button>
+    </div>
 
     <!-- DJ Chat & Live Voice Window -->
     <div id="dj-window" class="hidden opacity-0 scale-0 translate-y-10 absolute bottom-20 right-0 w-[350px] sm:w-[410px] h-[580px] max-h-[85vh] min-h-[260px] min-w-[280px] bg-slate-950/95 text-white backdrop-blur-2xl rounded-3xl shadow-2xl border border-rose-500/30 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
@@ -244,28 +270,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Direct Song Play Helper from DJ Kiara
     window.playSongFromDJ = function(id, title, artist, vibe, thumbnail) {
+        const payload = {
+            id: id,
+            title: title,
+            artist: artist,
+            vibe: vibe,
+            thumbnail: thumbnail,
+            isPlaying: true,
+            updatedAt: Date.now()
+        };
+
         // 1. If currently on /music page and selectSong function exists, trigger directly!
         if (typeof selectSong === 'function') {
             selectSong(id, title, artist, vibe, "Queued by DJ Kiara", thumbnail, "", true);
         } else {
-            // 2. Broadcast to localStorage so floating indicator and music page sync
+            // 2. Play right here on the current page through global player!
             try {
-                localStorage.setItem('shaix2_current_song', JSON.stringify({
-                    id: id,
-                    title: title,
-                    artist: artist,
-                    vibe: vibe,
-                    thumbnail: thumbnail,
-                    isPlaying: true,
-                    updatedAt: Date.now()
-                }));
+                localStorage.setItem('shaix2_current_song', JSON.stringify(payload));
+                localStorage.setItem('shaix2_song_time', '0');
             } catch(e) {}
 
-            // Open or redirect to /music with autoplay param if desired
-            window.location.href = `/music?play=${id}`;
+            if (typeof window.syncGlobalMusicAudio === 'function') {
+                window.syncGlobalMusicAudio();
+            }
         }
 
-        // Update Turntable Strip
+        // Update Pill and Turntable Strip immediately
+        updateDJPillUI(payload);
         const stripTitle = document.getElementById('dj-strip-title');
         const stripImg = document.getElementById('dj-strip-img');
         if (stripTitle) stripTitle.textContent = title;
@@ -286,6 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
             djInput.value = '';
             djInput.style.height = 'auto';
             if (djTyping) djTyping.classList.remove('hidden');
+            const thinkingRing = document.getElementById('dj-toggle-thinking-ring');
+            const thinkingBadge = document.getElementById('dj-toggle-thinking-badge');
+            if (thinkingRing) thinkingRing.classList.remove('hidden');
+            if (thinkingBadge) thinkingBadge.classList.remove('hidden');
 
             try {
                 const res = await fetch('/api/dj/chat', {
@@ -295,6 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (djTyping) djTyping.classList.add('hidden');
+                if (thinkingRing) thinkingRing.classList.add('hidden');
+                if (thinkingBadge) thinkingBadge.classList.add('hidden');
 
                 if (!res.ok) throw new Error("DJ Kiara is tuning the records...");
                 const data = await res.json();
@@ -313,6 +350,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } catch (err) {
                 if (djTyping) djTyping.classList.add('hidden');
+                if (thinkingRing) thinkingRing.classList.add('hidden');
+                if (thinkingBadge) thinkingBadge.classList.add('hidden');
                 addDJMessage("DJ Kiara: " + err.message, false);
             }
         });
@@ -462,5 +501,95 @@ document.addEventListener('DOMContentLoaded', () => {
             else startDJVoice();
         });
     }
+
+    // --- Global DJ Pill & Playback Control (Merged with DJ Kiara) ---
+    function updateDJPillUI(songData) {
+        const pill = document.getElementById('dj-track-floating-pill');
+        const pillTitle = document.getElementById('dj-pill-track-title');
+        const pillArtist = document.getElementById('dj-pill-track-artist');
+        const pillIcon = document.getElementById('dj-pill-play-icon');
+        const toggleDisc = document.getElementById('dj-toggle-disc-icon');
+        const toggleEq = document.getElementById('dj-toggle-eq');
+
+        if (!pill || !songData || !songData.id) {
+            if (pill) pill.classList.add('hidden');
+            if (toggleDisc) toggleDisc.classList.remove('animate-spin');
+            if (toggleEq) toggleEq.classList.add('hidden');
+            return;
+        }
+
+        // Show pill
+        pill.classList.remove('hidden');
+        pill.classList.add('flex');
+        if (pillTitle) pillTitle.textContent = songData.title || 'Playing Song';
+        if (pillArtist) pillArtist.textContent = songData.artist || 'DJ Kiara';
+
+        if (songData.isPlaying) {
+            if (pillIcon) pillIcon.textContent = 'pause';
+            if (toggleDisc) {
+                toggleDisc.classList.add('animate-spin');
+                toggleDisc.classList.remove('text-white');
+                toggleDisc.classList.add('text-amber-300');
+            }
+            if (toggleEq) toggleEq.classList.remove('hidden');
+        } else {
+            if (pillIcon) pillIcon.textContent = 'play_arrow';
+            if (toggleDisc) {
+                toggleDisc.classList.remove('animate-spin');
+                toggleDisc.classList.remove('text-amber-300');
+                toggleDisc.classList.add('text-white');
+            }
+            if (toggleEq) toggleEq.classList.add('hidden');
+        }
+    }
+
+    window.toggleGlobalDJPlayback = function(event) {
+        if (event) event.stopPropagation();
+        try {
+            const raw = localStorage.getItem('shaix2_current_song');
+            if (!raw) return;
+            const song = JSON.parse(raw);
+            const newState = !song.isPlaying;
+            song.isPlaying = newState;
+            song.updatedAt = Date.now();
+            localStorage.setItem('shaix2_current_song', JSON.stringify(song));
+
+            // If on /music page, toggle local player
+            if (typeof togglePlay === 'function') {
+                togglePlay();
+            } else if (window.globalYtPlayer) {
+                if (newState && typeof window.globalYtPlayer.playVideo === 'function') {
+                    window.globalYtPlayer.playVideo();
+                } else if (!newState && typeof window.globalYtPlayer.pauseVideo === 'function') {
+                    window.globalYtPlayer.pauseVideo();
+                }
+            } else if (typeof window.syncGlobalMusicAudio === 'function') {
+                window.syncGlobalMusicAudio();
+            }
+
+            updateDJPillUI(song);
+        } catch(e) {
+            console.error("toggleGlobalDJPlayback error:", e);
+        }
+    };
+
+    // Listen for storage events (cross-tab / cross-page changes)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'shaix2_current_song') {
+            try {
+                const song = JSON.parse(e.newValue);
+                updateDJPillUI(song);
+            } catch(err) {}
+        }
+    });
+
+    // Check initial song state on page load
+    try {
+        const raw = localStorage.getItem('shaix2_current_song');
+        if (raw) {
+            const song = JSON.parse(raw);
+            updateDJPillUI(song);
+        }
+    } catch(err) {}
 });
 </script>

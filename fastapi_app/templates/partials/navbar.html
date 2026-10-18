@@ -218,38 +218,9 @@
             class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">flight_takeoff</span> AI Planner</a>
     </div>
-    <!-- Global Floating Now Playing Indicator (Appears when any song is playing across tabs or anywhere on the website) -->
-    <div id="global-music-floating-pill" class="hidden fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 transition-all duration-300 transform translate-y-2 opacity-0 select-none">
-        <a href="/music" class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/95 dark:bg-[#181820]/95 text-white backdrop-blur-xl border border-rose-500/30 shadow-2xl hover:border-gaana-red hover:scale-105 active:scale-95 transition-all group">
-            <!-- Pulsing/Spinning Mini Disc -->
-            <div class="relative w-8 h-8 rounded-full bg-black border border-white/20 flex items-center justify-center shrink-0 overflow-hidden shadow-inner">
-                <img id="global-pill-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-full h-full object-cover rounded-full animate-spin-slow">
-                <div class="absolute w-2 h-2 rounded-full bg-black border border-white/60 inset-0 m-auto"></div>
-            </div>
-
-            <!-- Track Info -->
-            <div class="min-w-0 max-w-[140px] sm:max-w-[200px]">
-                <div class="flex items-center gap-1.5">
-                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                    <h4 id="global-pill-title" class="text-xs font-bold text-white truncate group-hover:text-gaana-red transition-colors">
-                        Playing Song
-                    </h4>
-                </div>
-                <p id="global-pill-artist" class="text-[10px] text-slate-400 truncate">
-                    ShaiX2 Music
-                </p>
-            </div>
-
-            <!-- Mini Audio Equalizer Animation -->
-            <div class="flex items-center gap-0.5 h-3 shrink-0 px-1">
-                <span class="w-0.5 h-full bg-rose-500 rounded-full animate-pulse"></span>
-                <span class="w-0.5 h-2 bg-rose-400 rounded-full animate-pulse delay-75"></span>
-                <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
-            </div>
-
-            <!-- Open Icon -->
-            <span class="material-icons text-sm text-slate-400 group-hover:text-white transition-colors">open_in_new</span>
-        </a>
+    <!-- Global Hidden YouTube Audio Engine (Keeps music playing across ALL pages of the website) -->
+    <div id="global-hidden-yt-container" class="hidden">
+        <div id="global-navbar-yt-player"></div>
     </div>
 
     <!-- Global Music Player (Hidden Logic) -->
@@ -395,55 +366,102 @@
                     }
                 }
 
-                // Global Music Track Sync for Floating Indicator
+                // Global Music Track Sync across website tabs & pages
                 if (event.key === 'shaix2_current_song') {
-                    updateGlobalFloatingPill();
+                    syncGlobalMusicAudio();
                 }
             });
 
-            // Global Music Floating Pill Controller
-            function updateGlobalFloatingPill() {
-                const pill = document.getElementById('global-music-floating-pill');
-                if (!pill) return;
-
-                // Don't show pill on the /music page itself (since it already has the full player bar)
+            // Global Background YouTube Audio Player (Plays on non-music pages)
+            window.globalYtPlayer = null;
+            window.syncGlobalMusicAudio = function() {
                 if (window.location.pathname.startsWith('/music')) {
-                    pill.classList.add('hidden');
+                    // On /music page, let the local dedicated player handle playback
+                    if (window.globalYtPlayer && typeof window.globalYtPlayer.stopVideo === 'function') {
+                        try { window.globalYtPlayer.stopVideo(); } catch(e) {}
+                    }
                     return;
                 }
 
                 try {
                     const raw = localStorage.getItem('shaix2_current_song');
-                    if (!raw) {
-                        pill.classList.add('hidden');
-                        return;
-                    }
+                    if (!raw) return;
                     const data = JSON.parse(raw);
-                    // Show pill only if music is active or playing within the last 15 minutes
-                    if (data && data.isPlaying) {
-                        const titleEl = document.getElementById('global-pill-title');
-                        const artistEl = document.getElementById('global-pill-artist');
-                        const imgEl = document.getElementById('global-pill-img');
 
-                        if (titleEl) titleEl.textContent = data.title || 'Playing Music';
-                        if (artistEl) artistEl.textContent = data.artist || 'ShaiX2 Music';
-                        if (imgEl && data.thumbnail) imgEl.src = data.thumbnail;
-
-                        pill.classList.remove('hidden');
-                        setTimeout(() => {
-                            pill.classList.remove('translate-y-2', 'opacity-0');
-                        }, 50);
-                    } else {
-                        pill.classList.add('translate-y-2', 'opacity-0');
-                        setTimeout(() => pill.classList.add('hidden'), 300);
+                    if (data && data.id && data.isPlaying) {
+                        const savedTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                        if (!window.globalYtPlayer) {
+                            if (!window.YT) {
+                                const tag = document.createElement('script');
+                                tag.src = "https://www.youtube.com/iframe_api";
+                                document.head.appendChild(tag);
+                                window.onYouTubeIframeAPIReady = function() {
+                                    createGlobalPlayer(data.id, savedTime);
+                                };
+                            } else {
+                                createGlobalPlayer(data.id, savedTime);
+                            }
+                        } else if (typeof window.globalYtPlayer.loadVideoById === 'function') {
+                            window.globalYtPlayer.loadVideoById({
+                                videoId: data.id,
+                                startSeconds: savedTime
+                            });
+                            window.globalYtPlayer.playVideo();
+                        }
+                    } else if (data && !data.isPlaying && window.globalYtPlayer && typeof window.globalYtPlayer.pauseVideo === 'function') {
+                        window.globalYtPlayer.pauseVideo();
                     }
                 } catch(e) {
-                    console.error("Error updating global floating pill:", e);
+                    console.error("Global music sync error:", e);
+                }
+            };
+
+            function createGlobalPlayer(videoId, startSeconds = 0) {
+                const container = document.getElementById('global-navbar-yt-player');
+                if (!container || !window.YT || !window.YT.Player) return;
+                try {
+                    window.globalYtPlayer = new YT.Player('global-navbar-yt-player', {
+                        height: '1',
+                        width: '1',
+                        videoId: videoId,
+                        playerVars: {
+                            'autoplay': 1,
+                            'playsinline': 1,
+                            'controls': 0,
+                            'start': Math.floor(startSeconds)
+                        },
+                        events: {
+                            'onReady': (e) => {
+                                if (startSeconds > 0) {
+                                    try { e.target.seekTo(startSeconds, true); } catch(err) {}
+                                }
+                                e.target.playVideo();
+                                // Track time on non-music pages too
+                                setInterval(() => {
+                                    if (window.globalYtPlayer && typeof window.globalYtPlayer.getCurrentTime === 'function') {
+                                        try {
+                                            const ct = window.globalYtPlayer.getCurrentTime();
+                                            if (ct > 0) localStorage.setItem('shaix2_song_time', ct.toFixed(1));
+                                        } catch(err) {}
+                                    }
+                                }, 1000);
+                            },
+                            'onStateChange': (e) => {
+                                if (e.data === YT.PlayerState.ENDED) {
+                                    // Move to next song in DJ queue if available
+                                    const djNextBtn = document.getElementById('dj-next-btn');
+                                    if (djNextBtn) djNextBtn.click();
+                                }
+                            }
+                        }
+                    });
+                } catch(err) {
+                    console.warn("Global player creation:", err);
                 }
             }
 
-            // Check and update pill on page load
-            updateGlobalFloatingPill();
+            // Trigger global sync on page load
+            syncGlobalMusicAudio();
         });
     </script>
 

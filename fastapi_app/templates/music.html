@@ -1308,6 +1308,11 @@
                 if (time) time.textContent = formatSeconds(cur);
                 if (fullBar) fullBar.style.width = `${pct}%`;
                 if (fullTime) fullTime.textContent = formatSeconds(cur);
+
+                // Continuously save current playback time for cross-page resume
+                try {
+                    localStorage.setItem('shaix2_song_time', cur.toFixed(1));
+                } catch(e) {}
             }, 500);
         }
 
