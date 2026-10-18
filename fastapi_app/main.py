@@ -274,6 +274,20 @@ async def honeymoon_page(request: Request):
     })
 
 
+@app.get("/wedding", response_class=HTMLResponse)
+@app.get("/sagan-wedding", response_class=HTMLResponse)
+async def wedding_page(request: Request):
+    from fastapi_app.wedding_data import WEDDING_DETAILS
+    settings = request.state.settings
+
+    return templates.TemplateResponse("wedding.html", {
+        "request": request,
+        "page": "wedding",
+        "settings": settings,
+        "wedding": WEDDING_DETAILS
+    })
+
+
 @app.post("/api/honeymoon/toggle-checklist")
 async def toggle_honeymoon_checklist(request: Request):
     from fastapi_app.database import get_honeymoon_data, save_honeymoon_data

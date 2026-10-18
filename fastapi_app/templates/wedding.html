@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagan & Wedding Celebrations | Shaiwal &amp; Shaila</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D4AF37", /* Royal Gold */
+                        royal: {
+                            gold: "#D4AF37",
+                            champagne: "#F7E7CE",
+                            maroon: "#58111A",
+                            wine: "#722F37",
+                            deep: "#1A0B10"
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                        cursive: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Ambient Animated Wedding Background */
+        body {
+            background: linear-gradient(135deg, #0e0508 0%, #1c0b12 40%, #15060c 80%, #0d0407 100%);
+            color: #f7e7ce;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .gold-shimmer {
+            background: linear-gradient(90deg, #d4af37 0%, #fff2b2 30%, #f3c258 50%, #fff2b2 70%, #d4af37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.12), inset 0 0 15px rgba(212, 175, 55, 0.05);
+        }
+
+        .glass-royal {
+            background: rgba(35, 12, 22, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .glass-tab-active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(114, 47, 55, 0.4) 100%);
+            border-color: #d4af37;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        /* Floating sparkles */
+        .sparkle-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #fff4bf;
+            box-shadow: 0 0 8px 2px #d4af37;
+            animation: twinkle 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+
+        /* Custom Video Player UI */
+        .video-container:hover .video-overlay-ctrls {
+            opacity: 1;
+        }
+        .video-overlay-ctrls {
+            transition: opacity 0.3s ease;
+        }
+        
+        .timer-card {
+            background: rgba(26, 9, 16, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 1.25rem;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col relative selection:bg-amber-500/30 selection:text-amber-200">
+
+    <!-- Decorative Top Sparkles -->
+    <div class="sparkle-node" style="top: 120px; left: 8%; animation-delay: 0.2s;"></div>
+    <div class="sparkle-node" style="top: 180px; right: 12%; animation-delay: 1.5s;"></div>
+    <div class="sparkle-node" style="top: 340px; left: 18%; animation-delay: 0.9s;"></div>
+    <div class="sparkle-node" style="top: 480px; right: 22%; animation-delay: 2.1s;"></div>
+
+    {% include 'partials/navbar.html' %}
+
+    <main class="flex-grow pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
+
+        <!-- Breadcrumb / Back to Upcoming Link -->
+        <div class="mb-8 flex items-center justify-between flex-wrap gap-4">
+            <a href="/upcoming" class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-royal text-xs font-bold tracking-wider uppercase text-amber-200 hover:text-white hover:border-amber-400 transition-all">
+                <span class="material-icons text-sm">arrow_back</span>
+                <span>Back to Upcoming Milestones</span>
+            </a>
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-extrabold tracking-widest uppercase">
+                <span class="material-icons text-sm animate-spin">auto_awesome</span>
+                <span>{{ wedding.hashtag }}</span>
+            </div>
+        </div>
+
+        <!-- HERO HEADER -->
+        <section class="text-center mb-16 relative">
+            <div class="inline-block mb-3">
+                <span class="font-cursive text-3xl sm:text-4xl text-amber-300 block">Celebrate the Auspicious Union of</span>
+            </div>
+            
+            <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4 gold-shimmer uppercase">
+                Shaiwal <span class="font-cursive text-amber-200 lowercase text-4xl sm:text-6xl mx-2">&amp;</span> Shaila
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-amber-100/80 text-sm sm:text-base italic font-serif leading-relaxed mb-6">
+                “Two lives, two hearts, joined together in friendship, united forever in love.”
+            </p>
+
+            <!-- Family Heritage Lineage -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto text-xs sm:text-sm text-amber-200/90 py-4 px-6 rounded-2xl glass-royal border border-amber-500/20 mb-8">
+                <div class="text-center md:text-right md:border-r md:border-amber-500/20 md:pr-6">
+                    <p class="font-cinzel font-bold text-amber-300 uppercase tracking-wider text-sm mb-1">Groom: Shaiwal Sachdev</p>
+                    <p class="text-amber-100/70">Son of {{ wedding.couple.groom_parents }}</p>
+                    <p class="text-amber-100/60 text-[11px] italic">Grandson of {{ wedding.couple.groom_grandparents }}</p>
+                </div>
+                <div class="text-center md:text-left md:pl-6">
+                    <p class="font-cinzel font-bold text-amber-300 uppercase tracking-wider text-sm mb-1">Bride: Shaila Manaktahla</p>
+                    <p class="text-amber-100/70">Daughter of {{ wedding.couple.bride_parents }}</p>
+                    <p class="text-amber-100/60 text-[11px] italic">Welcoming a beautiful new chapter together</p>
+                </div>
+            </div>
+
+            <!-- Cute Family Note Badge -->
+            <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-rose-950/60 border border-rose-400/40 text-rose-200 text-xs sm:text-sm shadow-lg font-medium">
+                <span class="text-base">💌</span>
+                <span>{{ wedding.cute_quote }}</span>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN TO THE WEDDING -->
+        <section class="max-w-3xl mx-auto mb-16 text-center">
+            <h3 class="text-xs uppercase font-extrabold tracking-[0.25em] text-amber-400 mb-4">Countdown to the Wedding Day · Dec 6, 2026</h3>
+            <div class="grid grid-cols-4 gap-3 sm:gap-6 text-center">
+                <div class="timer-card p-4 sm:p-6 shadow-xl">
+                    <span id="wd-days" class="font-cinzel text-3xl sm:text-5xl font-extrabold text-amber-300 block">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-amber-200/70 font-semibold mt-1 block">Days</span>
+                </div>
+                <div class="timer-card p-4 sm:p-6 shadow-xl">
+                    <span id="wd-hours" class="font-cinzel text-3xl sm:text-5xl font-extrabold text-amber-300 block">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-amber-200/70 font-semibold mt-1 block">Hours</span>
+                </div>
+                <div class="timer-card p-4 sm:p-6 shadow-xl">
+                    <span id="wd-mins" class="font-cinzel text-3xl sm:text-5xl font-extrabold text-amber-300 block">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-amber-200/70 font-semibold mt-1 block">Minutes</span>
+                </div>
+                <div class="timer-card p-4 sm:p-6 shadow-xl">
+                    <span id="wd-secs" class="font-cinzel text-3xl sm:text-5xl font-extrabold text-amber-300 block">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-amber-200/70 font-semibold mt-1 block">Seconds</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIDEO INVITATIONS & MEDIA THEATER SECTION -->
+        <!-- ========================================== -->
+        <section class="mb-20" id="video-invitations">
+            <div class="text-center mb-8">
+                <span class="px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-widest inline-block mb-3">
+                    Cinematic Video Invites
+                </span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-2">Watch the Wedding Invites</h2>
+                <p class="text-sm text-amber-200/70 max-w-xl mx-auto">
+                    Stream both versions below in high definition, compressed and web-optimized for instant playback.
+                </p>
+            </div>
+
+            <!-- Video Version Switcher Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex p-1.5 rounded-2xl glass-royal border border-amber-400/30 gap-2 max-w-xl w-full">
+                    <button id="tab-btn-haldi" onclick="switchVideo('haldi')"
+                        class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 glass-tab-active text-amber-200">
+                        <span class="material-icons text-base">movie</span>
+                        <span>Wedding Invite + Haldi Version</span>
+                    </button>
+                    <button id="tab-btn-sagan" onclick="switchVideo('sagan')"
+                        class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 text-amber-100/70 hover:text-white">
+                        <span class="material-icons text-base">video_library</span>
+                        <span>Wedding Invite</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video Player Theater Card -->
+            <div class="max-w-4xl mx-auto glass-royal rounded-3xl overflow-hidden border border-amber-400/40 shadow-2xl relative">
+                
+                <!-- Video Header Info Bar -->
+                <div class="px-6 py-4 border-b border-amber-500/20 flex items-center justify-between flex-wrap gap-3 bg-black/40">
+                    <div>
+                        <h3 id="current-video-title" class="font-cinzel text-lg sm:text-xl font-bold text-amber-300">
+                            Wedding Invite + Haldi Version
+                        </h3>
+                        <p id="current-video-sub" class="text-xs text-amber-200/60">
+                            Complete Invitation including Haldi Ceremony, Sagan &amp; Wedding Details
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a id="download-video-link" href="/static/videos/wedding_invite_haldi.mp4" download="Wedding_Invite_Haldi_Shaiwal_Shaila.mp4"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs font-bold transition-all">
+                            <span class="material-icons text-sm">download</span>
+                            <span>Save Video</span>
+                        </a>
+                        <button onclick="toggleCinemaTheater()" title="Toggle Fullscreen" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all">
+                            <span class="material-icons text-sm">fullscreen</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Video Element Container -->
+                <div class="relative aspect-video bg-black flex items-center justify-center group video-container" id="theater-box">
+                    <video id="main-wedding-video"
+                        class="w-full h-full object-contain"
+                        controls
+                        playsinline
+                        preload="metadata"
+                        poster="/static/videos/wedding_invite_haldi_poster.jpg"
+                        src="/static/videos/wedding_invite_haldi.mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video Highlights / Features Footer -->
+                <div class="p-6 bg-black/30 border-t border-amber-500/10 flex flex-wrap items-center justify-between gap-4 text-xs">
+                    <div class="flex items-center gap-2 text-amber-200/80">
+                        <span class="material-icons text-base text-amber-400">hd</span>
+                        <span>High Definition Web-Optimized MP4 (H.264 + FastStart)</span>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <button onclick="seekVideo(-10)" class="hover:text-amber-300 text-amber-200/70 inline-flex items-center gap-1 font-semibold">
+                            <span class="material-icons text-sm">replay_10</span> -10s
+                        </button>
+                        <button onclick="seekVideo(10)" class="hover:text-amber-300 text-amber-200/70 inline-flex items-center gap-1 font-semibold">
+                            <span class="material-icons text-sm">forward_10</span> +10s
+                        </button>
+                        <button onclick="cycleSpeed()" id="speed-btn" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-amber-200 font-bold">
+                            1.0x
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini Thumbnails for Direct Quick Selection -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-6">
+                <!-- Video 1 Preview Card -->
+                <div onclick="switchVideo('haldi')" class="cursor-pointer glass-royal p-4 rounded-2xl border border-amber-500/20 hover:border-amber-400 transition-all flex gap-4 items-center group">
+                    <div class="relative w-28 h-18 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
+                        <img src="/static/videos/wedding_invite_haldi_poster.jpg" alt="Wedding Invite + Haldi" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <span class="material-icons text-amber-300 text-2xl group-hover:scale-110 transition-transform">play_circle</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-500/20 text-amber-300">1:24 Min</span>
+                            <span class="text-[10px] text-amber-200/60 font-semibold">Extended</span>
+                        </div>
+                        <h4 class="font-cinzel text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
+                            Wedding Invite + Haldi Version
+                        </h4>
+                        <p class="text-[11px] text-amber-100/60 line-clamp-1">With Haldi at Meriton, Sagan &amp; Wedding Pheras</p>
+                    </div>
+                </div>
+
+                <!-- Video 2 Preview Card -->
+                <div onclick="switchVideo('sagan')" class="cursor-pointer glass-royal p-4 rounded-2xl border border-amber-500/20 hover:border-amber-400 transition-all flex gap-4 items-center group">
+                    <div class="relative w-28 h-18 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
+                        <img src="/static/videos/wedding_invite_poster.jpg" alt="Wedding Invite" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <span class="material-icons text-amber-300 text-2xl group-hover:scale-110 transition-transform">play_circle</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-rose-500/20 text-rose-300">0:42 Min</span>
+                            <span class="text-[10px] text-amber-200/60 font-semibold">Invite</span>
+                        </div>
+                        <h4 class="font-cinzel text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
+                            Wedding Invite
+                        </h4>
+                        <p class="text-[11px] text-amber-100/60 line-clamp-1">Official Sagan &amp; Wedding Ring Ceremony Edition</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- COMPLETE SCHEDULE OF WEDDING FUNCTIONS     -->
+        <!-- ========================================== -->
+        <section class="mb-20" id="wedding-schedule">
+            <div class="text-center mb-12">
+                <span class="px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-400/30 text-rose-300 text-xs font-bold uppercase tracking-widest inline-block mb-3">
+                    Auspicious Itinerary
+                </span>
+                <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-white mb-3">Celebrations &amp; Ceremonies</h2>
+                <p class="text-sm text-amber-200/70 max-w-xl mx-auto">
+                    Please grace all events with your warm presence, blessings, and joyful dance moves!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {% for evt in wedding.events %}
+                <div class="glass-royal rounded-3xl p-6 sm:p-8 border {{ evt.border_accent }} shadow-2xl relative overflow-hidden group hover:scale-[1.01] transition-all bg-gradient-to-br {{ evt.theme_color }}">
+                    <!-- Top Ribbon -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/15 border border-amber-300/30 text-amber-300 text-[11px] font-extrabold uppercase tracking-wider">
+                            <span class="text-sm">{{ evt.icon }}</span>
+                            <span>{{ evt.badge }}</span>
+                        </span>
+                        
+                        <span class="text-xs font-serif italic text-amber-200/70">
+                            {{ evt.dress_code }}
+                        </span>
+                    </div>
+
+                    <h3 class="font-cinzel text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
+                        {{ evt.name }}
+                    </h3>
+                    <p class="text-xs sm:text-sm text-amber-200/80 italic font-serif mb-6">
+                        {{ evt.tagline }}
+                    </p>
+
+                    <!-- Date & Time Box -->
+                    <div class="bg-black/40 rounded-2xl p-4 border border-white/10 mb-6 space-y-2">
+                        <div class="flex items-center gap-3 text-sm text-amber-200 font-semibold">
+                            <span class="material-icons text-amber-400 text-lg">calendar_today</span>
+                            <span>{{ evt.date_display }}</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-amber-300 font-bold">
+                            <span class="material-icons text-amber-400 text-lg">schedule</span>
+                            <span>{{ evt.time_display }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Venue & Metro Details -->
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-3 text-xs sm:text-sm text-amber-100/90">
+                            <span class="material-icons text-rose-400 text-lg shrink-0 mt-0.5">place</span>
+                            <div>
+                                <p class="font-bold text-white">{{ evt.venue_name }}</p>
+                                <p class="text-amber-200/70">{{ evt.venue_city }}</p>
+                            </div>
+                        </div>
+
+                        {% if evt.metro %}
+                        <div class="flex items-start gap-3 text-xs text-amber-200/70 bg-white/5 p-3 rounded-xl border border-white/5">
+                            <span class="material-icons text-amber-400 text-base shrink-0">directions_subway</span>
+                            <span>{{ evt.metro }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Directions Link -->
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <a href="https://maps.google.com/?q={{ evt.google_maps_query | urlencode }}" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-300 hover:text-white transition-colors">
+                            <span class="material-icons text-sm">navigation</span>
+                            <span>Get Google Directions</span>
+                        </a>
+
+                        <button onclick="addToCalendar('{{ evt.name }}', '{{ evt.venue_name }}, {{ evt.venue_city }}', '{{ evt.iso_date }}')"
+                            class="inline-flex items-center gap-1 text-xs text-amber-200/70 hover:text-amber-200 transition-colors">
+                            <span class="material-icons text-sm">event</span>
+                            <span>Add to Cal</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- RSVP & FAMILY CONTACTS SECTION             -->
+        <!-- ========================================== -->
+        <section class="max-w-4xl mx-auto glass-royal rounded-3xl p-8 sm:p-10 border border-amber-400/30 text-center mb-16 shadow-2xl relative overflow-hidden">
+            <div class="sparkle-node" style="top: 20px; left: 15%;"></div>
+            <div class="sparkle-node" style="bottom: 25px; right: 20%;"></div>
+
+            <span class="font-cursive text-3xl text-amber-300 block mb-2">With Warm Compliments</span>
+            <h3 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-2">Sachdev &amp; Manaktahla Families</h3>
+            <p class="text-sm text-amber-200/70 max-w-lg mx-auto mb-8">
+                For any queries regarding venues, stay, or transportation, feel free to reach out to our wedding coordinators:
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                {% for contact in wedding.rsvp_contacts %}
+                <div class="p-4 rounded-2xl bg-black/40 border border-amber-500/20 text-center">
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-amber-300 mb-1">RSVP</p>
+                    <h4 class="font-serif font-bold text-base text-white mb-1">{{ contact.name }}</h4>
+                    <a href="tel:{{ contact.tel }}" class="inline-flex items-center gap-1.5 text-xs sm:text-sm text-amber-200 hover:text-amber-400 font-mono font-semibold transition-colors">
+                        <span class="material-icons text-sm text-amber-400">call</span>
+                        <span>{{ contact.phone }}</span>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Quick Navigation to Roka & Honeymoon -->
+            <div class="pt-6 border-t border-amber-500/20 flex flex-wrap justify-center gap-4 text-xs font-bold uppercase tracking-wider">
+                <a href="/roka" class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-amber-200 border border-white/10 transition-all flex items-center gap-2">
+                    <span class="material-icons text-sm text-rose-400">favorite</span>
+                    <span>Relive The Roka</span>
+                </a>
+                <a href="/honeymoon" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg shadow-rose-600/30 transition-all flex items-center gap-2">
+                    <span class="material-icons text-sm">castle</span>
+                    <span>Disney Honeymoon Singapore</span>
+                </a>
+                <a href="/guestbook" class="px-5 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 transition-all flex items-center gap-2">
+                    <span class="material-icons text-sm">edit_note</span>
+                    <span>Sign The Guestbook</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <!-- Interactive Scripting -->
+    <script>
+        // Video Data Dictionary
+        const videoData = {
+            haldi: {
+                title: "Wedding Invite + Haldi Version",
+                sub: "Complete Invitation including Haldi Ceremony, Sagan & Wedding Details",
+                src: "/static/videos/wedding_invite_haldi.mp4",
+                poster: "/static/videos/wedding_invite_haldi_poster.jpg",
+                filename: "Wedding_Invite_Haldi_Shaiwal_Shaila.mp4"
+            },
+            sagan: {
+                title: "Wedding Invite",
+                sub: "Official Sagan & Wedding Video Invitation",
+                src: "/static/videos/wedding_invite.mp4",
+                poster: "/static/videos/wedding_invite_poster.jpg",
+                filename: "Wedding_Invite_Shaiwal_Shaila.mp4"
+            }
+        };
+
+        const mainVideo = document.getElementById('main-wedding-video');
+        const videoTitle = document.getElementById('current-video-title');
+        const videoSub = document.getElementById('current-video-sub');
+        const downloadLink = document.getElementById('download-video-link');
+        const tabHaldi = document.getElementById('tab-btn-haldi');
+        const tabSagan = document.getElementById('tab-btn-sagan');
+
+        function switchVideo(type) {
+            const current = videoData[type];
+            if (!current) return;
+
+            // Update UI tabs
+            if (type === 'haldi') {
+                tabHaldi.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 glass-tab-active text-amber-200";
+                tabSagan.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 text-amber-100/70 hover:text-white";
+            } else {
+                tabSagan.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 glass-tab-active text-amber-200";
+                tabHaldi.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 text-amber-100/70 hover:text-white";
+            }
+
+            // Update titles & download target
+            videoTitle.innerText = current.title;
+            videoSub.innerText = current.sub;
+            downloadLink.href = current.src;
+            downloadLink.download = current.filename;
+
+            // Pause and load new source
+            const wasPlaying = !mainVideo.paused;
+            mainVideo.src = current.src;
+            mainVideo.poster = current.poster;
+            mainVideo.load();
+            if (wasPlaying) {
+                mainVideo.play().catch(e => console.log(e));
+            }
+        }
+
+        function seekVideo(seconds) {
+            if (mainVideo) {
+                mainVideo.currentTime = Math.max(0, Math.min(mainVideo.duration, mainVideo.currentTime + seconds));
+            }
+        }
+
+        const speeds = [1.0, 1.25, 1.5, 0.75];
+        let speedIdx = 0;
+        function cycleSpeed() {
+            speedIdx = (speedIdx + 1) % speeds.length;
+            const newSpeed = speeds[speedIdx];
+            mainVideo.playbackRate = newSpeed;
+            document.getElementById('speed-btn').innerText = newSpeed + 'x';
+        }
+
+        function toggleCinemaTheater() {
+            if (!document.fullscreenElement) {
+                mainVideo.requestFullscreen().catch(err => {
+                    console.error("Fullscreen error:", err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Live Countdown to Dec 6, 2026, 8:00 PM
+        function updateWeddingCountdown() {
+            const weddingTime = new Date('2026-12-06T20:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = weddingTime - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const dEl = document.getElementById('wd-days');
+                const hEl = document.getElementById('wd-hours');
+                const mEl = document.getElementById('wd-mins');
+                const sEl = document.getElementById('wd-secs');
+
+                if (dEl) dEl.innerText = String(days).padStart(2, '0');
+                if (hEl) hEl.innerText = String(hours).padStart(2, '0');
+                if (mEl) mEl.innerText = String(mins).padStart(2, '0');
+                if (sEl) sEl.innerText = String(secs).padStart(2, '0');
+            }
+        }
+        setInterval(updateWeddingCountdown, 1000);
+        updateWeddingCountdown();
+
+        // Helper to generate Google Calendar link
+        function addToCalendar(title, location, isoDateTime) {
+            const start = new Date(isoDateTime);
+            const end = new Date(start.getTime() + (3 * 60 * 60 * 1000)); // +3 hours
+            const fmt = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, "");
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title + ' - Shaiwal & Shaila Wedding')}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(location)}&details=${encodeURIComponent('Celebrations of Shaiwal & Shaila Wedding #Shaigothershai')}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+
+</html>
