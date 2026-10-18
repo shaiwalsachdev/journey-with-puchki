@@ -1644,13 +1644,18 @@ async def add_wish(
     title: str = Form(...),
     description: str = Form(...),
     image_url: str = Form(...),
+    category: str = Form("Date Ideas 💡"),
+    creator: str = Form(None),
     link: str = Form(None)
 ):
     from datetime import datetime
     items = await get_all_wishlist()
+    next_id = max([it.get("id", 0) for it in items] + [0]) + 1
     new_item = {
-        "id": len(items) + 1,
+        "id": next_id,
         "title": title,
+        "category": category,
+        "creator": creator if creator else "",
         "description": description,
         "image_url": image_url,
         "link": link if link else "#",

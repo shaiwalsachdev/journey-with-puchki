@@ -67,55 +67,82 @@
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center gap-3 mb-12">
-            <button
-                class="px-6 py-2.5 rounded-full bg-primary text-white font-medium shadow-lg hover:scale-105 transition-transform">All
-                Dreams</button>
-            <button
-                class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-colors">Future
-                Travel ✈️</button>
-            <button
-                class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-colors">Home
-                Decor 🏠</button>
-            <button
-                class="px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-colors">Date
-                Ideas 💡</button>
+        <div class="flex flex-wrap justify-center gap-3 mb-12" id="filter-tabs">
+            <button onclick="filterCategory('all', this)"
+                class="filter-btn px-6 py-2.5 rounded-full bg-primary text-white font-bold shadow-lg hover:scale-105 transition-all text-xs sm:text-sm">
+                All Dreams ({{ items|length }})
+            </button>
+            <button onclick="filterCategory('Future Travel ✈️', this)"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-all text-xs sm:text-sm">
+                Future Travel ✈️
+            </button>
+            <button onclick="filterCategory('Home Decor 🏠', this)"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-all text-xs sm:text-sm">
+                Home Decor 🏠
+            </button>
+            <button onclick="filterCategory('Date Ideas 💡', this)"
+                class="filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-all text-xs sm:text-sm">
+                Date Ideas 💡
+            </button>
         </div>
 
         <!-- Add Wish Button -->
         <div class="fixed bottom-8 right-8 z-50">
             <button onclick="toggleWishModal()"
-                class="bg-primary text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center">
+                class="bg-gradient-to-r from-primary to-rose-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center cursor-pointer border border-white/20">
                 <span class="material-icons text-3xl">add</span>
             </button>
         </div>
 
         <!-- Masonry Grid -->
-        <div class="masonry-grid pb-20">
+        <div class="masonry-grid pb-20" id="wishlist-grid">
             {% for item in items %}
-            <div class="break-inside-avoid mb-6 relative group">
+            <div class="break-inside-avoid mb-6 relative group wishlist-card" data-category="{{ item.category|default('All') }}">
                 <div
-                    class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
-                    <div class="relative overflow-hidden">
+                    class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700/80">
+                    <div class="relative overflow-hidden group/img">
                         <img src="{{ item.image_url }}"
-                            class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy">
+                            class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500 max-h-72"
+                            loading="lazy" alt="{{ item.title }}">
                         {% if item.link and item.link != '#' %}
-                        <a href="{{ item.link }}" target="_blank"
-                            class="absolute inset-0 bg-black/0 group-hover:bg-black/20 flex items-center justify-center transition-colors">
+                        <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer"
+                            class="absolute inset-0 bg-black/0 group-hover/img:bg-black/30 flex items-center justify-center transition-colors">
                             <span
-                                class="material-icons text-white opacity-0 group-hover:opacity-100 bg-black/50 p-2 rounded-full">open_in_new</span>
+                                class="material-icons text-white opacity-0 group-hover/img:opacity-100 bg-black/60 p-2.5 rounded-full transition-all hover:scale-110">open_in_new</span>
                         </a>
                         {% endif %}
+                        {% if item.category %}
+                        <div class="absolute top-3 left-3">
+                            <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 shadow-sm">
+                                {{ item.category }}
+                            </span>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="p-4">
-                        <span
-                            class="text-xs font-semibold px-2.5 py-1 rounded-full bg-pink-100 text-pink-600 mb-2 inline-block">Wish
-                            ✨</span>
-                        <h3 class="font-bold text-lg mb-1 leading-tight">{{ item.title }}</h3>
-                        <p class="font-medium text-slate-600 dark:text-slate-400 text-sm leading-snug">{{
-                            item.description }}</p>
-                        <p class="text-xs text-gray-400 mt-3 text-right">{{ item.date_added }}</p>
+                    <div class="p-5">
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            {% if item.creator %}
+                            <span class="text-[11px] font-semibold text-rose-500 dark:text-rose-400 flex items-center gap-1">
+                                <span class="material-icons text-xs">smart_display</span> {{ item.creator }}
+                            </span>
+                            {% else %}
+                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-pink-100 dark:bg-pink-950/40 text-pink-600 dark:text-pink-300">
+                                Wish ✨
+                            </span>
+                            {% endif %}
+                            <span class="text-[10px] text-gray-400 font-medium">{{ item.date_added }}</span>
+                        </div>
+                        <h3 class="font-bold text-base sm:text-lg mb-2 text-gray-900 dark:text-white leading-snug">{{ item.title }}</h3>
+                        <p class="font-normal text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">{{ item.description }}</p>
+                        {% if item.link and item.link != '#' and 'instagram.com' in item.link %}
+                        <div class="mt-4 pt-3 border-t border-gray-100 dark:border-white/5 flex justify-between items-center">
+                            <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" 
+                                class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 hover:text-rose-700 dark:text-rose-400 transition-colors">
+                                <span>Watch on Instagram</span>
+                                <span class="material-icons text-xs">arrow_forward</span>
+                            </a>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -127,45 +154,61 @@
     <div id="wishModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleWishModal()"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-4">
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden relative">
-                <div class="p-8">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden relative border border-gray-200 dark:border-white/10">
+                <div class="p-6 sm:p-8">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-2xl font-bold font-cursive text-primary">Add to Our Dreams</h3>
-                        <button onclick="toggleWishModal()" class="text-slate-400 hover:text-slate-600">
+                        <div>
+                            <h3 class="text-2xl font-bold font-cursive text-primary">Add to Our Dreams</h3>
+                            <p class="text-xs text-gray-500">Save a new link, Instagram reel, or shared wish</p>
+                        </div>
+                        <button onclick="toggleWishModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
                             <span class="material-icons">close</span>
                         </button>
                     </div>
                     <form action="/wishlist/add" method="POST" class="space-y-4">
                         <div>
-                            <label
-                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Title</label>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Title</label>
                             <input type="text" name="title" required
-                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
-                                placeholder="E.g., Northern Lights Trip">
+                                class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-primary focus:border-primary"
+                                placeholder="E.g., Northern Lights Glass Igloo Stay">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Category</label>
+                                <select name="category" class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-primary focus:border-primary">
+                                    <option value="Date Ideas 💡">Date Ideas 💡</option>
+                                    <option value="Future Travel ✈️">Future Travel ✈️</option>
+                                    <option value="Home Decor 🏠">Home Decor 🏠</option>
+                                    <option value="Special Milestones 💍">Special Milestones 💍</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Creator / Account (Optional)</label>
+                                <input type="text" name="creator"
+                                    class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-primary focus:border-primary"
+                                    placeholder="@handle or source">
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Image
-                                URL</label>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Image URL / Thumbnail</label>
                             <input type="url" name="image_url" required
-                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
-                                placeholder="https://example.com/image.jpg">
+                                class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-primary focus:border-primary"
+                                placeholder="https://images.unsplash.com/...">
                         </div>
                         <div>
-                            <label
-                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Description</label>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Description &amp; Notes</label>
                             <textarea name="description" rows="3" required
-                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
-                                placeholder="Why is this wish special?"></textarea>
+                                class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-primary focus:border-primary"
+                                placeholder="Why do we love this? Notes on when or how we want to do this together..."></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Link
-                                (Optional)</label>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Link (Instagram Reel, Location, or Booking URL)</label>
                             <input type="url" name="link"
-                                class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
-                                placeholder="https://...">
+                                class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-primary focus:border-primary"
+                                placeholder="https://www.instagram.com/reel/...">
                         </div>
                         <button type="submit"
-                            class="w-full bg-primary text-white font-bold py-3 rounded-xl shadow-lg hover:bg-opacity-90 transition-all mt-2">
+                            class="w-full bg-gradient-to-r from-primary to-rose-600 text-white font-bold py-3 rounded-xl shadow-lg hover:opacity-95 transition-all mt-2 cursor-pointer">
                             Add to Wishlist ✨
                         </button>
                     </form>
@@ -184,6 +227,25 @@
                 modal.classList.add('hidden');
                 document.body.style.overflow = 'auto';
             }
+        }
+
+        function filterCategory(cat, btn) {
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.className = "filter-btn px-6 py-2.5 rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 hover:text-primary transition-all text-xs sm:text-sm cursor-pointer";
+            });
+            btn.className = "filter-btn px-6 py-2.5 rounded-full bg-primary text-white font-bold shadow-lg hover:scale-105 transition-all text-xs sm:text-sm cursor-pointer";
+
+            // Filter cards
+            const cards = document.querySelectorAll('.wishlist-card');
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (cat === 'all' || cardCat === cat) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
         }
     </script>
 
