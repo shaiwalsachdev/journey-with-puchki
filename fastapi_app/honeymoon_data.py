@@ -484,10 +484,8 @@ DEFAULT_HONEYMOON_DATA = {
             ],
             "options": [
                 {"title": "🛍️ Marina Bay Mall (The Shoppes at Marina Bay Sands):", "desc": "• Complete Shopping Paradise: 800,000+ sq ft of high-end fashion, luxury jewelry, cosmetics, and high-street labels.\n• Sampan Boat Ride: Traditional wooden boat ride along the indoor canal (~SGD 15 / person) circling the bottom of the Rain Oculus whirlpool.\n• Apple Marina Bay Sands: Iconic floating glass orb on the water with underwater entrance tunnel.\n• Direct Metro Access: Connects directly inside Bayfront MRT Station (Exit C & D)."},
-                {"title": "🏙️ Marina Bay Sands SkyPark Observation Deck (Level 57):", "desc": "Perched 200m above the city atop Tower 3 of Marina Bay Sands. 360-degree panoramic vistas of the Singapore Strait, shipping lanes, and skyline lights. Timed entry on Klook/Pelago (Slot: 5:00 PM – 5:30 PM)."},
-                {"title": "🏙️ Marina Bay Sands SkyPark Observation Deck:", "desc": "Perched 200m high on the cantilevered rooftop of Tower 3. Spectacular panoramic views of Gardens by the Bay, Singapore Strait, and the glittering city skyline. Timed entry tickets available on Klook / Pelago."},
+                {"title": "🏙️ Marina Bay Sands SkyPark Observation Deck (Level 57 Sunset):", "desc": "Perched 200m above the city atop Tower 3 of Marina Bay Sands. 360-degree panoramic vistas of the Singapore Strait, shipping lanes, and skyline lights. Timed entry on Klook/Pelago (Slot: 5:00 PM – 5:30 PM). Skipping the secondary Supertree Observatory rooftop queue saves ₹1,600 and gives you relaxed, unhurried time!"},
                 {"title": "🌸 Floral Fantasy (~₹1,400 / person):", "desc": "Located right at Bayfront MRT Exit B. Includes 4 whimsical floral dreamscapes and the immersive 4D simulated 'Flight of the Dragonfly' motion theatre."},
-                {"title": "🌅 Supertree Observatory (~₹800 / person):", "desc": "Perched 50m atop the tallest Supertree. Best visited in the late afternoon / evening just before sunset (5:30 PM – 6:30 PM) for the magical golden hour transition into dusk!"},
                 {"title": "🧺 Pro-Tip for Garden Rhapsody (7:45 PM & 8:45 PM):", "desc": "Do NOT stand or crane your neck! Bring a lightweight bedsheet or picnic mat and cold bottled water. Spread it on the soft grass directly under the Supertrees 15–20 mins before showtime and lay flat on your backs to watch the lights dance directly overhead!"},
                 {"title": "🚐 Gardens by the Bay $3 Shuttle Service:", "desc": "Bayfront MRT (Exit B) ⇄ Conservatories. SGD 3.00 unlimited rides all day."},
                 {"title": "🌊 Spectra Light & Water Show (Nightly 8:00 PM & 9:00 PM):", "desc": "Free outdoor spectacle at the MBS Event Plaza along the waterfront promenade. The 9:00 PM slot fits seamlessly right after the 7:45 PM Garden Rhapsody show!"}
@@ -637,17 +635,6 @@ DEFAULT_HONEYMOON_DATA = {
             "pelago_link": "https://www.pelago.com/en-SG/activity/gardens-by-the-bay-ticket-singapore",
             "booked": False, 
             "price": "~₹1,400 / person (SGD ~22)"
-        },
-        {
-            "id": "t6-supertree", 
-            "date": "20 Dec 2026", 
-            "due_date": "Book by Nov 20, 2026 (Go Before Sunset 5:30 PM)", 
-            "name": "Supertree Observatory (Rooftop Sunset Views)", 
-            "status": "To Book", 
-            "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", 
-            "pelago_link": "https://www.pelago.com/en-SG/activity/gardens-by-the-bay-ticket-singapore",
-            "booked": False, 
-            "price": "~₹800 / person (SGD ~14)"
         },
         {
             "id": "t7", 
