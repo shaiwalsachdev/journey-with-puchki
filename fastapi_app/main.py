@@ -1259,9 +1259,10 @@ async def get_admin_coupons(request: Request):
 
 
 @app.get("/upcoming", response_class=HTMLResponse)
+@app.get("/events", response_class=HTMLResponse)
 async def read_upcoming(request: Request):
     settings = request.state.settings
-    return templates.TemplateResponse("upcoming.html", {"request": request, "settings": settings})
+    return templates.TemplateResponse("upcoming.html", {"request": request, "settings": settings, "page": "events"})
 
 
 @app.get("/review", response_class=HTMLResponse)
