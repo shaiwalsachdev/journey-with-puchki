@@ -1794,13 +1794,47 @@ DEFAULT_HONEYMOON_DATA = {
         "channel": "YouTube Travel Guide",
         "url": "https://youtu.be/UITG7PTmgk4?si=ib582oVRTud8I00g",
         "embed_url": "https://www.youtube.com/embed/UITG7PTmgk4",
-        "description": "Essential Indian traveler reference guide breaking down flights, visas, MRT local transit via contactless cards, must-see sights (Universal Studios, S.E.A. Aquarium, Gardens by the Bay, Fort Siloso Skywalk, Jewel Changi Rain Vortex), and authentic food budgets.",
-        "key_highlights": [
-            "Little India & Chinatown walking routes and budget souvenir spots",
-            "Mandai Wildlife / Singapore Zoo logistics and shuttle advice",
-            "Sentosa Island free transport (Beach shuttle tram & Fort Siloso Skywalk)",
-            "Marina Bay Sands, Spectra Light & Water show and Merlion Park",
-            "Jewel Changi Rain Vortex & departure transit time management"
+        "summary": "The ultimate detailed 6-day Singapore itinerary from India covering all must-see attractions, practical travel tips, SGAC & visa guidelines, and an exact complete total cost breakdown (flights, visa, accommodation, local transport, food & tickets).",
+        "itinerary_breakdown": [
+            {"day": "Day 1", "title": "Arrival & Check-in + Exploring Little India", "time": "04:44"},
+            {"day": "Day 2", "title": "Full Day at Universal Studios Singapore (USS) on Sentosa Island", "time": "07:14"},
+            {"day": "Day 3", "title": "Chinatown, Haji Lane & Gardens by the Bay", "time": "09:52"},
+            {"day": "Day 4", "title": "Singapore Zoo, Marina Bay Sands, Merlion Park & Spectra", "time": "16:12"},
+            {"day": "Day 5", "title": "Singapore Oceanarium (S.E.A.) & Free Things to Do in Sentosa Island", "time": "19:27"},
+            {"day": "Day 6", "title": "Checkout, Jewel Changi Rain Vortex, Duty-Free Shopping & Flight Back", "time": "23:54"}
+        ],
+        "cost_breakdown": [
+            {"category": "Flights", "note": "Round-trip estimated costs from major Indian cities (Delhi/Mumbai direct)", "icon": "flight"},
+            {"category": "Visa Fee", "note": "Singapore eVisa fee (~₹2,500–₹3,000) & processing timeline", "icon": "badge"},
+            {"category": "Accommodation", "note": "Budget, Mid-Range (Carlton Hotel), and Luxury (Oasia Sentosa)", "icon": "hotel"},
+            {"category": "Local Transport", "note": "MRT & buses using contactless cards or EZ-Link + free Sentosa express", "icon": "directions_subway"},
+            {"category": "Attractions", "note": "Pre-booking entry tickets on Klook/Pelago for USS, Gardens, Zoo & SkyPark", "icon": "confirmation_number"},
+            {"category": "Food & Dining", "note": "Hawker Centers (Lau Pa Sat, Maxwell) vs. Casual Cafes & Romantic Dining", "icon": "restaurant"},
+            {"category": "Budget Summary", "note": "Total estimated budget breakdown presented at 26:13 in the video", "icon": "payments"}
+        ],
+        "timestamps": [
+            {"time": "0:00", "seconds": 0, "label": "Intro"},
+            {"time": "0:50", "seconds": 50, "label": "Singapore Visa Process"},
+            {"time": "1:42", "seconds": 102, "label": "SGAC Arrival Card"},
+            {"time": "2:22", "seconds": 142, "label": "Flights & Booking"},
+            {"time": "2:40", "seconds": 160, "label": "Currency & Forex"},
+            {"time": "3:37", "seconds": 217, "label": "Useful Mobile Apps"},
+            {"time": "4:20", "seconds": 260, "label": "Tourist SIM Card"},
+            {"time": "4:44", "seconds": 284, "label": "Day 1: Arrival & Little India"},
+            {"time": "7:14", "seconds": 434, "label": "Day 2: Universal Studios Singapore"},
+            {"time": "9:52", "seconds": 592, "label": "Day 3: Chinatown & Gardens by the Bay"},
+            {"time": "16:12", "seconds": 972, "label": "Day 4: Singapore Zoo & Marina Bay"},
+            {"time": "19:27", "seconds": 1167, "label": "Day 5: Singapore Oceanarium & Sentosa"},
+            {"time": "23:54", "seconds": 1434, "label": "Day 6: Jewel Changi Rain Vortex"},
+            {"time": "26:13", "seconds": 1573, "label": "Total Trip Budget Breakdown"}
+        ],
+        "useful_links": [
+            {"title": "ICA Official SGAC Portal", "url": "https://eservices.ica.gov.sg/sgarrivalcard", "icon": "verified_user"},
+            {"title": "Singapore Visa Guide for Indians", "url": "https://www.youtube.com/watch?v=uaXzAy3ok9Y", "icon": "play_arrow"},
+            {"title": "How to Fill SGAC Tutorial", "url": "https://www.youtube.com/watch?v=8mRJ3cdFHRg", "icon": "play_arrow"},
+            {"title": "Gardens by the Bay Complete Guide", "url": "https://www.youtube.com/watch?v=aBy5F1qA-pw", "icon": "play_arrow"},
+            {"title": "Singapore Oceanarium Tour", "url": "https://www.youtube.com/watch?v=UiVes1gsJrY", "icon": "play_arrow"},
+            {"title": "Singapore Zoo Complete Guide", "url": "https://www.youtube.com/watch?v=_eqOBfyfKJI", "icon": "play_arrow"}
         ]
     }
 }
