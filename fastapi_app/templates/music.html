@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Music Lounge - ShaiX2 Forever</title>
+    <title>ShaiX2 Music - Our Exclusive Songs &amp; Vibes</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Dancing+Script:wght@500;700&family=Cinzel:wght@600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
@@ -19,348 +19,267 @@
                 extend: {
                     colors: {
                         "primary": "#ec131e",
-                        "primary-soft": "#fdedee",
-                        "background-light": "#fff5f6",
-                        "background-dark": "#12080a",
-                        "gold": "#d4af37",
-                        "gold-light": "#fef3c7"
+                        "primary-hover": "#d00e18",
+                        "gaana-red": "#e72c30",
+                        "gaana-dark": "#121216",
+                        "gaana-card": "#1c1c24",
+                        "gaana-sidebar": "#16161c",
+                        "background-light": "#f8f9fa",
+                        "background-dark": "#0f0f13",
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"],
                         "handwriting": ["Dancing Script", "cursive"],
-                        "serif": ["Cinzel", "serif"],
                     },
                     animation: {
-                        'spin-slow': 'spin 18s linear infinite',
-                        'spin-fast': 'spin 3s linear infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 5s ease-in-out infinite',
-                        'wave': 'wave 1.2s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        },
-                        wave: {
-                            '0%': { height: '20%' },
-                            '100%': { height: '100%' },
-                        }
+                        'spin-slow': 'spin 14s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 },
             },
         }
     </script>
     <style>
-        /* Vinyl Turntable Grooves */
-        .vinyl-grooves {
-            background: radial-gradient(
-                circle,
-                #111 0%,
-                #111 25%,
-                #222 26%,
-                #111 28%,
-                #2a2a2a 34%,
-                #111 36%,
-                #333 45%,
-                #111 47%,
-                #222 55%,
-                #111 58%,
-                #2d2d2d 68%,
-                #111 70%,
-                #1c1c1c 80%,
-                #000 100%
-            );
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.15);
-        }
-
-        .vinyl-arm {
-            transform-origin: 20px 20px;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .vinyl-arm.playing {
-            transform: rotate(26deg);
-        }
-
-        .vinyl-arm.paused {
-            transform: rotate(0deg);
-        }
-
-        .cd-sheen {
-            background: conic-gradient(
-                from 0deg,
-                rgba(255, 255, 255, 0.1) 0deg,
-                rgba(236, 19, 30, 0.3) 60deg,
-                rgba(255, 255, 255, 0.1) 120deg,
-                rgba(245, 158, 11, 0.3) 180deg,
-                rgba(255, 255, 255, 0.1) 240deg,
-                rgba(236, 19, 30, 0.3) 300deg,
-                rgba(255, 255, 255, 0.1) 360deg
-            );
-        }
-
-        .custom-scrollbar::-webkit-scrollbar {
+        /* Modern Music Streaming App Scrollbars */
+        ::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(236, 19, 30, 0.4);
+        ::-webkit-scrollbar-thumb {
+            background: rgba(231, 44, 48, 0.35);
             border-radius: 9999px;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(231, 44, 48, 0.7);
+        }
+        ::-webkit-scrollbar-track {
             background: transparent;
         }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        .dark .glass-panel {
-            background: rgba(26, 13, 16, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(236, 19, 30, 0.15);
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Vinyl Grooves inside the Mini CD Disc */
+        .cd-vinyl {
+            background: radial-gradient(circle, #151515 0%, #151515 28%, #2b2b2b 30%, #151515 32%, #222 42%, #111 55%, #2a2a2a 70%, #050505 100%);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .cd-shine {
+            background: conic-gradient(from 0deg, rgba(255,255,255,0.08) 0deg, rgba(231,44,48,0.25) 60deg, rgba(255,255,255,0.08) 120deg, rgba(245,158,11,0.25) 180deg, rgba(255,255,255,0.08) 240deg, rgba(231,44,48,0.25) 300deg, rgba(255,255,255,0.08) 360deg);
+        }
+
+        /* Equalizer Wave Bars */
+        .eq-bar {
+            width: 3px;
+            border-radius: 9999px;
+            background-color: #e72c30;
+            animation: bounce-eq 1s ease-in-out infinite alternate;
+        }
+        .eq-bar:nth-child(1) { height: 16px; animation-delay: 0.1s; }
+        .eq-bar:nth-child(2) { height: 24px; animation-delay: 0.3s; }
+        .eq-bar:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+        .eq-bar:nth-child(4) { height: 20px; animation-delay: 0.4s; }
+
+        @keyframes bounce-eq {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
         }
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen relative overflow-x-hidden transition-colors duration-300">
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen flex flex-col pb-28 select-none">
 
     {% include 'partials/navbar.html' %}
 
-    <!-- Ambient Glowing Backdrop Orbs -->
-    <div class="fixed top-24 left-1/4 w-96 h-96 bg-rose-500/15 dark:bg-rose-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
-    <div class="fixed bottom-12 right-1/4 w-96 h-96 bg-amber-500/15 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <!-- Top Music Sub-Header (Gaana Style) -->
+    <div class="border-b border-slate-200 dark:border-white/5 bg-white/80 dark:bg-gaana-dark/90 backdrop-blur-md sticky top-16 z-30 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+            
+            <!-- Left: Brand & Quick Pills -->
+            <div class="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
+                <div class="flex items-center gap-2 pr-3 border-r border-slate-200 dark:border-white/10 shrink-0">
+                    <span class="w-8 h-8 rounded-lg bg-gaana-red flex items-center justify-center text-white shadow-md shadow-red-500/30">
+                        <span class="material-icons text-lg">music_note</span>
+                    </span>
+                    <span class="font-bold text-sm tracking-tight text-slate-900 dark:text-white hidden sm:inline">ShaiX2 Music</span>
+                </div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-20 relative z-10">
-
-        <!-- Header -->
-        <header class="text-center mb-10 sm:mb-14 relative">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 dark:bg-rose-500/20 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-                <span class="material-icons text-sm animate-spin-slow">album</span>
-                <span>The ShaiX2 Soundtrack</span>
-                <span class="text-rose-400">•</span>
-                <span>Interactive Turntable</span>
+                <div class="flex items-center gap-2 text-xs font-semibold shrink-0">
+                    <button onclick="filterVibe('all', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-gaana-red text-white shadow-sm transition-all">
+                        All Tracks
+                    </button>
+                    <button onclick="filterVibe('romantic', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                        💖 Most Loved
+                    </button>
+                    <button onclick="filterVibe('festive', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                        💍 Wedding &amp; Sagan
+                    </button>
+                    <button onclick="filterVibe('lofi', this)" class="vibe-filter-btn px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                        🌙 Late Night Lofi
+                    </button>
+                </div>
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold font-handwriting text-primary drop-shadow mb-3 transform -rotate-1">
-                Our Music Lounge
-            </h1>
-            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                "Every love story has its own soundtrack. Spin the vinyl, select a vibe, and let the melodies play."
-            </p>
-        </header>
+
+            <!-- Right: Search Bar & Likes Counter -->
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="relative hidden md:block">
+                    <span class="material-icons text-slate-400 absolute left-3 top-2 text-sm">search</span>
+                    <input id="songSearchInput" onkeyup="handleSearchSongs(this.value)" type="text" placeholder="Search our songs..."
+                        class="w-48 lg:w-64 pl-8 pr-3 py-1.5 text-xs rounded-full bg-slate-100 dark:bg-white/10 border-transparent focus:border-gaana-red focus:bg-white dark:focus:bg-gaana-card text-slate-800 dark:text-white transition-all">
+                </div>
+                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 text-rose-500 text-xs font-bold border border-rose-500/20">
+                    <span class="material-icons text-sm text-rose-500">favorite</span>
+                    <span id="likedCountText">11 Favorites</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main Content Container (Streaming App Grid) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 flex-1 w-full">
 
         <!-- ==============================================
-             HERO TURNTABLE & CD JUKEBOX PLAYER
+             HERO FEATURED BANNER (Gaana / Spotify Top Carousel)
              ============================================== -->
-        <section class="glass-panel rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl mb-14 relative overflow-hidden border border-white/60 dark:border-rose-500/20">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                
-                <!-- Left: Interactive Rotating CD / Vinyl Turntable (5 cols) -->
-                <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
-                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center">
-                        
-                        <!-- Turntable Platter Base -->
-                        <div class="absolute inset-0 rounded-full bg-slate-900/90 dark:bg-black/90 p-3 shadow-2xl border-4 border-slate-700/60 dark:border-stone-800"></div>
-                        
-                        <!-- Rotating CD / Vinyl Disc -->
-                        <div id="vinyl-disc" 
-                            class="relative w-full h-full rounded-full vinyl-grooves flex items-center justify-center transition-all duration-700 animate-spin-slow [animation-play-state:paused]">
-                            
-                            <!-- CD Sheen Overlay -->
-                            <div class="absolute inset-0 rounded-full cd-sheen opacity-40 pointer-events-none"></div>
-                            
-                            <!-- Center Label (Album Art / Couple Avatar) -->
-                            <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white/90 shadow-2xl overflow-hidden bg-rose-600 flex items-center justify-center">
-                                <img id="player-cover-art" 
-                                    src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" 
-                                    alt="Now Playing Cover" 
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/20"></div>
-                                <!-- Center Spindle Hole -->
-                                <div class="absolute w-5 h-5 rounded-full bg-slate-900 border-2 border-white/80 shadow-inner z-10"></div>
-                            </div>
-                        </div>
-
-                        <!-- Tonearm (Turntable Stylus) -->
-                        <div class="absolute -top-3 right-2 w-20 h-40 pointer-events-none z-20">
-                            <!-- Pivot Base -->
-                            <div class="absolute top-0 right-2 w-8 h-8 rounded-full bg-gradient-to-br from-amber-200 to-amber-600 shadow-lg border border-amber-300"></div>
-                            <!-- Stylus Arm -->
-                            <div id="turntable-arm" class="vinyl-arm paused absolute top-4 right-5 w-2 h-28 bg-gradient-to-b from-stone-300 via-stone-400 to-amber-400 rounded-full shadow-md">
-                                <!-- Cartridge Head -->
-                                <div class="absolute bottom-0 -left-1.5 w-5 h-6 bg-slate-900 rounded-sm border border-amber-400/80 shadow">
-                                    <div class="w-1 h-2 bg-amber-400 mx-auto mt-3 rounded-full"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mini Visualizer Equalizer -->
-                    <div id="audio-visualizer" class="flex items-end justify-center gap-1.5 h-6 mt-6 opacity-40 transition-opacity duration-300">
-                        <div class="w-1.5 bg-rose-500 rounded-full h-2"></div>
-                        <div class="w-1.5 bg-rose-500 rounded-full h-5"></div>
-                        <div class="w-1.5 bg-amber-500 rounded-full h-3"></div>
-                        <div class="w-1.5 bg-rose-500 rounded-full h-6"></div>
-                        <div class="w-1.5 bg-amber-500 rounded-full h-4"></div>
-                        <div class="w-1.5 bg-rose-500 rounded-full h-2"></div>
-                        <div class="w-1.5 bg-rose-500 rounded-full h-5"></div>
-                        <div class="w-1.5 bg-amber-500 rounded-full h-3"></div>
-                    </div>
-                </div>
-
-                <!-- Right: Now Playing Details & Interactive Controls (7 cols) -->
-                <div class="lg:col-span-7 flex flex-col justify-between">
-                    <div>
-                        <!-- Vibe & Status Pill -->
-                        <div class="flex items-center gap-2 mb-3">
-                            <span id="player-badge" class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide bg-gradient-to-r from-rose-500 to-amber-500 text-white shadow-sm flex items-center gap-1.5">
-                                <span class="material-icons text-xs">music_note</span>
-                                <span id="player-vibe-text">Soulful Romance</span>
-                            </span>
-                            <span id="player-state-pill" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                                <span class="w-2 h-2 rounded-full bg-slate-400" id="player-indicator-dot"></span>
-                                <span id="player-status-text">Paused</span>
-                            </span>
-                        </div>
-
-                        <!-- Song Title & Artist -->
-                        <h2 id="player-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2 leading-tight">
-                            Tum Ho Toh
-                        </h2>
-                        <p id="player-artist" class="text-lg sm:text-xl font-medium text-rose-500 dark:text-rose-400 mb-4">
-                            Vishal Mishra (Saiyaara)
-                        </p>
-
-                        <!-- Love Note / Song Significance -->
-                        <div class="p-3.5 sm:p-4 rounded-2xl bg-white/60 dark:bg-black/30 border border-slate-200/80 dark:border-white/10 mb-6">
-                            <p class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1">
-                                <span class="material-icons text-xs text-rose-500">favorite</span>
-                                <span>Why this song is special to us</span>
-                            </p>
-                            <p id="player-note" class="text-sm sm:text-base italic text-slate-700 dark:text-slate-300">
-                                "Whenever this plays, everything feels quiet and magical."
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Hidden YouTube iFrame Container -->
-                    <div id="youtube-player-wrapper" class="w-full h-0 overflow-hidden opacity-0 pointer-events-none">
-                        <div id="yt-player"></div>
-                    </div>
-
-                    <!-- Controls & Progress -->
-                    <div>
-                        <!-- Timeline Bar -->
-                        <div class="flex items-center gap-3 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-4">
-                            <span id="time-current">0:00</span>
-                            <div class="flex-1 relative cursor-pointer group py-2" onclick="seekSong(event)">
-                                <div class="w-full h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
-                                    <div id="progress-bar" class="h-full bg-gradient-to-r from-rose-500 to-amber-500 rounded-full w-0 transition-all duration-100"></div>
-                                </div>
-                            </div>
-                            <span id="time-total">5:19</span>
-                        </div>
-
-                        <!-- Buttons Row -->
-                        <div class="flex items-center justify-between sm:justify-start sm:gap-6 flex-wrap">
-                            <div class="flex items-center gap-3 sm:gap-4">
-                                <button onclick="playPrevSong()" 
-                                    class="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-800 dark:text-white flex items-center justify-center transition-transform active:scale-90 shadow-sm"
-                                    title="Previous Track">
-                                    <span class="material-icons text-2xl">skip_previous</span>
-                                </button>
-
-                                <button id="main-play-btn" onclick="togglePlayPause()" 
-                                    class="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-primary hover:from-rose-600 hover:to-primary-dark text-white flex items-center justify-center transition-all shadow-xl hover:shadow-rose-500/30 transform hover:scale-105 active:scale-95"
-                                    title="Play / Pause">
-                                    <span id="main-play-icon" class="material-icons text-4xl">play_arrow</span>
-                                </button>
-
-                                <button onclick="playNextSong()" 
-                                    class="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-800 dark:text-white flex items-center justify-center transition-transform active:scale-90 shadow-sm"
-                                    title="Next Track">
-                                    <span class="material-icons text-2xl">skip_next</span>
-                                </button>
-                            </div>
-
-                            <div class="flex items-center gap-2 mt-2 sm:mt-0">
-                                <a id="yt-open-link" href="https://music.youtube.com/watch?v=N7jDUBRVQVA" target="_blank"
-                                    class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 transition-all shadow-sm">
-                                    <span class="material-icons text-rose-500 text-sm">open_in_new</span>
-                                    <span>Watch on YouTube</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+        <div class="relative rounded-3xl overflow-hidden mb-10 shadow-2xl bg-gradient-to-r from-red-950 via-stone-900 to-black border border-white/10">
+            <!-- Background Artwork Blur -->
+            <div class="absolute inset-0 opacity-40 bg-cover bg-center filter blur-xl scale-110 pointer-events-none"
+                id="hero-banner-bg"
+                style="background-image: url('https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg');">
             </div>
-        </section>
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+
+            <div class="relative z-10 p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <!-- Left Details -->
+                <div class="max-w-xl text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gaana-red/20 text-red-400 border border-gaana-red/40 text-xs font-bold uppercase tracking-wider mb-4 shadow">
+                        <span class="material-icons text-xs">verified</span>
+                        <span>Official ShaiX2 Private Release</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-2">
+                        ShaiX2 Playlist - Most Loved
+                    </h1>
+                    <p class="text-sm sm:text-base text-stone-300 font-light mb-6">
+                        Curated directly from our YouTube Music favorites. From the soulful notes of <i>Tum Ho Toh</i> to car sing-alongs on <i>Suniyan Suniyan</i>.
+                    </p>
+                    
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <button onclick="playAll()" 
+                            class="px-8 py-3.5 rounded-full bg-gaana-red hover:bg-primary-hover text-white font-bold text-sm shadow-xl shadow-red-600/30 flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-all">
+                            <span class="material-icons text-xl">play_arrow</span>
+                            <span>Play All Songs</span>
+                        </button>
+                        <button onclick="shufflePlay()" 
+                            class="px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm backdrop-blur-md border border-white/20 flex items-center gap-2 transition-all">
+                            <span class="material-icons text-lg">shuffle</span>
+                            <span>Shuffle</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Spinning Turntable / Vinyl Disc Feature -->
+                <div class="relative group cursor-pointer shrink-0" onclick="togglePlayPause()" title="Click to Play / Pause">
+                    <div class="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full cd-vinyl flex items-center justify-center border-4 border-stone-800 shadow-2xl">
+                        <!-- Rainbow Hologram Sheen -->
+                        <div class="absolute inset-0 rounded-full cd-shine opacity-50 pointer-events-none"></div>
+                        
+                        <!-- Rotating Cover Disc -->
+                        <div id="banner-spinning-disc" 
+                            class="w-full h-full rounded-full flex items-center justify-center animate-spin-slow [animation-play-state:paused]">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-white/90 overflow-hidden shadow-2xl relative">
+                                <img id="banner-disc-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/20"></div>
+                                <div class="absolute w-4 h-4 rounded-full bg-black border border-white/80 inset-0 m-auto"></div>
+                            </div>
+                        </div>
+
+                        <!-- Hover Play Indicator -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 rounded-full">
+                            <div class="w-12 h-12 rounded-full bg-gaana-red text-white flex items-center justify-center shadow-lg">
+                                <span id="banner-hover-play-icon" class="material-icons text-2xl">play_arrow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- ==============================================
-             PLAYLISTS SECTIONS & VIBES
+             STREAMING SECTIONS (Gaana / Spotify Rows)
              ============================================== -->
         {% for section in music_data.sections %}
-        <section class="mb-14" id="section-{{ section.id }}">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-3 border-b border-slate-200 dark:border-white/10 gap-3">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full text-white bg-gradient-to-r {{ section.color }} shadow-sm uppercase tracking-wider">
-                            <span class="material-icons text-xs">{{ section.icon }}</span>
-                            {{ section.badge }}
-                        </span>
-                        <span class="text-xs text-slate-400 font-medium">• {{ section.songs|length }} Songs</span>
+        <section class="section-container mb-12" data-vibe="{{ section.theme }}">
+            <!-- Section Header -->
+            <div class="flex items-center justify-between mb-5 pb-2 border-b border-slate-200 dark:border-white/5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br {{ section.color }} flex items-center justify-center text-white shadow-md">
+                        <span class="material-icons text-lg">{{ section.icon }}</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-                        {{ section.title }}
-                    </h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                        {{ section.subtitle }}
-                    </p>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            {{ section.title }}
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+                            {{ section.subtitle }}
+                        </p>
+                    </div>
                 </div>
 
                 {% if section.playlist_url %}
                 <a href="{{ section.playlist_url }}" target="_blank"
-                    class="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors shrink-0">
-                    <span>Open Full YouTube Playlist</span>
-                    <span class="material-icons text-sm">arrow_forward</span>
+                    class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-gaana-red hover:text-red-400 transition-colors">
+                    <span>YouTube Playlist</span>
+                    <span class="material-icons text-sm">open_in_new</span>
                 </a>
                 {% endif %}
             </div>
 
-            <!-- Song Cards Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Horizontal / Grid Streaming Cards (Gaana Card Style) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {% for song in section.songs %}
                 <div onclick="selectSong('{{ song.id }}', '{{ song.title|replace('\'', '\\\'') }}', '{{ song.artist|replace('\'', '\\\'') }}', '{{ song.vibe|replace('\'', '\\\'') }}', '{{ song.note|replace('\'', '\\\'') }}', '{{ song.thumbnail }}', '{{ song.duration }}')"
-                    class="song-card group relative p-4 rounded-2xl glass-panel hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-white/80 dark:border-white/10 hover:border-primary/50 flex gap-4 items-center">
-                    
-                    <!-- Thumbnail with Play Overlay -->
-                    <div class="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 shadow-md bg-black">
-                        <img src="{{ song.thumbnail }}" alt="{{ song.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 flex items-center justify-center transition-colors">
-                            <div class="w-9 h-9 rounded-full bg-rose-500/90 text-white flex items-center justify-center transform group-hover:scale-110 shadow-lg transition-transform">
-                                <span class="material-icons text-xl">play_arrow</span>
-                            </div>
+                    class="song-card group relative p-3 rounded-2xl bg-white dark:bg-gaana-card hover:bg-slate-50 dark:hover:bg-[#252530] border border-slate-200/80 dark:border-white/5 hover:border-gaana-red/40 dark:hover:border-gaana-red/40 transition-all duration-300 hover:-translate-y-1.5 shadow-sm hover:shadow-xl cursor-pointer flex flex-col justify-between"
+                    data-title="{{ song.title|lower }}" data-artist="{{ song.artist|lower }}">
+
+                    <!-- Thumbnail Container with Floating Play Button -->
+                    <div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-md bg-black">
+                        <img src="{{ song.thumbnail }}" alt="{{ song.title }}" 
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        
+                        <!-- Floating Badge -->
+                        <span class="absolute top-2 left-2 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-black/70 text-white backdrop-blur-md">
+                            {{ song.vibe }}
+                        </span>
+
+                        <!-- Like Heart Button on Hover -->
+                        <button onclick="event.stopPropagation(); toggleLikeSong('{{ song.id }}', this)" 
+                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 text-rose-400 hover:text-rose-500 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 shadow">
+                            <span class="material-icons text-sm">favorite</span>
+                        </button>
+
+                        <!-- Hover Play Pill (Bottom Right like Spotify/Gaana) -->
+                        <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-gaana-red text-white flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="material-icons text-xl">play_arrow</span>
                         </div>
                     </div>
 
-                    <!-- Song Info -->
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center justify-between gap-1 mb-1">
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-500 dark:bg-rose-500/20 uppercase tracking-wide truncate max-w-[140px]">
-                                {{ song.vibe }}
-                            </span>
-                            <span class="text-[11px] text-slate-400 font-medium shrink-0">{{ song.duration }}</span>
-                        </div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                    <!-- Song Metadata -->
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-gaana-red transition-colors">
                             {{ song.title }}
-                        </h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">
+                        </h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">
                             {{ song.artist }}
                         </p>
                         {% if song.note %}
-                        <p class="text-[11px] text-slate-600 dark:text-slate-300 italic line-clamp-1 border-l-2 border-rose-400/60 pl-1.5">
+                        <p class="text-[10px] text-slate-400 dark:text-slate-500 italic truncate mt-1">
                             "{{ song.note }}"
                         </p>
                         {% endif %}
@@ -372,6 +291,108 @@
         {% endfor %}
 
     </main>
+
+    <!-- Hidden YouTube API Video Element -->
+    <div id="youtube-player-wrapper" class="w-0 h-0 overflow-hidden opacity-0 pointer-events-none fixed">
+        <div id="yt-player"></div>
+    </div>
+
+    <!-- ==============================================
+         STICKY GAANA / SPOTIFY BOTTOM AUDIO PLAYER
+         ============================================== -->
+    <footer id="bottom-music-player" 
+        class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#14141a]/95 backdrop-blur-xl border-t border-slate-200 dark:border-white/10 shadow-2xl transition-all duration-300">
+        
+        <!-- Scrubber Progress Bar at Top of Player -->
+        <div class="relative w-full h-1 bg-slate-200 dark:bg-white/10 cursor-pointer group" onclick="seekSong(event)">
+            <div id="player-progress-bar" class="h-full bg-gaana-red transition-all duration-100 relative">
+                <span class="w-3 h-3 rounded-full bg-white shadow-md absolute right-0 top-1/2 -translate-y-1/2 transform scale-0 group-hover:scale-100 transition-transform"></span>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+            
+            <!-- Left: Current Song Media + Spinning Mini Disc (30%) -->
+            <div class="flex items-center gap-3.5 w-1/3 min-w-0">
+                <!-- Mini CD Disc Animation -->
+                <div class="relative w-12 h-12 rounded-full cd-vinyl flex items-center justify-center shrink-0 border border-white/20 shadow-md">
+                    <div id="player-mini-disc" class="w-full h-full rounded-full flex items-center justify-center animate-spin-slow [animation-play-state:paused]">
+                        <img id="player-track-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-6 h-6 rounded-full object-cover">
+                        <div class="absolute w-1.5 h-1.5 rounded-full bg-black inset-0 m-auto"></div>
+                    </div>
+                </div>
+
+                <!-- Song Info -->
+                <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-2">
+                        <h4 id="player-track-title" class="text-sm font-bold text-slate-900 dark:text-white truncate">
+                            Tum Ho Toh
+                        </h4>
+                        <!-- Equalizer animation when playing -->
+                        <div id="player-eq-bars" class="hidden items-center gap-0.5 h-3">
+                            <span class="eq-bar"></span>
+                            <span class="eq-bar"></span>
+                            <span class="eq-bar"></span>
+                            <span class="eq-bar"></span>
+                        </div>
+                    </div>
+                    <p id="player-track-artist" class="text-xs text-slate-500 dark:text-slate-400 truncate">
+                        Vishal Mishra (Saiyaara)
+                    </p>
+                </div>
+
+                <!-- Heart Like Button -->
+                <button onclick="togglePlayerLike(this)" class="text-rose-500 hover:scale-110 transition-transform hidden sm:block">
+                    <span class="material-icons text-xl">favorite</span>
+                </button>
+            </div>
+
+            <!-- Center: Playback Controls (40%) -->
+            <div class="flex flex-col items-center justify-center gap-1 w-1/3">
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <button onclick="shufflePlay()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors" title="Shuffle">
+                        <span class="material-icons text-lg">shuffle</span>
+                    </button>
+                    <button onclick="playPrevSong()" class="text-slate-700 dark:text-slate-200 hover:text-gaana-red transition-colors" title="Previous Track">
+                        <span class="material-icons text-2xl">skip_previous</span>
+                    </button>
+                    <button id="player-play-btn" onclick="togglePlayPause()" 
+                        class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gaana-red hover:bg-primary-hover text-white flex items-center justify-center shadow-lg shadow-red-500/30 transform hover:scale-105 active:scale-95 transition-all">
+                        <span id="player-play-icon" class="material-icons text-2xl sm:text-3xl">play_arrow</span>
+                    </button>
+                    <button onclick="playNextSong()" class="text-slate-700 dark:text-slate-200 hover:text-gaana-red transition-colors" title="Next Track">
+                        <span class="material-icons text-2xl">skip_next</span>
+                    </button>
+                    <button onclick="toggleRepeat()" id="repeat-btn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors" title="Repeat Track">
+                        <span class="material-icons text-lg">repeat</span>
+                    </button>
+                </div>
+                
+                <!-- Time Indicators -->
+                <div class="hidden sm:flex items-center gap-2 text-[11px] font-semibold text-slate-400">
+                    <span id="player-current-time">0:00</span>
+                    <span>/</span>
+                    <span id="player-total-time">5:19</span>
+                </div>
+            </div>
+
+            <!-- Right: External Link & Volume (30%) -->
+            <div class="flex items-center justify-end gap-3 w-1/3">
+                <a id="player-yt-link" href="https://music.youtube.com/watch?v=N7jDUBRVQVA" target="_blank"
+                    class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-white/20 transition-all">
+                    <span class="material-icons text-gaana-red text-xs">open_in_new</span>
+                    <span>YouTube Music</span>
+                </a>
+                
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-slate-400 text-sm">volume_up</span>
+                    <input type="range" min="0" max="100" value="100" oninput="changeVolume(this.value)"
+                        class="w-16 sm:w-20 accent-gaana-red cursor-pointer">
+                </div>
+            </div>
+
+        </div>
+    </footer>
 
     {% include 'partials/footer.html' %}
     {% include 'partials/copilot.html' %}
@@ -391,7 +412,8 @@
                     vibe: s.vibe,
                     note: s.note,
                     thumbnail: s.thumbnail,
-                    duration: s.duration
+                    duration: s.duration,
+                    theme: sec.theme
                 });
             });
         });
@@ -399,6 +421,7 @@
         let currentSongIndex = 0;
         let ytPlayer = null;
         let isPlaying = false;
+        let isRepeat = false;
         let progressInterval = null;
 
         // 1. YouTube API Ready
@@ -407,8 +430,8 @@
             const firstSong = flatPlaylist[0];
 
             ytPlayer = new YT.Player('yt-player', {
-                height: '200',
-                width: '300',
+                height: '100',
+                width: '100',
                 videoId: firstSong.id,
                 playerVars: {
                     'playsinline': 1,
@@ -418,47 +441,44 @@
                     'enablejsapi': 1
                 },
                 events: {
-                    'onReady': onPlayerReady,
+                    'onReady': () => console.log("Music Engine Ready"),
                     'onStateChange': onPlayerStateChange
                 }
             });
         }
 
-        function onPlayerReady(event) {
-            console.log("YouTube Player Ready!");
-        }
-
         function onPlayerStateChange(event) {
-            const vinyl = document.getElementById('vinyl-disc');
-            const arm = document.getElementById('turntable-arm');
-            const visualizer = document.getElementById('audio-visualizer');
-            const playIcon = document.getElementById('main-play-icon');
-            const statusText = document.getElementById('player-status-text');
-            const indicatorDot = document.getElementById('player-indicator-dot');
+            const playIcon = document.getElementById('player-play-icon');
+            const miniDisc = document.getElementById('player-mini-disc');
+            const bannerDisc = document.getElementById('banner-spinning-disc');
+            const eqBars = document.getElementById('player-eq-bars');
+            const bannerHoverIcon = document.getElementById('banner-hover-play-icon');
 
             if (event.data === YT.PlayerState.PLAYING) {
                 isPlaying = true;
-                vinyl.style.animationPlayState = 'running';
-                arm.className = 'vinyl-arm playing absolute top-4 right-5 w-2 h-28 bg-gradient-to-b from-stone-300 via-stone-400 to-amber-400 rounded-full shadow-md';
-                visualizer.classList.remove('opacity-40');
-                visualizer.classList.add('opacity-100');
                 playIcon.textContent = 'pause';
-                statusText.textContent = 'Playing';
-                indicatorDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+                if (bannerHoverIcon) bannerHoverIcon.textContent = 'pause';
+                miniDisc.style.animationPlayState = 'running';
+                if (bannerDisc) bannerDisc.style.animationPlayState = 'running';
+                eqBars.classList.remove('hidden');
+                eqBars.classList.add('flex');
                 startProgressTracker();
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
-                vinyl.style.animationPlayState = 'paused';
-                arm.className = 'vinyl-arm paused absolute top-4 right-5 w-2 h-28 bg-gradient-to-b from-stone-300 via-stone-400 to-amber-400 rounded-full shadow-md';
-                visualizer.classList.add('opacity-40');
-                visualizer.classList.remove('opacity-100');
                 playIcon.textContent = 'play_arrow';
-                statusText.textContent = event.data === YT.PlayerState.ENDED ? 'Finished' : 'Paused';
-                indicatorDot.className = 'w-2 h-2 rounded-full bg-slate-400';
+                if (bannerHoverIcon) bannerHoverIcon.textContent = 'play_arrow';
+                miniDisc.style.animationPlayState = 'paused';
+                if (bannerDisc) bannerDisc.style.animationPlayState = 'paused';
+                eqBars.classList.add('hidden');
+                eqBars.classList.remove('flex');
                 stopProgressTracker();
 
                 if (event.data === YT.PlayerState.ENDED) {
-                    playNextSong();
+                    if (isRepeat) {
+                        ytPlayer.playVideo();
+                    } else {
+                        playNextSong();
+                    }
                 }
             }
         }
@@ -479,27 +499,26 @@
             const idx = flatPlaylist.findIndex(s => s.id === id);
             if (idx !== -1) currentSongIndex = idx;
 
-            // Update UI
-            document.getElementById('player-title').textContent = title;
-            document.getElementById('player-artist').textContent = artist;
-            document.getElementById('player-vibe-text').textContent = vibe;
-            document.getElementById('player-note').textContent = `"${note || ''}"`;
-            document.getElementById('player-cover-art').src = thumbnail;
-            document.getElementById('time-total').textContent = duration;
-            document.getElementById('yt-open-link').href = `https://music.youtube.com/watch?v=${id}`;
+            // Update Player Bar
+            document.getElementById('player-track-title').textContent = title;
+            document.getElementById('player-track-artist').textContent = artist;
+            document.getElementById('player-track-img').src = thumbnail;
+            document.getElementById('player-total-time').textContent = duration;
+            document.getElementById('player-yt-link').href = `https://music.youtube.com/watch?v=${id}`;
+
+            // Update Banner Visuals
+            const bannerDiscImg = document.getElementById('banner-disc-img');
+            const bannerBg = document.getElementById('hero-banner-bg');
+            if (bannerDiscImg) bannerDiscImg.src = thumbnail;
+            if (bannerBg) bannerBg.style.backgroundImage = `url('${thumbnail}')`;
 
             // Load & Play in YouTube
             if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
                 ytPlayer.loadVideoById(id);
             }
-
-            // Smooth scroll up to player if user is on mobile
-            if (window.innerWidth < 768) {
-                window.scrollTo({ top: 120, behavior: 'smooth' });
-            }
         }
 
-        // 4. Next / Prev
+        // 4. Next / Prev / Shuffle
         function playNextSong() {
             currentSongIndex = (currentSongIndex + 1) % flatPlaylist.length;
             const s = flatPlaylist[currentSongIndex];
@@ -512,7 +531,38 @@
             selectSong(s.id, s.title, s.artist, s.vibe, s.note, s.thumbnail, s.duration);
         }
 
-        // 5. Progress Tracking & Seeking
+        function playAll() {
+            currentSongIndex = 0;
+            const s = flatPlaylist[0];
+            selectSong(s.id, s.title, s.artist, s.vibe, s.note, s.thumbnail, s.duration);
+        }
+
+        function shufflePlay() {
+            currentSongIndex = Math.floor(Math.random() * flatPlaylist.length);
+            const s = flatPlaylist[currentSongIndex];
+            selectSong(s.id, s.title, s.artist, s.vibe, s.note, s.thumbnail, s.duration);
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            const btn = document.getElementById('repeat-btn');
+            if (isRepeat) {
+                btn.classList.add('text-gaana-red');
+                btn.classList.remove('text-slate-400');
+            } else {
+                btn.classList.remove('text-gaana-red');
+                btn.classList.add('text-slate-400');
+            }
+        }
+
+        // 5. Volume Control
+        function changeVolume(val) {
+            if (ytPlayer && typeof ytPlayer.setVolume === 'function') {
+                ytPlayer.setVolume(val);
+            }
+        }
+
+        // 6. Progress Tracking & Seeking
         function startProgressTracker() {
             stopProgressTracker();
             progressInterval = setInterval(() => {
@@ -520,8 +570,8 @@
                 const cur = ytPlayer.getCurrentTime() || 0;
                 const dur = ytPlayer.getDuration() || 1;
                 const pct = (cur / dur) * 100;
-                document.getElementById('progress-bar').style.width = `${pct}%`;
-                document.getElementById('time-current').textContent = formatSeconds(cur);
+                document.getElementById('player-progress-bar').style.width = `${pct}%`;
+                document.getElementById('player-current-time').textContent = formatSeconds(cur);
             }, 500);
         }
 
@@ -543,6 +593,47 @@
             const m = Math.floor(sec / 60);
             const s = Math.floor(sec % 60);
             return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        // 7. Vibe Filtering
+        function filterVibe(theme, btn) {
+            document.querySelectorAll('.vibe-filter-btn').forEach(b => {
+                b.className = 'vibe-filter-btn px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/20 transition-all';
+            });
+            btn.className = 'vibe-filter-btn px-3 py-1.5 rounded-full bg-gaana-red text-white shadow-sm transition-all';
+
+            document.querySelectorAll('.section-container').forEach(sec => {
+                if (theme === 'all' || sec.getAttribute('data-vibe') === theme) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
+
+        // 8. Search Filter
+        function handleSearchSongs(query) {
+            const q = query.trim().toLowerCase();
+            document.querySelectorAll('.song-card').forEach(card => {
+                const title = card.getAttribute('data-title') || '';
+                const artist = card.getAttribute('data-artist') || '';
+                if (!q || title.includes(q) || artist.includes(q)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 9. Like Toggle
+        function toggleLikeSong(id, btn) {
+            btn.classList.toggle('text-rose-500');
+            btn.classList.toggle('text-slate-400');
+        }
+
+        function togglePlayerLike(btn) {
+            btn.classList.toggle('text-rose-500');
+            btn.classList.toggle('text-slate-400');
         }
     </script>
 </body>
