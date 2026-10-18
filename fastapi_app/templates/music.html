@@ -404,8 +404,8 @@
 
     </main>
 
-    <!-- Hidden YouTube API Video Element -->
-    <div id="youtube-player-wrapper" class="w-0 h-0 overflow-hidden opacity-0 pointer-events-none fixed">
+    <!-- Hidden YouTube API Video Element (Must have dimensions > 0 for browser media codecs to run) -->
+    <div id="youtube-player-wrapper" style="position: fixed; bottom: 0; right: 0; width: 200px; height: 120px; opacity: 0.001; pointer-events: none; z-index: -10;">
         <div id="yt-player"></div>
     </div>
 
@@ -542,19 +542,25 @@
             const firstSong = flatPlaylist[0];
 
             ytPlayer = new YT.Player('yt-player', {
-                height: '100',
-                width: '100',
+                height: '120',
+                width: '200',
                 videoId: firstSong.id,
                 playerVars: {
                     'playsinline': 1,
                     'controls': 0,
                     'modestbranding': 1,
                     'rel': 0,
-                    'enablejsapi': 1
+                    'enablejsapi': 1,
+                    'origin': window.location.origin
                 },
                 events: {
                     'onReady': () => console.log("Music Engine Ready"),
-                    'onStateChange': onPlayerStateChange
+                    'onStateChange': onPlayerStateChange,
+                    'onError': (e) => {
+                        console.warn("YouTube player error:", e.data);
+                        // If current track is restricted/blocked from embedding, auto advance to next
+                        playNextSong();
+                    }
                 }
             });
         }
@@ -626,7 +632,27 @@
 
             // Load & Play in YouTube
             if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-                ytPlayer.loadVideoById(id);
+                try {
+                    ytPlayer.loadVideoById(id);
+                    ytPlayer.playVideo();
+                } catch(err) {
+                    console.error("Error playing video:", err);
+                }
+            } else if (!ytPlayer && window.YT && window.YT.Player) {
+                ytPlayer = new YT.Player('yt-player', {
+                    height: '120',
+                    width: '200',
+                    videoId: id,
+                    playerVars: {
+                        'autoplay': 1,
+                        'playsinline': 1,
+                        'origin': window.location.origin
+                    },
+                    events: {
+                        'onReady': (e) => e.target.playVideo(),
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
             }
         }
 
