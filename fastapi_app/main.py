@@ -1223,6 +1223,23 @@ async def agent_chat(request: Request):
     return response
 
 
+# --- DJ Kiara Personal DJ Assistant ---
+@app.post("/api/dj/chat")
+async def dj_chat(request: Request):
+    from fastapi_app.dj_agent import chat_with_dj
+    data = await request.json()
+    
+    messages = data.get("messages", [])
+    if not messages and "message" in data:
+        messages = [{"role": "user", "content": data.get("message")}]
+        
+    if not messages:
+        return {"text": "Tell me what vibe or song you want to hear!", "song": None}
+    
+    response = await chat_with_dj(messages)
+    return response
+
+
 @app.get("/story", response_class=HTMLResponse)
 async def read_story(request: Request):
     from fastapi_app.database import get_story_data
@@ -2181,6 +2198,81 @@ async def websocket_endpoint(websocket: WebSocket):
             
     except Exception as e:
         print("WebSocket SDK error:", e, traceback.format_exc())
+    finally:
+        try:
+            await websocket.close()
+        except:
+            pass
+
+# --- DJ Kiara Realtime Live Voice Bot ---
+@app.websocket("/ws/dj-voice-chat")
+async def dj_websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    from fastapi_app.agent import GEMINI_API_KEY
+    from fastapi_app.gemini_live import GeminiLive
+    from google.genai import types
+    import traceback
+    
+    try:
+        from fastapi_app.dj_agent import get_dj_music_context, get_dj_voice_instruction_parts
+        context_str, _ = await get_dj_music_context()
+        system_instruction = types.Content(parts=get_dj_voice_instruction_parts(context_str))
+        
+        audio_input_queue = asyncio.Queue()
+        video_input_queue = asyncio.Queue()
+        text_input_queue = asyncio.Queue()
+
+        async def audio_output_callback(data):
+            await websocket.send_bytes(data)
+
+        async def audio_interrupt_callback():
+            pass
+
+        gemini_client = GeminiLive(
+            api_key=GEMINI_API_KEY, 
+            model="gemini-3.1-flash-live-preview", 
+            input_sample_rate=16000,
+            system_instruction=system_instruction
+        )
+        
+        async def receive_from_client():
+            try:
+                while True:
+                    message = await websocket.receive()
+                    if message.get("text"):
+                        try:
+                            payload = json.loads(message["text"])
+                            if "realtimeInput" in payload:
+                                if "audio" in payload["realtimeInput"]:
+                                    audio_b64 = payload["realtimeInput"]["audio"]["data"]
+                                    audio_bytes = base64.b64decode(audio_b64)
+                                    await audio_input_queue.put(audio_bytes)
+                                if "text" in payload["realtimeInput"]:
+                                    await text_input_queue.put(payload["realtimeInput"]["text"])
+                        except json.JSONDecodeError:
+                            pass
+            except WebSocketDisconnect:
+                pass
+            except Exception as e:
+                print("DJ Client receive error:", e)
+
+        receive_task = asyncio.create_task(receive_from_client())
+
+        try:
+            async for event in gemini_client.start_session(
+                audio_input_queue=audio_input_queue,
+                video_input_queue=video_input_queue,
+                text_input_queue=text_input_queue,
+                audio_output_callback=audio_output_callback,
+                audio_interrupt_callback=audio_interrupt_callback,
+            ):
+                if event:
+                    await websocket.send_json(event)
+        finally:
+            receive_task.cancel()
+            
+    except Exception as e:
+        print("DJ WebSocket error:", e, traceback.format_exc())
     finally:
         try:
             await websocket.close()

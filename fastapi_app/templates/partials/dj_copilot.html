@@ -1,0 +1,466 @@
+<!-- DJ Kiara - Personal AI DJ Widget -->
+<div id="dj-copilot-widget" class="fixed bottom-6 right-24 sm:right-28 z-[99998] font-sans">
+    
+    <!-- DJ Toggle Button -->
+    <button id="dj-toggle" class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-3.5 sm:p-4 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border border-white/20" title="Open DJ Kiara - Your Personal DJ">
+        <!-- DJ Vinyl & Headphones Icon -->
+        <span class="material-icons text-xl sm:text-2xl animate-spin-slow">album</span>
+        <!-- Floating mini headphones badge -->
+        <span class="material-icons text-[12px] absolute top-1 right-1 text-amber-300">headphones</span>
+        <!-- Wave Glow effect -->
+        <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500"></div>
+    </button>
+
+    <!-- DJ Chat & Live Voice Window -->
+    <div id="dj-window" class="hidden opacity-0 scale-0 translate-y-10 absolute bottom-20 right-0 w-[350px] sm:w-[410px] h-[580px] max-h-[85vh] min-h-[260px] min-w-[280px] bg-slate-950/95 text-white backdrop-blur-2xl rounded-3xl shadow-2xl border border-rose-500/30 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
+        
+        <!-- Header -->
+        <div id="dj-header" class="cursor-move bg-gradient-to-r from-red-950/80 via-stone-900/90 to-black/90 p-4 border-b border-rose-500/20 flex justify-between items-center select-none shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-amber-500 via-rose-500 to-red-600 shadow-lg shrink-0">
+                    <div class="w-full h-full bg-black rounded-full flex items-center justify-center overflow-hidden relative">
+                        <img src="/static/images/kiara_avatar.png" class="w-full h-full object-cover">
+                        <!-- Tiny turntable overlay -->
+                        <div class="absolute bottom-0 inset-x-0 bg-black/60 text-[8px] text-center font-extrabold text-amber-400 uppercase tracking-tighter">
+                            DJ
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-base tracking-wide flex items-center gap-1.5 text-white">
+                        <span>DJ Kiara</span>
+                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30 uppercase tracking-wider">ShaiX2 DJ</span>
+                        <div id="dj-status-dot" class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse hidden"></div>
+                    </h3>
+                    <p class="text-[10px] text-amber-400 font-bold tracking-wider uppercase flex items-center gap-1">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                        <span id="dj-voice-status">On The Decks • Ready</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="flex items-center gap-1.5">
+                <button id="dj-new-chat" class="text-xs font-bold text-amber-400 bg-white/10 hover:bg-white/20 px-2 py-1 rounded-lg transition-colors flex items-center" title="Reset DJ Session">
+                    <span class="material-icons text-[14px] mr-1">refresh</span>New
+                </button>
+                <button id="dj-close" class="p-1 rounded-lg text-stone-400 hover:text-white hover:bg-white/10 transition-colors flex items-center">
+                    <span class="material-icons text-xl">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Turntable Visualizer Strip (Shows when track is being queued/played) -->
+        <div id="dj-turntable-strip" class="bg-black/60 border-b border-white/5 px-4 py-2 flex items-center justify-between gap-3 shrink-0">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-7 h-7 rounded-full cd-vinyl flex items-center justify-center shrink-0 border border-white/20">
+                    <img id="dj-strip-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-4 h-4 rounded-full object-cover animate-spin-slow">
+                </div>
+                <div class="min-w-0">
+                    <p class="text-[9px] uppercase tracking-wider text-amber-400 font-extrabold truncate">Currently Queued</p>
+                    <p id="dj-strip-title" class="text-xs font-bold text-white truncate">Tum Ho Toh</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-0.5 h-3 shrink-0">
+                <span class="w-0.5 h-full bg-gaana-red rounded-full animate-pulse"></span>
+                <span class="w-0.5 h-2 bg-amber-400 rounded-full animate-pulse delay-75"></span>
+                <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
+            </div>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="dj-messages" class="flex-1 overflow-y-auto p-4 space-y-3.5 scroll-smooth custom-scrollbar">
+            <!-- Welcome Message -->
+            <div class="flex gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 p-0.5 shrink-0 shadow">
+                    <img src="/static/images/kiara_avatar.png" alt="DJ Kiara" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-xs text-stone-200 shadow border border-white/10 leading-relaxed">
+                    <p class="font-bold text-amber-300 mb-1">🎧 What's good Shai & Puchki! I'm DJ Kiara.</p>
+                    <p>Tell me what you're feeling, ask for a song by name (e.g. <i>"Play Ye Tune Kya Kiya"</i>), or ask for a mood! Try tapping:</p>
+                    <div class="mt-2.5 space-y-1.5">
+                        <button class="dj-suggestion-btn w-full text-left px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-rose-300 font-semibold border border-white/5 hover:border-rose-500/30 transition-all flex items-center justify-between">
+                            <span>"Drop something deeply romantic"</span>
+                            <span class="material-icons text-xs">play_arrow</span>
+                        </button>
+                        <button class="dj-suggestion-btn w-full text-left px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-rose-300 font-semibold border border-white/5 hover:border-rose-500/30 transition-all flex items-center justify-between">
+                            <span>"Play Ye Tune Kya Kiya"</span>
+                            <span class="material-icons text-xs">play_arrow</span>
+                        </button>
+                        <button class="dj-suggestion-btn w-full text-left px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-rose-300 font-semibold border border-white/5 hover:border-rose-500/30 transition-all flex items-center justify-between">
+                            <span>"Give me energetic Punjabi beats"</span>
+                            <span class="material-icons text-xs">play_arrow</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DJ Thinking Indicator -->
+        <div id="dj-typing" class="hidden p-3 pt-0">
+            <div class="flex gap-2 items-center text-amber-400 text-xs font-semibold pl-10">
+                <span class="material-icons text-sm animate-spin">sync</span>
+                <span>DJ Kiara is scanning the vinyl records...</span>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-3 bg-black/80 border-t border-white/10 shrink-0">
+            <form id="dj-form" class="relative flex items-center gap-2">
+                <textarea id="dj-input" 
+                    class="w-full bg-white/10 border border-white/15 text-white placeholder-stone-400 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-transparent resize-none min-h-[40px] max-h-[100px]" 
+                    placeholder="Tell DJ Kiara your mood or song name..." 
+                    rows="1"></textarea>
+                
+                <!-- Live Voice DJ Button -->
+                <button id="dj-voice-btn" type="button" class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-amber-400 hover:text-amber-300 transition-colors shrink-0 relative overflow-hidden group" title="Talk to DJ Kiara">
+                    <span class="material-icons text-lg" id="dj-voice-icon">mic_none</span>
+                    <div id="dj-voice-ripple" class="absolute inset-0 bg-rose-500/30 rounded-full scale-0 transition-transform duration-300"></div>
+                </button>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-10 h-10 rounded-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white flex items-center justify-center transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed shrink-0" id="dj-send-btn">
+                    <span class="material-icons text-sm">send</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Append DJ widget to body to avoid container clipping
+    const djWidget = document.getElementById('dj-copilot-widget');
+    if (djWidget && djWidget.parentElement !== document.body) {
+        document.body.appendChild(djWidget);
+    }
+
+    const djToggle = document.getElementById('dj-toggle');
+    const djClose = document.getElementById('dj-close');
+    const djNewChat = document.getElementById('dj-new-chat');
+    const djWindow = document.getElementById('dj-window');
+    const djForm = document.getElementById('dj-form');
+    const djInput = document.getElementById('dj-input');
+    const djMessages = document.getElementById('dj-messages');
+    const djTyping = document.getElementById('dj-typing');
+    const djSendBtn = document.getElementById('dj-send-btn');
+    const djVoiceBtn = document.getElementById('dj-voice-btn');
+    const djVoiceIcon = document.getElementById('dj-voice-icon');
+    const djVoiceRipple = document.getElementById('dj-voice-ripple');
+    const djVoiceStatus = document.getElementById('dj-voice-status');
+    const djStatusDot = document.getElementById('dj-status-dot');
+    const welcomeHTML = djMessages.innerHTML;
+
+    let djChatHistory = JSON.parse(localStorage.getItem('dj_kiara_chat_history') || '[]');
+
+    function saveDJHistory() {
+        localStorage.setItem('dj_kiara_chat_history', JSON.stringify(djChatHistory));
+    }
+
+    // Toggle DJ Window
+    function toggleDJWindow() {
+        if (djWindow.classList.contains('hidden') || djWindow.classList.contains('opacity-0')) {
+            djWindow.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                djWindow.classList.remove('opacity-0', 'scale-0', 'translate-y-10');
+                djWindow.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+            });
+            setTimeout(() => djInput && djInput.focus(), 300);
+        } else {
+            djWindow.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+            djWindow.classList.add('opacity-0', 'scale-0', 'translate-y-10');
+            setTimeout(() => djWindow.classList.add('hidden'), 300);
+        }
+    }
+
+    if (djToggle) djToggle.addEventListener('click', toggleDJWindow);
+    if (djClose) djClose.addEventListener('click', toggleDJWindow);
+
+    if (djNewChat) {
+        djNewChat.addEventListener('click', () => {
+            djChatHistory = [];
+            saveDJHistory();
+            djMessages.innerHTML = welcomeHTML;
+            bindDJSuggestions();
+        });
+    }
+
+    function bindDJSuggestions() {
+        document.querySelectorAll('.dj-suggestion-btn').forEach(btn => {
+            btn.onclick = () => {
+                const text = btn.innerText.replace(/["\n]/g, '').trim();
+                if (text && djInput) {
+                    djInput.value = text;
+                    djForm.dispatchEvent(new Event('submit'));
+                }
+            };
+        });
+    }
+    bindDJSuggestions();
+
+    function addDJMessage(text, isUser = false, song = null) {
+        if (!text && !song) return;
+        const div = document.createElement('div');
+        div.className = `flex gap-2.5 ${isUser ? 'justify-end' : ''}`;
+
+        const avatarHTML = isUser ? '' : `
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 p-0.5 shrink-0 shadow">
+                <img src="/static/images/kiara_avatar.png" alt="DJ Kiara" class="w-full h-full rounded-full object-cover">
+            </div>
+        `;
+
+        let songCardHTML = '';
+        if (song && song.id) {
+            songCardHTML = `
+                <div onclick="playSongFromDJ('${song.id}', '${(song.title || '').replace(/'/g, "\\'")}', '${(song.artist || '').replace(/'/g, "\\'")}', '${(song.vibe || '').replace(/'/g, "\\'")}', '${song.thumbnail || ''}')"
+                    class="mt-2.5 p-2 rounded-xl bg-black/40 border border-rose-500/30 hover:border-gaana-red flex items-center gap-3 cursor-pointer group transition-all hover:scale-[1.02]">
+                    <div class="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 shadow bg-stone-900">
+                        <img src="${song.thumbnail || 'https://img.youtube.com/vi/' + song.id + '/hqdefault.jpg'}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 flex items-center justify-center transition-all">
+                            <span class="material-icons text-white text-base">play_arrow</span>
+                        </div>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-[9px] uppercase tracking-wider font-extrabold text-amber-400">DJ'S CHOICE • PLAYING</span>
+                        <h4 class="text-xs font-bold text-white truncate group-hover:text-gaana-red">${song.title || 'Track'}</h4>
+                        <p class="text-[10px] text-stone-400 truncate">${song.artist || 'Artist'}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        const bubbleHTML = `
+            <div class="${isUser ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white' : 'bg-white/10 text-stone-200 border border-white/10'} rounded-2xl ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} p-3 max-w-[85%] text-xs shadow-md leading-relaxed break-words">
+                <div>${text ? text.replace(/\n/g, '<br>') : ''}</div>
+                ${songCardHTML}
+            </div>
+        `;
+
+        div.innerHTML = isUser ? bubbleHTML : avatarHTML + bubbleHTML;
+        djMessages.appendChild(div);
+        djMessages.scrollTop = djMessages.scrollHeight;
+    }
+
+    // Direct Song Play Helper from DJ Kiara
+    window.playSongFromDJ = function(id, title, artist, vibe, thumbnail) {
+        // 1. If currently on /music page and selectSong function exists, trigger directly!
+        if (typeof selectSong === 'function') {
+            selectSong(id, title, artist, vibe, "Queued by DJ Kiara", thumbnail, "", true);
+        } else {
+            // 2. Broadcast to localStorage so floating indicator and music page sync
+            try {
+                localStorage.setItem('shaix2_current_song', JSON.stringify({
+                    id: id,
+                    title: title,
+                    artist: artist,
+                    vibe: vibe,
+                    thumbnail: thumbnail,
+                    isPlaying: true,
+                    updatedAt: Date.now()
+                }));
+            } catch(e) {}
+
+            // Open or redirect to /music with autoplay param if desired
+            window.location.href = `/music?play=${id}`;
+        }
+
+        // Update Turntable Strip
+        const stripTitle = document.getElementById('dj-strip-title');
+        const stripImg = document.getElementById('dj-strip-img');
+        if (stripTitle) stripTitle.textContent = title;
+        if (stripImg && thumbnail) stripImg.src = thumbnail;
+    };
+
+    // Chat Submission
+    if (djForm) {
+        djForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = djInput.value.trim();
+            if (!text) return;
+
+            addDJMessage(text, true);
+            djChatHistory.push({ role: 'user', content: text });
+            saveDJHistory();
+
+            djInput.value = '';
+            djInput.style.height = 'auto';
+            if (djTyping) djTyping.classList.remove('hidden');
+
+            try {
+                const res = await fetch('/api/dj/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: djChatHistory })
+                });
+
+                if (djTyping) djTyping.classList.add('hidden');
+
+                if (!res.ok) throw new Error("DJ Kiara is tuning the records...");
+                const data = await res.json();
+
+                const replyText = data.text || "Spinning your track right now!";
+                const song = data.song;
+
+                addDJMessage(replyText, false, song);
+                djChatHistory.push({ role: 'assistant', content: replyText });
+                saveDJHistory();
+
+                // If song recommended, update strip and play!
+                if (song && song.id) {
+                    playSongFromDJ(song.id, song.title, song.artist, song.vibe, song.thumbnail);
+                }
+
+            } catch (err) {
+                if (djTyping) djTyping.classList.add('hidden');
+                addDJMessage("DJ Kiara: " + err.message, false);
+            }
+        });
+    }
+
+    // Auto-expand textarea
+    if (djInput) {
+        djInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+        djInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                djForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    }
+
+    // --- DJ Live Voice Engine ---
+    let djVoiceActive = false;
+    let djAudioContext = null;
+    let djStream = null;
+    let djNextAudioTime = 0;
+
+    function setDJVoiceUI(state) {
+        if (state === 'inactive') {
+            djVoiceIcon.innerText = 'mic_none';
+            djVoiceBtn.classList.remove('text-rose-500');
+            djVoiceBtn.classList.add('text-amber-400');
+            djVoiceRipple.classList.replace('scale-150', 'scale-0');
+            djVoiceRipple.classList.remove('animate-pulse');
+            djVoiceStatus.innerText = "On The Decks • Ready";
+            djStatusDot.classList.add('hidden');
+        } else if (state === 'connecting') {
+            djVoiceStatus.innerText = "Tuning Decks...";
+            djVoiceIcon.innerText = 'hourglass_empty';
+        } else if (state === 'active') {
+            djVoiceStatus.innerText = "DJ Kiara Listening...";
+            djVoiceIcon.innerText = 'mic_off';
+            djVoiceBtn.classList.add('text-rose-500');
+            djVoiceRipple.classList.replace('scale-0', 'scale-150');
+            djVoiceRipple.classList.add('animate-pulse');
+            djStatusDot.classList.remove('hidden');
+        }
+    }
+
+    async function startDJVoice() {
+        if (djVoiceActive) return;
+        djVoiceActive = true;
+        setDJVoiceUI('connecting');
+
+        try {
+            djNextAudioTime = 0;
+            djStream = await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+            });
+            djAudioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+            await djAudioContext.audioWorklet.addModule('/static/js/audio-worklet.js');
+
+            const mic = djAudioContext.createMediaStreamSource(djStream);
+            const processor = new AudioWorkletNode(djAudioContext, 'pcm-processor');
+            mic.connect(processor);
+            processor.connect(djAudioContext.destination);
+
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const ws = new WebSocket(`${protocol}//${window.location.host}/ws/dj-voice-chat`);
+            window.djKiaraWs = ws;
+
+            ws.onopen = () => {
+                setDJVoiceUI('active');
+                processor.port.onmessage = (e) => {
+                    if (ws.readyState === WebSocket.OPEN) {
+                        const pcm16 = e.data;
+                        let binary = '';
+                        const bytes = new Uint8Array(pcm16.buffer);
+                        for (let i = 0; i < bytes.byteLength; i++) { binary += String.fromCharCode(bytes[i]); }
+                        const base64 = btoa(binary);
+                        ws.send(JSON.stringify({ realtimeInput: { audio: { mimeType: "audio/pcm;rate=16000", data: base64 } } }));
+                    }
+                };
+            };
+
+            ws.onmessage = async (e) => {
+                try {
+                    if (e.data instanceof Blob) {
+                        const arrayBuffer = await e.data.arrayBuffer();
+                        const pcm16 = new Int16Array(arrayBuffer);
+                        const audioBuffer = djAudioContext.createBuffer(1, pcm16.length, 24000);
+                        const channelData = audioBuffer.getChannelData(0);
+                        for (let i = 0; i < pcm16.length; i++) { channelData[i] = pcm16[i] / 32768.0; }
+
+                        const source = djAudioContext.createBufferSource();
+                        source.buffer = audioBuffer;
+                        source.connect(djAudioContext.destination);
+
+                        if (djNextAudioTime < djAudioContext.currentTime) {
+                            djNextAudioTime = djAudioContext.currentTime;
+                        }
+                        source.start(djNextAudioTime);
+                        djNextAudioTime += audioBuffer.duration;
+
+                        djVoiceStatus.innerText = "DJ Kiara on the mic...";
+                    } else {
+                        const data = JSON.parse(e.data);
+                        if (data.type === "gemini" && data.text) {
+                            addDJMessage(data.text, false);
+                        } else if (data.type === "user" && data.text) {
+                            addDJMessage(data.text, true);
+                        }
+                    }
+                } catch(err) {
+                    console.error("DJ voice parse error:", err);
+                }
+            };
+
+            ws.onclose = () => stopDJVoice();
+
+        } catch (err) {
+            console.error("DJ Voice Start Error:", err);
+            djVoiceStatus.innerText = "Mic Error: " + err.message;
+            setTimeout(() => stopDJVoice(), 2000);
+        }
+    }
+
+    function stopDJVoice() {
+        if (!djVoiceActive) return;
+        djVoiceActive = false;
+        setDJVoiceUI('inactive');
+        if (window.djKiaraWs) {
+            window.djKiaraWs.close();
+            window.djKiaraWs = null;
+        }
+        if (djStream) {
+            djStream.getTracks().forEach(t => t.stop());
+            djStream = null;
+        }
+        if (djAudioContext) {
+            djAudioContext.close();
+            djAudioContext = null;
+        }
+    }
+
+    if (djVoiceBtn) {
+        djVoiceBtn.addEventListener('click', () => {
+            if (djVoiceActive) stopDJVoice();
+            else startDJVoice();
+        });
+    }
+});
+</script>

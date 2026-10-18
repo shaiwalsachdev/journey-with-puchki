@@ -676,7 +676,6 @@
     </div>
 
     {% include 'partials/footer.html' %}
-    {% include 'partials/copilot.html' %}
 
     <!-- YouTube IFrame Player API Script -->
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -974,7 +973,18 @@
                     'origin': window.location.origin
                 },
                 events: {
-                    'onReady': () => console.log("Music Engine Ready"),
+                    'onReady': () => {
+                        console.log("Music Engine Ready");
+                        // Auto-play song if ?play=id parameter is present in URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const playId = urlParams.get('play');
+                        if (playId) {
+                            const song = flatPlaylist.find(s => s.id === playId);
+                            if (song) {
+                                selectSong(song.id, song.title, song.artist, song.vibe, song.note, song.thumbnail, song.duration, true);
+                            }
+                        }
+                    },
                     'onStateChange': onPlayerStateChange,
                     'onError': (e) => handleSongError(e.data)
                 }
