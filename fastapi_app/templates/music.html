@@ -139,11 +139,14 @@
                         <span class="hidden sm:inline">Shuffle</span>
                     </button>
 
-                    <!-- Search Input (Prominent, High-Contrast Search Icon) -->
+                    <!-- Search Input (Prominent, High-Contrast Search Icon + Clear button) -->
                     <div class="relative flex items-center">
                         <span class="material-icons text-gaana-red dark:text-rose-400 absolute left-3 text-base pointer-events-none">search</span>
-                        <input id="songSearchInput" onkeyup="handleSearchSongs(this.value)" type="text" placeholder="Search 203 tracks..."
-                            class="w-48 sm:w-64 lg:w-80 pl-9 pr-3 py-1.5 text-xs rounded-full bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 focus:border-gaana-red focus:bg-white dark:focus:bg-gaana-card text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-inner">
+                        <input id="songSearchInput" oninput="handleSearchSongs(this.value)" type="text" placeholder="Search 203 tracks (e.g. Ye Tune Kya Kiya)..."
+                            class="w-48 sm:w-64 lg:w-80 pl-9 pr-8 py-1.5 text-xs rounded-full bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 focus:border-gaana-red focus:bg-white dark:focus:bg-gaana-card text-slate-900 dark:text-white placeholder-slate-400 transition-all shadow-inner">
+                        <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute right-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors" title="Clear Search">
+                            <span class="material-icons text-sm">close</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -260,6 +263,43 @@
                 </div>
             </div>
         </div>
+
+        <!-- ==============================================
+             DEDICATED SEARCH RESULTS CONTAINER (Instant Live Filtering)
+             ============================================== -->
+        <section class="section-container mb-12 hidden" id="sec-search-results">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-gaana-red/30">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 to-rose-600 flex items-center justify-center text-white shadow-md shadow-red-600/30">
+                        <span class="material-icons text-lg">search</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                                Search Results
+                            </h2>
+                            <span id="search-count-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gaana-red text-white shadow-sm">
+                                0 matches
+                            </span>
+                        </div>
+                        <p id="search-query-desc" class="text-xs text-slate-500 dark:text-slate-400">
+                            Searching all 203 tracks across collections
+                        </p>
+                    </div>
+                </div>
+
+                <button onclick="clearSearch()" 
+                    class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center gap-1 transition-all">
+                    <span class="material-icons text-xs">close</span>
+                    <span>Clear Search</span>
+                </button>
+            </div>
+
+            <!-- Search Results Grid -->
+            <div id="grid-search-results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
 
         <!-- ==============================================
              DEDICATED "MY LOVED SONGS" PLAYLIST SECTION
@@ -1295,18 +1335,138 @@
             selectSong(song.id, song.title, song.artist, song.vibe, song.note, song.thumbnail, song.duration);
         }
 
-        // 9. Search Filter
+        // 9. Global Search Filter across all 203 tracks
         function handleSearchSongs(query) {
-            const q = query.trim().toLowerCase();
-            document.querySelectorAll('.song-card').forEach(card => {
-                const title = card.getAttribute('data-title') || '';
-                const artist = card.getAttribute('data-artist') || '';
-                if (!q || title.includes(q) || artist.includes(q)) {
-                    card.style.display = 'flex';
+            const rawQ = query.trim();
+            const q = rawQ.toLowerCase();
+            const clearBtn = document.getElementById('search-clear-btn');
+            const searchSec = document.getElementById('sec-search-results');
+            const searchGrid = document.getElementById('grid-search-results');
+            const countBadge = document.getElementById('search-count-badge');
+            const queryDesc = document.getElementById('search-query-desc');
+
+            if (clearBtn) {
+                if (rawQ.length > 0) {
+                    clearBtn.classList.remove('hidden');
                 } else {
-                    card.style.display = 'none';
+                    clearBtn.classList.add('hidden');
                 }
+            }
+
+            if (!q) {
+                // Hide search results section and restore normal sections
+                if (searchSec) searchSec.classList.add('hidden');
+                document.querySelectorAll('.section-container:not(#sec-search-results):not(#sec-favorites)').forEach(sec => {
+                    sec.style.display = 'block';
+                });
+                return;
+            }
+
+            // Normalization helper: remove punctuation and extra spaces
+            const normalize = (str) => (str || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+            const normQ = normalize(q);
+            const queryTokens = normQ.split(' ').filter(Boolean);
+
+            // Filter across all 203 songs in flatPlaylist
+            const matches = flatPlaylist.filter(song => {
+                const normTitle = normalize(song.title);
+                const normArtist = normalize(song.artist);
+                const normVibe = normalize(song.vibe);
+                const normNote = normalize(song.note);
+                const combined = `${normTitle} ${normArtist} ${normVibe} ${normNote}`;
+
+                // Direct substring match
+                if (combined.includes(normQ)) return true;
+
+                // All tokens match anywhere in combined string
+                if (queryTokens.length > 0 && queryTokens.every(tok => combined.includes(tok))) {
+                    return true;
+                }
+
+                return false;
             });
+
+            // Hide normal category sections while searching to focus on search results
+            document.querySelectorAll('.section-container:not(#sec-search-results)').forEach(sec => {
+                sec.style.display = 'none';
+            });
+
+            // Show dedicated Search Results container
+            if (searchSec) {
+                searchSec.classList.remove('hidden');
+                searchSec.style.display = 'block';
+            }
+
+            if (countBadge) {
+                countBadge.textContent = `${matches.length} ${matches.length === 1 ? 'match' : 'matches'}`;
+            }
+
+            if (queryDesc) {
+                queryDesc.textContent = `Showing results for "${rawQ}" across all 203 tracks`;
+            }
+
+            if (!searchGrid) return;
+
+            if (matches.length === 0) {
+                searchGrid.innerHTML = `
+                    <div class="col-span-full py-12 px-4 rounded-3xl bg-slate-50 dark:bg-white/5 border border-dashed border-slate-300 dark:border-white/10 text-center">
+                        <span class="material-icons text-4xl text-slate-400 mb-2">search_off</span>
+                        <h4 class="font-extrabold text-base text-slate-900 dark:text-white">No tracks found for "${rawQ}"</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+                            Try searching for artist names like "SANAM", "Vishal Mishra", or song keywords like "Ye Tune Kya Kiya".
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            searchGrid.innerHTML = matches.map(song => `
+                <div onclick="selectSong('${song.id}', '${(song.title || '').replace(/'/g, "\\'")}', '${(song.artist || '').replace(/'/g, "\\'")}', '${(song.vibe || '').replace(/'/g, "\\'")}', '${(song.note || '').replace(/'/g, "\\'")}', '${song.thumbnail}', '${song.duration || ''}')"
+                    class="song-card group relative p-3 rounded-2xl bg-white dark:bg-gaana-card hover:bg-slate-50 dark:hover:bg-[#252530] border border-slate-100 dark:border-white/5 hover:border-gaana-red/50 transition-all duration-300 hover:-translate-y-1.5 shadow-sm hover:shadow-xl cursor-pointer flex flex-col justify-between"
+                    data-title="${(song.title || '').toLowerCase()}" data-artist="${(song.artist || '').toLowerCase()}">
+
+                    <!-- Thumbnail Container with Floating Play Button -->
+                    <div class="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-md bg-black">
+                        <img src="${song.thumbnail}" alt="${song.title}" 
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        
+                        <!-- Floating Badge -->
+                        <span class="absolute top-2 left-2 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-black/70 text-white backdrop-blur-md">
+                            ${song.vibe || 'MUSIC'}
+                        </span>
+
+                        <!-- Like Heart Button -->
+                        <button onclick="event.stopPropagation(); toggleLikeSong('${song.id}', this)" data-song-id="${song.id}" 
+                            class="song-like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 ${lovedSongIds.has(song.id) ? 'text-rose-500 opacity-100' : 'text-slate-300 opacity-0 group-hover:opacity-100'} hover:text-rose-500 hover:scale-110 flex items-center justify-center transition-all shadow" title="Add to Loved Songs">
+                            <span class="material-icons text-sm">favorite</span>
+                        </button>
+
+                        <!-- Hover Play Pill -->
+                        <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-gaana-red text-white flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="material-icons text-xl">play_arrow</span>
+                        </div>
+                    </div>
+
+                    <!-- Song Metadata -->
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-gaana-red transition-colors">
+                            ${song.title}
+                        </h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                            ${song.artist}
+                        </p>
+                        ${song.note ? `<p class="text-[10px] text-slate-400 dark:text-slate-500 italic truncate mt-1">"${song.note}"</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('songSearchInput');
+            if (input) {
+                input.value = '';
+                handleSearchSongs('');
+            }
         }
 
         // 10. Loved Songs / Favorites System (Persisted in localStorage)
