@@ -1475,6 +1475,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
 
                 <!-- ==========================================
@@ -4254,9 +4255,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-gray-200/60 dark:border-white/10 text-center text-xs text-gray-500">
-        <p>Made with endless love for Shaila by Shaiwal · Singapore Honeymoon 2026 ❤️</p>
-    </footer>
+    {% include 'partials/footer.html' %}
 
     <!-- Tab Switching & Interactive Scripts -->
     <script>
