@@ -342,7 +342,7 @@
                 </button>
                 <button onclick="switchTab('tickets')" class="bg-black/50 hover:bg-black/70 backdrop-blur-md px-4 py-2.5 rounded-2xl flex items-center gap-2 text-white border border-white/30 shadow-lg transition-all hover:scale-105 cursor-pointer">
                     <span class="material-icons text-emerald-400 text-lg">confirmation_number</span>
-                    <span class="font-bold text-white drop-shadow-sm">7 Klook Experiences</span>
+                    <span class="font-bold text-white drop-shadow-sm">Klook & Pelago Experiences</span>
                 </button>
             </div>
         </div>
@@ -366,7 +366,7 @@
             </button>
             <button onclick="switchTab('tickets')" id="tab-btn-tickets" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
                 <span class="material-icons text-base">local_activity</span>
-                <span>Klook Tickets & Links</span>
+                <span>Tickets: Klook & Pelago</span>
             </button>
             <button onclick="switchTab('dining')" id="tab-btn-dining" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
                 <span class="material-icons text-base">restaurant</span>
@@ -582,6 +582,24 @@
                             <p><b class="text-indigo-800 dark:text-indigo-200">Lines:</b> {{ d.mrt_guide.lines }}</p>
                             {% endif %}
                             <p class="leading-relaxed"><b class="text-indigo-800 dark:text-indigo-200">Directions:</b> {{ d.mrt_guide.route_desc }}</p>
+                            {% if d.mrt_guide.payment_tips %}
+                            <p class="text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                                <span class="material-icons text-xs">contactless</span>
+                                <span><b>Fare Payment:</b> {{ d.mrt_guide.payment_tips }}</span>
+                            </p>
+                            {% endif %}
+                            {% if d.mrt_guide.bus_alternative %}
+                            <p class="text-[11px] text-sky-700 dark:text-sky-300 flex items-center gap-1">
+                                <span class="material-icons text-xs">directions_bus</span>
+                                <span><b>Bus Alternative:</b> {{ d.mrt_guide.bus_alternative }}</span>
+                            </p>
+                            {% endif %}
+                            {% if d.mrt_guide.cable_car_guide %}
+                            <p class="text-[11px] text-fuchsia-700 dark:text-fuchsia-300 flex items-center gap-1">
+                                <span class="material-icons text-xs">flight_takeoff</span>
+                                <span><b>Cable Car Route:</b> {{ d.mrt_guide.cable_car_guide }}</span>
+                            </p>
+                            {% endif %}
                             {% if d.mrt_guide.taxi_alternative %}
                             <p class="text-[11px] text-amber-700 dark:text-amber-400 mt-1 flex items-center gap-1">
                                 <span class="material-icons text-xs">local_taxi</span>
@@ -1252,27 +1270,32 @@
         </section>
 
         <!-- ========================================================
-             TAB 3: KLOOK TICKETS & BOOKINGS
+             TAB 3: TICKETS & EXPERIENCES (KLOOK & PELAGO)
              ======================================================== -->
         <section id="tab-content-tickets" class="tab-content hidden space-y-8">
             <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Experiences & Tickets to Book (2 Adults)</h2>
-                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Direct booking links to Klook India. Book exact dates in advance for timed slots.</p>
+                        <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Direct booking options on both <strong>Klook</strong> & <strong>Pelago (Singapore Airlines)</strong>. Compare prices & earn KrisFlyer miles!</p>
                     </div>
-                    <div class="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 px-4 py-2 rounded-2xl text-xs font-bold text-rose-600 dark:text-rose-300">
-                        🎟️ 5G eSIM + 7 Major Experiences
+                    <div class="flex items-center gap-2">
+                        <div class="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 px-3.5 py-1.5 rounded-2xl text-xs font-bold text-rose-600 dark:text-rose-300">
+                            🎟️ Klook Option
+                        </div>
+                        <div class="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 px-3.5 py-1.5 rounded-2xl text-xs font-bold text-indigo-600 dark:text-indigo-300 flex items-center gap-1">
+                            ✈️ Pelago (SIA KrisFlyer)
+                        </div>
                     </div>
                 </div>
 
-                <!-- Advance eSIM Booking Reminder Banner -->
-                <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-sky-500/10 to-indigo-500/10 border border-sky-300/40 flex items-start gap-3 text-xs">
+                <!-- Advance eSIM & SIM Booking Reminder Banner -->
+                <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-rose-500/10 border border-sky-300/40 flex items-start gap-3 text-xs">
                     <span class="material-icons text-sky-500 text-lg shrink-0 mt-0.5">sim_card</span>
                     <div>
-                        <span class="font-bold text-sky-700 dark:text-sky-300">📱 Crucial Connectivity Reminder: Book eSIM by Dec 5, 2026</span>
+                        <span class="font-bold text-sky-700 dark:text-sky-300">📱 Crucial Connectivity Reminder: Book eSIM / Singtel SIM by Dec 5, 2026</span>
                         <p class="text-gray-600 dark:text-gray-300 mt-0.5 leading-relaxed">
-                            Book your Singapore 5G Tourist eSIM on Klook before departing India. Scan and install the QR profile while connected to home Wi-Fi in Delhi so high-speed data activates immediately the moment your plane lands at Changi!
+                            Book your Singtel Singapore 5G Tourist eSIM or Changi Pickup SIM on <strong>Pelago</strong> or <strong>Klook</strong> before departing India. If choosing eSIM, install the QR profile while connected to home Wi-Fi in Delhi so high-speed data activates immediately the moment your plane touches down at Changi!
                         </p>
                     </div>
                 </div>
@@ -1300,27 +1323,45 @@
                                 </div>
                             </div>
                             <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">{{ t.name }}</h3>
-                            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 font-semibold mb-2">
+                            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 font-semibold mb-3">
                                 <span>Est: {{ t.price }}</span>
                                 <span class="text-emerald-600 dark:text-emerald-400 font-bold">
                                     {% if t.actual_cost %}Actual: ₹{{ t.actual_cost }}{% else %}<button onclick="promptTicketActual('{{ t.id }}')" class="hover:underline text-[11px] text-gray-400">+ Add actual cost</button>{% endif %}
                                 </span>
                             </div>
                         </div>
-                        <div class="pt-3 border-t border-gray-200/60 dark:border-white/10 flex items-center justify-between">
-                            <span class="text-[11px] text-gray-500 dark:text-gray-400">Klook India Official</span>
-                            <div class="flex items-center gap-2.5">
-                                <button onclick="promptTicketLink('{{ t.id }}', '{{ t.link }}')" class="text-[11px] font-bold text-gray-400 hover:text-indigo-600 flex items-center gap-0.5" title="Update / Change Klook Link">
-                                    <span class="material-icons text-xs">link</span> Link
-                                </button>
-                                <button onclick="promptTicketActual('{{ t.id }}')" class="text-[11px] font-bold text-gray-500 hover:text-primary flex items-center gap-0.5" title="Update Actual Cost Paid">
-                                    <span class="material-icons text-xs">edit</span> Cost
-                                </button>
+                        <div class="pt-3 border-t border-gray-200/60 dark:border-white/10 flex flex-col gap-2.5">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="promptTicketLink('{{ t.id }}', '{{ t.link }}')" class="text-[11px] font-bold text-gray-400 hover:text-indigo-600 flex items-center gap-0.5" title="Update / Change Link">
+                                        <span class="material-icons text-xs">link</span> Edit Link
+                                    </button>
+                                    <span class="text-gray-300 dark:text-gray-600">·</span>
+                                    <button onclick="promptTicketActual('{{ t.id }}')" class="text-[11px] font-bold text-gray-500 hover:text-primary flex items-center gap-0.5" title="Update Actual Cost Paid">
+                                        <span class="material-icons text-xs">edit</span> Cost
+                                    </button>
+                                </div>
+                                <span class="text-[10px] text-gray-400 font-medium">Instant Mobile Vouchers</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 pt-1">
                                 <a href="{{ t.link }}" target="_blank" rel="noopener noreferrer" 
-                                    class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 hover:text-rose-700 hover:underline">
-                                    <span>Book on Klook</span>
-                                    <span class="material-icons text-sm">open_in_new</span>
+                                    class="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-600 dark:text-rose-300 border border-rose-200 dark:border-rose-800 transition-all hover:scale-[1.02] shadow-sm">
+                                    <span>Klook</span>
+                                    <span class="material-icons text-xs">open_in_new</span>
                                 </a>
+                                {% if t.pelago_link %}
+                                <a href="{{ t.pelago_link }}" target="_blank" rel="noopener noreferrer" 
+                                    class="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 transition-all hover:scale-[1.02] shadow-sm">
+                                    <span>Pelago (SIA)</span>
+                                    <span class="material-icons text-xs">open_in_new</span>
+                                </a>
+                                {% else %}
+                                <a href="https://www.pelago.com/en-SG/" target="_blank" rel="noopener noreferrer" 
+                                    class="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition-all shadow-sm">
+                                    <span>Pelago</span>
+                                    <span class="material-icons text-xs">search</span>
+                                </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1394,6 +1435,69 @@
             </div>
             {% endif %}
 
+            <!-- Reference Travel Video Guide -->
+            {% if honeymoon.reference_video %}
+            {% set refv = honeymoon.reference_video %}
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl border-2 border-red-400/40 bg-gradient-to-br from-red-50/40 via-white/80 to-rose-50/40 dark:from-red-950/20 dark:via-gray-800/60 dark:to-rose-950/20 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-rose-600 text-white flex items-center justify-center shadow-lg shadow-red-500/30">
+                            <span class="material-icons text-2xl">smart_display</span>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">
+                                Video Reference & Travel Guide
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ refv.title }}</h2>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Curated Indian traveler itinerary & budget walkthrough for Singapore</p>
+                        </div>
+                    </div>
+                    <a href="{{ refv.url }}" target="_blank" rel="noopener noreferrer" 
+                        class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all self-start md:self-auto shrink-0">
+                        <span class="material-icons text-base">play_circle</span>
+                        <span>Watch on YouTube</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <!-- Embedded Responsive Video Player -->
+                    <div class="lg:col-span-7">
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-red-200 dark:border-red-900/40 bg-black">
+                            <iframe 
+                                src="{{ refv.embed_url }}" 
+                                title="{{ refv.title }}" 
+                                class="absolute inset-0 w-full h-full"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Video Highlights & Context -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {{ refv.description }}
+                        </p>
+                        <div class="p-4 rounded-2xl bg-white/70 dark:bg-gray-800/60 border border-red-100 dark:border-white/5 space-y-2">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                                <span class="material-icons text-red-500 text-sm">checklist</span>
+                                <span>Key Topics Covered:</span>
+                            </span>
+                            <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+                                {% for highlight in refv.key_highlights %}
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-500 font-bold">•</span>
+                                    <span>{{ highlight }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             <!-- Free Attractions Section -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-sm border border-emerald-200/50 dark:border-emerald-900/30">
                 <div class="flex items-center gap-2 mb-4 text-emerald-600 dark:text-emerald-400">
@@ -1409,6 +1513,228 @@
                     {% endfor %}
                 </div>
             </div>
+
+            <!-- Little India Shopping & Heritage Temples Guide -->
+            {% if honeymoon.little_india_guide %}
+            {% set lig = honeymoon.little_india_guide %}
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border-2 border-amber-300/60 bg-gradient-to-br from-amber-50/40 via-white/80 to-orange-50/40 dark:from-amber-950/20 dark:via-gray-800/60 dark:to-orange-950/20">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-amber-200/50 dark:border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/30">
+                            <span class="material-icons text-2xl">temple_hindu</span>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">
+                                Cultural & Shopping Guide
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ lig.title }}</h3>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 border border-amber-200 dark:border-white/10 text-amber-700 dark:text-amber-300">
+                        {{ lig.subtitle }}
+                    </span>
+                </div>
+
+                <!-- Two Column Layout: Temples & Shopping -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Famous Temples & Spiritual Heritage -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300 text-base">
+                            <span class="material-icons text-amber-600">temple_hindu</span>
+                            <h4>Famous Temples & Architectural Wonders</h4>
+                        </div>
+                        <div class="space-y-3">
+                            {% for temple in lig.temples %}
+                            <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-amber-200/70 dark:border-white/10 shadow-sm">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h5 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ temple.name }}</h5>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-300/30">{{ temple.year }}</span>
+                                </div>
+                                <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-1">{{ temple.desc }}</p>
+                                <p class="text-[11px] text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
+                                    <span class="material-icons text-xs">auto_awesome</span>
+                                    <span><b>Highlight:</b> {{ temple.highlight }}</span>
+                                </p>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Temple Etiquette Note -->
+                        <div class="p-3 rounded-2xl bg-amber-100/60 dark:bg-amber-950/40 border border-amber-300/60 dark:border-amber-900/50 text-xs text-amber-900 dark:text-amber-200">
+                            <b>🛕 Temple Etiquette:</b> Dress modestly (shoulders & knees covered) and take off footwear before entering any temple or prayer hall.
+                        </div>
+                    </div>
+
+                    <!-- Best Shops & Shopping Experiences -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2 font-bold text-orange-800 dark:text-orange-300 text-base">
+                            <span class="material-icons text-orange-600">shopping_bag</span>
+                            <h4>Best Shops & Colorful Bazaars</h4>
+                        </div>
+                        <div class="space-y-3">
+                            {% for shop in lig.shops %}
+                            <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-orange-200/70 dark:border-white/10 shadow-sm">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h5 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ shop.name }}</h5>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500/10 text-orange-700 dark:text-orange-300 border border-orange-300/30">{{ shop.tag }}</span>
+                                </div>
+                                <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-1">{{ shop.desc }}</p>
+                                <p class="text-[11px] text-orange-700 dark:text-orange-400 font-semibold flex items-center gap-1">
+                                    <span class="material-icons text-xs">shopping_cart</span>
+                                    <span><b>What to Buy:</b> {{ shop.what_to_buy }}</span>
+                                </p>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Photography & Food Note -->
+                        <div class="p-3 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200/60 dark:border-rose-900/40 text-xs text-rose-800 dark:text-rose-200">
+                            <b>📸 Honeymoon Photo Spot:</b> Stop by the <b>House of Tan Teng Niah</b> (1900 rainbow villa) for iconic colorful couple photos, followed by crispy dosas and Teh Tarik!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Chinatown Shopping & Heritage Guide -->
+            {% if honeymoon.chinatown_guide %}
+            {% set cng = honeymoon.chinatown_guide %}
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border-2 border-red-300/60 bg-gradient-to-br from-red-50/40 via-white/80 to-amber-50/40 dark:from-red-950/20 dark:via-gray-800/60 dark:to-amber-950/20">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-red-200/50 dark:border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-amber-500 text-white flex items-center justify-center shadow-lg shadow-red-500/30">
+                            <span class="material-icons text-2xl">storefront</span>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-700 dark:text-red-300 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">
+                                Souvenirs & Culture Guide
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ cng.title }}</h3>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 border border-red-200 dark:border-white/10 text-red-700 dark:text-red-300 inline-block">
+                            {{ cng.subtitle }}
+                        </span>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-end gap-1">
+                            <span class="material-icons text-xs text-red-500">subway</span> {{ cng.how_to_reach }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chinatown Highlights Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    {% for shop in cng.shops %}
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-red-200/70 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <h5 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ shop.name }}</h5>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-500/10 text-red-700 dark:text-red-300 border border-red-300/30">{{ shop.tag }}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">{{ shop.desc }}</p>
+                        </div>
+                        <div class="pt-2 border-t border-red-100 dark:border-white/5">
+                            <p class="text-[11px] text-red-700 dark:text-red-400 font-semibold flex items-start gap-1">
+                                <span class="material-icons text-xs shrink-0 mt-0.5">shopping_bag</span>
+                                <span><b>What to Buy:</b> {{ shop.what_to_buy }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Famous Heritage Temples in Chinatown (Sri Mariamman Temple & Buddha Tooth Relic) -->
+                {% if cng.attractions %}
+                <div class="pt-5 border-t border-red-200/50 dark:border-white/10 space-y-3">
+                    <div class="flex items-center gap-2 font-bold text-red-900 dark:text-red-200 text-sm">
+                        <span class="material-icons text-red-600">temple_hindu</span>
+                        <h4>Chinatown Iconic Spiritual Landmarks & Temples</h4>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for att in cng.attractions %}
+                        <div class="p-4 rounded-2xl bg-white/90 dark:bg-gray-800/80 border border-red-200 dark:border-white/10 shadow-sm">
+                            <div class="flex items-center justify-between gap-2 mb-1.5">
+                                <h5 class="text-sm font-bold text-gray-900 dark:text-white">{{ att.name }}</h5>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-300/40 shrink-0">{{ att.year }}</span>
+                            </div>
+                            <p class="text-[11px] text-red-600 dark:text-red-400 font-semibold mb-1 flex items-center gap-1">
+                                <span class="material-icons text-xs">pin_drop</span> {{ att.location }}
+                            </p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">{{ att.desc }}</p>
+                            <div class="p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 text-[11px] text-amber-800 dark:text-amber-200 leading-relaxed">
+                                <b>✨ Highlight:</b> {{ att.highlight }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Landmark Tip -->
+                <div class="mt-5 p-3.5 rounded-2xl bg-red-100/60 dark:bg-red-950/40 border border-red-300/50 text-xs text-red-900 dark:text-red-200 flex items-center justify-between flex-wrap gap-2">
+                    <span><b>🛕 Temple Etiquette Note:</b> At <b>Sri Mariamman Temple</b>, remove shoes before entering and dress modestly (covered knees & shoulders). Photography is permitted with reverence.</span>
+                    <span class="font-bold text-red-700 dark:text-red-300">MRT: Chinatown (NE4 Exit A directly to Pagoda St)</span>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Bugis Street & Haji Lane Guide -->
+            {% if honeymoon.bugis_haji_guide %}
+            {% set bhg = honeymoon.bugis_haji_guide %}
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-md border-2 border-fuchsia-300/60 bg-gradient-to-br from-fuchsia-50/40 via-white/80 to-purple-50/40 dark:from-fuchsia-950/20 dark:via-gray-800/60 dark:to-purple-950/20">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-fuchsia-200/50 dark:border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-fuchsia-600 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-fuchsia-500/30">
+                            <span class="material-icons text-2xl">checkroom</span>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">
+                                Cheap Clothes & Hip Street Art
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ bhg.title }}</h3>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 border border-fuchsia-200 dark:border-white/10 text-fuchsia-700 dark:text-fuchsia-300 inline-block">
+                            {{ bhg.subtitle }}
+                        </span>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-end gap-1">
+                            <span class="material-icons text-xs text-fuchsia-500">directions_walk</span> {{ bhg.how_to_reach }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bugis & Haji Lane Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {% for spot in bhg.spots %}
+                    <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/60 border border-fuchsia-200/70 dark:border-white/10 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5 gap-1">
+                                <h5 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{{ spot.name }}</h5>
+                                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border border-fuchsia-300/30 shrink-0">{{ spot.tag }}</span>
+                            </div>
+                            <p class="text-[11px] text-fuchsia-600 dark:text-fuchsia-400 font-semibold mb-1 flex items-center gap-1">
+                                <span class="material-icons text-xs">pin_drop</span> {{ spot.location }}
+                            </p>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">{{ spot.desc }}</p>
+                        </div>
+                        <div class="pt-2 border-t border-fuchsia-100 dark:border-white/5">
+                            <p class="text-[11px] text-fuchsia-700 dark:text-fuchsia-300 font-semibold flex items-start gap-1">
+                                <span class="material-icons text-xs shrink-0 mt-0.5">local_offer</span>
+                                <span><b>Highlights / What to Buy:</b> {{ spot.what_to_buy }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Transit & Walking Advice -->
+                <div class="mt-4 p-3.5 rounded-2xl bg-fuchsia-100/60 dark:bg-fuchsia-950/40 border border-fuchsia-300/50 text-xs text-fuchsia-900 dark:text-fuchsia-200 flex items-center justify-between flex-wrap gap-2">
+                    <span><b>🚇 Chinatown ➔ Bugis Transit:</b> Take the direct Downtown Line (Blue line) from Chinatown MRT (DT19) ➔ Bugis MRT (DT14 Exit C, 7 mins). From Bugis, Haji Lane is a quick 5-min walk down Victoria Street & Ophir Road!</span>
+                    <span class="font-bold text-fuchsia-700 dark:text-fuchsia-300">Bugis MRT (DT14 / EW12)</span>
+                </div>
+            </div>
+            {% endif %}
         </section>
 
         <!-- ========================================================
@@ -1599,31 +1925,52 @@
                     <div>
                         <div class="flex items-center gap-3 mb-4">
                             <div class="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
-                                <span class="material-icons">local_taxi</span>
+                                <span class="material-icons">directions_subway</span>
                             </div>
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ trans.title }}</h3>
-                                <p class="text-xs text-purple-600 dark:text-purple-400 font-semibold">{{ trans.best_mode }}</p>
+                                <p class="text-xs text-purple-600 dark:text-purple-400 font-semibold">{{ trans.best_mode if trans.best_mode else 'MRT, Public Buses, EZ-Link, VISA & Grab' }}</p>
                             </div>
                         </div>
 
                         <div class="space-y-2 text-xs text-gray-600 dark:text-gray-300">
-                            {% for mode in trans.modes %}
-                            <div class="p-2.5 rounded-2xl bg-purple-50/40 dark:bg-purple-950/20 border border-purple-100 dark:border-white/5 flex items-start gap-2.5">
-                                <span class="material-icons text-purple-500 text-sm mt-0.5 shrink-0">directions</span>
-                                <div>
-                                    <span class="font-bold text-gray-900 dark:text-white">{{ mode.name }}:</span>
-                                    <span class="leading-relaxed">{{ mode.verdict }}</span>
+                            {% if trans.guide %}
+                                {% for item in trans.guide %}
+                                <div class="p-2.5 rounded-2xl bg-purple-50/40 dark:bg-purple-950/20 border border-purple-100 dark:border-white/5 flex items-start gap-2.5">
+                                    <span class="material-icons text-purple-500 text-sm mt-0.5 shrink-0">
+                                        {% if 'Bus' in item.mode %}directions_bus
+                                        {% elif 'MRT' in item.mode %}subway
+                                        {% elif 'EZ-Link' in item.mode or 'Card' in item.mode %}credit_card
+                                        {% elif 'Grab' in item.mode %}local_taxi
+                                        {% elif 'Monorail' in item.mode %}tram
+                                        {% else %}directions{% endif %}
+                                    </span>
+                                    <div>
+                                        <span class="font-bold text-gray-900 dark:text-white">{{ item.mode }}:</span>
+                                        <span class="leading-relaxed">{{ item.desc }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% elif trans.modes %}
+                                {% for mode in trans.modes %}
+                                <div class="p-2.5 rounded-2xl bg-purple-50/40 dark:bg-purple-950/20 border border-purple-100 dark:border-white/5 flex items-start gap-2.5">
+                                    <span class="material-icons text-purple-500 text-sm mt-0.5 shrink-0">directions</span>
+                                    <div>
+                                        <span class="font-bold text-gray-900 dark:text-white">{{ mode.name }}:</span>
+                                        <span class="leading-relaxed">{{ mode.verdict }}</span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
 
+                    {% if trans.car_rental_verdict %}
                     <div class="mt-4 p-3 rounded-2xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 text-xs">
                         <span class="font-bold text-rose-700 dark:text-rose-300 block mb-0.5">🚫 Car Rental Advice:</span>
                         <p class="text-gray-600 dark:text-gray-300 leading-normal">{{ trans.car_rental_verdict }}</p>
                     </div>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>

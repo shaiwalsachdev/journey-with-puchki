@@ -286,7 +286,9 @@ DEFAULT_HONEYMOON_DATA = {
                 "end": "City Hall MRT (EW13 / NS25) or Bras Basah (CC2)",
                 "lines": "East-West Line (Green) ➔ Transfer at Tanah Merah to City Hall",
                 "route_desc": "Changi Airport MRT (CG2) ➔ Tanah Merah (EW4) cross platform ➔ City Hall MRT (EW13) Exit A. Carlton Hotel is directly a 4-minute walk (350m) across Bras Basah Rd.",
-                "fare": "~SGD 2.05 (Tap zero-forex card directly)",
+                "fare": "~SGD 2.05 (Tap contactless card or EZ-Link)",
+                "payment_tips": "Simply tap your contactless VISA / Mastercard at MRT fare gates. EZ-Link card is also accepted for MRT & buses.",
+                "bus_alternative": "Public Bus No. 36 departs directly from Changi Airport basement bus bays (Terminals 1, 2, 3 & 4) and goes straight into the city / Bras Basah & Orchard Rd (~SGD 2.00, scenic route!).",
                 "taxi_alternative": "Grab/Taxi ~20 mins (SGD 22–28) recommended with heavy honeymoon luggage."
             },
             "schedule": [
@@ -373,25 +375,34 @@ DEFAULT_HONEYMOON_DATA = {
             "title": "Sentosa Island, Cable Car & Wings of Time",
             "location": "Oasia Resort Sentosa & Siloso/Palawan Beach",
             "mrt_guide": {
-                "start": "Marina South Pier MRT (NS28)",
-                "end": "Imbiah Station (Sentosa Express) / HarbourFront MRT (NE1 / CC29)",
-                "lines": "North-South Line ➔ Dhoby Ghaut ➔ North-East Line (Purple) to HarbourFront ➔ Sentosa Express Monorail",
-                "route_desc": "From Cruise Centre walk to Marina South Pier (NS28) ➔ Take North-South Line to Dhoby Ghaut (NS24) ➔ Transfer to North-East Line (Purple) to HarbourFront (NE1, VivoCity) ➔ Board Sentosa Express monorail to Imbiah Station (Oasia Resort Sentosa is right outside the station exit!).",
-                "fare": "~SGD 2.10 MRT + Monorail (Free Monorail once checked in at Oasia).",
+                "start": "HarbourFront MRT Station (NE1 / CC29) · Inside VivoCity Mall",
+                "end": "Imbiah Station (Oasia Resort Sentosa) ➔ Beach Station / Central Beach Bazaar (Terminal)",
+                "lines": "North-East Line (Purple) / Circle Line (Yellow) ➔ VivoCity Mall (Level 3 Monorail / Tower 2 Cable Car)",
+                "route_desc": "1. Reaching HarbourFront MRT: The station exits directly inside VivoCity Mall (Basement 2).\n2. Sentosa Express Monorail: Take the escalator inside VivoCity up to Level 3 (Lobby L). Board the Sentosa Express Monorail directly into Sentosa. Line has 4 stations: VivoCity ➔ Resorts World ➔ Imbiah (Stop 2, right at front steps of Oasia Resort Sentosa!) ➔ Beach Station (Final Stop: Central Beach Bazaar, Wings of Time, street food street, & beach shuttles).\n3. Singapore Cable Car: From HarbourFront MRT Exit B, walk sheltered linkway to HarbourFront Tower 2 (Level 15) to board the Mount Faber Line cable car across the water directly to Sentosa Cable Car Station (Imbiah Lookout).",
+                "fare": "SGD 4.00 Monorail entry ticket (Pay once, 100% FREE unlimited rides across all stations thereafter with Oasia Resort Sentosa keycard/pass; Cable Car included in your Klook/Pelago SkyPass).",
+                "payment_tips": "Monorail Tickets: Cost is SGD 4.00 per person to enter Sentosa from VivoCity Level 3. Buy at kiosks or simply tap your contactless VISA/Mastercard/EZ-Link directly at the gantry! After the initial $4 entry (or once checked into Oasia Resort Sentosa), all monorail rides inside Sentosa island and back are 100% FREE OF COST without any further charges.",
+                "cable_car_guide": "Singapore Cable Car departs from HarbourFront Tower 2 across Keppel Bay to Mount Faber & Sentosa Island (spectacular 360° romantic panoramic harbor view).",
                 "taxi_alternative": "Grab/Taxi ~18 mins (SGD 16–22) with suitcases directly to Oasia Resort lobby."
             },
             "schedule": [
                 {"time": "7:00 AM – 8:30 AM", "title": "Cruise Disembarkation", "desc": "Follow cruise exit instructions. Clear customs at Marina Bay Cruise Centre.", "icon": "exit_to_app"},
-                {"time": "8:30 AM – 9:30 AM", "title": "Taxi to Oasia Resort Sentosa", "desc": "Arrive at Oasia Resort Sentosa. Leave luggage with concierge (check-in at 3 PM).", "icon": "hotel"},
-                {"time": "10:00 AM – 12:00 PM", "title": "Singapore Cable Car SkyPass", "desc": "Ride the Mount Faber Line & Sentosa Line. Panoramic 360-degree aerial views of the harbor.", "icon": "flight_takeoff"},
-                {"time": "12:00 PM – 3:00 PM", "title": "Beachside Lunch & Siloso / Palawan Beach", "desc": "Cross the rope bridge to the Southernmost Point of Continental Asia. Relax on pristine sand.", "icon": "beach_access"},
-                {"time": "3:00 PM – 5:00 PM", "title": "Check-in at Oasia Resort & Unwind", "desc": "Settle into your sanctuary room at Oasia. Refresh and take romantic resort photos.", "icon": "bed"},
-                {"time": "7:40 PM / 8:40 PM", "title": "Wings of Time Night Show", "desc": "Spectacular multi-sensory laser, fire, water, and music show set against the open sea.", "icon": "auto_awesome"}
+                {"time": "8:30 AM – 9:30 AM", "title": "Taxi to Oasia Resort Sentosa", "desc": "Arrive at Oasia Resort Sentosa (Imbiah Station). Leave luggage with concierge (check-in at 3 PM).", "icon": "hotel"},
+                {"time": "9:30 AM – 11:30 AM", "title": "Fort Siloso Skywalk (100% FREE Aerial Canopy Trail) 🌲🌁", "desc": "Take the scenic Sentosa Cable Car Siloso Point station or stroll to Fort Siloso Skywalk — completely FREE entry! Take the scenic glass elevator 11 storeys up (181 meters long elevated treetop walkway). Stroll through the lush jungle canopy with panoramic sea views of Keppel Harbour and the South China Sea, walking into Singapore's only preserved coastal fort.", "icon": "nature_people"},
+                {"time": "11:30 AM – 1:30 PM", "title": "Palawan Beach: Wooden Suspension Bridge & Tropical Islet 🏝️🌉", "desc": "Hop on the Free Beach Shuttle tram to Palawan Beach. Walk across the famous wooden rope suspension bridge over turquoise water to the offshore islet. Stand on the Southernmost Point of Continental Asia and climb the twin timber lookout towers!", "icon": "beach_access"},
+                {"time": "1:30 PM – 3:30 PM", "title": "Tanjong Beach: Serene Crescent Cove & Beachside Lunch 🏖️🍹", "desc": "Take the free Beach Shuttle one stop further east to Tanjong Beach — Singapore's most tranquil, private, and romantic beach cove! Relax under swaying palm trees away from all crowds, dip your toes in calm sheltered waters, or lounge with chilled drinks and artisanal lunch at Tanjong Beach Club.", "icon": "waves"},
+                {"time": "3:30 PM – 5:30 PM", "title": "Check-in at Oasia Resort Sentosa & Unwind 🛏️✨", "desc": "Hop on the shuttle back to Imbiah Station. Check into your Premier Room sanctuary at Oasia Resort Sentosa, refresh, and get dressed for the beach evening.", "icon": "bed"},
+                {"time": "5:30 PM – 6:45 PM", "title": "Siloso Beach: Sunset Stroll, Vibrant Boardwalk & Cocktails 🌅🍕", "desc": "Head down to Siloso Beach for the magical late afternoon / golden sunset! Stroll the buzzing beachfront promenade, watch beach volleyball, sip tropical coolers, and enjoy seaside wood-fired pizza at Trapizza right by the rolling waves as the sky turns orange.", "icon": "wb_twilight"},
+                {"time": "6:45 PM – 7:30 PM", "title": "Arrive 1 Hour Early at Central Beach Bazaar 🌅", "desc": "Walk 5 mins along the boardwalk from Siloso Beach to Central Beach Bazaar (or hop on Sentosa Express monorail). Arrive at least 1 HOUR before showtime to stroll the vibrant beachfront promenade, watch the 80m Sentosa SkyJet fountain, sample international street food, and claim prime middle seats!", "icon": "storefront"},
+                {"time": "Daily Shows: 7:40 PM & 8:40 PM", "title": "Wings of Time Night Show (Sentosa Island) 🎆✨", "desc": "Spectacular open-sea light, water, laser, fire, and fireworks symphony at Central Beach Bazaar on Sentosa Island. Daily showtimes start promptly at 7:40 PM (Show 1) and 8:40 PM (Show 2). Reaching 1 hour early ensures seamless check-in and prime panoramic views right in the middle rows!", "icon": "auto_awesome"},
+                {"time": "8:30 PM – 9:30 PM", "title": "Sentosa Sensoryscape: 'ImagiNite' Evening Light Walk (100% FREE) 🌟🌺", "desc": "Right outside Beach Station, walk into Sentosa's brand-new landmark walkway connecting Beach Station to Imbiah Station (right back to Oasia Resort!). Starting at 7:50 PM every night, Sensoryscape transforms with 'ImagiNite' — an open-air wonderland of illuminated architectural domes, interactive augmented-reality light projections on the ground, shimmering light beams, water mist chambers, and scented night blooms. The most romantic post-dinner stroll directly to your hotel!", "icon": "flare"}
             ],
             "options": [
-                {"title": "Lunch Option A (Beachfront Italian):", "desc": "Trapizza on Siloso Beach — wood-fired pizza and cocktails right by the waves."},
-                {"title": "Lunch Option B (Chic Beach Club):", "desc": "Tipsy Unicorn or Ola Beach Club for tropical mocktails and relaxing beach loungers."},
-                {"title": "Dinner Option:", "desc": "Quayside Isle waterfront dining at Sentosa Cove (overlooking private yachts)."}
+                {"title": "🌟 Sentosa Sensoryscape 'ImagiNite' (100% FREE Night Experience):", "desc": "• Perfect Location: A 350-meter biophilic illuminated sensory corridor connecting Beach Station directly to Imbiah Lookout / Oasia Resort Sentosa.\n• ImagiNite Light Show (7:50 PM – 9:40 PM nightly): Free entry! Features 6 sensory gardens with interactive digital light projections, floor beam art, glowing basket-weave architectural gazebos (Lookout Loop, Tactile Trellis, Scented Sphere, Symphony Streams), and misty light displays.\n• Romantic Stroll Home: After watching Wings of Time at Beach Station, instead of taking the crowded monorail, stroll 10–15 mins through this glowing fairy-tale path straight back to your hotel lobby at Oasia Resort!"},
+                {"title": "🏖️ The 3 Beaches of Sentosa (Palawan ➔ Tanjong ➔ Siloso):", "desc": "• 1. Palawan Beach (Morning): Best for couples & families. Iconic wooden suspension bridge to the offshore islet & Southernmost Point of Continental Asia with timber lookout towers.\n• 2. Tanjong Beach (Afternoon): Sentosa's quietest, most peaceful crescent beach. Lined with coconut groves and the bohemian-chic Tanjong Beach Club (perfect for a relaxed couple lunch & daybed cocktails).\n• 3. Siloso Beach (Evening & Sunset): The liveliest beach with hip beach clubs, music, water sports, Trapizza Italian restaurant, and vibrant boardwalk connecting directly into Central Beach Bazaar."},
+                {"title": "🚎 Sentosa Beach Shuttle (100% Free):", "desc": "• Zero Cost: Runs continuously every 10–15 mins linking Beach Station ⇄ Siloso Beach ⇄ Palawan Beach ⇄ Tanjong Beach.\n• Effortless Hop-On Hop-Off: Seamlessly connects all 3 beaches without walking in the sun."},
+                {"title": "🌁 Fort Siloso Skywalk (100% Free Treetop Walk):", "desc": "• Free Access: Glass elevator 11 storeys up (36m high) to an 181m elevated treetop canopy trail with sweeping views of the western coast and Keppel Harbour."},
+                {"title": "⭐ Crucial Tip — Reach Wings of Time 1 Hour Early:", "desc": "For the 7:40 PM show, arrive at Central Beach Bazaar by 6:40 PM; for the 8:40 PM show, arrive by 7:40 PM. Seating is on a first-come, first-served basis within standard/premium tiers, and arriving an hour early lets you soak in the sunset vibes, musical fountain, and beach food stalls without rushing."},
+                {"title": "Dining Options along the Beaches:", "desc": "• Lunch at Tanjong Beach: Tanjong Beach Club (fresh seafood, truffle fries, cocktails) or Palawan FOC Sentosa.\n• Sunset Dinner at Siloso Beach: Trapizza (wood-fired authentic Italian pizza by the sand) or Rumours Beach Club."}
             ]
         },
         {
@@ -420,53 +431,68 @@ DEFAULT_HONEYMOON_DATA = {
         {
             "day": 7,
             "date": "Saturday, 19 December 2026",
-            "title": "River Wonders Pandas & Culture Shopping",
-            "location": "Mandai Wildlife Reserve ➔ Little India ➔ Chinatown",
+            "title": "Shopping Day: Pandas, Little India, Chinatown, Bugis Street & Haji Lane",
+            "location": "Mandai ➔ Little India ➔ Chinatown ➔ Bugis Street & Haji Lane",
             "mrt_guide": {
                 "start": "HarbourFront MRT (NE1)",
-                "end": "Khatib MRT (NS14) ➔ Mandai Shuttle ➔ Farrer Park (NE8) ➔ Chinatown (NE4)",
-                "lines": "North-East Line (Purple) ➔ North-South Line (Red) ➔ Mandai Khatib Shuttle Bus",
-                "route_desc": "1. To Mandai: Monorail to HarbourFront (NE1) ➔ Purple line to Dhoby Ghaut ➔ Red line northbound to Khatib (NS14 Exit A) ➔ Mandai Khatib Shuttle (SGD 1, every 10 min) directly to River Wonders. (Grab ~25 mins is very convenient here!).\n2. To Little India: Red Line south from Khatib ➔ Dhoby Ghaut ➔ Purple line to Farrer Park (NE8 Exit I for Mustafa Centre) or Little India (NE7).\n3. To Chinatown: Purple line direct from Little India (NE7) ➔ Chinatown MRT (NE4 Exit A directly into Pagoda Street market).",
-                "fare": "~SGD 2.20 per MRT leg."
+                "end": "Khatib (NS14) ➔ Little India (NE7) ➔ Chinatown (NE4) ➔ Bugis (DT14/EW12) ➔ Sentosa",
+                "lines": "North-East Line (Purple) ➔ Downtown Line (Blue) ➔ Sentosa Express Monorail",
+                "route_desc": "1. Mandai ➔ Little India: Khatib MRT (Red line) south to Dhoby Ghaut ➔ Purple line to Little India (NE7) / Farrer Park (NE8 for Mustafa Centre).\n2. Little India ➔ Chinatown: Direct Purple Line southbound from Little India (NE7) to Chinatown (NE4 Exit A, 4 stops, ~8 mins).\n3. Chinatown ➔ Bugis Street: Direct Downtown Line (Blue line) from Chinatown MRT (DT19) to Bugis MRT (DT14 Exit C, 4 stops, ~7 mins) directly opposite Bugis Street Market!\n4. Bugis ➔ Haji Lane: Just a breezy 5-minute stroll (400m) from Bugis MRT / Bugis Junction to Haji Lane's colorful street art & quirky boutiques.\n5. Returning to Sentosa: From Bugis MRT (DT14), take Downtown Line to Chinatown (DT19) ➔ Transfer to Purple Line to HarbourFront (NE1) ➔ Sentosa Express Monorail.",
+                "fare": "~SGD 1.50–2.20 per MRT leg (Tap Contactless VISA/Mastercard directly at gantries)."
             },
             "schedule": [
-                {"time": "8:00 AM – 9:00 AM", "title": "Taxi to Mandai Wildlife Reserve", "desc": "Head north to Mandai for the river safari experience.", "icon": "directions_car"},
-                {"time": "9:00 AM – 12:00 PM", "title": "River Wonders & Giant Panda Forest", "desc": "Visit adorable Kai Kai and Jia Jia in their climate-controlled forest, Amazon Flooded Forest, and reservoir cruise.", "icon": "pets"},
-                {"time": "12:00 PM – 1:00 PM", "title": "Lunch at Mandai", "desc": "Cute panda bao and snacks at Mama Panda Kitchen.", "icon": "lunch_dining"},
-                {"time": "1:00 PM – 3:30 PM", "title": "Taxi to Little India & Mustafa Centre", "desc": "Mustafa Centre (24/7 shopping for electronics, chocolates, perfumes) and colorful Serangoon Road.", "icon": "shopping_bag"},
-                {"time": "3:30 PM – 6:30 PM", "title": "Chinatown Street Market & Souvenirs", "desc": "Pagoda Street, Buddha Tooth Relic Temple, authentic bubble tea, gifts and souvenirs.", "icon": "storefront"},
-                {"time": "7:30 PM", "title": "Return to Sentosa & Rest", "desc": "Dinner and peaceful night at Oasia Resort.", "icon": "night_shelter"}
+                {"time": "7:30 AM – 8:30 AM", "title": "Early Morning Transit to Khatib MRT & Mandai Shuttle 🚌", "desc": "Take North-South Line (Red) to Khatib MRT Station (NS14 Exit A). Board the Mandai Khatib Shuttle (~Rs 170 / SGD 2.70, runs every 10–15 mins) for a quick 15-min direct ride to Singapore Zoo & River Wonders in Mandai.", "icon": "directions_bus"},
+                {"time": "8:30 AM – 12:30 PM", "title": "Singapore Zoo (World-Famous Open-Concept Wildlife Safari) 🦁🐘🦘", "desc": "Enter Singapore Zoo at 8:30 AM opening! Explore 300+ species across open lush rainforest habitats with natural moats instead of cages. Highlights: White tigers, African lions, Asian elephants splash, Australian kangaroos/wallabies walk-through, Great Rift Valley baboons, primate island, aviary birds, and the famous Splash Safari Sea Lion presentation at the amphitheatre!", "icon": "pets"},
+                {"time": "12:30 PM – 1:30 PM", "title": "Lunch at Mandai Rainforest Pavilion / Ah Meng Kitchen 🍜", "desc": "Enjoy Singapore hawker dishes (chicken rice, laksa) and chilled drinks at Ah Meng Restaurant or Mama Panda Kitchen before heading to Little India.", "icon": "lunch_dining"},
+                {"time": "1:15 PM – 2:00 PM", "title": "House of Tan Teng Niah & Sri Veeramakaliamman Temple", "desc": "Take vibrant couple photos at the 1900 rainbow-colored House of Tan Teng Niah (Kerbau Rd), then walk 2 mins to seek blessings at Sri Veeramakaliamman Temple (Shri Viliyam).", "icon": "temple_hindu"},
+                {"time": "2:00 PM – 3:15 PM", "title": "Mustafa Centre: 24/7 Mega Electronics & Packed Foods", "desc": "Stock up on packed Indian ready-to-eat meals, snacks, cosmetics, wholesale Tiger Balm, Type G adapters, power banks, and duty-free perfumes.", "icon": "shopping_cart"},
+                {"time": "3:30 PM – 4:00 PM", "title": "Chinatown Transfer (Purple Line MRT Direct)", "desc": "Hop on the North-East MRT (Purple Line) direct from Little India (NE7) to Chinatown MRT (NE4 Exit A, 8 mins).", "icon": "subway"},
+                {"time": "4:00 PM – 5:30 PM", "title": "Chinatown Market, Sri Mariamman & Buddha Tooth Relic", "desc": "Shop Singapore's cheapest Merlion souvenirs on Pagoda Street, seek blessings at Sri Mariamman Temple (1827), and marvel at the 3.5-ton solid gold stupa at the Buddha Tooth Relic Temple.", "icon": "storefront"},
+                {"time": "5:30 PM – 6:00 PM", "title": "Chinatown to Bugis (Downtown Line MRT Direct)", "desc": "Board the Downtown Blue Line direct from Chinatown MRT (DT19) to Bugis MRT (DT14 Exit C, only 4 stops / 7 mins).", "icon": "train"},
+                {"time": "6:00 PM – 7:15 PM", "title": "Bugis Street Market: Singapore's Largest & Cheapest Clothes Market", "desc": "Dive into Bugis Street — 3 levels of 800+ sheltered stalls! Grab trendy Korean & street fashion clothes ($10–$15), cute sunglasses, luggage bags, bags, watches, phone cases, and $1 fresh juice cups.", "icon": "checkroom"},
+                {"time": "7:15 PM – 8:30 PM", "title": "Haji Lane (5-Min Walk from Bugis): Street Art & Quirky Boutiques 🎨", "desc": "Stroll 5 mins from Bugis into Haji Lane. Pose against world-famous vibrant graffiti wall murals, browse independent quirky fashion boutiques, vintage vinyl, handmade jewelry, and enjoy live music cafes with iced mocktails & dinner.", "icon": "palette"},
+                {"time": "8:30 PM – 9:15 PM", "title": "Return to Sentosa & Rest", "desc": "Bugis MRT (Downtown Line) ➔ Chinatown ➔ Purple line to HarbourFront ➔ Sentosa Express Monorail to Oasia Resort. Unwind in your suite with your shopping haul!", "icon": "night_shelter"}
             ],
             "options": [
-                {"title": "Shopping Alternative:", "desc": "If tired of street shopping, head to Bugis Junction or Orchard Road malls for luxury & fashion brands."},
-                {"title": "Foodie Treat in Chinatown:", "desc": "Chinatown Complex Hawker Centre for Michelin-rated street food."}
+                {"title": "🛍️ Bugis Street Market (Cheapest Clothes & Accessories):", "desc": "• Trendy Clothing & Outfits: Summer dresses, beach shirts, trendy tees, and streetwear at $10 to $15.\n• Electronics & Phone Accessories: Fast chargers, novelty phone cases, cables, selfie sticks, and portable fans for $5–$12.\n• Bags, Footwear & Luggage: Extra duffel bags & foldable trolley bags if your shopping exceeds luggage space!\n• Budget Souvenirs & $1 Refreshments: 3 for $10 souvenir bundles and freshly pressed dragonfruit/watermelon juices for $1–$1.50."},
+                {"title": "🎨 Haji Lane (5 Mins from Bugis — Colorful Murals & Quirky Boutiques):", "desc": "• Vibrant Street Art Murals: Legendary colorful geometric and pop-art murals on heritage shophouse walls — absolute must-visit for romantic couple photography!\n• Quirky Fashion & Indie Boutiques: One-of-a-kind dresses, handmade leather accessories, bespoke perfume blending, retro sunglasses, and artisanal jewelry.\n• Hip Cafes & Live Music: Open-air chill bars, Turkish lamp cafes, artisanal coffee roasters, and Mexican/Middle Eastern bistros."},
+                {"title": "🏮 Chinatown Shopping & Temples:", "desc": "• Pagoda Street: Singapore's best Merlion souvenirs (magnets/keychains 5–6 for $10), silk nightgowns, and kaya jam.\n• Sri Mariamman Temple: Singapore's oldest 1827 national monument Hindu temple.\n• Buddha Tooth Relic Temple: 4-storey Tang-style architectural marvel with 3.5-ton gold stupa."},
+                {"title": "Mustafa Centre Electronics & Packed Food Checklist:", "desc": "• Packed Foods: Ready-to-eat MTR/Haldiram meals, samosas, sweets, and dry fruits.\n• Electronics: Travel adapters, fast power banks, earphones, and multi-pin plugs.\n• Daily Essentials: Wholesale toiletries, sunscreens, shampoos, and Tiger Balm."}
             ]
         },
         {
             "day": 8,
             "date": "Sunday, 20 December 2026",
-            "title": "Gardens by the Bay, Marina Bay SkyPark & Light Show",
-            "location": "Marina Bay & Gardens by the Bay",
+            "title": "Marina Bay Sands SkyPark, The Shoppes Mall, Gardens by the Bay & Spectra Show",
+            "location": "Marina Bay Sands, The Shoppes & Gardens by the Bay",
             "mrt_guide": {
-                "start": "HarbourFront MRT (NE1 / CC29)",
-                "end": "Gardens by the Bay MRT (TE22) & Bayfront MRT (CE1 / DT16)",
-                "lines": "Circle Line (Yellow) to Marina Bay (CE2) ➔ Thomson-East Coast Line (Brown) to TE22 OR Downtown Line (Blue)",
-                "route_desc": "Monorail from Oasia to VivoCity / HarbourFront ➔ Circle Line (Yellow) to Marina Bay (CE2) ➔ Transfer 1 stop on Thomson-East Coast Line to Gardens by the Bay MRT (TE22 Exit 1 right outside Flower Dome!). For evening SkyPark & Spectra: Walk through Dragonfly Bridge to Bayfront MRT (DT16/CE1 Exit B). Returning to Sentosa: Bayfront (Downtown line) ➔ Chinatown (Purple line) ➔ HarbourFront.",
-                "fare": "~SGD 1.90 each way."
+                "start": "HarbourFront MRT (NE1 / CC29) · Sentosa Gateway",
+                "end": "Bayfront MRT Station (DT16 / CE1) · Main Station for Gardens by the Bay & Marina Bay Sands",
+                "lines": "Circle Line (Yellow) direct OR Downtown Line (Blue) directly into Bayfront MRT (CE1 / DT16)",
+                "route_desc": "• Primary Station — Bayfront MRT (DT16 / CE1): The central station serving both Gardens by the Bay AND Marina Bay Sands!\n• Exit B (Underground Sheltered Linkway): Leads directly into Gardens by the Bay outside Dragonfly Bridge. Floral Fantasy is located right beside Exit B!\n• 🚐 Gardens by the Bay Shuttle Service (SGD 3.00): Board the air-conditioned electric shuttle right at Bayfront MRT Exit B! For just SGD 3.00 per person (unlimited all-day rides), this shuttle whisks you straight across the gardens to the entrance of Flower Dome, Cloud Forest & Jurassic World — saving you a 15-minute walk in the tropical heat!\n• Exit C & D: Connects directly inside The Shoppes at Marina Bay Sands, the Casino, Food Court, and lifts up to the Level 57 MBS SkyPark Observation Deck!\n• Returning to Sentosa at Night: Board Downtown Line at Bayfront MRT (DT16) ➔ Chinatown (DT19) ➔ Transfer to Purple Line to HarbourFront (NE1) ➔ Free Sentosa Express Monorail back to Oasia Resort.",
+                "fare": "~SGD 1.90 MRT fare + optional SGD 3.00 Gardens Shuttle (unlimited rides between Bayfront MRT Exit B & Conservatories)."
             },
             "schedule": [
-                {"time": "10:00 AM – 1:00 PM", "title": "Flower Dome & Cloud Forest", "desc": "World's largest glass greenhouse with indoor waterfall and mist walk.", "icon": "local_florist"},
-                {"time": "1:00 PM – 2:00 PM", "title": "Lunch at Marina Bay Sands", "desc": "Dine at The Shoppes at Marina Bay Sands or waterfront dining.", "icon": "restaurant"},
-                {"time": "2:00 PM – 3:30 PM", "title": "Outdoor Gardens & Supertree Boardwalk", "desc": "Walk among the towering 50-meter Supertrees and sculpture gardens.", "icon": "park"},
-                {"time": "5:00 PM – 6:15 PM", "title": "Marina Bay Sands SkyPark Observation Deck", "desc": "57 levels high! Catch the golden hour sunset over Singapore skyline.", "icon": "apartment"},
-                {"time": "6:15 PM – 7:15 PM", "title": "Merlion Park & Waterfront Photos", "desc": "Iconic photos with the Singapore Merlion against the skyline.", "icon": "photo_camera"},
-                {"time": "7:45 PM – 8:15 PM", "title": "Garden Rhapsody Light & Sound Show", "desc": "Lie under the Supertrees as they dance with synchronized lights and music (free to watch!).", "icon": "auto_awesome"},
-                {"time": "8:30 PM – Late", "title": "Grand Honeymoon Finale Dinner", "desc": "Romantic waterfront dinner celebrating your final night.", "icon": "celebration"}
+                {"time": "9:30 AM – 10:30 AM", "title": "Floral Fantasy & Flight of the Dragonfly 4D Show 🌸🚁", "desc": "Start right outside Bayfront MRT Exit B at Floral Fantasy (~₹1,400 / person). Stroll through 4 magical garden landscapes (Dance, Float, Waltz, Drift) with hanging floral bouquets, cascading flowers, and poison dart frogs, ending with the thrilling 4D simulated ride 'Flight of the Dragonfly' soaring over Gardens by the Bay!", "icon": "spa"},
+                {"time": "10:30 AM – 1:30 PM", "title": "Flower Dome + Cloud Forest & Jurassic World (Must-Visit) 🦖🌸", "desc": "Take the $3 electric shuttle to the main Conservatories. 1. Flower Dome: The world's largest glass greenhouse with Mediterranean gardens and seasonal floral displays. 2. Cloud Forest & Jurassic World: Step into the misty 35m indoor mountain waterfall, surrounded by roaring animatronic dinosaurs (towering Brachiosaurus & T-Rex) with the aerial Cloud Walk and Tree Top Walk!", "icon": "local_florist"},
+                {"time": "1:30 PM – 2:30 PM", "title": "Lunch at Jurassic Nest / The Shoppes at MBS 🦕🍜", "desc": "Grab lunch at Jurassic Nest Food Hall (dine next to roaring animatronic dinosaurs with Michelin-recommended hawker stalls) OR cross the short covered linkbridge into The Shoppes at Marina Bay Sands for world-class waterfront restaurants and food courts.", "icon": "restaurant"},
+                {"time": "2:30 PM – 4:15 PM", "title": "The Shoppes at MBS, Sampan Canal Boat & Apple Floating Store 🛶🛍️🍏", "desc": "Walk directly into The Shoppes at Marina Bay Sands (connected to Bayfront MRT Exit C/D). 1. Sampan Boat Ride: Glide gracefully along the indoor canal in a traditional wooden Sampan boat around the swirling Rain Oculus. 2. Luxury Shopping: Stroll through high-fashion flagship boutiques, TWG Tea garden, and high-street brands. 3. Apple Marina Bay Sands: Walk out through the underwater tunnel to the world's first and only 360-degree floating glass sphere Apple store on the bay waters!", "icon": "shopping_bag"},
+                {"time": "4:30 PM – 5:30 PM", "title": "MBS SkyPark Observation Deck OR OCBC Skyway 🌆", "desc": "Take the high-speed lift up to Level 57 of Marina Bay Sands to the iconic SkyPark Observation Deck for jaw-dropping 360° bird's-eye views of Singapore, or stroll the 128m suspended OCBC Skyway canopy bridge between the Supertrees.", "icon": "apartment"},
+                {"time": "5:30 PM – 6:45 PM", "title": "Supertree Observatory (~₹800 / person) — Golden Hour Sunset 🌅", "desc": "Head up to the rooftop of the tallest 50-meter Supertree (~₹800 / SGD 14 per person, best visited right before sunset!). Enjoy 360-degree open-air rooftop views of the golden sunset over the Marina Bay skyline, with light refreshments at the cafe.", "icon": "wb_twilight"},
+                {"time": "7:00 PM – 7:45 PM", "title": "Claim Your Picnic Spot under Supertree Grove 🧺💧", "desc": "Bring a bedsheet / picnic mat and bottles of water. Spread your bedsheet on the lush green lawns directly beneath the central Supertrees and lay down side-by-side looking straight up into the towering branches in anticipation of the light show!", "icon": "deck"},
+                {"time": "Daily Shows: 7:45 PM & 8:45 PM", "title": "Garden Rhapsody Light & Sound Show ✨🎶", "desc": "The Supertrees come alive with dazzling synchronized lights, colors, and musical symphonies! Lying down on your bedsheet looking straight up is the undisputed #1 romantic honeymoon experience in Singapore. Daily shows start promptly at 7:45 PM and 8:45 PM (free to watch!).", "icon": "auto_awesome"},
+                {"time": "9:00 PM – 9:45 PM", "title": "Spectra Light & Water Show at MBS Waterfront Plaza 🌊🎆", "desc": "Walk from Supertree Grove across the Dragonfly Bridge directly to the Marina Bay Sands Event Plaza for the spectacular 9:00 PM Spectra show (15 mins, 100% free!). Watch dancing water fountain jets, colorful visual projections, misty laser beams, and orchestral soundtrack against the shimmering bay and skyline.", "icon": "celebration"},
+                {"time": "9:45 PM – 10:45 PM", "title": "Romantic Waterfront Promenade Walk to Merlion Park 🦁🌊", "desc": "From Marina Bay Sands / Event Plaza, take a gorgeous romantic nighttime stroll along the Marina Bay waterfront promenade (or cross via the illuminated Helix Bridge / Jubilee Bridge, or hop on a $5 Singapore River bumboo boat). Reach iconic Merlion Park! Pose for classic couple photos with the illuminated 8.6-meter water-spouting Merlion statue framed directly against the glowing Marina Bay Sands hotel in the background. Return via Raffles Place MRT or Bayfront MRT back to Sentosa.", "icon": "photo_camera"}
             ],
             "options": [
-                {"title": "Light Show Bonus:", "desc": "Catch the Spectra Marina Bay water-and-laser fountain show at 9:00 PM from the MBS Event Plaza!"},
-                {"title": "Dining Option A (Rooftop):", "desc": "CÉ LA VI or Spago atop Marina Bay Sands for jaw-dropping skyline drinks."},
-                {"title": "Dining Option B (Colonial Library Vegan Fine Dining):", "desc": "Cultivate Cafe at Maxwell Reserve — intimate, candlelit library setting."}
+                {"title": "🦁 Merlion Park Romantic Walk (Post-MBS / Post-Spectra):", "desc": "• Scenic Waterfront Stroll: Walk right along the illuminated bay waterfront from Marina Bay Sands Event Plaza across the Jubilee Bridge / Helix Bridge to Merlion Park (~15–20 min scenic stroll).\n• Iconic Photo Opportunity: Stand on the viewing pier for the legendary photo catching the spouting water from the majestic 8.6-meter Merlion with the 3 towers of Marina Bay Sands glowing across the water!\n• Singapore River Cruise / Bumboo Boat Alternative: Hop on an electric bumboo boat from Bayfront South Jetty (outside MBS) directly across the water to Merlion Jetty for a relaxing 5-minute cruise across the bay."},
+                {"title": "🛍️ The Shoppes at Marina Bay Sands & Canal Boat:", "desc": "• Easy MRT Walk: Directly accessible from Bayfront MRT (Exit C & D) via sheltered, air-conditioned walkways.\n• Sampan Boat Ride: Traditional boat cruise along the indoor canal inside The Shoppes (~SGD 15 / person). You circle around the giant Rain Oculus whirlpool that pours water 2 storeys down!\n• Apple Marina Bay Sands: The world's first floating sphere Apple store. Entirely made of 114 pieces of glass surrounded by bay water, with 360-degree skyline views and submerged entrance tunnel.\n• Luxury & High Street Shopping: Over 170 premier luxury boutiques, watchmakers, cosmetics, and fine fashion labels."},
+                {"title": "🏙️ Marina Bay Sands SkyPark Observation Deck:", "desc": "Perched 200m high on the cantilevered rooftop of Tower 3. Spectacular panoramic views of Gardens by the Bay, Singapore Strait, and the glittering city skyline. Timed entry tickets available on Klook / Pelago."},
+                {"title": "🌸 Floral Fantasy (~₹1,400 / person):", "desc": "Located right at Bayfront MRT Exit B. Includes 4 whimsical floral dreamscapes and the immersive 4D simulated 'Flight of the Dragonfly' motion theatre."},
+                {"title": "🌅 Supertree Observatory (~₹800 / person):", "desc": "Perched 50m atop the tallest Supertree. Best visited in the late afternoon / evening just before sunset (5:30 PM – 6:30 PM) for the magical golden hour transition into dusk!"},
+                {"title": "🧺 Pro-Tip for Garden Rhapsody (7:45 PM & 8:45 PM):", "desc": "Do NOT stand or crane your neck! Bring a lightweight bedsheet or picnic mat and cold bottled water. Spread it on the soft grass directly under the Supertrees 15–20 mins before showtime and lay flat on your backs to watch the lights dance directly overhead!"},
+                {"title": "🚐 Gardens by the Bay $3 Shuttle Service:", "desc": "Bayfront MRT (Exit B) ⇄ Conservatories. SGD 3.00 unlimited rides all day."},
+                {"title": "🌊 Spectra Light & Water Show (Nightly 8:00 PM & 9:00 PM):", "desc": "Free outdoor spectacle at the MBS Event Plaza along the waterfront promenade. The 9:00 PM slot fits seamlessly right after the 7:45 PM Garden Rhapsody show!"}
             ]
         },
         {
@@ -483,30 +509,159 @@ DEFAULT_HONEYMOON_DATA = {
                 "taxi_alternative": "Grab/Taxi ~28 mins (SGD 26–32) highly recommended for luggage-free comfort."
             },
             "schedule": [
-                {"time": "9:00 AM", "title": "Check-out of Oasia Resort Sentosa", "desc": "Take taxi to Changi Airport (~25–35 min).", "icon": "luggage"},
-                {"time": "10:00 AM – 12:30 PM", "title": "Jewel Changi & Rain Vortex", "desc": "Marvel at the world's tallest indoor waterfall (HSBC Rain Vortex) and lush Shiseido Forest Valley.", "icon": "water_drop"},
-                {"time": "1:00 PM", "title": "Check-in at Terminal & Baggage Drop", "desc": "Complete airline check-in for flight to Delhi.", "icon": "how_to_reg"},
-                {"time": "1:30 PM – 3:30 PM", "title": "Duty-Free Shopping & Airport Lunch", "desc": "Bengawan Solo pandan cakes, TWG tea, cosmetics, and duty-free gifts.", "icon": "shopping_cart"},
-                {"time": "4:40 PM", "title": "Flight to Delhi", "desc": "Board flight. Estimated landing at Delhi IGI Airport around 8:00 PM IST.", "icon": "flight_takeoff"}
+                {"time": "8:30 AM – 9:00 AM", "title": "Early Check-out from Oasia Resort Sentosa 🧳🚕", "desc": "Check out early from Oasia Resort Sentosa. Hop in a Grab / taxi directly to Changi Airport (~25–30 mins) to arrive a full 5 to 6 hours before flight time to thoroughly explore the world's #1 airport!", "icon": "luggage"},
+                {"time": "9:30 AM – 10:15 AM", "title": "Early Baggage Check-in / Left Luggage Counter ✈️🎒", "desc": "Head directly to Jewel Changi Airport (Level 1). If your airline offers Early Check-In (ECI, open 3–12 hrs before flight for Air India, Singapore Airlines, IndiGo, etc.), drop your heavy suitcases immediately! If ECI is not open yet, drop bags at Jewel Left Baggage storage on Level 1 so you can explore completely hands-free.", "icon": "how_to_reg"},
+                {"time": "10:15 AM – 12:30 PM", "title": "Explore Jewel Changi: Rain Vortex & Forest Valley 🌊🌿", "desc": "Immerse yourselves in Jewel Changi! 1. HSBC Rain Vortex: Marvel at the world's tallest 40m indoor waterfall from Level 1, Basement 1 acrylic funnel, and the Level 2 viewing deck. 2. Shiseido Forest Valley: Stroll the romantic 4-storey indoor terraced rainforest trails among 2,000+ trees. 3. Canopy Park (Level 5): Walk across the glass Canopy Bridge, Topiary Walk, and petal gardens.", "icon": "water_drop"},
+                {"time": "12:30 PM – 1:45 PM", "title": "Jewel Dining & Souvenir Shopping 🍜🛍️", "desc": "Enjoy a farewell lunch at Jewel: Shake Shack, Din Tai Fung, Violet Oon Singapore, or the Five Spice Food Court. Pick up signature Singapore edible gifts: Bengawan Solo fresh pandan chiffon cake, Irvins salted egg chips, and TWG luxury teas.", "icon": "restaurant"},
+                {"time": "1:45 PM – 2:30 PM", "title": "Immigration & Skytrain to Departure Terminal 🚊🛂", "desc": "Clear automated biometric immigration seamlessly. Take the complimentary Skytrain between Terminals 1, 2, and 3 (the T2-T3 Skytrain route glides right past the roaring Rain Vortex for a jaw-dropping aerial view!).", "icon": "flight_takeoff"},
+                {"time": "2:30 PM – 4:00 PM", "title": "Explore Airside Wonders: Free Movie Theatres & Butterfly Garden 🎬🦋", "desc": "Inside transit departure gates: 1. Terminal 3 Free Movie Theatre: Relax in plush cinema seats watching 24/7 free blockbuster movies! 2. Terminal 3 Butterfly Garden: 2-storey tropical greenhouse with 1,000+ flying tropical butterflies and indoor waterfall. 3. Terminal 2 Dreamscape & Wonderfall. 4. Duty-Free shopping for perfumes, cosmetics, and tech.", "icon": "movie"},
+                {"time": "4:00 PM – 4:40 PM", "title": "Gate Boarding & Flight to Delhi 🛫🇮🇳", "desc": "Proceed to departure gate for security screening and boarding. Relax and fly back to Delhi, carrying unforgettable honeymoon memories! Estimated landing at Delhi IGI Airport around 8:00 PM IST.", "icon": "flight_takeoff"}
             ],
             "options": [
-                {"title": "Luggage Tip at Jewel:", "desc": "Use Early Check-in (if your airline supports it) or the Left Baggage counter on Level 1 to walk around hands-free!"}
+                {"title": "🎬 24/7 Free Movie Theatres at Changi Airport:", "desc": "• 100% Free Admission: No booking or payment needed! Just walk in and sink into plush theatre seats.\n• Terminal 3 Free Movie Theatre: Located near the Ambassador Transit Lounge on Level 3 (Departure Transit Lounge, near Gates A1–A8). Runs non-stop 24 hours a day with current Hollywood blockbusters and family movies on a large cinema screen.\n• Terminal 2 Free Movie Area: Level 3 near Sunflower Garden.\n• Perfect Cozy Rest: If you want to put your feet up and relax for 45 minutes in dark air-conditioned comfort before boarding your flight to Delhi!"},
+                {"title": "🚊 Moving Between Terminals via Changi Skytrain (100% Free):", "desc": "• Free & Fast: The automated Skytrain is completely FREE of cost, runs every 2 to 4 minutes, and takes only 90 seconds between terminals (operates daily 05:00 AM – 02:30 AM).\n• Dual Sides (Public vs Transit): Skytrain has two separate lines: Public Landside (before immigration) and Airside Transit (after immigration). You can move between T1, T2, and T3 on both sides!\n• ⭐ MUST-DO T2 ⇄ T3 Rain Vortex Route: The Skytrain route connecting Terminal 2 and Terminal 3 cuts directly through the central glass dome of Jewel Changi, gliding just meters away from the roaring 40m Rain Vortex waterfall! Stand right by the window for incredible slow-motion video footage.\n• Jewel Changi Walking Access: Jewel is physically connected via sheltered air-conditioned link bridges: 2-min walk from T1 Arrival Hall, and 5–8 min travelator bridge from T2 & T3.\n• Terminal 4 Shuttle: If departing from T4, a free 24-hour electric shuttle bus runs every 10 mins from Terminal 1 & 2 Arrival Halls."},
+                {"title": "⏰ Why Arriving 5–6 Hours Early is Essential:", "desc": "Changi is not just an airport — it's a world-class attraction and botanical paradise! Arriving 5–6 hours before your 4:40 PM flight gives you 3+ hours in Jewel (Rain Vortex, Forest Valley, shopping) and 2 hours inside the transit departure lounges (Butterfly Garden, duty-free shopping) without any rush."},
+                {"title": "🧳 Hands-Free Exploring (Early Check-In vs. Left Luggage):", "desc": "• Early Check-In (ECI) Lounge at Jewel (Level 1): Many major airlines (including Singapore Airlines, Air India, IndiGo) allow check-in and luggage drop up to 12 hours prior to scheduled departure!\n• Jewel Left Baggage (Level 1): If early baggage drop isn't open for your airline, safely store your suitcases at the 24-hour Baggage Storage on Level 1 (~SGD 10–15 per bag) and explore completely luggage-free."},
+                {"title": "🌊 Best HSBC Rain Vortex Photo Points:", "desc": "• Level 1 Deck: Right in front of the thundering falls surrounded by misty air.\n• Basement 1 / B2: The massive glass acrylic vortex tube where the water plunges into the subterranean basin.\n• Skytrain between T2 & T3: Ride the free monorail right alongside the waterfall for stunning slow-motion video footage!"},
+                {"title": "🛍️ Last-Minute Duty-Free & Souvenir Checklist:", "desc": "• Bengawan Solo: Fresh pandan chiffon cake & kaya roll cakes (buy at Jewel or airside).\n• TWG Tea Salon: Luxury tea gift boxes & macarons.\n• Irvins: Dangerously addictive salted egg fish skin & potato chips.\n• Bacha Coffee: Heritage Moroccan drip coffee gift sets & sweet croissants."}
             ]
         }
     ],
 
-    # Tickets to Book (Klook Checklist) with Due Dates
+    # Tickets to Book (Klook & Pelago Checklist) with Due Dates
     "klook_tickets": [
-        {"id": "t0", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 📱 (Install QR in Delhi)", "name": "Singtel Singapore 5G High-Speed Data Tourist eSIM", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/176809-singtel-singapore-data-esim/", "booked": False, "price": "~₹950 / person (10–20 GB)"},
-        {"id": "t0-sea", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 (Multi-Country / Cruise Waters)", "name": "South East Asia Multi-Country High-Speed Data eSIM (Singapore, Malaysia, Thailand, Indonesia)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/105381-south-east-asia-esim/", "booked": False, "price": "~₹450 - ₹1,200 / person (Flexible Data/Days)"},
-        {"id": "t0-physical", "date": "13 Dec 2026 (Arrival)", "due_date": "Book by Dec 5, 2026 (Pickup at Changi T1/T2/T3/T4)", "name": "Singtel 4G/5G Physical Tourist SIM Card (Changi Airport Pickup)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/77287-4g-travel-sim-card-singtel-singapore/?spm=SearchResult.SearchResult_LIST&clickId=752b002a05", "booked": False, "price": "~₹750 - ₹950 / person (100 GB)"},
-        {"id": "t1", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Singapore Cable Car SkyPass", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", "booked": False, "price": "~₹2,200 / person"},
-        {"id": "t2", "date": "17 Dec 2026", "due_date": "Book by Nov 20, 2026", "name": "Wings of Time (Sentosa)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", "booked": False, "price": "~₹1,100 / person"},
-        {"id": "t3", "date": "18 Dec 2026", "due_date": "Book by Nov 25, 2026", "name": "Singapore Oceanarium (S.E.A. Aquarium)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/119-sea-aquarium-singapore/", "booked": False, "price": "~₹2,800 / person"},
-        {"id": "t4", "date": "18 Dec 2026", "due_date": "Book by Nov 20, 2026 ⚠️ (Slots Fill Fast)", "name": "Harry Potter: Visions of Magic", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/112678-harry-potter-visions-of-magic-singapore/", "booked": False, "price": "~₹3,200 / person"},
-        {"id": "t5", "date": "19 Dec 2026", "due_date": "Book by Nov 25, 2026", "name": "River Wonders (with Giant Panda Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/123-river-safari-singapore/", "booked": False, "price": "~₹2,600 / person"},
-        {"id": "t6", "date": "20 Dec 2026", "due_date": "Book by Nov 20, 2026 ⚠️ (Prime Sunset Domes)", "name": "Gardens by the Bay (Flower Dome + Cloud Forest)", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", "booked": False, "price": "~₹3,100 / person"},
-        {"id": "t7", "date": "20 Dec 2026", "due_date": "Book by Nov 20, 2026 ⚠️ (Sunset Slot 5:30 PM)", "name": "Marina Bay Sands SkyPark Observation Deck", "status": "To Book", "link": "https://www.klook.com/en-IN/activity/148-skypark-observation-deck-singapore/", "booked": False, "price": "~₹2,100 / person"}
+        {
+            "id": "t0", 
+            "date": "13 Dec 2026 (Arrival)", 
+            "due_date": "Book by Dec 5, 2026 📱 (Install QR in Delhi)", 
+            "name": "Singtel Singapore 5G High-Speed Data Tourist eSIM", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/176809-singtel-singapore-data-esim/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/p8pl4-singtel-prepaid-sim-card-singapore/",
+            "booked": False, 
+            "price": "~₹950 / person (10–20 GB)"
+        },
+        {
+            "id": "t0-sea", 
+            "date": "13 Dec 2026 (Arrival)", 
+            "due_date": "Book by Dec 5, 2026 (Multi-Country / Cruise Waters)", 
+            "name": "South East Asia Multi-Country High-Speed Data eSIM (Singapore, Malaysia, Thailand, Indonesia)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/105381-south-east-asia-esim/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/p8pl4-singtel-prepaid-sim-card-singapore/",
+            "booked": False, 
+            "price": "~₹450 - ₹1,200 / person (Flexible Data/Days)"
+        },
+        {
+            "id": "t0-physical", 
+            "date": "13 Dec 2026 (Arrival)", 
+            "due_date": "Book by Dec 5, 2026 (Pickup at Changi T1/T2/T3/T4)", 
+            "name": "Singtel 4G/5G Physical Tourist SIM Card (Changi Airport Pickup)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/77287-4g-travel-sim-card-singtel-singapore/?spm=SearchResult.SearchResult_LIST&clickId=752b002a05", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/p8pl4-singtel-prepaid-sim-card-singapore/",
+            "booked": False, 
+            "price": "~₹750 - ₹950 / person (100 GB)"
+        },
+        {
+            "id": "t1", 
+            "date": "17 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026", 
+            "name": "Singapore Cable Car SkyPass", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/132-singapore-cable-car-sky-pass-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/singapore-cable-car-singapore",
+            "booked": False, 
+            "price": "~₹2,200 / person"
+        },
+        {
+            "id": "t2", 
+            "date": "17 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026 · Daily Shows: 7:40 PM & 8:40 PM", 
+            "name": "Wings of Time Fireworks Symphony (Sentosa Central Beach Bazaar — Daily 7:40 PM & 8:40 PM)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/124-wings-of-time-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/wings-of-time-singapore",
+            "booked": False, 
+            "price": "~₹1,200 / person (SGD ~19)"
+        },
+        {
+            "id": "t3", 
+            "date": "18 Dec 2026", 
+            "due_date": "Book by Nov 25, 2026", 
+            "name": "Singapore Oceanarium (S.E.A. Aquarium)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/119-sea-aquarium-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/oceanarium-ticket-singapore",
+            "booked": False, 
+            "price": "~₹2,800 / person"
+        },
+        {
+            "id": "t4", 
+            "date": "18 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026 ⚠️ (Slots Fill Fast)", 
+            "name": "Harry Potter: Visions of Magic", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/112678-harry-potter-visions-of-magic-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/harry-potter-visions-of-magic",
+            "booked": False, 
+            "price": "~₹3,200 / person"
+        },
+        {
+            "id": "t5", 
+            "date": "19 Dec 2026", 
+            "due_date": "Book by Nov 25, 2026", 
+            "name": "River Wonders (with Giant Panda Forest)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/123-river-safari-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/river-wonders-singapore",
+            "booked": False, 
+            "price": "~₹2,600 / person"
+        },
+        {
+            "id": "t6", 
+            "date": "20 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026 ⚠️ (Prime Sunset Domes)", 
+            "name": "Gardens by the Bay (Flower Dome + Cloud Forest & Jurassic World Experience)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/gardens-by-the-bay-ticket-singapore",
+            "booked": False, 
+            "price": "~₹3,100 / person"
+        },
+        {
+            "id": "t6-floral", 
+            "date": "20 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026", 
+            "name": "Floral Fantasy + Flight of the Dragonfly 4D Ride", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/gardens-by-the-bay-ticket-singapore",
+            "booked": False, 
+            "price": "~₹1,400 / person (SGD ~22)"
+        },
+        {
+            "id": "t6-supertree", 
+            "date": "20 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026 (Go Before Sunset 5:30 PM)", 
+            "name": "Supertree Observatory (Rooftop Sunset Views)", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/127-gardens-by-the-bay-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/gardens-by-the-bay-ticket-singapore",
+            "booked": False, 
+            "price": "~₹800 / person (SGD ~14)"
+        },
+        {
+            "id": "t7", 
+            "date": "20 Dec 2026", 
+            "due_date": "Book by Nov 20, 2026 ⚠️ (Sunset Slot 5:30 PM)", 
+            "name": "Marina Bay Sands SkyPark Observation Deck", 
+            "status": "To Book", 
+            "link": "https://www.klook.com/en-IN/activity/148-skypark-observation-deck-singapore/", 
+            "pelago_link": "https://www.pelago.com/en-SG/activity/marina-bay-sands-skypark-observation-deck-new-singapore",
+            "booked": False, 
+            "price": "~₹2,100 / person"
+        }
     ],
 
     # Camera Rental Strategy: SharePal Recommendation & Comparison
@@ -554,6 +709,168 @@ DEFAULT_HONEYMOON_DATA = {
         "Fort Canning Park Tree Tunnel and Spice Garden (near Carlton Hotel)"
     ],
 
+    # Little India Heritage Temples & Best Shopping Guide
+    "little_india_guide": {
+        "title": "Little India Temples & Best Shopping Places 🛕🛍️",
+        "subtitle": "Serangoon Road Cultural Heart & Bazaars",
+        "temples": [
+            {
+                "name": "Sri Veeramakaliamman Temple (Shri Viliyam)",
+                "year": "Est. 1855 · Historic Little India",
+                "desc": "Singapore's most prominent Kali temple along Serangoon Road. Built in 1855 by early Indian pioneer settlers for divine protection.",
+                "highlight": "Breathtaking multi-tiered Rajagopuram entrance tower adorned with hundreds of colorful, intricate statues of Goddess Kali and Hindu deities."
+            },
+            {
+                "name": "Sri Mariamman Temple (Chinatown Link)",
+                "year": "Est. 1827 · Singapore's Oldest Hindu Temple",
+                "desc": "Singapore's oldest and grandest national monument Hindu temple, dedicated to Goddess Mariamman (healer & protector). Located along South Bridge Road right next to Chinatown.",
+                "highlight": "Legendary 6-tier monumental Gopuram covered in detailed plaster sculptures of Hindu mythological figures, flags, and deities. Host of the historic firewalking (Theemithi) ceremony."
+            },
+            {
+                "name": "Sri Srinivasa Perumal Temple",
+                "year": "Est. 1855 · National Monument",
+                "desc": "Majestic temple dedicated to Lord Vishnu, featuring expansive temple courtyards and serene sanctity. Serves as the key starting ground for the annual Thaipusam festival.",
+                "highlight": "Soaring 20-meter high Gopuram depicting the Dashavatara (10 celestial incarnations of Lord Vishnu) and intricate ceiling mandala carvings."
+            },
+            {
+                "name": "Sakya Muni Buddha Gaya Temple",
+                "year": "Temple of 1,000 Lights",
+                "desc": "Renowned Buddhist monastery located along Race Course Road, founded in 1927 by the venerable Vutthisasna.",
+                "highlight": "Spectacular 15-meter tall seated Buddha statue illuminated by a dazzling chain of 1,000 glowing lights, plus a reclining Buddha chamber."
+            },
+            {
+                "name": "Abdul Gafoor Mosque",
+                "year": "Est. 1859 · National Monument",
+                "desc": "Unique architectural marvel blending Moorish, South Indian, and Victorian Roman neoclassical styles on Dunlop Street.",
+                "highlight": "Delicate Roman-inspired columns, ornate minarets, and a rare sundial adorned with 25 rays representing the 25 Islamic prophets."
+            }
+        ],
+        "shops": [
+            {
+                "name": "House of Tan Teng Niah (Heritage Rainbow Villa)",
+                "tag": "Iconic 1900 Chinese Villa & Photo Hotspot",
+                "desc": "Located on Kerbau Road. The last surviving Chinese villa in Little India, celebrated for its 8-color kaleidoscope pastel shophouse facade.",
+                "what_to_buy": "The #1 honeymoon photo destination in Little India! Surrounded by cozy artisanal cafes, art souvenir stalls, and flower garland stands."
+            },
+            {
+                "name": "Mustafa Centre",
+                "tag": "24/7 Mega Mall · Packed Food & Daily Essentials",
+                "desc": "A legendary multi-storey retail powerhouse across Syed Alwi Road. Sells virtually everything under the sun across 6 massive interconnected levels at unbeatable wholesale rates.",
+                "what_to_buy": "Packed Food & Ready-to-Eat Meals (MTR & Haldiram retort curry/rice pouches, instant noodles, freshly packed samosas, puffs & Indian mithai), Daily Essentials & Toiletries (sunscreens, moisturisers, shampoos, wet wipes, Tiger Balm), Groceries & Dry Fruits, Swiss & Belgian chocolates, travel adapters, and designer perfumes."
+            },
+            {
+                "name": "Little India Arcade",
+                "tag": "Campbell Lane Pedestrian Bazaar",
+                "desc": "Restored 1920s heritage shophouses buzzing with vibrant music, traditional craftsmanship, and aromatic flower garland weavers.",
+                "what_to_buy": "Traditional silk saris, embroidered kurtas, brass statues & pooja lamps, intricate henna (mehndi) body art, and handmade handicrafts."
+            },
+            {
+                "name": "Tekka Centre",
+                "tag": "Iconic Wet Market & Hawker Complex",
+                "desc": "Located right beside Little India MRT (NE7). Singapore's largest indoor traditional apparel and culinary market.",
+                "what_to_buy": "Affordable ethnic Punjabi suits, Bollywood dresses, tailoring services, and Singapore's finest masala dosa, biryani & teh tarik."
+            },
+            {
+                "name": "Serangoon Road Gold & Jewelry Corridor",
+                "tag": "22K & 24K Gold Specialists",
+                "desc": "The glittering main thoroughfare of Little India lined with prestigious Indian jewelers like Malabar Gold, Joyalukkas, and GRT.",
+                "what_to_buy": "Authentic hallmarked 22K gold rings, bangles, bridal designs, and tax-free certified jewelry (eligible for 8-9% GST refund)."
+            }
+        ]
+    },
+
+    # Chinatown Heritage & Shopping Guide (What to Buy & Where to Go)
+    "chinatown_guide": {
+        "title": "Chinatown Heritage & Best Shopping Guide 🏮🛍️",
+        "subtitle": "Pagoda Street, Trengganu Street & Heritage Shophouses",
+        "how_to_reach": "Take North-East Line (Purple MRT) direct to Chinatown MRT (NE4). Take Exit A to emerge right into the heart of Pagoda Street souvenir bazaar.",
+        "shops": [
+            {
+                "name": "Pagoda Street Souvenir Street Market",
+                "tag": "Best Budget Souvenirs in Singapore",
+                "desc": "The pedestrian-only epicenter of Chinatown shopping directly at Chinatown MRT Exit A. Colorful rows of heritage shophouses offering unbeatable prices on Singapore souvenirs.",
+                "what_to_buy": "Singapore Merlion fridge magnets (5–6 for $10), metal keychains, snow globes, engraved bottle openers, Singapore T-shirts ($5–$10), coasters, and postcards."
+            },
+            {
+                "name": "Yue Hwa Chinese Products (Eu Tong Sen St)",
+                "tag": "6-Storey Heritage Department Store",
+                "desc": "Iconic multi-storey department store housed in a grand 1927 heritage landmark. Offers authentic high-quality Chinese cultural goods, fashion, teas, and wellness products.",
+                "what_to_buy": "Pure silk cheongsams & silk sleepwear robes, hand-painted porcelain tea sets, authentic ceramic dining sets, calligraphy brushes, and traditional medicinal ointments."
+            },
+            {
+                "name": "Pek Sin Choon & Tea Merchants",
+                "tag": "Oldest Tea Merchant (Est. 1925)",
+                "desc": "Historic tea artisans that supply tea to famous bak kut teh restaurants and tea connoisseurs across Southeast Asia.",
+                "what_to_buy": "Premium loose-leaf Chinese teas: Royal Jasmine tea, floral blooming tea balls (blooms in hot water), Tie Guan Yin Oolong, and artisanal clay tea pots."
+            },
+            {
+                "name": "Chinatown Herbal Dispensaries & Tiger Balm",
+                "tag": "Traditional Wellness & Balms",
+                "desc": "Old-world Chinese medical halls along Temple Street and South Bridge Road selling certified natural remedies and ointments.",
+                "what_to_buy": "Tiger Balm Red & White ointments, cooling muscle pain relief patches, Kwan Loong medicated oil, and soothing herbal throat drops."
+            },
+            {
+                "name": "Lim Chee Guan & Traditional Confectionery",
+                "tag": "Heritage Sweet Treats & Bakkwa",
+                "desc": "Famed heritage confectioneries along New Bridge Road and Smith Street renowned for Singapore's sweetest gourmet souvenirs.",
+                "what_to_buy": "Pandan coconut Kaya jam jars (for authentic Singapore breakfast toasts), handmade pineapple tarts, and sweet barbecued bakkwa jerky."
+            }
+        ],
+        "attractions": [
+            {
+                "name": "Sri Mariamman Temple (Singapore's Oldest Hindu Temple)",
+                "year": "Est. 1827 · National Monument of Singapore",
+                "location": "244 South Bridge Road (corner of Pagoda Street, Chinatown)",
+                "desc": "Singapore's oldest, most revered Hindu temple, founded in 1827 by Naraina Pillai. Dedicated to Goddess Mariamman, worshipped for healing illnesses, rains, and protection. Features the famous annual fire-walking (Theemithi) ceremony.",
+                "highlight": "Breathtaking 6-tiered monumental Gopuram entrance tower towering over Chinatown, lavishly sculpted with hundreds of colorful Hindu gods, mythical beasts, and divine dancers. Inside, admire ornate ceiling murals and sanctums dedicated to Lord Murugan, Lord Vinayagar, and Lord Rama."
+            },
+            {
+                "name": "Buddha Tooth Relic Temple & Museum",
+                "year": "Est. 2007 · Tang Dynasty Buddhist Stupa",
+                "location": "288 South Bridge Road (3 mins walk from Sri Mariamman Temple)",
+                "desc": "Monumental Tang-style Buddhist architectural marvel housing what is believed to be the sacred left canine tooth of Buddha.",
+                "highlight": "4th-floor Sacred Light Hall housing a massive 3.5-ton solid gold stupa, plus a rooftop rooftop garden with a giant Tibetan prayer wheel."
+            }
+        ]
+    },
+
+    # Bugis Street & Haji Lane Shopping & Street Art Guide
+    "bugis_haji_guide": {
+        "title": "Bugis Street & Haji Lane Guide 👗🎨🛍️",
+        "subtitle": "Singapore's Cheapest Fashion Market & Iconic Street Art Alley",
+        "how_to_reach": "Take Downtown Line (Blue MRT) from Chinatown MRT (DT19) direct to Bugis MRT (DT14 Exit C, only 4 stops / 7 mins!). Haji Lane is a scenic 5-minute walk (400m) from Bugis MRT / Bugis Junction.",
+        "spots": [
+            {
+                "name": "Bugis Street Market (3-Storey Fashion Maze)",
+                "tag": "Singapore's #1 Cheap Fashion Mecca",
+                "location": "Opposite Bugis Junction (Bugis MRT Exit C)",
+                "desc": "Singapore's largest undercover street shopping destination with 800+ stalls. The ground level features budget trendy streetwear, level 2 is packed with air-conditioned boutique Korean and Japanese style dresses, and level 3 has shoe and luggage shops.",
+                "what_to_buy": "Trendy summer maxi dresses ($10–$15), beach co-ord sets, graphic crop tops, cute sun hats, trendy sunglasses, handbags, Korean skincare/cosmetics, phone cases, and portable rechargeable neck fans."
+            },
+            {
+                "name": "Iconic Haji Lane Graffiti Murals & Wall Paintings 🎨",
+                "tag": "World-Famous Instagram Couple Photos",
+                "location": "Along Haji Lane & corner of Beach Road / Ophir Road",
+                "desc": "A dazzling open-air gallery of towering multi-story wall murals and kaleidoscopic street art. World-famous artists have transformed heritage shophouses into photographic masterpieces.",
+                "what_to_buy": "Highlights: The towering Aztec/Mayan warrior mural outside Piedra Negra, vibrant pop-art cartoon murals outside Blu Jaz Cafe, and monochrome vintage paintings. Strike romantic couple poses with natural daylight or evening neon glow!"
+            },
+            {
+                "name": "Trendy Aesthetic Cafes & Dessert Bars ☕🍰",
+                "tag": "Hipster Coffee & Couple Chillout",
+                "location": "Haji Lane, Arab Street & Baghdad Street",
+                "desc": "The most fashionable cluster of aesthetic concept cafes in Singapore, featuring pastel interiors, neon signs, and artisan baristas.",
+                "what_to_buy": "Top Trendy Cafes: • Selfie Coffee (print your couple photo on foam!), • Earlybird Cafe (famous fried chicken & birdcage aesthetic), • Windowsill Pies (gourmet floral pies), • I Am... Cafe (Dutch-themed mocktails), and • % Arabica (world-famous minimalist Japanese coffee)."
+            },
+            {
+                "name": "Quirky Fashion Boutiques & Vintage Stores 👗✨",
+                "tag": "Indie Fashion & Bohemian Treasures",
+                "location": "Mid-section of Haji Lane (between North Bridge Rd & Beach Rd)",
+                "desc": "Chic, independent concept stores offering one-of-a-kind handcrafted garments, accessories, and nostalgic collectibles away from generic mall brands.",
+                "what_to_buy": "Vintage Y2K clothing, bespoke handmade leather totes, retro cat-eye sunglasses, artisan perfume blending (scents customized for couples), handmade bohemian silver jewelry, and indie lifestyle home decor."
+            }
+        ]
+    },
+
     # Strict Rules, Do's & Don'ts (The Fine City)
     "rules": {
         "donts": [
@@ -570,7 +887,7 @@ DEFAULT_HONEYMOON_DATA = {
         "dos": [
             {"title": "Tap Water is 100% Safe (Refill Flasks)", "desc": "Singapore tap water is cleaner than bottled water. Bottled water costs SGD 2.50 (~₹180). Carry reusable insulated flasks and refill at hotels & attractions."},
             {"title": "Claim 8–9% GST Tourist Refund at Changi", "desc": "Spend > SGD 100 at any single participating store? Present your passport at checkout for eTRS tax-free slip and claim 8–9% refund at Changi Airport kiosks before your flight home."},
-            {"title": "Tap Credit/Debit Card for MRT", "desc": "No need to buy transit cards (EZ-Link)! Simply tap any contactless Visa/Mastercard directly at MRT gates."},
+            {"title": "Tap Contactless VISA / Mastercard or EZ-Link for MRT & Buses", "desc": "You can tap contactless VISA or Mastercard directly at MRT gantry turnstiles and bus card readers with no setup! Alternatively, traditional EZ-Link stored-value cards are also widely accepted."},
             {"title": "Tipping is NOT Customary", "desc": "10% service charge and 9% GST are already included in hotel and restaurant bills."},
             {"title": "Modest Temple Attire", "desc": "Cover shoulders and knees when entering Hindu, Buddhist, or Muslim places of worship in Little India and Chinatown."},
             {"title": "Download Grab & Gojek Apps", "desc": "Download both apps in India before flying. Airport street taxis charge premium surge rates; Grab/Gojek offer fixed upfront prices."},
@@ -1366,12 +1683,17 @@ DEFAULT_HONEYMOON_DATA = {
         },
         "transportation_and_cars": {
             "title": "Taxis, Grab, Cars & MRT Logistics",
+            "best_mode": "MRT, Public Bus 36, EZ-Link / Contactless VISA & Grab",
             "guide": [
-                {"mode": "MRT & Public Buses (Contactless Tap)", "desc": "The fastest, cleanest, and most budget-friendly transport in Singapore (~SGD 1.50–2.00 / ₹100–150 per trip). Simply tap your contactless Visa/Mastercard directly at turnstiles. No need to buy an EZ-Link card."},
-                {"mode": "Grab & Gojek Apps", "desc": "Download & verify both apps before flying. Street taxis charge airport surcharge and midnight fees. Grab/Gojek offer clear upfront fixed pricing ($15–$25 SGD / ₹1,500–2,000). Use for luggage transfers and late night rides back to Sentosa."},
-                {"mode": "Sentosa Express Monorail", "desc": "Complimentary unlimited passes provided by Oasia Resort Sentosa during your 4-night stay."},
-                {"mode": "Rental Cars (Do NOT Rent)", "desc": "Avoid self-drive car rentals! Singapore has expensive Electronic Road Pricing (ERP), steep parking fees ($3–$6/hr), and left-hand driving with strict speed cameras."}
-            ]
+                {"mode": "Public Bus No. 36 (Airport ➔ City Direct)", "desc": "Departs directly from the basement bus bays of Changi Airport (T1, T2, T3 & T4). Travels straight to the city center, including Marine Parade, Bras Basah (Carlton Hotel area), and Orchard Road (~SGD 2.00, scenic daylight ride into town)."},
+                {"mode": "MRT Metro Network", "desc": "Singapore's world-class subway connecting Changi Airport, City Hall, Marina Bay, Chinatown, and HarbourFront. Fast, spotless, and fully air-conditioned (~SGD 1.50–2.20 per trip)."},
+                {"mode": "Fare Payment: Contactless VISA & EZ-Link Card", "desc": "EZ-Link stored-value cards are available at MRT passenger service counters and 7-Eleven. However, foreign contactless VISA (and Mastercard) credit/debit cards or Apple/Google Pay are seamlessly accepted with tap-and-go convenience at all MRT gantries and bus readers!"},
+                {"mode": "Grab & Gojek Ride-Hailing", "desc": "Download both apps before flying. Transparent fixed pricing (~SGD 15–28) with no surge taxi meter surprises. Ideal for heavy luggage transfers between airport, cruise terminal, and Sentosa."},
+                {"mode": "Sentosa Express Monorail & Tickets ($4 Ticket, Thereafter FREE)", "desc": "HarbourFront MRT (NE1/CC29) brings you straight into VivoCity Mall Basement 2. Take the escalator up to Level 3 (Lobby L) to board the Sentosa Express monorail into Sentosa. Tickets cost SGD 4.00 per person for entry (purchase at Level 3 kiosks or tap contactless VISA/Mastercard/EZ-Link directly at gantries). AFTER this initial $4 ticket entry (or once checked into Oasia Resort Sentosa with your guest room keycard/QR pass), all monorail rides inside Sentosa island and returning back to VivoCity are 100% FREE OF COST! The monorail connects 4 stations: VivoCity ➔ Resorts World ➔ Imbiah Station (Stop 2, right at Oasia Resort Sentosa front door) ➔ Beach Station (Final Stop: Central Beach Bazaar, Wings of Time daily shows at 7:40 PM & 8:40 PM, beach shuttles & food street)."},
+                {"mode": "Singapore Cable Car (HarbourFront Tower 2 ➔ Sentosa)", "desc": "Walk from HarbourFront MRT Exit B to HarbourFront Tower 2 (Level 15) to board the Mount Faber Line cable car soaring high across Keppel Bay directly into Sentosa (Imbiah Lookout). Breathtaking 360° romantic panoramic views of the entire island, sea, and cruise ship terminals."},
+                {"mode": "Rental Cars (Do NOT Rent)", "desc": "Avoid self-drive car rentals due to ERP electronic toll gantries, $4–$8/hr parking rates, and strict left-hand traffic monitoring."}
+            ],
+            "car_rental_verdict": "Self-drive car rentals are completely unnecessary and stressful in Singapore. MRT trains, Bus 36, VivoCity Sentosa Monorail, Cable Car, Grab, and walking cover 100% of your honeymoon travel smoothly."
         },
         "must_eat_places": [
             {"name": "Trapizza (Siloso Beach, Sentosa)", "type": "Italian Wood-fired by the waves", "must_try": "Pizza Quattro Formaggi, Linguine Granchio, sunset spritz on the sand."},
@@ -1444,11 +1766,11 @@ DEFAULT_HONEYMOON_DATA = {
         },
         {
             "id": "todo-2",
-            "title": "Fill & Submit Electronic SG Arrival Card (ICA)",
-            "category": "Immigration",
+            "title": "Apply for Electronic SG Arrival Card with Health Declaration (SGAC)",
+            "category": "Mandatory Immigration",
             "link": "https://eservices.ica.gov.sg/sgarrivalcard/",
-            "notes": "100% Free online submission strictly within 72 hours before arrival in Singapore.",
-            "due_date": "Dec 10–12, 2026",
+            "notes": "CRITICAL MANDATORY STEP: Must apply online within 72 hours (3 days) prior to landing in Singapore (apply Dec 10–12, 2026). It is 100% FREE on the official ICA website (never pay on third-party fake websites!). Fill individual declarations for Shaiwal & Shaila (passport details, flight info, Carlton Hotel address, and health declaration). Download the PDF acknowledgment barcodes onto your phones.",
+            "due_date": "Dec 10–12, 2026 (Within 72 hrs of flight)",
             "status": "Pending"
         },
         {
@@ -1478,5 +1800,21 @@ DEFAULT_HONEYMOON_DATA = {
             "due_date": "Nov 20, 2026",
             "status": "Pending"
         }
-    ]
+    ],
+
+    # Curated Travel Video Reference
+    "reference_video": {
+        "title": "India to Singapore: 6-Day Detailed Itinerary & Total Cost Breakdown",
+        "channel": "YouTube Travel Guide",
+        "url": "https://youtu.be/UITG7PTmgk4?si=NyeGgwMjw_J-sy8A",
+        "embed_url": "https://www.youtube.com/embed/UITG7PTmgk4",
+        "description": "Essential Indian traveler reference guide breaking down flights, visas, MRT local transit via contactless cards, must-see sights (Universal Studios, S.E.A. Aquarium, Gardens by the Bay, Fort Siloso Skywalk, Jewel Changi Rain Vortex), and authentic food budgets.",
+        "key_highlights": [
+            "Little India & Chinatown walking routes and budget souvenir spots",
+            "Mandai Wildlife / Singapore Zoo logistics and shuttle advice",
+            "Sentosa Island free transport (Beach shuttle tram & Fort Siloso Skywalk)",
+            "Marina Bay Sands, Spectra Light & Water show and Merlion Park",
+            "Jewel Changi Rain Vortex & departure transit time management"
+        ]
+    }
 }
