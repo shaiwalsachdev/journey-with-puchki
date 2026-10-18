@@ -224,9 +224,11 @@ DEFAULT_HONEYMOON_DATA = {
             },
             {
                 "id": "v2",
-                "title": "Completed & Signed Form 14A",
+                "title": "Completed & Signed Form 14A (Singapore Visa Application Form)",
                 "due_date": "Due: Oct 28, 2026",
-                "detail": "Official Singapore visa application form for both Shaiwal and Shaila. Print & sign.",
+                "detail": "Official Singapore Entry Visa application form (Form 14A) to be filled and signed separately for both Shaiwal and Shaila. Paste the 35x45mm matte photo on page 1 and sign in blue/black ink.",
+                "doc_url": "/static/Form14A_Singapore_Visa.pdf",
+                "doc_name": "Download Official Form 14A (PDF)",
                 "done": False
             },
             {
