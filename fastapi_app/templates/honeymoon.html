@@ -364,6 +364,10 @@
                 <span class="material-icons text-base">assignment</span>
                 <span>Visa & Documents (Nov 1)</span>
             </button>
+            <button onclick="switchTab('tickets'); setTimeout(() => document.getElementById('reference-video-guide')?.scrollIntoView({behavior: 'smooth'}), 150);" id="tab-btn-video" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all text-red-600 dark:text-red-400">
+                <span class="material-icons text-base text-red-500">smart_display</span>
+                <span>Travel Video Guide 🎥</span>
+            </button>
             <button onclick="switchTab('tickets')" id="tab-btn-tickets" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
                 <span class="material-icons text-base">local_activity</span>
                 <span>Tickets: Klook & Pelago</span>
@@ -477,6 +481,69 @@
                 </div>
                 {% endfor %}
             </div>
+
+            <!-- Featured Travel Video Guide (Quick Access) -->
+            {% if honeymoon.reference_video %}
+            {% set refv = honeymoon.reference_video %}
+            <div id="reference-video-guide-itinerary" class="glass-panel p-6 sm:p-7 rounded-3xl shadow-xl border-2 border-red-400/40 bg-gradient-to-br from-red-50/40 via-white/80 to-rose-50/40 dark:from-red-950/20 dark:via-gray-800/60 dark:to-rose-950/20 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-rose-600 text-white flex items-center justify-center shadow-lg shadow-red-500/30">
+                            <span class="material-icons text-2xl">smart_display</span>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 text-[10px] font-extrabold uppercase tracking-wider mb-0.5">
+                                Featured Video Reference & Itinerary Guide
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ refv.title }}</h2>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Curated Indian traveler itinerary, MRT transit & budget walkthrough for Singapore</p>
+                        </div>
+                    </div>
+                    <a href="{{ refv.url }}" target="_blank" rel="noopener noreferrer" 
+                        class="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all self-start md:self-auto shrink-0 hover:scale-105">
+                        <span class="material-icons text-base">play_circle</span>
+                        <span>Watch on YouTube</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <!-- Embedded Responsive Video Player -->
+                    <div class="lg:col-span-7">
+                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-red-200 dark:border-red-900/40 bg-black">
+                            <iframe 
+                                src="{{ refv.embed_url }}" 
+                                title="{{ refv.title }}" 
+                                class="absolute inset-0 w-full h-full"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Video Highlights & Context -->
+                    <div class="lg:col-span-5 space-y-3.5">
+                        <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                            {{ refv.description }}
+                        </p>
+                        <div class="p-3.5 rounded-2xl bg-white/70 dark:bg-gray-800/60 border border-red-100 dark:border-white/5 space-y-2">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                                <span class="material-icons text-red-500 text-sm">checklist</span>
+                                <span>Key Topics Covered:</span>
+                            </span>
+                            <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+                                {% for highlight in refv.key_highlights %}
+                                <li class="flex items-start gap-2">
+                                    <span class="text-red-500 font-bold">•</span>
+                                    <span>{{ highlight }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
 
             <!-- AI Real-Time Itinerary Copilot Banner -->
             <div class="glass-panel p-6 sm:p-7 rounded-3xl border-2 border-primary/30 shadow-xl relative overflow-hidden bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-amber-500/10 dark:from-rose-950/30 dark:via-pink-950/30 dark:to-amber-950/20">
