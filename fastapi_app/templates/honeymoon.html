@@ -1535,9 +1535,338 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- ==========================================
+                         VISA COVER LETTER & TRIP FUNDING SECTION
+                         ========================================== -->
+                    <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-indigo-50/90 via-white/80 to-purple-50/70 dark:from-indigo-950/40 dark:via-gray-900/60 dark:to-purple-950/30 border-2 border-indigo-200/80 dark:border-indigo-800/60 shadow-lg" id="visa-cover-letter-section">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="material-icons text-indigo-600 dark:text-indigo-400 text-3xl">description</span>
+                                <div>
+                                    <h4 class="font-bold text-lg sm:text-xl text-gray-900 dark:text-white">Official Singapore Visa Cover Letter Template</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Complete with Day-by-Day itinerary, purpose of visit, and trip funding details</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="copyCoverLetterText()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow transition-all cursor-pointer">
+                                    <span class="material-icons text-sm" id="copy-cl-icon">content_copy</span>
+                                    <span id="copy-cl-btn-text">Copy Cover Letter</span>
+                                </button>
+                                <button onclick="printCoverLetter()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-gray-800 border border-indigo-200 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 font-bold text-xs shadow-sm hover:bg-indigo-50 transition-all cursor-pointer">
+                                    <span class="material-icons text-sm">print</span>
+                                    <span>Print / PDF</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Summary Pills -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-xs">
+                            <div class="p-3.5 rounded-2xl bg-white/90 dark:bg-gray-800/90 border border-indigo-100 dark:border-indigo-900/50">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-400 block mb-1">Purpose of Visit</span>
+                                <span class="font-bold text-gray-800 dark:text-gray-100">Tourism &amp; Honeymoon Trip</span>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Singapore City + Disney Adventure Cruise</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/90 dark:bg-gray-800/90 border border-indigo-100 dark:border-indigo-900/50">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-400 block mb-1">Dates &amp; Duration</span>
+                                <span class="font-bold text-gray-800 dark:text-gray-100">13 Dec 2026 – 21 Dec 2026</span>
+                                <p class="text-[11px] text-gray-500 mt-0.5">8 Nights / 9 Days (Return ticket confirmed)</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/90 dark:bg-gray-800/90 border border-indigo-100 dark:border-indigo-900/50">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-400 block mb-1">Trip Funding &amp; Sponsorship</span>
+                                <span class="font-bold text-emerald-700 dark:text-emerald-400">Self-Funded by Shaiwal Sachdev</span>
+                                <p class="text-[11px] text-gray-500 mt-0.5">Full financial responsibility for both applicants</p>
+                            </div>
+                        </div>
+
+                        <!-- Formatted Letter Preview Box -->
+                        <div class="p-6 rounded-2xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 border border-gray-300/80 dark:border-gray-700 font-mono text-xs leading-relaxed overflow-x-auto shadow-inner relative" id="cover-letter-content">
+                            <p class="mb-4 text-right text-gray-500 dark:text-gray-400 font-sans">
+                                <b>Date:</b> [DD/MM/2026]<br>
+                                <b>Place:</b> New Delhi, India
+                            </p>
+
+                            <p class="mb-4">
+                                <b>To,</b><br>
+                                <b>The Visa Officer,</b><br>
+                                The High Commission of the Republic of Singapore / Immigration &amp; Checkpoints Authority (ICA),<br>
+                                New Delhi, India.
+                            </p>
+
+                            <p class="mb-4 font-bold text-indigo-700 dark:text-indigo-400 text-sm">
+                                SUBJECT: Application for Singapore Tourist Entry Visa (Form 14A) for Mr. Shaiwal Sachdev &amp; Ms. Shaila Manaktahla (Honeymoon Trip: 13 Dec 2026 – 21 Dec 2026)
+                            </p>
+
+                            <p class="mb-3">
+                                Respected Sir / Madam,
+                            </p>
+
+                            <p class="mb-3 text-justify">
+                                I, <b>Shaiwal Sachdev</b>, an Indian citizen holding Passport No. <b>[Shaiwal's Passport No.]</b>, along with my wife, <b>Shaila Manaktahla</b>, holding Passport No. <b>[Shaila's Passport No.]</b>, am submitting this application for a Singapore Tourist Visa. We are traveling to Singapore for our <b>Honeymoon Vacation</b> from <b>13th December 2026 to 21st December 2026 (8 Nights / 9 Days)</b>.
+                            </p>
+
+                            <p class="mb-3 text-justify">
+                                Our trip consists of exploring the vibrant city of Singapore, embarking on a 3-night sailing aboard the <b>Disney Adventure Cruise</b> departing and returning to Singapore Marina Bay Cruise Centre, followed by a relaxing resort stay on <b>Sentosa Island</b>.
+                            </p>
+
+                            <h5 class="font-bold text-xs text-gray-900 dark:text-white mt-4 mb-2 uppercase tracking-wide">
+                                1. APPLICANT DETAILS:
+                            </h5>
+                            <div class="mb-4 overflow-x-auto">
+                                <table class="w-full text-left border-collapse border border-gray-300 dark:border-gray-700 text-[11px]">
+                                    <thead>
+                                        <tr class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Applicant</th>
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Full Name (As in Passport)</th>
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Passport No.</th>
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Expiry Date</th>
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Profession / Employer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold">Primary Applicant</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">SHAIWAL SACHDEV</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">[Enter Passport No.]</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">[DD/MM/YYYY]</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">[Designation, Company Name]</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold">Co-Applicant (Spouse)</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">SHAILA MANAKTAHLA</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">[Enter Passport No.]</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">[DD/MM/YYYY]</td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">[Designation, Company Name]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h5 class="font-bold text-xs text-gray-900 dark:text-white mt-4 mb-2 uppercase tracking-wide">
+                                2. TRIP FUNDING &amp; FINANCIAL SPONSORSHIP:
+                            </h5>
+                            <p class="mb-3 text-justify">
+                                <b>I, Shaiwal Sachdev, will personally bear all financial expenses for this entire trip for both myself and my wife, Shaila Manaktahla.</b> This includes confirmed roundtrip flights, hotel accommodations, cruise stateroom fare, travel insurance, daily local transportation, food, sightseeing, and incidental expenses.
+                            </p>
+                            <p class="mb-3 text-justify">
+                                All major trip expenses (Air tickets on Singapore Airlines, 1 night at Carlton Hotel Singapore, 3 nights Disney Adventure Cruise Stateroom #11680, and 4 nights at Oasia Resort Sentosa) have already been <b>booked and paid in full</b>. To demonstrate my financial capability, I have attached:
+                            </p>
+                            <ul class="list-disc pl-5 mb-4 space-y-1">
+                                <li>My official Company Employment Certificate / No Objection Certificate (NOC).</li>
+                                <li>My official Company Photo Identity Card.</li>
+                                <li>My Salary Slips for the last 3 consecutive months.</li>
+                                <li>My official original Bank Account Statements (Salary Account) for the last 3 months showing healthy sufficient financial balances to comfortably support our holiday.</li>
+                            </ul>
+
+                            <h5 class="font-bold text-xs text-gray-900 dark:text-white mt-4 mb-2 uppercase tracking-wide">
+                                3. DAY-BY-DAY TRAVEL ITINERARY (13 DEC – 21 DEC 2026):
+                            </h5>
+                            <div class="mb-4 overflow-x-auto">
+                                <table class="w-full text-left border-collapse border border-gray-300 dark:border-gray-700 text-[11px]">
+                                    <thead>
+                                        <tr class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700 w-24">Date &amp; Day</th>
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Planned Activities &amp; Purpose of Visit</th>
+                                            <th class="p-2 border border-gray-300 dark:border-gray-700">Night Accommodation / Stateroom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">13 Dec 2026<br><span class="text-gray-500 font-normal">Day 1 (Sun)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Depart New Delhi (DEL) at 09:45 AM via Singapore Airlines SQ 401. Arrive Changi Airport (SIN) at 6:00 PM. Transfer &amp; check-in at hotel. Romantic evening dinner stroll at heritage courtyards of CHIJMES.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Carlton Hotel Singapore</b><br>
+                                                76 Bras Basah Road, Singapore 189558
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">14 Dec 2026<br><span class="text-gray-500 font-normal">Day 2 (Mon)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Breakfast at hotel. Transfer to Marina Bay Cruise Centre Singapore (MBCCS). Embark aboard the <b>Disney Adventure Cruise</b> (Booking #44985264). Sailaway party with Disney characters at 4:00 PM; evening rotational dining &amp; signature theatre show.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Disney Adventure Cruise</b><br>
+                                                Stateroom 11680 (Deck 11 Midship)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">15 Dec 2026<br><span class="text-gray-500 font-normal">Day 3 (Tue)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Disney Magic at Sea (High Seas sailing). Meet &amp; Greet with Disney Princesses at Town Square, Wayfinder Bay pool leisure, couples spa, and Royal Gala Celebration dinner.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Disney Adventure Cruise</b><br>
+                                                Stateroom 11680 (Deck 11 Midship)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">16 Dec 2026<br><span class="text-gray-500 font-normal">Day 4 (Wed)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Marvel Landing thrilling attractions, Toy Story Place, Disney cinema movie marathon, and farewell dinner with Disney characters as ship returns towards Singapore waters.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Disney Adventure Cruise</b><br>
+                                                Stateroom 11680 (Deck 11 Midship)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">17 Dec 2026<br><span class="text-gray-500 font-normal">Day 5 (Thu)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Disembark cruise at 7:00 AM at Marina Bay Cruise Centre. Transfer to Sentosa Island. Check in to Oasia Resort Sentosa. Stroll along Palawan Beach &amp; rope suspension bridge to the Southernmost Point of Continental Asia. Evening sunset at Central Beach Bazaar and Wings of Time night light &amp; fire show.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Oasia Resort Sentosa</b><br>
+                                                23 Beach View, Palawan Ridge, Sentosa 098679
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">18 Dec 2026<br><span class="text-gray-500 font-normal">Day 6 (Fri)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Visit Singapore Oceanarium (S.E.A. Aquarium) at Resorts World Sentosa. Harry Potter: Visions of Magic exhibition. Late afternoon Fort Siloso Skywalk aerial trail &amp; golden sunset barefoot stroll at Siloso Beach. Beachfront Italian dinner at Trapizza.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Oasia Resort Sentosa</b><br>
+                                                23 Beach View, Palawan Ridge, Sentosa 098679
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">19 Dec 2026<br><span class="text-gray-500 font-normal">Day 7 (Sat)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Morning open-concept Singapore Zoo wildlife experience. Afternoon cultural &amp; souvenir shopping at Little India (Mustafa Centre), Chinatown (Buddha Tooth Relic Temple), and street art &amp; boutique fashion shopping at Bugis Street Market &amp; Haji Lane.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Oasia Resort Sentosa</b><br>
+                                                23 Beach View, Palawan Ridge, Sentosa 098679
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">20 Dec 2026<br><span class="text-gray-500 font-normal">Day 8 (Sun)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Gardens by the Bay (Floral Fantasy, Flower Dome, Cloud Forest misty mountain). Afternoon shopping &amp; canal boat ride at The Shoppes at Marina Bay Sands. Level 57 MBS SkyPark sunset panorama. Night Garden Rhapsody light show at Supertree Grove &amp; Spectra water show.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                <b>Oasia Resort Sentosa</b><br>
+                                                23 Beach View, Palawan Ridge, Sentosa 098679
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-bold whitespace-nowrap">21 Dec 2026<br><span class="text-gray-500 font-normal">Day 9 (Mon)</span></td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700">
+                                                Check out from Oasia Resort Sentosa. Transfer to Changi Airport. Visit the world-famous Jewel Changi Rain Vortex waterfall &amp; Canopy Park. Board return flight SQ 406 at 16:40 PM back to New Delhi (DEL), arriving at 20:00 PM IST.
+                                            </td>
+                                            <td class="p-2 border border-gray-300 dark:border-gray-700 font-semibold text-emerald-600 dark:text-emerald-400">
+                                                Return flight to New Delhi<br>(Singapore Airlines SQ 406)
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h5 class="font-bold text-xs text-gray-900 dark:text-white mt-4 mb-2 uppercase tracking-wide">
+                                4. ENCLOSED SUPPORTING DOCUMENTS:
+                            </h5>
+                            <ol class="list-decimal pl-5 mb-4 space-y-1">
+                                <li>Duly completed and signed Form 14A Visa Application Forms with 35x45mm matte color photographs (70% face, white background).</li>
+                                <li>Original Passports with more than 6 months remaining validity from travel date.</li>
+                                <li>Confirmed Roundtrip Flight Tickets on Singapore Airlines (DEL ➔ SIN ➔ DEL, PNR: DVXVBM).</li>
+                                <li>Confirmed Hotel Reservation Vouchers (Carlton Hotel Singapore &amp; Oasia Resort Sentosa).</li>
+                                <li>Confirmed Disney Adventure Cruise Line Contract &amp; Stateroom Confirmation (#44985264).</li>
+                                <li>Comprehensive Overseas Travel &amp; Medical Insurance policies (Tata AIG).</li>
+                                <li>Sponsor's Employment Verification Letter / NOC, Company ID card, 3 months Salary Slips, and 3 months certified Bank Statements.</li>
+                            </ol>
+
+                            <p class="mb-4 text-justify">
+                                We assure you that we are genuine tourists visiting Singapore purely for leisure and our honeymoon. We will strictly adhere to all the laws and regulations of the Republic of Singapore, and we will return to India before the expiry of our authorized stay as scheduled on 21st December 2026 to resume our professional duties.
+                            </p>
+
+                            <p class="mb-4">
+                                I kindly request you to grant us the entry visa at your earliest convenience.
+                            </p>
+
+                            <p class="mb-6">
+                                Thanking you,<br>
+                                Yours sincerely,
+                            </p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 font-sans">
+                                <div>
+                                    <p class="font-bold text-gray-900 dark:text-white mb-8">____________________________<br>Shaiwal Sachdev</p>
+                                    <p class="text-[11px] text-gray-500 leading-tight">
+                                        <b>Primary Applicant &amp; Trip Sponsor</b><br>
+                                        Phone: +91 [Your Mobile Number]<br>
+                                        Email: [Your Email Address]<br>
+                                        Address: [Your Full Indian Residential Address]
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 dark:text-white mb-8">____________________________<br>Shaila Manaktahla</p>
+                                    <p class="text-[11px] text-gray-500 leading-tight">
+                                        <b>Co-Applicant (Spouse)</b><br>
+                                        Phone: +91 [Shaila's Mobile Number]<br>
+                                        Email: [Shaila's Email Address]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Script for Cover Letter Copy & Print -->
+        <script>
+        function copyCoverLetterText() {
+            const letterEl = document.getElementById('cover-letter-content');
+            if (!letterEl) return;
+            const textToCopy = letterEl.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btnText = document.getElementById('copy-cl-btn-text');
+                const icon = document.getElementById('copy-cl-icon');
+                if (btnText && icon) {
+                    btnText.textContent = "Copied to Clipboard!";
+                    icon.textContent = "done";
+                    setTimeout(() => {
+                        btnText.textContent = "Copy Cover Letter";
+                        icon.textContent = "content_copy";
+                    }, 2500);
+                }
+            }).catch(err => {
+                console.error("Failed to copy:", err);
+            });
+        }
+
+        function printCoverLetter() {
+            const letterEl = document.getElementById('cover-letter-content');
+            if (!letterEl) return;
+            const printWindow = window.open('', '', 'width=800,height=900');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Singapore Visa Cover Letter - Shaiwal & Shaila</title>
+                    <style>
+                        body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.5; color: #000; padding: 30px 40px; }
+                        h4, h5 { font-size: 11pt; margin-top: 15px; margin-bottom: 5px; text-transform: uppercase; }
+                        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5pt; }
+                        th, td { border: 1px solid #444; padding: 6px 8px; vertical-align: top; }
+                        th { background-color: #f2f2f2; font-weight: bold; }
+                        .text-right { text-align: right; }
+                        .text-justify { text-align: justify; }
+                    </style>
+                </head>
+                <body>
+                    ${letterEl.innerHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+            }, 300);
+        }
+        </script>
 
         <!-- ========================================================
              TAB 3: TICKETS & EXPERIENCES (KLOOK & PELAGO)
