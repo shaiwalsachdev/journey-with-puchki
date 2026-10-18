@@ -226,8 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     bindDJSuggestions();
 
-    function addDJMessage(text, isUser = false, song = null) {
-        if (!text && !song) return;
+    function addDJMessage(text, isUser = false, song = null, choices = null) {
+        if (!text && !song && (!choices || choices.length === 0)) return;
         const div = document.createElement('div');
         div.className = `flex gap-2.5 ${isUser ? 'justify-end' : ''}`;
 
@@ -238,7 +238,46 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         let songCardHTML = '';
-        if (song && song.id) {
+        
+        // 1. Multiple Choices List (When user asked for a mood, vibe, or help choosing)
+        if (choices && Array.isArray(choices) && choices.length > 0) {
+            songCardHTML += `
+                <div class="mt-2.5 space-y-2">
+                    <p class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                        <span class="material-icons text-xs">queue_music</span>
+                        DJ KIARA'S PICKS • TAP TO PLAY:
+                    </p>
+                    <div class="space-y-1.5">
+            `;
+            choices.forEach((c, idx) => {
+                if (!c || !c.id) return;
+                const choiceCardId = 'dj-choice-' + Math.random().toString(36).substring(2, 9);
+                songCardHTML += `
+                    <div id="${choiceCardId}" class="p-2 rounded-xl bg-black/60 border border-white/10 hover:border-amber-500/50 flex items-center justify-between gap-2.5 transition-all group">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="relative w-9 h-9 rounded-lg overflow-hidden shrink-0 shadow bg-stone-900 border border-white/5">
+                                <img src="${c.thumbnail || 'https://img.youtube.com/vi/' + c.id + '/hqdefault.jpg'}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h4 class="text-[11px] font-bold text-white truncate group-hover:text-amber-300">${c.title || 'Track'}</h4>
+                                <p class="text-[9px] text-stone-400 truncate">${c.artist || 'Artist'}</p>
+                            </div>
+                        </div>
+                        <button onclick="confirmAndPlayDJTrack('${choiceCardId}', '${c.id}', '${(c.title || '').replace(/'/g, "\\'")}', '${(c.artist || '').replace(/'/g, "\\'")}', '${(c.vibe || '').replace(/'/g, "\\'")}', '${c.thumbnail || ''}')"
+                            class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px] flex items-center gap-1 shadow shrink-0 active:scale-95 transition-all">
+                            <span class="material-icons text-[12px]">play_arrow</span>Play
+                        </button>
+                    </div>
+                `;
+            });
+            songCardHTML += `
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 2. Exact Match Confirmation Card (When specific song was requested)
+        else if (song && song.id) {
             const cardId = 'dj-confirm-' + Math.random().toString(36).substring(2, 9);
             songCardHTML = `
                 <div id="${cardId}" class="mt-2.5 p-3 rounded-2xl bg-black/60 border border-amber-500/40 shadow-xl flex flex-col gap-2.5 transition-all">
@@ -249,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="min-w-0 flex-1">
                             <span class="text-[9px] uppercase tracking-wider font-extrabold text-amber-400 flex items-center gap-1">
                                 <span class="material-icons text-[11px]">headphones</span>
-                                DJ KIARA RECOMMENDS
+                                CONFIRM TRACK
                             </span>
                             <h4 class="text-xs font-bold text-white truncate">${song.title || 'Track'}</h4>
                             <p class="text-[10px] text-stone-400 truncate">${song.artist || 'Artist'}</p>
@@ -394,9 +433,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const replyText = data.text || "Here is what I picked for your vibe!";
                 const song = data.song;
+                const choices = data.choices;
 
-                // Add message with confirmation card (Does NOT auto-play directly)
-                addDJMessage(replyText, false, song);
+                // Add message with choices list or exact confirmation card
+                addDJMessage(replyText, false, song, choices);
                 djChatHistory.push({ role: 'assistant', content: replyText });
                 saveDJHistory();
 
