@@ -12,7 +12,7 @@ WEDDING_DETAILS = {
         "bride": "Shaila Manaktahla",
         "bride_parents": "Mrs. Mukta & Gurmeet Singh"
     },
-    "cute_quote": "Mere Chachu ki Shaadi me Jaroor Aaana! — Aastha (D/o Shantanu & Natasha Sachdev)",
+    "cute_quote": "Mere Chachu ki Shaadi me Jaroor Aaana! — Naisha (D/o Shantanu & Natasha Sachdev)",
     "events": [
         {
             "id": "sagan",
