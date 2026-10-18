@@ -219,7 +219,7 @@ DEFAULT_HONEYMOON_DATA = {
                 "id": "v1",
                 "title": "Original Indian Passports",
                 "due_date": "Due: Ready Now (Verify Validity > Jun 2027)",
-                "detail": "Must have min. 6 months validity from Dec 13, 2026 (at least 2 blank pages).",
+                "detail": "Must have min. 6 months validity from Dec 13, 2026 (at least 2 blank pages for both Shaiwal and Shaila).",
                 "done": True
             },
             {
@@ -252,20 +252,41 @@ DEFAULT_HONEYMOON_DATA = {
             },
             {
                 "id": "v6",
-                "title": "Bank Statements (Last 3–6 Months)",
+                "title": "Company Employment Certificate / NOC",
                 "due_date": "Due: Oct 30, 2026",
-                "detail": "Bank stamped statements showing healthy balance (≥ ₹1.5–2 Lakhs) for Shaiwal.",
+                "detail": "Official Company Employment Certificate / Letter of Introduction stating designation, tenure, approved leave dates for honeymoon, and authorized signatory seal.",
                 "done": False
             },
             {
                 "id": "v7",
-                "title": "Cover Letter & Employment Details",
+                "title": "Company ID Card",
                 "due_date": "Due: Oct 30, 2026",
-                "detail": "Honeymoon cover letter detailing travel dates + salary slips / company leave approval.",
+                "detail": "Clear scanned copy of official corporate/company employee identity card (front & back).",
                 "done": False
             },
             {
                 "id": "v8",
+                "title": "Last 3 Months Salary Slips",
+                "due_date": "Due: Oct 30, 2026",
+                "detail": "Official employer-issued salary payslips for the last 3 consecutive months with company seal / digital authentication.",
+                "done": False
+            },
+            {
+                "id": "v9",
+                "title": "Last 3 Months Bank Statement (Salary Account Only)",
+                "due_date": "Due: Oct 30, 2026",
+                "detail": "Original bank-stamped or digitally signed bank statement strictly for the SALARY account showing regular monthly salary credits and healthy balance.",
+                "done": False
+            },
+            {
+                "id": "v10",
+                "title": "Honeymoon Cover Letter",
+                "due_date": "Due: Oct 30, 2026",
+                "detail": "Personal cover letter addressed to the High Commission of Singapore detailing travel itinerary, dates, and wedding/honeymoon context.",
+                "done": False
+            },
+            {
+                "id": "v11",
                 "title": "SG Arrival Card (Electronic)",
                 "due_date": "Due: Dec 10–12, 2026 (strictly 72 hrs prior)",
                 "detail": "Submit online at ica.gov.sg strictly within 3 days (72 hours) before landing in Singapore (Dec 10-12). Free of cost.",
