@@ -911,6 +911,26 @@
             } catch(e) {}
         }
 
+        // Helper to get accurate playback time factoring in elapsed time if playing
+        function getAccuratePlaybackTime() {
+            try {
+                const baseTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                const lastUpdated = parseFloat(localStorage.getItem('shaix2_song_time_updated_at') || '0');
+                const rawSong = localStorage.getItem('shaix2_current_song');
+                if (!rawSong) return Math.max(0, baseTime);
+                const song = JSON.parse(rawSong);
+                if (song && song.isPlaying && lastUpdated > 0) {
+                    const elapsed = (Date.now() - lastUpdated) / 1000;
+                    if (elapsed > 0 && elapsed < 7200) { // sanity check within 2 hours
+                        return baseTime + elapsed;
+                    }
+                }
+                return Math.max(0, baseTime);
+            } catch(e) {
+                return 0;
+            }
+        }
+
         // Global Cross-Tab & Cross-Page State Synchronizer
         function syncCurrentSongToStorage(playingState) {
             const currentSong = flatPlaylist[currentSongIndex];
@@ -927,6 +947,13 @@
                     updatedAt: Date.now()
                 };
                 localStorage.setItem('shaix2_current_song', JSON.stringify(payload));
+                if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                    const cur = ytPlayer.getCurrentTime();
+                    if (cur > 0) {
+                        localStorage.setItem('shaix2_song_time', cur.toFixed(1));
+                        localStorage.setItem('shaix2_song_time_updated_at', Date.now().toString());
+                    }
+                }
                 if (typeof updateDJPillUI === 'function') {
                     updateDJPillUI(payload);
                 }
@@ -935,26 +962,47 @@
             }
         }
 
-        // Visibility Change Handler: prevent background tab throttling from pausing music
+        // Visibility Change Handler: prevent background tab throttling and sync accurate time when tab becomes visible
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
-                // Window/tab minimized or phone screen locked
+                // Save current exact time when tab goes to background
+                if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                    try {
+                        const cur = ytPlayer.getCurrentTime();
+                        localStorage.setItem('shaix2_song_time', cur.toFixed(1));
+                        localStorage.setItem('shaix2_song_time_updated_at', Date.now().toString());
+                    } catch(e) {}
+                }
                 if (isPlaying) {
                     initBackgroundAudioEngine();
                     if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
-                        // Ensure video remains unpaused in background
                         if (ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
                             try { ytPlayer.playVideo(); } catch(e) {}
                         }
                     }
                 }
             } else {
-                // User came back to tab
-                if (isPlaying && ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
-                    if (ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
-                        try { ytPlayer.playVideo(); } catch(e) {}
+                // User came back to tab: Resync time if audio played in another tab or drifted
+                try {
+                    const raw = localStorage.getItem('shaix2_current_song');
+                    if (raw) {
+                        const savedSong = JSON.parse(raw);
+                        const curIdxSong = flatPlaylist[currentSongIndex];
+                        if (savedSong && curIdxSong && savedSong.id === curIdxSong.id) {
+                            if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function' && typeof ytPlayer.seekTo === 'function') {
+                                const accurateTime = getAccuratePlaybackTime();
+                                const playerCurrentTime = ytPlayer.getCurrentTime() || 0;
+                                // If drifted by more than 2 seconds, seek to real ongoing playback time
+                                if (Math.abs(playerCurrentTime - accurateTime) > 2) {
+                                    ytPlayer.seekTo(accurateTime, true);
+                                }
+                                if (savedSong.isPlaying && ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+                                    ytPlayer.playVideo();
+                                }
+                            }
+                        }
                     }
-                }
+                } catch(e) {}
             }
         });
 
@@ -996,7 +1044,7 @@
                                 const currentSaved = JSON.parse(raw);
                                 if (currentSaved && currentSaved.id) {
                                     const matched = flatPlaylist.find(s => s.id === currentSaved.id);
-                                    const savedTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                                    const accurateTime = getAccuratePlaybackTime();
                                     const sTitle = matched ? matched.title : currentSaved.title;
                                     const sArtist = matched ? matched.artist : currentSaved.artist;
                                     const sVibe = matched ? matched.vibe : currentSaved.vibe;
@@ -1024,14 +1072,14 @@
                                         if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
                                             ytPlayer.loadVideoById({
                                                 videoId: currentSaved.id,
-                                                startSeconds: savedTime
+                                                startSeconds: accurateTime
                                             });
                                             ytPlayer.playVideo();
                                         }
                                     } else if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
                                         ytPlayer.cueVideoById({
                                             videoId: currentSaved.id,
-                                            startSeconds: savedTime
+                                            startSeconds: accurateTime
                                         });
                                     }
                                 }
@@ -1364,12 +1412,24 @@
                 if (fullBar) fullBar.style.width = `${pct}%`;
                 if (fullTime) fullTime.textContent = formatSeconds(cur);
 
-                // Continuously save current playback time for cross-page resume
+                // Continuously save current playback time and timestamp for cross-page resume
                 try {
                     localStorage.setItem('shaix2_song_time', cur.toFixed(1));
+                    localStorage.setItem('shaix2_song_time_updated_at', Date.now().toString());
                 } catch(e) {}
             }, 500);
         }
+
+        // Save current timestamp before unload
+        window.addEventListener('beforeunload', () => {
+            if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                try {
+                    const cur = ytPlayer.getCurrentTime();
+                    localStorage.setItem('shaix2_song_time', cur.toFixed(1));
+                    localStorage.setItem('shaix2_song_time_updated_at', Date.now().toString());
+                } catch(e) {}
+            }
+        });
 
         function stopProgressTracker() {
             if (progressInterval) clearInterval(progressInterval);
@@ -1383,6 +1443,10 @@
             const pct = Math.max(0, Math.min(1, clickX / rect.width));
             const targetSec = pct * ytPlayer.getDuration();
             ytPlayer.seekTo(targetSec, true);
+            try {
+                localStorage.setItem('shaix2_song_time', targetSec.toFixed(1));
+                localStorage.setItem('shaix2_song_time_updated_at', Date.now().toString());
+            } catch(e) {}
         }
 
         function formatSeconds(sec) {
@@ -1729,13 +1793,25 @@
         // Initialize loved songs on start
         loadLovedSongs();
 
-        // Listen for storage events (e.g., when a song is queued/selected from DJ Kiara)
+        // Listen for storage events (e.g., when a song is queued/selected from DJ Kiara or another tab)
         window.addEventListener('storage', (e) => {
             if (e.key === 'shaix2_current_song' && e.newValue) {
                 try {
                     const song = JSON.parse(e.newValue);
                     if (song && song.id) {
-                        selectSong(song.id, song.title, song.artist, song.vibe, "Queued by DJ Kiara", song.thumbnail, song.duration || '', false);
+                        const curSong = flatPlaylist[currentSongIndex];
+                        // If same song, just sync play/pause state without reloading from 0:00!
+                        if (curSong && curSong.id === song.id && ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                            const curState = ytPlayer.getPlayerState();
+                            if (song.isPlaying && curState !== YT.PlayerState.PLAYING) {
+                                ytPlayer.playVideo();
+                            } else if (!song.isPlaying && curState === YT.PlayerState.PLAYING) {
+                                ytPlayer.pauseVideo();
+                            }
+                        } else {
+                            // Different song was selected from DJ Kiara or another page
+                            selectSong(song.id, song.title, song.artist, song.vibe, "Queued by DJ Kiara", song.thumbnail, song.duration || '', false);
+                        }
                     }
                 } catch(err) {}
             }

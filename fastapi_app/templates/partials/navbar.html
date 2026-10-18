@@ -374,6 +374,25 @@
 
             // Global Background YouTube Audio Player (Plays on non-music pages)
             window.globalYtPlayer = null;
+            function getAccurateGlobalTime() {
+                try {
+                    const baseTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                    const lastUpdated = parseFloat(localStorage.getItem('shaix2_song_time_updated_at') || '0');
+                    const rawSong = localStorage.getItem('shaix2_current_song');
+                    if (!rawSong) return Math.max(0, baseTime);
+                    const song = JSON.parse(rawSong);
+                    if (song && song.isPlaying && lastUpdated > 0) {
+                        const elapsed = (Date.now() - lastUpdated) / 1000;
+                        if (elapsed > 0 && elapsed < 7200) {
+                            return baseTime + elapsed;
+                        }
+                    }
+                    return Math.max(0, baseTime);
+                } catch(e) {
+                    return 0;
+                }
+            }
+
             window.syncGlobalMusicAudio = function() {
                 if (window.location.pathname.startsWith('/music')) {
                     // On /music page, let the local dedicated player handle playback
@@ -389,22 +408,22 @@
                     const data = JSON.parse(raw);
 
                     if (data && data.id && data.isPlaying) {
-                        const savedTime = parseFloat(localStorage.getItem('shaix2_song_time') || '0');
+                        const accurateTime = getAccurateGlobalTime();
                         if (!window.globalYtPlayer) {
                             if (!window.YT) {
                                 const tag = document.createElement('script');
                                 tag.src = "https://www.youtube.com/iframe_api";
                                 document.head.appendChild(tag);
                                 window.onYouTubeIframeAPIReady = function() {
-                                    createGlobalPlayer(data.id, savedTime);
+                                    createGlobalPlayer(data.id, accurateTime);
                                 };
                             } else {
-                                createGlobalPlayer(data.id, savedTime);
+                                createGlobalPlayer(data.id, accurateTime);
                             }
                         } else if (typeof window.globalYtPlayer.loadVideoById === 'function') {
                             window.globalYtPlayer.loadVideoById({
                                 videoId: data.id,
-                                startSeconds: savedTime
+                                startSeconds: accurateTime
                             });
                             window.globalYtPlayer.playVideo();
                         }
@@ -441,7 +460,10 @@
                                     if (window.globalYtPlayer && typeof window.globalYtPlayer.getCurrentTime === 'function') {
                                         try {
                                             const ct = window.globalYtPlayer.getCurrentTime();
-                                            if (ct > 0) localStorage.setItem('shaix2_song_time', ct.toFixed(1));
+                                            if (ct > 0) {
+                                                localStorage.setItem('shaix2_song_time', ct.toFixed(1));
+                                                localStorage.setItem('shaix2_song_time_updated_at', Date.now().toString());
+                                            }
                                         } catch(err) {}
                                     }
                                 }, 1000);
