@@ -543,11 +543,12 @@
             </div>
 
             <!-- Right Options -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3">
                 <a id="full-player-yt-btn" href="#" target="_blank" 
-                    class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-semibold transition-all">
-                    <span class="material-icons text-xs text-gaana-red">open_in_new</span>
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/20 hover:bg-red-600/30 text-rose-300 border border-rose-500/40 text-xs font-bold transition-all shadow-md active:scale-95" title="Listen with background audio on YouTube Music">
+                    <span class="material-icons text-sm text-gaana-red animate-pulse">play_circle_filled</span>
                     <span>YouTube Music</span>
+                    <span class="material-icons text-[12px] opacity-80">open_in_new</span>
                 </a>
                 <button onclick="closeFullPlayer()" class="p-2 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
                     <span class="material-icons text-xl">close</span>
@@ -612,9 +613,15 @@
                             "The soundtrack to our favorite memories"
                         </p>
                     </div>
-                    <button id="full-player-like-btn" onclick="togglePlayerLike(this)" class="song-like-btn p-3 rounded-full bg-white/10 hover:bg-white/20 text-slate-400 hover:text-rose-500 hover:scale-110 transition-all shrink-0 shadow-lg" title="Add to Loved Songs">
-                        <span class="material-icons text-2xl">favorite</span>
-                    </button>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <!-- Direct YouTube Music Pill Button on Song Row -->
+                        <a id="full-player-yt-badge-btn" href="#" target="_blank" class="p-2.5 rounded-full bg-red-600/20 hover:bg-red-600/40 text-gaana-red hover:scale-110 active:scale-95 transition-all shadow border border-red-500/30 flex items-center justify-center" title="Open in YouTube Music (Supports Background Listening)">
+                            <span class="material-icons text-xl">play_circle_filled</span>
+                        </a>
+                        <button id="full-player-like-btn" onclick="togglePlayerLike(this)" class="song-like-btn p-2.5 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 text-slate-400 hover:text-rose-500 hover:scale-110 transition-all shrink-0 shadow-lg" title="Add to Loved Songs">
+                            <span class="material-icons text-2xl">favorite</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Interactive Scrubber Bar in Full Player -->
@@ -1277,6 +1284,7 @@
             const fullDiscImg = document.getElementById('full-disc-img');
             const fullTime = document.getElementById('full-total-time');
             const fullYtBtn = document.getElementById('full-player-yt-btn');
+            const fullYtBadgeBtn = document.getElementById('full-player-yt-badge-btn');
             const fullPlaylistName = document.getElementById('full-player-playlist-name');
             if (fullTitle) fullTitle.textContent = title;
             if (fullArtist) fullArtist.textContent = artist;
@@ -1284,6 +1292,7 @@
             if (fullDiscImg) fullDiscImg.src = thumbnail;
             if (fullTime) fullTime.textContent = duration;
             if (fullYtBtn) fullYtBtn.href = `https://music.youtube.com/watch?v=${id}`;
+            if (fullYtBadgeBtn) fullYtBadgeBtn.href = `https://music.youtube.com/watch?v=${id}`;
             if (fullPlaylistName) fullPlaylistName.textContent = vibe || 'ShaiX2 Lounge';
 
             // Update System MediaSession for Mobile Notifications, Lock Screen, & Headset Controls
