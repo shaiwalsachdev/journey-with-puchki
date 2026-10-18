@@ -7,9 +7,11 @@
     <title>Music Lounge - ShaiX2 Forever</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Dancing+Script:wght@500;700&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Dancing+Script:wght@500;700&family=Cinzel:wght@600;700&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="/static/js/theme.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -18,107 +20,531 @@
                     colors: {
                         "primary": "#ec131e",
                         "primary-soft": "#fdedee",
-                        "background-light": "#fff0f3",
-                        "background-dark": "#221011",
+                        "background-light": "#fff5f6",
+                        "background-dark": "#12080a",
+                        "gold": "#d4af37",
+                        "gold-light": "#fef3c7"
                     },
                     fontFamily: {
                         "display": ["Plus Jakarta Sans", "sans-serif"],
                         "handwriting": ["Dancing Script", "cursive"],
+                        "serif": ["Cinzel", "serif"],
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'spin-slow': 'spin 12s linear infinite',
+                        'spin-slow': 'spin 18s linear infinite',
+                        'spin-fast': 'spin 3s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 5s ease-in-out infinite',
+                        'wave': 'wave 1.2s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        wave: {
+                            '0%': { height: '20%' },
+                            '100%': { height: '100%' },
                         }
                     }
                 },
             },
         }
     </script>
+    <style>
+        /* Vinyl Turntable Grooves */
+        .vinyl-grooves {
+            background: radial-gradient(
+                circle,
+                #111 0%,
+                #111 25%,
+                #222 26%,
+                #111 28%,
+                #2a2a2a 34%,
+                #111 36%,
+                #333 45%,
+                #111 47%,
+                #222 55%,
+                #111 58%,
+                #2d2d2d 68%,
+                #111 70%,
+                #1c1c1c 80%,
+                #000 100%
+            );
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.15);
+        }
+
+        .vinyl-arm {
+            transform-origin: 20px 20px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .vinyl-arm.playing {
+            transform: rotate(26deg);
+        }
+
+        .vinyl-arm.paused {
+            transform: rotate(0deg);
+        }
+
+        .cd-sheen {
+            background: conic-gradient(
+                from 0deg,
+                rgba(255, 255, 255, 0.1) 0deg,
+                rgba(236, 19, 30, 0.3) 60deg,
+                rgba(255, 255, 255, 0.1) 120deg,
+                rgba(245, 158, 11, 0.3) 180deg,
+                rgba(255, 255, 255, 0.1) 240deg,
+                rgba(236, 19, 30, 0.3) 300deg,
+                rgba(255, 255, 255, 0.1) 360deg
+            );
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(236, 19, 30, 0.4);
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .dark .glass-panel {
+            background: rgba(26, 13, 16, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(236, 19, 30, 0.15);
+        }
+    </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display min-h-screen">
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen relative overflow-x-hidden transition-colors duration-300">
 
     {% include 'partials/navbar.html' %}
 
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <header class="text-center mb-16 relative">
-            <div
-                class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-primary/20 rounded-full blur-3xl -z-10 animate-pulse">
+    <!-- Ambient Glowing Backdrop Orbs -->
+    <div class="fixed top-24 left-1/4 w-96 h-96 bg-rose-500/15 dark:bg-rose-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
+    <div class="fixed bottom-12 right-1/4 w-96 h-96 bg-amber-500/15 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-20 relative z-10">
+
+        <!-- Header -->
+        <header class="text-center mb-10 sm:mb-14 relative">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 dark:bg-rose-500/20 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+                <span class="material-icons text-sm animate-spin-slow">album</span>
+                <span>The ShaiX2 Soundtrack</span>
+                <span class="text-rose-400">•</span>
+                <span>Interactive Turntable</span>
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold mb-4 font-handwriting text-primary transform -rotate-2">Our Love
-                Soundtrack</h1>
-            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                "Music gives a soul to the universe, wings to the mind, flight to the imagination and life to
-                everything."
+            <h1 class="text-5xl md:text-7xl font-bold font-handwriting text-primary drop-shadow mb-3 transform -rotate-1">
+                Our Music Lounge
+            </h1>
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                "Every love story has its own soundtrack. Spin the vinyl, select a vibe, and let the melodies play."
             </p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Common Playlist -->
-            <div
-                class="group relative rounded-3xl overflow-hidden shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700 transition-transform hover:-translate-y-2">
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-end p-6 pointer-events-none">
-                    <div class="text-white">
-                        <h3 class="text-2xl font-bold mb-1">Our Commons</h3>
-                        <p class="text-sm opacity-90">Songs we vibe to together</p>
+        <!-- ==============================================
+             HERO TURNTABLE & CD JUKEBOX PLAYER
+             ============================================== -->
+        <section class="glass-panel rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl mb-14 relative overflow-hidden border border-white/60 dark:border-rose-500/20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                
+                <!-- Left: Interactive Rotating CD / Vinyl Turntable (5 cols) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center">
+                        
+                        <!-- Turntable Platter Base -->
+                        <div class="absolute inset-0 rounded-full bg-slate-900/90 dark:bg-black/90 p-3 shadow-2xl border-4 border-slate-700/60 dark:border-stone-800"></div>
+                        
+                        <!-- Rotating CD / Vinyl Disc -->
+                        <div id="vinyl-disc" 
+                            class="relative w-full h-full rounded-full vinyl-grooves flex items-center justify-center transition-all duration-700 animate-spin-slow [animation-play-state:paused]">
+                            
+                            <!-- CD Sheen Overlay -->
+                            <div class="absolute inset-0 rounded-full cd-sheen opacity-40 pointer-events-none"></div>
+                            
+                            <!-- Center Label (Album Art / Couple Avatar) -->
+                            <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white/90 shadow-2xl overflow-hidden bg-rose-600 flex items-center justify-center">
+                                <img id="player-cover-art" 
+                                    src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" 
+                                    alt="Now Playing Cover" 
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/20"></div>
+                                <!-- Center Spindle Hole -->
+                                <div class="absolute w-5 h-5 rounded-full bg-slate-900 border-2 border-white/80 shadow-inner z-10"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tonearm (Turntable Stylus) -->
+                        <div class="absolute -top-3 right-2 w-20 h-40 pointer-events-none z-20">
+                            <!-- Pivot Base -->
+                            <div class="absolute top-0 right-2 w-8 h-8 rounded-full bg-gradient-to-br from-amber-200 to-amber-600 shadow-lg border border-amber-300"></div>
+                            <!-- Stylus Arm -->
+                            <div id="turntable-arm" class="vinyl-arm paused absolute top-4 right-5 w-2 h-28 bg-gradient-to-b from-stone-300 via-stone-400 to-amber-400 rounded-full shadow-md">
+                                <!-- Cartridge Head -->
+                                <div class="absolute bottom-0 -left-1.5 w-5 h-6 bg-slate-900 rounded-sm border border-amber-400/80 shadow">
+                                    <div class="w-1 h-2 bg-amber-400 mx-auto mt-3 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Visualizer Equalizer -->
+                    <div id="audio-visualizer" class="flex items-end justify-center gap-1.5 h-6 mt-6 opacity-40 transition-opacity duration-300">
+                        <div class="w-1.5 bg-rose-500 rounded-full h-2"></div>
+                        <div class="w-1.5 bg-rose-500 rounded-full h-5"></div>
+                        <div class="w-1.5 bg-amber-500 rounded-full h-3"></div>
+                        <div class="w-1.5 bg-rose-500 rounded-full h-6"></div>
+                        <div class="w-1.5 bg-amber-500 rounded-full h-4"></div>
+                        <div class="w-1.5 bg-rose-500 rounded-full h-2"></div>
+                        <div class="w-1.5 bg-rose-500 rounded-full h-5"></div>
+                        <div class="w-1.5 bg-amber-500 rounded-full h-3"></div>
                     </div>
                 </div>
-                <div class="aspect-video w-full">
-                    <iframe width="100%" height="100%"
-                        src="https://www.youtube.com/embed/videoseries?list=PLaY4vgH3VeVf6EfModVUZ2qWmF4Zv6Xyq"
-                        title="Common Playlist" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-3 mb-2">
-                        <span class="material-icons text-primary animate-bounce">favorite</span>
-                        <h2 class="text-2xl font-bold">Us Together</h2>
+
+                <!-- Right: Now Playing Details & Interactive Controls (7 cols) -->
+                <div class="lg:col-span-7 flex flex-col justify-between">
+                    <div>
+                        <!-- Vibe & Status Pill -->
+                        <div class="flex items-center gap-2 mb-3">
+                            <span id="player-badge" class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide bg-gradient-to-r from-rose-500 to-amber-500 text-white shadow-sm flex items-center gap-1.5">
+                                <span class="material-icons text-xs">music_note</span>
+                                <span id="player-vibe-text">Soulful Romance</span>
+                            </span>
+                            <span id="player-state-pill" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-slate-400" id="player-indicator-dot"></span>
+                                <span id="player-status-text">Paused</span>
+                            </span>
+                        </div>
+
+                        <!-- Song Title & Artist -->
+                        <h2 id="player-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-2 leading-tight">
+                            Tum Ho Toh
+                        </h2>
+                        <p id="player-artist" class="text-lg sm:text-xl font-medium text-rose-500 dark:text-rose-400 mb-4">
+                            Vishal Mishra (Saiyaara)
+                        </p>
+
+                        <!-- Love Note / Song Significance -->
+                        <div class="p-3.5 sm:p-4 rounded-2xl bg-white/60 dark:bg-black/30 border border-slate-200/80 dark:border-white/10 mb-6">
+                            <p class="text-xs uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1">
+                                <span class="material-icons text-xs text-rose-500">favorite</span>
+                                <span>Why this song is special to us</span>
+                            </p>
+                            <p id="player-note" class="text-sm sm:text-base italic text-slate-700 dark:text-slate-300">
+                                "Whenever this plays, everything feels quiet and magical."
+                            </p>
+                        </div>
                     </div>
-                    <p class="text-gray-500 text-sm">The perfect mix of our shared favorites.</p>
-                </div>
-            </div>
 
-            <!-- Puchki's Playlist -->
-            <div
-                class="group relative rounded-3xl overflow-hidden shadow-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-700 transition-transform hover:-translate-y-2">
-                <div class="aspect-video w-full">
-                    <iframe width="100%" height="100%"
-                        src="https://www.youtube.com/embed/videoseries?list=PLaY4vgH3VeVf1UiQ0E4s79Ox9l5N_AOz0"
-                        title="Puchki's Playlist" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-3 mb-2">
-                        <span class="material-icons text-pink-500">face_3</span>
-                        <h2 class="text-2xl font-bold">Puchki's Jams</h2>
+                    <!-- Hidden YouTube iFrame Container -->
+                    <div id="youtube-player-wrapper" class="w-full h-0 overflow-hidden opacity-0 pointer-events-none">
+                        <div id="yt-player"></div>
                     </div>
-                    <p class="text-gray-500 text-sm">Your soulful and fun collection.</p>
+
+                    <!-- Controls & Progress -->
+                    <div>
+                        <!-- Timeline Bar -->
+                        <div class="flex items-center gap-3 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                            <span id="time-current">0:00</span>
+                            <div class="flex-1 relative cursor-pointer group py-2" onclick="seekSong(event)">
+                                <div class="w-full h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                                    <div id="progress-bar" class="h-full bg-gradient-to-r from-rose-500 to-amber-500 rounded-full w-0 transition-all duration-100"></div>
+                                </div>
+                            </div>
+                            <span id="time-total">5:19</span>
+                        </div>
+
+                        <!-- Buttons Row -->
+                        <div class="flex items-center justify-between sm:justify-start sm:gap-6 flex-wrap">
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <button onclick="playPrevSong()" 
+                                    class="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-800 dark:text-white flex items-center justify-center transition-transform active:scale-90 shadow-sm"
+                                    title="Previous Track">
+                                    <span class="material-icons text-2xl">skip_previous</span>
+                                </button>
+
+                                <button id="main-play-btn" onclick="togglePlayPause()" 
+                                    class="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-primary hover:from-rose-600 hover:to-primary-dark text-white flex items-center justify-center transition-all shadow-xl hover:shadow-rose-500/30 transform hover:scale-105 active:scale-95"
+                                    title="Play / Pause">
+                                    <span id="main-play-icon" class="material-icons text-4xl">play_arrow</span>
+                                </button>
+
+                                <button onclick="playNextSong()" 
+                                    class="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-800 dark:text-white flex items-center justify-center transition-transform active:scale-90 shadow-sm"
+                                    title="Next Track">
+                                    <span class="material-icons text-2xl">skip_next</span>
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-2 mt-2 sm:mt-0">
+                                <a id="yt-open-link" href="https://music.youtube.com/watch?v=N7jDUBRVQVA" target="_blank"
+                                    class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 border border-slate-300 dark:border-white/10 transition-all shadow-sm">
+                                    <span class="material-icons text-rose-500 text-sm">open_in_new</span>
+                                    <span>Watch on YouTube</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+            </div>
+        </section>
+
+        <!-- ==============================================
+             PLAYLISTS SECTIONS & VIBES
+             ============================================== -->
+        {% for section in music_data.sections %}
+        <section class="mb-14" id="section-{{ section.id }}">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-3 border-b border-slate-200 dark:border-white/10 gap-3">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full text-white bg-gradient-to-r {{ section.color }} shadow-sm uppercase tracking-wider">
+                            <span class="material-icons text-xs">{{ section.icon }}</span>
+                            {{ section.badge }}
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">• {{ section.songs|length }} Songs</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+                        {{ section.title }}
+                    </h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                        {{ section.subtitle }}
+                    </p>
+                </div>
+
+                {% if section.playlist_url %}
+                <a href="{{ section.playlist_url }}" target="_blank"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors shrink-0">
+                    <span>Open Full YouTube Playlist</span>
+                    <span class="material-icons text-sm">arrow_forward</span>
+                </a>
+                {% endif %}
             </div>
 
-        </div>
+            <!-- Song Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {% for song in section.songs %}
+                <div onclick="selectSong('{{ song.id }}', '{{ song.title|replace('\'', '\\\'') }}', '{{ song.artist|replace('\'', '\\\'') }}', '{{ song.vibe|replace('\'', '\\\'') }}', '{{ song.note|replace('\'', '\\\'') }}', '{{ song.thumbnail }}', '{{ song.duration }}')"
+                    class="song-card group relative p-4 rounded-2xl glass-panel hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-white/80 dark:border-white/10 hover:border-primary/50 flex gap-4 items-center">
+                    
+                    <!-- Thumbnail with Play Overlay -->
+                    <div class="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 shadow-md bg-black">
+                        <img src="{{ song.thumbnail }}" alt="{{ song.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 flex items-center justify-center transition-colors">
+                            <div class="w-9 h-9 rounded-full bg-rose-500/90 text-white flex items-center justify-center transform group-hover:scale-110 shadow-lg transition-transform">
+                                <span class="material-icons text-xl">play_arrow</span>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Floating Vinyl Decoration -->
-        <div
-            class="fixed -bottom-20 -right-20 w-64 h-64 bg-black rounded-full border-8 border-gray-800 shadow-2xl animate-spin-slow opacity-20 pointer-events-none hidden lg:block">
-            <div class="absolute inset-0 m-auto w-24 h-24 bg-red-600 rounded-full flex items-center justify-center">
-                <div class="w-2 h-2 bg-white rounded-full"></div>
+                    <!-- Song Info -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between gap-1 mb-1">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-500 dark:bg-rose-500/20 uppercase tracking-wide truncate max-w-[140px]">
+                                {{ song.vibe }}
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-medium shrink-0">{{ song.duration }}</span>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">
+                            {{ song.title }}
+                        </h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">
+                            {{ song.artist }}
+                        </p>
+                        {% if song.note %}
+                        <p class="text-[11px] text-slate-600 dark:text-slate-300 italic line-clamp-1 border-l-2 border-rose-400/60 pl-1.5">
+                            "{{ song.note }}"
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-        </div>
+        </section>
+        {% endfor %}
+
     </main>
 
+    {% include 'partials/footer.html' %}
     {% include 'partials/copilot.html' %}
-    
+
+    <!-- YouTube IFrame Player API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // Tracklist extracted from MongoDB
+        const ALL_SECTIONS = {{ music_data.sections | tojson | safe }};
+        let flatPlaylist = [];
+        ALL_SECTIONS.forEach(sec => {
+            sec.songs.forEach(s => {
+                flatPlaylist.push({
+                    id: s.id,
+                    title: s.title,
+                    artist: s.artist,
+                    vibe: s.vibe,
+                    note: s.note,
+                    thumbnail: s.thumbnail,
+                    duration: s.duration
+                });
+            });
+        });
+
+        let currentSongIndex = 0;
+        let ytPlayer = null;
+        let isPlaying = false;
+        let progressInterval = null;
+
+        // 1. YouTube API Ready
+        function onYouTubeIframeAPIReady() {
+            if (flatPlaylist.length === 0) return;
+            const firstSong = flatPlaylist[0];
+
+            ytPlayer = new YT.Player('yt-player', {
+                height: '200',
+                width: '300',
+                videoId: firstSong.id,
+                playerVars: {
+                    'playsinline': 1,
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'enablejsapi': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            console.log("YouTube Player Ready!");
+        }
+
+        function onPlayerStateChange(event) {
+            const vinyl = document.getElementById('vinyl-disc');
+            const arm = document.getElementById('turntable-arm');
+            const visualizer = document.getElementById('audio-visualizer');
+            const playIcon = document.getElementById('main-play-icon');
+            const statusText = document.getElementById('player-status-text');
+            const indicatorDot = document.getElementById('player-indicator-dot');
+
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                vinyl.style.animationPlayState = 'running';
+                arm.className = 'vinyl-arm playing absolute top-4 right-5 w-2 h-28 bg-gradient-to-b from-stone-300 via-stone-400 to-amber-400 rounded-full shadow-md';
+                visualizer.classList.remove('opacity-40');
+                visualizer.classList.add('opacity-100');
+                playIcon.textContent = 'pause';
+                statusText.textContent = 'Playing';
+                indicatorDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+                startProgressTracker();
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                isPlaying = false;
+                vinyl.style.animationPlayState = 'paused';
+                arm.className = 'vinyl-arm paused absolute top-4 right-5 w-2 h-28 bg-gradient-to-b from-stone-300 via-stone-400 to-amber-400 rounded-full shadow-md';
+                visualizer.classList.add('opacity-40');
+                visualizer.classList.remove('opacity-100');
+                playIcon.textContent = 'play_arrow';
+                statusText.textContent = event.data === YT.PlayerState.ENDED ? 'Finished' : 'Paused';
+                indicatorDot.className = 'w-2 h-2 rounded-full bg-slate-400';
+                stopProgressTracker();
+
+                if (event.data === YT.PlayerState.ENDED) {
+                    playNextSong();
+                }
+            }
+        }
+
+        // 2. Play / Pause Control
+        function togglePlayPause() {
+            if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+            const state = ytPlayer.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) {
+                ytPlayer.pauseVideo();
+            } else {
+                ytPlayer.playVideo();
+            }
+        }
+
+        // 3. Select Track
+        function selectSong(id, title, artist, vibe, note, thumbnail, duration) {
+            const idx = flatPlaylist.findIndex(s => s.id === id);
+            if (idx !== -1) currentSongIndex = idx;
+
+            // Update UI
+            document.getElementById('player-title').textContent = title;
+            document.getElementById('player-artist').textContent = artist;
+            document.getElementById('player-vibe-text').textContent = vibe;
+            document.getElementById('player-note').textContent = `"${note || ''}"`;
+            document.getElementById('player-cover-art').src = thumbnail;
+            document.getElementById('time-total').textContent = duration;
+            document.getElementById('yt-open-link').href = `https://music.youtube.com/watch?v=${id}`;
+
+            // Load & Play in YouTube
+            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                ytPlayer.loadVideoById(id);
+            }
+
+            // Smooth scroll up to player if user is on mobile
+            if (window.innerWidth < 768) {
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+            }
+        }
+
+        // 4. Next / Prev
+        function playNextSong() {
+            currentSongIndex = (currentSongIndex + 1) % flatPlaylist.length;
+            const s = flatPlaylist[currentSongIndex];
+            selectSong(s.id, s.title, s.artist, s.vibe, s.note, s.thumbnail, s.duration);
+        }
+
+        function playPrevSong() {
+            currentSongIndex = (currentSongIndex - 1 + flatPlaylist.length) % flatPlaylist.length;
+            const s = flatPlaylist[currentSongIndex];
+            selectSong(s.id, s.title, s.artist, s.vibe, s.note, s.thumbnail, s.duration);
+        }
+
+        // 5. Progress Tracking & Seeking
+        function startProgressTracker() {
+            stopProgressTracker();
+            progressInterval = setInterval(() => {
+                if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+                const cur = ytPlayer.getCurrentTime() || 0;
+                const dur = ytPlayer.getDuration() || 1;
+                const pct = (cur / dur) * 100;
+                document.getElementById('progress-bar').style.width = `${pct}%`;
+                document.getElementById('time-current').textContent = formatSeconds(cur);
+            }, 500);
+        }
+
+        function stopProgressTracker() {
+            if (progressInterval) clearInterval(progressInterval);
+        }
+
+        function seekSong(event) {
+            if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
+            const bar = event.currentTarget;
+            const rect = bar.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const pct = Math.max(0, Math.min(1, clickX / rect.width));
+            const targetSec = pct * ytPlayer.getDuration();
+            ytPlayer.seekTo(targetSec, true);
+        }
+
+        function formatSeconds(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+    </script>
 </body>
 
 </html>

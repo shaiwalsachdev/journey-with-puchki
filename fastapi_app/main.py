@@ -1443,8 +1443,15 @@ async def add_memory(
 
 @app.get("/music", response_class=HTMLResponse)
 async def read_music(request: Request):
+    from fastapi_app.database import get_music_data
+    music_data = await get_music_data()
     settings = request.state.settings
-    return templates.TemplateResponse("music.html", {"request": request, "settings": settings})
+    return templates.TemplateResponse("music.html", {
+        "request": request, 
+        "settings": settings,
+        "music_data": music_data,
+        "page": "music"
+    })
 
 
 # --- Guestbook ---

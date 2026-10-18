@@ -288,9 +288,13 @@ async def get_honeymoon_data():
     data = await db.honeymoon.find_one({}, {"_id": 0})
     return data
 
-async def save_honeymoon_data(data: dict):
+# --- Music Lounge & Playlists ---
+async def get_music_data():
     db = get_db()
-    import datetime
-    data["updated_at"] = datetime.datetime.utcnow().isoformat()
-    await db.honeymoon.replace_one({}, data, upsert=True)
+    data = await db.music_data.find_one({}, {"_id": 0})
+    return data
+
+async def save_music_data(data: dict):
+    db = get_db()
+    await db.music_data.replace_one({}, data, upsert=True)
 
