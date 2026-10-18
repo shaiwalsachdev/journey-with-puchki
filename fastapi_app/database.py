@@ -288,6 +288,10 @@ async def get_honeymoon_data():
     data = await db.honeymoon.find_one({}, {"_id": 0})
     return data
 
+async def save_honeymoon_data(data: dict):
+    db = get_db()
+    await db.honeymoon.replace_one({}, data, upsert=True)
+
 # --- Music Lounge & Playlists ---
 async def get_music_data():
     db = get_db()
