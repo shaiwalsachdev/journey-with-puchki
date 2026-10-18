@@ -32,14 +32,7 @@
 
 <body class="bg-gradient-to-br from-background-light to-white min-h-screen font-display">
 
-    <nav class="fixed w-full z-50 top-0 left-0 bg-white/80 backdrop-blur-md border-b border-primary/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="/" class="font-handwriting text-2xl font-bold text-gray-900">ShaiX2 Forever</a>
-                <a href="/" class="text-primary font-bold">Back Home</a>
-            </div>
-        </div>
-    </nav>
+    {% include 'partials/navbar.html' %}
 
     <div class="container mx-auto px-4 pt-32 pb-20">
         <div class="text-center mb-16">
@@ -111,8 +104,8 @@
         </div>
 
     </div>
-    {% include 'partials/copilot.html' %}
     
+    {% include 'partials/footer.html' %}
 </body>
 
 </html>
