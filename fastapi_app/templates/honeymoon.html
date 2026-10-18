@@ -1473,6 +1473,69 @@
                     </div>
                     {% endfor %}
                 </div>
+
+                <!-- Form 14A Passport Exact Matching Guide & Verification Helper -->
+                <div class="mt-8 pt-6 border-t border-gray-200/80 dark:border-white/10">
+                    <div class="bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-indigo-500/10 border border-amber-400/40 rounded-3xl p-6 sm:p-7 shadow-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                            <div class="flex items-center gap-2.5">
+                                <span class="material-icons text-amber-500 text-2xl">verified_user</span>
+                                <h4 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">Form 14A ⇄ Passport Details Verification Guide</h4>
+                            </div>
+                            <span class="inline-flex items-center gap-1 text-[11px] font-extrabold px-3 py-1 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-200 border border-amber-300/40">
+                                <span class="material-icons text-xs">priority_high</span> Must Match Letter-for-Letter
+                            </span>
+                        </div>
+
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-5 leading-relaxed">
+                            Singapore ICA rejects visa applications if any spelling, date, or number differs from your physical Indian passport bio-data page. Use this pre-flight checklist before handing your signed Form 14A to the agent:
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <!-- Card 1: Bio-Data Matching -->
+                            <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/80 border border-gray-200/80 dark:border-white/10 space-y-2.5">
+                                <div class="flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400">
+                                    <span class="material-icons text-sm">badge</span>
+                                    <span>Part I: Applicant Particulars</span>
+                                </div>
+                                <ul class="space-y-1.5 text-gray-600 dark:text-gray-300">
+                                    <li>• <b>Full Name:</b> Write exactly as shown in the travel document (Given Name + Surname). Do not interchange or add initials.</li>
+                                    <li>• <b>Date of Birth:</b> Format <code>DD/MM/YYYY</code> matching passport day/month/year exactly.</li>
+                                    <li>• <b>Place of Birth:</b> State and Country as printed on the passport bio-data page.</li>
+                                    <li>• <b>Passport No.:</b> Check 8-character alphanumeric number (e.g. 1 letter + 7 digits). Ensure zero <tt>0</tt> vs letter <tt>O</tt> are accurate.</li>
+                                    <li>• <b>Issue &amp; Expiry Dates:</b> Verify expiry date is well after <b>June 13, 2027</b> (&gt; 6 months from arrival).</li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 2: Travel, Stay & Local Contact -->
+                            <div class="p-4 rounded-2xl bg-white/80 dark:bg-gray-800/80 border border-gray-200/80 dark:border-white/10 space-y-2.5">
+                                <div class="flex items-center gap-1.5 font-bold text-rose-600 dark:text-rose-400">
+                                    <span class="material-icons text-sm">hotel</span>
+                                    <span>Part II &amp; III: Stay &amp; Hotel In Singapore</span>
+                                </div>
+                                <ul class="space-y-1.5 text-gray-600 dark:text-gray-300">
+                                    <li>• <b>Expected Date of Arrival:</b> <code>13/12/2026</code> (Matches DEL ➔ SIN flight ticket).</li>
+                                    <li>• <b>Purpose of Visit:</b> Select <code>Social</code> ➔ Details: <em>"Tourism / Honeymoon &amp; Disney Cruise"</em>.</li>
+                                    <li>• <b>Where Staying:</b> Select <code>Hotel</code> ➔ <b>Carlton Hotel Singapore</b> (76 Bras Basah Road, Postal Code 189558, Tel: +65 6338 8333).</li>
+                                    <li>• <b>Local Contact:</b> Fill Hotel Name as <em>Carlton Hotel Singapore</em> (Tourist applicants without relatives list their booked hotel).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Action Bar for Form 14A -->
+                        <div class="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-amber-300/30">
+                            <div class="text-[11px] text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                                <span class="material-icons text-sm text-emerald-500">check_circle</span>
+                                <span>Paste 35x45mm matte photo on Page 1 &amp; Sign Page 4 in blue/black ink.</span>
+                            </div>
+                            <a href="/static/Form14A_Singapore_Visa.pdf" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-bold text-xs shadow-md hover:opacity-95 transition-all">
+                                <span class="material-icons text-sm">file_download</span>
+                                <span>Download Official Blank Form 14A</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
