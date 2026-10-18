@@ -1,5 +1,5 @@
 <!-- DJ Kiara - Personal AI DJ Widget -->
-<div id="dj-copilot-widget" class="fixed bottom-6 right-24 sm:right-28 z-[99998] font-sans">
+<div id="dj-copilot-widget" class="fixed bottom-6 right-24 sm:right-28 z-[99999] font-sans">
     
     <!-- DJ Toggle & Floating Player Indicator -->
     <div class="relative flex items-center">
@@ -17,7 +17,7 @@
         </div>
 
         <!-- DJ Toggle Button -->
-        <button id="dj-toggle" class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-1.5 sm:p-2 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border-2 border-amber-400/60 shrink-0 w-14 h-14 sm:w-16 sm:h-16" title="DJ Kiara - ShaiX2 Personal AI DJ">
+        <button id="dj-toggle" onclick="window.toggleDJWindow(event)" class="cursor-pointer bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-1.5 sm:p-2 shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border-2 border-amber-400/60 shrink-0 w-14 h-14 sm:w-16 sm:h-16 pointer-events-auto" title="DJ Kiara - ShaiX2 Personal AI DJ">
             <!-- Thinking aura ring around DJ toggle -->
             <div id="dj-toggle-thinking-ring" class="hidden absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 via-rose-500 to-purple-500 animate-spin blur-xs opacity-75"></div>
             
@@ -49,7 +49,7 @@
     </div>
 
     <!-- DJ Chat & Live Voice Window -->
-    <div id="dj-window" class="hidden opacity-0 scale-0 translate-y-10 absolute bottom-20 right-0 w-[350px] sm:w-[410px] h-[580px] max-h-[85vh] min-h-[260px] min-w-[280px] bg-slate-950/95 text-white backdrop-blur-2xl rounded-3xl shadow-2xl border border-rose-500/30 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right">
+    <div id="dj-window" class="hidden opacity-0 scale-0 translate-y-10 absolute bottom-20 right-0 w-[350px] sm:w-[410px] h-[580px] max-h-[85vh] min-h-[260px] min-w-[280px] bg-slate-950/95 text-white backdrop-blur-2xl rounded-3xl shadow-2xl border border-rose-500/30 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right z-[99999] pointer-events-auto">
         
         <!-- Header -->
         <div id="dj-header" class="cursor-move bg-gradient-to-r from-red-950/80 via-stone-900/90 to-black/90 p-4 border-b border-rose-500/20 flex justify-between items-center select-none shrink-0">
@@ -177,6 +177,38 @@
 </div>
 
 <script>
+// Expose toggleDJWindow globally so onclick="window.toggleDJWindow(event)" works immediately
+window.toggleDJWindow = function(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    const djWindow = document.getElementById('dj-window');
+    if (!djWindow) return;
+
+    if (djWindow.classList.contains('hidden') || djWindow.classList.contains('opacity-0')) {
+        // Re-sync currently playing song whenever DJ window is opened
+        try {
+            const raw = localStorage.getItem('shaix2_current_song');
+            if (raw && typeof window.updateDJPillUI === 'function') {
+                const song = JSON.parse(raw);
+                window.updateDJPillUI(song);
+            }
+        } catch(e) {}
+
+        djWindow.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            djWindow.classList.remove('opacity-0', 'scale-0', 'translate-y-10');
+            djWindow.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+        });
+        const djInput = document.getElementById('dj-input');
+        setTimeout(() => djInput && djInput.focus(), 300);
+    } else {
+        djWindow.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+        djWindow.classList.add('opacity-0', 'scale-0', 'translate-y-10');
+        setTimeout(() => djWindow.classList.add('hidden'), 300);
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     // Append DJ widget to body to avoid container clipping
     const djWidget = document.getElementById('dj-copilot-widget');
@@ -206,33 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('dj_kiara_chat_history', JSON.stringify(djChatHistory));
     }
 
-    // Toggle DJ Window
-    function toggleDJWindow() {
-        if (djWindow.classList.contains('hidden') || djWindow.classList.contains('opacity-0')) {
-            // Re-sync currently playing song whenever DJ window is opened
-            try {
-                const raw = localStorage.getItem('shaix2_current_song');
-                if (raw) {
-                    const song = JSON.parse(raw);
-                    updateDJPillUI(song);
-                }
-            } catch(e) {}
-
-            djWindow.classList.remove('hidden');
-            requestAnimationFrame(() => {
-                djWindow.classList.remove('opacity-0', 'scale-0', 'translate-y-10');
-                djWindow.classList.add('opacity-100', 'scale-100', 'translate-y-0');
-            });
-            setTimeout(() => djInput && djInput.focus(), 300);
-        } else {
-            djWindow.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
-            djWindow.classList.add('opacity-0', 'scale-0', 'translate-y-10');
-            setTimeout(() => djWindow.classList.add('hidden'), 300);
-        }
-    }
-
-    if (djToggle) djToggle.addEventListener('click', toggleDJWindow);
-    if (djClose) djClose.addEventListener('click', toggleDJWindow);
+    if (djToggle) djToggle.addEventListener('click', window.toggleDJWindow);
+    if (djClose) djClose.addEventListener('click', window.toggleDJWindow);
 
     if (djNewChat) {
         djNewChat.addEventListener('click', () => {
