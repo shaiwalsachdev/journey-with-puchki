@@ -83,11 +83,14 @@
                     <img id="dj-strip-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-4 h-4 rounded-full object-cover animate-spin-slow">
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[9px] uppercase tracking-wider text-amber-400 font-extrabold truncate">Currently Queued</p>
+                    <p id="dj-strip-status" class="text-[9px] uppercase tracking-wider text-emerald-400 font-extrabold truncate flex items-center gap-1">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Currently Playing</span>
+                    </p>
                     <p id="dj-strip-title" class="text-xs font-bold text-white truncate">Tum Ho Toh</p>
                 </div>
             </div>
-            <div class="flex items-center gap-0.5 h-3 shrink-0">
+            <div id="dj-strip-eq" class="flex items-center gap-0.5 h-3 shrink-0">
                 <span class="w-0.5 h-full bg-gaana-red rounded-full animate-pulse"></span>
                 <span class="w-0.5 h-2 bg-amber-400 rounded-full animate-pulse delay-75"></span>
                 <span class="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse delay-150"></span>
@@ -616,6 +619,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pillTitle) pillTitle.textContent = songData.title || 'Playing Song';
         if (pillArtist) pillArtist.textContent = songData.artist || 'DJ Kiara';
 
+        // Update Turntable Strip in DJ chat window
+        const stripTitle = document.getElementById('dj-strip-title');
+        const stripImg = document.getElementById('dj-strip-img');
+        const stripStatus = document.getElementById('dj-strip-status');
+        const stripEq = document.getElementById('dj-strip-eq');
+        if (stripTitle) stripTitle.textContent = songData.title || 'Track';
+        if (stripImg && songData.thumbnail) stripImg.src = songData.thumbnail;
+
         if (songData.isPlaying) {
             if (pillIcon) pillIcon.textContent = 'pause';
             if (toggleDisc) {
@@ -624,6 +635,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleDisc.classList.add('text-amber-300');
             }
             if (toggleEq) toggleEq.classList.remove('hidden');
+            if (stripImg) stripImg.classList.add('animate-spin-slow');
+            if (stripEq) stripEq.classList.remove('opacity-0');
+            if (stripStatus) {
+                stripStatus.className = "text-[9px] uppercase tracking-wider text-emerald-400 font-extrabold truncate flex items-center gap-1";
+                stripStatus.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Currently Playing</span>`;
+            }
         } else {
             if (pillIcon) pillIcon.textContent = 'play_arrow';
             if (toggleDisc) {
@@ -632,6 +649,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleDisc.classList.add('text-white');
             }
             if (toggleEq) toggleEq.classList.add('hidden');
+            if (stripImg) stripImg.classList.remove('animate-spin-slow');
+            if (stripEq) stripEq.classList.add('opacity-0');
+            if (stripStatus) {
+                stripStatus.className = "text-[9px] uppercase tracking-wider text-stone-400 font-extrabold truncate flex items-center gap-1";
+                stripStatus.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-stone-500"></span><span>Paused</span>`;
+            }
         }
     }
 
