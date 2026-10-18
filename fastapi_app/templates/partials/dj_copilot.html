@@ -17,23 +17,34 @@
         </div>
 
         <!-- DJ Toggle Button -->
-        <button id="dj-toggle" class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-3.5 sm:p-4 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border border-white/20 shrink-0" title="Open DJ Kiara - Your Personal DJ">
+        <button id="dj-toggle" class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white rounded-full p-1.5 sm:p-2 shadow-2xl hover:scale-110 transition-transform duration-300 focus:outline-none flex items-center justify-center relative overflow-hidden group border-2 border-amber-400/60 shrink-0 w-14 h-14 sm:w-16 sm:h-16" title="DJ Kiara - ShaiX2 Personal AI DJ">
             <!-- Thinking aura ring around DJ toggle -->
             <div id="dj-toggle-thinking-ring" class="hidden absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 via-rose-500 to-purple-500 animate-spin blur-xs opacity-75"></div>
-            <!-- DJ Vinyl & Headphones Icon -->
-            <span class="material-icons text-xl sm:text-2xl animate-spin-slow relative z-10" id="dj-toggle-disc-icon">album</span>
-            <!-- Floating mini headphones badge -->
-            <span class="material-icons text-[12px] absolute top-1 right-1 text-amber-300 z-10">headphones</span>
-            <!-- DJ Thinking badge -->
-            <span id="dj-toggle-thinking-badge" class="hidden absolute -top-1 -left-1 w-4 h-4 rounded-full bg-amber-400 text-black text-[9px] font-black items-center justify-center animate-bounce z-20 shadow">💭</span>
-            <!-- Equalizer bar indicator when song is playing -->
-            <div id="dj-toggle-eq" class="hidden absolute bottom-1.5 inset-x-0 justify-center items-end gap-0.5 h-2 z-10">
-                <span class="w-0.5 h-full bg-white rounded-full animate-pulse"></span>
-                <span class="w-0.5 h-1.5 bg-white rounded-full animate-pulse delay-75"></span>
-                <span class="w-0.5 h-2 bg-white rounded-full animate-pulse delay-150"></span>
+            
+            <!-- DJ Kiara Avatar with vinyl border -->
+            <div class="relative w-full h-full rounded-full overflow-hidden bg-black flex items-center justify-center border border-amber-300/40">
+                <img src="/static/images/kiara_avatar.png" alt="DJ Kiara" class="w-full h-full object-cover">
+                <!-- DJ Badge Overlay at bottom of avatar -->
+                <div class="absolute bottom-0 inset-x-0 bg-black/75 text-[8px] sm:text-[9px] font-black text-amber-300 uppercase tracking-tight text-center py-0.5 leading-none shadow">
+                    DJ KIARA
+                </div>
             </div>
+
+            <!-- Floating Headphones Badge -->
+            <span class="material-icons text-[15px] sm:text-[16px] absolute top-1 right-1 text-amber-300 drop-shadow-md z-10 animate-bounce-slight">headphones</span>
+            
+            <!-- DJ Thinking badge -->
+            <span id="dj-toggle-thinking-badge" class="hidden absolute -top-1 -left-1 w-5 h-5 rounded-full bg-amber-400 text-black text-[10px] font-black items-center justify-center animate-bounce z-20 shadow">💭</span>
+            
+            <!-- Equalizer bar indicator when song is playing -->
+            <div id="dj-toggle-eq" class="hidden absolute bottom-3.5 inset-x-0 justify-center items-end gap-0.5 h-2.5 z-10 pointer-events-none">
+                <span class="w-0.5 h-full bg-amber-300 rounded-full animate-pulse shadow"></span>
+                <span class="w-0.5 h-2 bg-rose-300 rounded-full animate-pulse delay-75 shadow"></span>
+                <span class="w-0.5 h-2.5 bg-amber-300 rounded-full animate-pulse delay-150 shadow"></span>
+            </div>
+            
             <!-- Wave Glow effect -->
-            <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500 z-10"></div>
+            <div class="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 rounded-full transition-transform duration-500 z-10 pointer-events-none"></div>
         </button>
     </div>
 
