@@ -64,14 +64,14 @@
             scrollbar-width: none;
         }
 
-        /* Vinyl Grooves inside the Mini CD Disc */
+        /* Vinyl Grooves inside the Mini CD Disc & Full Turntable */
         .cd-vinyl {
-            background: radial-gradient(circle, #151515 0%, #151515 28%, #2b2b2b 30%, #151515 32%, #222 42%, #111 55%, #2a2a2a 70%, #050505 100%);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.2);
+            background: radial-gradient(circle, #151515 0%, #151515 26%, #2b2b2b 28%, #151515 30%, #222 42%, #111 55%, #2a2a2a 70%, #080808 100%);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(255,255,255,0.15);
         }
 
         .cd-shine {
-            background: conic-gradient(from 0deg, rgba(255,255,255,0.08) 0deg, rgba(231,44,48,0.25) 60deg, rgba(255,255,255,0.08) 120deg, rgba(245,158,11,0.25) 180deg, rgba(255,255,255,0.08) 240deg, rgba(231,44,48,0.25) 300deg, rgba(255,255,255,0.08) 360deg);
+            background: conic-gradient(from 0deg, rgba(255,255,255,0.06) 0deg, rgba(231,44,48,0.25) 60deg, rgba(255,255,255,0.06) 120deg, rgba(245,158,11,0.25) 180deg, rgba(255,255,255,0.06) 240deg, rgba(231,44,48,0.25) 300deg, rgba(255,255,255,0.06) 360deg);
         }
 
         /* Equalizer Wave Bars */
@@ -89,6 +89,18 @@
         @keyframes bounce-eq {
             0% { transform: scaleY(0.3); }
             100% { transform: scaleY(1); }
+        }
+
+        /* Turntable Tonearm Physics */
+        .tonearm {
+            transform-origin: 24px 24px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tonearm-playing {
+            transform: rotate(26deg);
+        }
+        .tonearm-paused {
+            transform: rotate(0deg);
         }
     </style>
 </head>
@@ -338,10 +350,10 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
             
-            <!-- Left: Current Song Media + Spinning Mini Disc (30%) -->
-            <div class="flex items-center gap-3.5 w-1/3 min-w-0">
+            <!-- Left: Current Song Media + Spinning Mini Disc (30%) - Click to open Full Player -->
+            <div onclick="openFullPlayer()" class="flex items-center gap-3.5 w-1/3 min-w-0 cursor-pointer group" title="Click to open Full Now Playing View">
                 <!-- Mini CD Disc Animation -->
-                <div class="relative w-12 h-12 rounded-full cd-vinyl flex items-center justify-center shrink-0 border border-white/20 shadow-md">
+                <div class="relative w-12 h-12 rounded-full cd-vinyl flex items-center justify-center shrink-0 border border-white/20 shadow-md group-hover:scale-105 transition-transform">
                     <div id="player-mini-disc" class="w-full h-full rounded-full flex items-center justify-center animate-spin-slow [animation-play-state:paused]">
                         <img id="player-track-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-6 h-6 rounded-full object-cover">
                         <div class="absolute w-1.5 h-1.5 rounded-full bg-black inset-0 m-auto"></div>
@@ -351,7 +363,7 @@
                 <!-- Song Info -->
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center gap-2">
-                        <h4 id="player-track-title" class="text-sm font-bold text-slate-900 dark:text-white truncate">
+                        <h4 id="player-track-title" class="text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-gaana-red transition-colors">
                             Tum Ho Toh
                         </h4>
                         <!-- Equalizer animation when playing -->
@@ -362,13 +374,18 @@
                             <span class="eq-bar"></span>
                         </div>
                     </div>
-                    <p id="player-track-artist" class="text-xs text-slate-500 dark:text-slate-400 truncate">
-                        Vishal Mishra (Saiyaara)
-                    </p>
+                    <div class="flex items-center gap-1.5">
+                        <p id="player-track-artist" class="text-xs text-slate-500 dark:text-slate-400 truncate">
+                            Vishal Mishra (Saiyaara)
+                        </p>
+                        <span class="text-[10px] text-gaana-red font-bold hidden sm:inline flex items-center">
+                            <span class="material-icons text-xs">open_in_full</span>
+                        </span>
+                    </div>
                 </div>
 
                 <!-- Heart Like Button -->
-                <button onclick="togglePlayerLike(this)" class="text-rose-500 hover:scale-110 transition-transform hidden sm:block">
+                <button onclick="event.stopPropagation(); togglePlayerLike(this)" class="text-rose-500 hover:scale-110 transition-transform hidden sm:block">
                     <span class="material-icons text-xl">favorite</span>
                 </button>
             </div>
@@ -419,6 +436,156 @@
 
         </div>
     </footer>
+
+    <!-- ==============================================
+         YOUTUBE MUSIC STYLE FULL NOW PLAYING OVERLAY
+         (Big CD Player Turntable + Real-time Upcoming Playlist Queue)
+         ============================================== -->
+    <div id="full-player-modal" 
+        class="fixed inset-0 z-50 bg-[#0f0f13]/95 backdrop-blur-2xl text-white hidden flex-col justify-between overflow-hidden transition-all duration-300">
+        
+        <!-- Modal Top Bar -->
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-5 flex items-center justify-between border-b border-white/10 shrink-0">
+            <button onclick="closeFullPlayer()" 
+                class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all hover:scale-105 active:scale-95">
+                <span class="material-icons text-base">expand_more</span>
+                <span>Minimize</span>
+            </button>
+
+            <!-- Center Tag -->
+            <div class="text-center">
+                <span class="text-[10px] uppercase tracking-widest font-extrabold text-gaana-red bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
+                    Playing From <span id="full-player-playlist-name">ShaiX2 Lounge</span>
+                </span>
+            </div>
+
+            <!-- Right Options -->
+            <div class="flex items-center gap-3">
+                <a id="full-player-yt-btn" href="#" target="_blank" 
+                    class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-semibold transition-all">
+                    <span class="material-icons text-xs text-gaana-red">open_in_new</span>
+                    <span>YouTube Music</span>
+                </a>
+                <button onclick="closeFullPlayer()" class="p-2 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
+                    <span class="material-icons text-xl">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Center Stage: Split Screen (Left: Spinning CD Turntable, Right: Next Songs In Playlist) -->
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 py-6 flex-1 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 min-h-0 overflow-y-auto lg:overflow-hidden">
+            
+            <!-- Left Side: Spinning Vinyl CD Player + Song Metadata & Big Controls -->
+            <div class="w-full lg:w-1/2 flex flex-col items-center justify-center text-center">
+                
+                <!-- Turntable Platter Container -->
+                <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full cd-vinyl flex items-center justify-center border-4 border-stone-800 shadow-2xl group cursor-pointer shrink-0" 
+                    onclick="togglePlayPause()" title="Click to Play / Pause">
+                    <!-- Holographic sheen -->
+                    <div class="absolute inset-0 rounded-full cd-shine opacity-60 pointer-events-none"></div>
+
+                    <!-- Spinning Vinyl Record Disc -->
+                    <div id="full-spinning-disc" 
+                        class="w-full h-full rounded-full flex items-center justify-center animate-spin-slow [animation-play-state:paused]">
+                        <div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full border-4 border-white/80 overflow-hidden shadow-2xl relative">
+                            <img id="full-disc-img" src="https://img.youtube.com/vi/N7jDUBRVQVA/hqdefault.jpg" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute w-5 h-5 rounded-full bg-black border-2 border-white/80 inset-0 m-auto"></div>
+                        </div>
+                    </div>
+
+                    <!-- Turntable Stylus / Tonearm -->
+                    <div class="absolute -top-4 -right-4 w-28 h-40 pointer-events-none hidden sm:block">
+                        <svg viewBox="0 0 100 160" class="w-full h-full drop-shadow-2xl">
+                            <!-- Pivot Base -->
+                            <circle cx="24" cy="24" r="14" fill="#333" stroke="#555" stroke-width="2"/>
+                            <circle cx="24" cy="24" r="6" fill="#111" />
+                            <!-- Arm (Tonearm class pivots here) -->
+                            <g id="full-tonearm" class="tonearm tonearm-paused">
+                                <path d="M24 24 L24 95 L50 135" fill="none" stroke="#ddd" stroke-width="3.5" stroke-linecap="round"/>
+                                <rect x="42" y="130" width="16" height="24" rx="3" fill="#e72c30" stroke="#fff" stroke-width="1.5" transform="rotate(35 50 142)"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Hover Play/Pause Overlay Button -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 rounded-full">
+                        <div class="w-16 h-16 rounded-full bg-gaana-red text-white flex items-center justify-center shadow-xl">
+                            <span id="full-hover-icon" class="material-icons text-3xl">play_arrow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Song Titles & Note -->
+                <div class="mt-6 max-w-md w-full">
+                    <h2 id="full-song-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight truncate">
+                        Tum Ho Toh
+                    </h2>
+                    <p id="full-song-artist" class="text-sm sm:text-base text-stone-300 font-medium truncate mt-1">
+                        Vishal Mishra (Saiyaara)
+                    </p>
+                    <p id="full-song-note" class="text-xs text-rose-300/80 italic mt-2 truncate">
+                        "The soundtrack to our favorite memories"
+                    </p>
+                </div>
+
+                <!-- Interactive Scrubber Bar in Full Player -->
+                <div class="w-full max-w-md mt-6">
+                    <div class="relative w-full h-1.5 bg-white/20 rounded-full cursor-pointer group" onclick="seekSong(event)">
+                        <div id="full-player-progress-bar" class="h-full bg-gaana-red rounded-full transition-all duration-100 relative w-0">
+                            <span class="w-3.5 h-3.5 rounded-full bg-white shadow-lg absolute right-0 top-1/2 -translate-y-1/2 transform scale-100"></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-semibold text-stone-400 mt-2">
+                        <span id="full-current-time">0:00</span>
+                        <span id="full-total-time">5:19</span>
+                    </div>
+                </div>
+
+                <!-- Big Controller Buttons -->
+                <div class="flex items-center justify-center gap-6 sm:gap-8 mt-5">
+                    <button onclick="shufflePlay()" class="text-stone-400 hover:text-white transition-colors" title="Shuffle">
+                        <span class="material-icons text-2xl">shuffle</span>
+                    </button>
+                    <button onclick="playPrevSong()" class="text-white hover:text-gaana-red transition-colors" title="Previous Track">
+                        <span class="material-icons text-4xl">skip_previous</span>
+                    </button>
+                    <button onclick="togglePlayPause()" 
+                        class="w-14 h-14 rounded-full bg-gaana-red hover:bg-primary-hover text-white flex items-center justify-center shadow-xl shadow-red-600/40 transform hover:scale-105 active:scale-95 transition-all">
+                        <span id="full-play-icon" class="material-icons text-3xl">play_arrow</span>
+                    </button>
+                    <button onclick="playNextSong()" class="text-white hover:text-gaana-red transition-colors" title="Next Track">
+                        <span class="material-icons text-4xl">skip_next</span>
+                    </button>
+                    <button onclick="toggleRepeat()" class="text-stone-400 hover:text-white transition-colors" title="Repeat Track">
+                        <span class="material-icons text-2xl">repeat</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Side: Up Next Playlist Queue (YouTube Music Style) -->
+            <div class="w-full lg:w-1/2 flex flex-col h-full max-h-[500px] bg-white/5 rounded-3xl p-5 border border-white/10 backdrop-blur-md">
+                <!-- Queue Header -->
+                <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="material-icons text-gaana-red text-lg">queue_music</span>
+                        <h3 class="font-extrabold text-sm sm:text-base tracking-wide uppercase text-white">
+                            Up Next In Queue
+                        </h3>
+                    </div>
+                    <span id="full-queue-count" class="text-xs font-bold text-stone-400 bg-white/10 px-2.5 py-1 rounded-full">
+                        203 Tracks
+                    </span>
+                </div>
+
+                <!-- Scrollable Up Next Song List -->
+                <div id="full-queue-list" class="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                    <!-- Queue items will be rendered dynamically here -->
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     {% include 'partials/footer.html' %}
     {% include 'partials/copilot.html' %}
@@ -604,30 +771,52 @@
 
         function onPlayerStateChange(event) {
             const playIcon = document.getElementById('player-play-icon');
+            const fullPlayIcon = document.getElementById('full-play-icon');
             const miniDisc = document.getElementById('player-mini-disc');
             const bannerDisc = document.getElementById('banner-spinning-disc');
+            const fullDisc = document.getElementById('full-spinning-disc');
+            const fullTonearm = document.getElementById('full-tonearm');
             const eqBars = document.getElementById('player-eq-bars');
             const bannerHoverIcon = document.getElementById('banner-hover-play-icon');
+            const fullHoverIcon = document.getElementById('full-hover-icon');
 
             if (event.data === YT.PlayerState.PLAYING) {
                 // Clear watchdog when playback successfully starts
                 clearTimeout(playbackWatchdog);
                 isPlaying = true;
-                playIcon.textContent = 'pause';
+                if (playIcon) playIcon.textContent = 'pause';
+                if (fullPlayIcon) fullPlayIcon.textContent = 'pause';
                 if (bannerHoverIcon) bannerHoverIcon.textContent = 'pause';
-                miniDisc.style.animationPlayState = 'running';
+                if (fullHoverIcon) fullHoverIcon.textContent = 'pause';
+                if (miniDisc) miniDisc.style.animationPlayState = 'running';
                 if (bannerDisc) bannerDisc.style.animationPlayState = 'running';
-                eqBars.classList.remove('hidden');
-                eqBars.classList.add('flex');
+                if (fullDisc) fullDisc.style.animationPlayState = 'running';
+                if (fullTonearm) {
+                    fullTonearm.classList.remove('tonearm-paused');
+                    fullTonearm.classList.add('tonearm-playing');
+                }
+                if (eqBars) {
+                    eqBars.classList.remove('hidden');
+                    eqBars.classList.add('flex');
+                }
                 startProgressTracker();
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
-                playIcon.textContent = 'play_arrow';
+                if (playIcon) playIcon.textContent = 'play_arrow';
+                if (fullPlayIcon) fullPlayIcon.textContent = 'play_arrow';
                 if (bannerHoverIcon) bannerHoverIcon.textContent = 'play_arrow';
-                miniDisc.style.animationPlayState = 'paused';
+                if (fullHoverIcon) fullHoverIcon.textContent = 'play_arrow';
+                if (miniDisc) miniDisc.style.animationPlayState = 'paused';
                 if (bannerDisc) bannerDisc.style.animationPlayState = 'paused';
-                eqBars.classList.add('hidden');
-                eqBars.classList.remove('flex');
+                if (fullDisc) fullDisc.style.animationPlayState = 'paused';
+                if (fullTonearm) {
+                    fullTonearm.classList.remove('tonearm-playing');
+                    fullTonearm.classList.add('tonearm-paused');
+                }
+                if (eqBars) {
+                    eqBars.classList.add('hidden');
+                    eqBars.classList.remove('flex');
+                }
                 stopProgressTracker();
 
                 if (event.data === YT.PlayerState.ENDED) {
@@ -651,22 +840,127 @@
             }
         }
 
+        // Open & Close YouTube Music Style Full Now Playing Overlay
+        function openFullPlayer() {
+            const modal = document.getElementById('full-player-modal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+            renderFullPlayerQueue();
+        }
+
+        function closeFullPlayer() {
+            const modal = document.getElementById('full-player-modal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Render Up Next Queue inside the Full Player Modal
+        function renderFullPlayerQueue() {
+            const queueContainer = document.getElementById('full-queue-list');
+            const queueCount = document.getElementById('full-queue-count');
+            if (!queueContainer) return;
+
+            if (queueCount) queueCount.textContent = `${flatPlaylist.length} Tracks`;
+
+            // Display current track highlighted + all upcoming tracks in sequence
+            let html = '';
+            for (let i = 0; i < flatPlaylist.length; i++) {
+                const s = flatPlaylist[i];
+                const isCurrent = (i === currentSongIndex);
+
+                html += `
+                    <div onclick="selectSong('${s.id}', '${(s.title || '').replace(/'/g, "\\'")}', '${(s.artist || '').replace(/'/g, "\\'")}', '${(s.vibe || '').replace(/'/g, "\\'")}', '${(s.note || '').replace(/'/g, "\\'")}', '${s.thumbnail}', '${s.duration || ''}')"
+                        class="flex items-center gap-3 p-2.5 rounded-2xl transition-all cursor-pointer ${isCurrent ? 'bg-white/15 border border-gaana-red/50 shadow-md' : 'hover:bg-white/5 border border-transparent'}">
+                        
+                        <!-- Track Index or Playing Wave -->
+                        <span class="w-6 text-center text-xs font-bold ${isCurrent ? 'text-gaana-red' : 'text-stone-400'}">
+                            ${isCurrent ? '<span class="material-icons text-sm animate-pulse">volume_up</span>' : (i + 1)}
+                        </span>
+
+                        <!-- Thumbnail -->
+                        <div class="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 shadow bg-black">
+                            <img src="${s.thumbnail}" alt="${s.title}" class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Song Info -->
+                        <div class="min-w-0 flex-1">
+                            <h4 class="text-xs sm:text-sm font-bold text-white truncate ${isCurrent ? 'text-gaana-red' : ''}">
+                                ${s.title}
+                            </h4>
+                            <p class="text-[11px] text-stone-300 truncate">
+                                ${s.artist}
+                            </p>
+                        </div>
+
+                        <!-- Duration & Tag -->
+                        <div class="text-right shrink-0">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isCurrent ? 'bg-gaana-red text-white' : 'bg-white/10 text-stone-300'}">
+                                ${s.vibe || 'Track'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }
+            queueContainer.innerHTML = html;
+
+            // Auto-scroll to currently playing song in queue
+            setTimeout(() => {
+                const activeEl = queueContainer.querySelector('.border-gaana-red\\/50');
+                if (activeEl) {
+                    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+
         // 3. Select Track
-        function selectSong(id, title, artist, vibe, note, thumbnail, duration) {
+        function selectSong(id, title, artist, vibe, note, thumbnail, duration, shouldAutoOpen = true) {
             const idx = flatPlaylist.findIndex(s => s.id === id);
             if (idx !== -1) currentSongIndex = idx;
 
             // Clear any previous watchdog
             clearTimeout(playbackWatchdog);
 
-            // Update Player Bar
-            document.getElementById('player-track-title').textContent = title;
-            document.getElementById('player-track-artist').textContent = artist;
-            document.getElementById('player-track-img').src = thumbnail;
-            document.getElementById('player-total-time').textContent = duration;
-            document.getElementById('player-yt-link').href = `https://music.youtube.com/watch?v=${id}`;
+            // Update Bottom Player Bar
+            const playerTitle = document.getElementById('player-track-title');
+            const playerArtist = document.getElementById('player-track-artist');
+            const playerImg = document.getElementById('player-track-img');
+            const playerTime = document.getElementById('player-total-time');
+            const playerLink = document.getElementById('player-yt-link');
+            if (playerTitle) playerTitle.textContent = title;
+            if (playerArtist) playerArtist.textContent = artist;
+            if (playerImg) playerImg.src = thumbnail;
+            if (playerTime) playerTime.textContent = duration;
+            if (playerLink) playerLink.href = `https://music.youtube.com/watch?v=${id}`;
 
-            // Update Banner Visuals
+            // Update Full YouTube Music Style Overlay
+            const fullTitle = document.getElementById('full-song-title');
+            const fullArtist = document.getElementById('full-song-artist');
+            const fullNote = document.getElementById('full-song-note');
+            const fullDiscImg = document.getElementById('full-disc-img');
+            const fullTime = document.getElementById('full-total-time');
+            const fullYtBtn = document.getElementById('full-player-yt-btn');
+            const fullPlaylistName = document.getElementById('full-player-playlist-name');
+            if (fullTitle) fullTitle.textContent = title;
+            if (fullArtist) fullArtist.textContent = artist;
+            if (fullNote) fullNote.textContent = note ? `"${note}"` : `Curated exclusive track from ${vibe || 'collection'}`;
+            if (fullDiscImg) fullDiscImg.src = thumbnail;
+            if (fullTime) fullTime.textContent = duration;
+            if (fullYtBtn) fullYtBtn.href = `https://music.youtube.com/watch?v=${id}`;
+            if (fullPlaylistName) fullPlaylistName.textContent = vibe || 'ShaiX2 Lounge';
+
+            // Refresh Full Player Queue
+            renderFullPlayerQueue();
+
+            // Open Full Player Overlay on user song click
+            if (shouldAutoOpen) {
+                openFullPlayer();
+            }
+
+            // Update Hero Banner Visuals
             const bannerDiscImg = document.getElementById('banner-disc-img');
             const bannerBg = document.getElementById('hero-banner-bg');
             if (bannerDiscImg) bannerDiscImg.src = thumbnail;
@@ -762,8 +1056,15 @@
                 const cur = ytPlayer.getCurrentTime() || 0;
                 const dur = ytPlayer.getDuration() || 1;
                 const pct = (cur / dur) * 100;
-                document.getElementById('player-progress-bar').style.width = `${pct}%`;
-                document.getElementById('player-current-time').textContent = formatSeconds(cur);
+                const bar = document.getElementById('player-progress-bar');
+                const time = document.getElementById('player-current-time');
+                const fullBar = document.getElementById('full-player-progress-bar');
+                const fullTime = document.getElementById('full-current-time');
+
+                if (bar) bar.style.width = `${pct}%`;
+                if (time) time.textContent = formatSeconds(cur);
+                if (fullBar) fullBar.style.width = `${pct}%`;
+                if (fullTime) fullTime.textContent = formatSeconds(cur);
             }, 500);
         }
 
