@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pre-Wedding Story | Shaiwal &amp; Shaila</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Great+Vibes&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E11D48", // Rose Red
+                        "gold": "#D4AF37",
+                        "background-light": "#0F070A",
+                        "background-dark": "#0F070A",
+                        "surface-dark": "#1A0B10"
+                    },
+                    fontFamily: {
+                        "display": ["'Playfair Display'", "serif"],
+                        "cinzel": ["'Cinzel'", "serif"],
+                        "cursive": ["'Great Vibes'", "cursive"],
+                        "sans": ["'Plus Jakarta Sans'", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F070A;
+            color: #FDF2F4;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Netflix-style horizontal row */
+        .netflix-row {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .netflix-row::-webkit-scrollbar {
+            display: none;
+        }
+        .netflix-row > * {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+        }
+
+        .photo-card {
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-origin: center center;
+        }
+        .photo-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            z-index: 20;
+            box-shadow: 0 16px 36px rgba(225, 29, 72, 0.25);
+        }
+
+        .hero-vignette {
+            background: linear-gradient(to top, #0F070A 0%, rgba(15, 7, 10, 0.4) 40%, rgba(15, 7, 10, 0.8) 100%);
+        }
+
+        .gold-shimmer {
+            background: linear-gradient(90deg, #F43F5E 0%, #FDA4AF 25%, #F59E0B 50%, #FDA4AF 75%, #F43F5E 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Ambient floating sparkle nodes */
+        .sparkle-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #FDA4AF;
+            box-shadow: 0 0 10px 2px #E11D48;
+            animation: twinkle 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+
+        /* Grid / Slider switch */
+        .grid-view-mode {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+            gap: 1.25rem !important;
+            overflow: visible !important;
+        }
+        @media (min-width: 768px) {
+            .grid-view-mode {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[#0F070A] antialiased selection:bg-rose-600 selection:text-white">
+
+    <!-- Ambient Sparkles -->
+    <div class="sparkle-node" style="top: 140px; left: 6%; animation-delay: 0.2s;"></div>
+    <div class="sparkle-node" style="top: 220px; right: 10%; animation-delay: 1.4s;"></div>
+    <div class="sparkle-node" style="top: 480px; left: 14%; animation-delay: 2.1s;"></div>
+    <div class="sparkle-node" style="top: 600px; right: 20%; animation-delay: 0.9s;"></div>
+
+    <!-- Navbar: included directly (same as Roka page) -->
+    <div class="cinematic-nav fixed top-0 w-full z-[100] transition-colors duration-500 bg-gradient-to-b from-black/90 pb-8 to-transparent">
+        {% set page = 'prewedding' %}
+        {% include 'partials/navbar.html' %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="relative w-full overflow-hidden pt-20">
+        
+        <!-- Hero Section -->
+        <section class="relative w-full min-h-[92vh] flex items-center py-20 px-4 sm:px-8 lg:px-16">
+            {% if hero_media and hero_media.media_type == "video" %}
+            <video id="hero-bg-video" autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="{{ r2_url }}/{{ hero_media.filename }}" type="video/mp4">
+            </video>
+            {% else %}
+            <!-- Ambient Romantic Backdrop with first available photos -->
+            <div class="absolute inset-0 z-0 overflow-hidden opacity-35">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-transparent to-[#0F070A] z-10"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 h-full w-full gap-2 p-2 filter blur-sm scale-105">
+                    {% for m in media[:8] %}
+                    <img src="{{ r2_url }}/{{ m.filename }}" class="w-full h-full object-cover rounded-xl" />
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="absolute inset-0 hero-vignette z-10 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/70 to-transparent w-full md:w-[65vw] z-10 pointer-events-none"></div>
+
+            <div class="relative z-20 max-w-3xl pt-6 md:pt-0">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 mb-4 px-3.5 py-1 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-extrabold uppercase tracking-widest backdrop-blur-md">
+                    <span class="material-icons text-sm text-rose-400 animate-pulse">favorite</span>
+                    <span>The Four Looks Experience</span>
+                </div>
+
+                <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 gold-shimmer uppercase leading-[1.1]">
+                    Pre-Wedding
+                </h1>
+                <h2 class="font-cursive text-3xl sm:text-5xl text-rose-200 mb-6 font-normal">
+                    Framed in laughter, sealed in four timeless styles
+                </h2>
+
+                <div class="flex items-center gap-3 mb-6 text-xs sm:text-sm font-bold text-gray-300 flex-wrap">
+                    <span class="text-rose-300 bg-rose-500/20 px-3 py-0.5 rounded-full border border-rose-400/40">October 10, 2026</span>
+                    <span class="text-[#46d369] bg-[#46d369]/10 px-2 py-0.5 rounded border border-[#46d369]/20">100% Romance</span>
+                    <span>4 Iconic Looks</span>
+                    <span class="border border-white/30 px-2 py-0.5 rounded text-white/90">Teasers &amp; Frames</span>
+                    <span class="border border-rose-400/40 text-rose-300 px-2 py-0.5 rounded text-xs">4K Quality</span>
+                </div>
+
+                <p class="text-base sm:text-lg text-rose-100/90 leading-relaxed mb-8 max-w-2xl font-serif italic">
+                    From timeless ethnic grace to spontaneous sunny picnics, bustling city skylines, and our unforgettable proposal look — every frame is a chapter of us.
+                </p>
+
+                <!-- Navigation Quick Anchor Tabs (High Visibility Look Buttons) -->
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
+                    <a href="#ethnic-look" class="px-4 py-2 rounded-full bg-amber-500/30 hover:bg-amber-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-100 shadow-md transition-all hover:scale-105">
+                        🥻 Ethnic Look
+                    </a>
+                    <a href="#picnic-look" class="px-4 py-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500/50 border border-emerald-400/60 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
+                        🧺 Picnic Look
+                    </a>
+                    <a href="#city-look" class="px-4 py-2 rounded-full bg-sky-500/30 hover:bg-sky-500/50 border border-sky-400/60 text-xs sm:text-sm font-extrabold text-sky-100 shadow-md transition-all hover:scale-105">
+                        🏙️ City Look
+                    </a>
+                    <a href="#proposal-look" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
+                        💍 Proposal Look
+                    </a>
+                    {% if chapters_map['Teaser & Videos'] and chapters_map['Teaser & Videos']|length > 0 %}
+                    <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-purple-500/30 hover:bg-purple-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-100 shadow-md transition-all hover:scale-105">
+                        🎬 Teaser &amp; Videos
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- Action Buttons (Bold, High Contrast, Like Roka) -->
+                <div class="flex flex-wrap items-center gap-4">
+                    {% if hero_media and hero_media.media_type == "video" %}
+                    <button onclick="playPreweddingVideo('{{ r2_url }}/{{ hero_media.filename }}', 'Pre-Wedding Teaser')" class="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-extrabold hover:bg-white/90 transition shadow-2xl text-sm sm:text-base hover:scale-105 active:scale-95">
+                        <span class="material-icons text-2xl text-black">play_arrow</span>
+                        Play Teaser
+                    </button>
+                    {% endif %}
+                    <button onclick="startAiMagic()" class="flex items-center gap-2 bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 hover:from-rose-500 hover:to-amber-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-rose-400/30 hover:scale-105 active:scale-95">
+                        <span class="material-icons text-2xl text-amber-200 group-hover:rotate-12 transition-transform">auto_awesome</span>
+                        <span>AI Magic ✨</span>
+                    </button>
+                    <button onclick="document.getElementById('looks-start').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl font-extrabold transition shadow-xl text-sm sm:text-base border border-white/30 backdrop-blur-md hover:scale-105 active:scale-95">
+                        <span class="material-icons text-xl text-white">photo_library</span>
+                        Browse Looks
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Gradient -->
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0F070A] z-10 pointer-events-none"></div>
+        </section>
+
+        <!-- Dynamic Looks Sections -->
+        <div id="looks-start" class="relative z-30 px-4 sm:px-8 lg:px-16 space-y-20 pb-28">
+
+            {% set looks_config = [
+                {
+                    "title": "Ethnic Look",
+                    "id": "ethnic-look",
+                    "badge": "Look 01",
+                    "icon": "auto_awesome",
+                    "theme_color": "border-amber-400/30 text-amber-300",
+                    "desc": "Draped in heritage and timeless royal charm. Intricate fabrics, regal smiles, and a celebration of tradition."
+                },
+                {
+                    "title": "Picnic Look",
+                    "id": "picnic-look",
+                    "badge": "Look 02",
+                    "icon": "park",
+                    "theme_color": "border-emerald-400/30 text-emerald-300",
+                    "desc": "Sunlit lawns, playful laughs, cozy blankets, and warm sunny skies. The sweet carefree romance of lazy afternoons."
+                },
+                {
+                    "title": "City Look",
+                    "id": "city-look",
+                    "badge": "Look 03",
+                    "icon": "location_city",
+                    "theme_color": "border-sky-400/30 text-sky-300",
+                    "desc": "Modern aesthetics, iconic urban architecture, bold styling, and the rhythm of our favorite city streets."
+                },
+                {
+                    "title": "Proposal Look",
+                    "id": "proposal-look",
+                    "badge": "Look 04",
+                    "icon": "diamond",
+                    "theme_color": "border-rose-400/30 text-rose-300",
+                    "desc": "The breathtaking moment when love found its forever answer. Candlelight, beating hearts, and unforgettable promise."
+                },
+                {
+                    "title": "Teaser & Videos",
+                    "id": "teaser-and-videos",
+                    "badge": "Motion",
+                    "icon": "movie",
+                    "theme_color": "border-purple-400/30 text-purple-300",
+                    "desc": "Cinematic motion teasers, behind the scenes, and dynamic video snippets bringing every shoot to life."
+                }
+            ] %}
+
+            {% for look in looks_config %}
+            {% set items = chapters_map.get(look.title, []) %}
+            <section id="{{ look.id }}" class="scroll-mt-28">
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-3 border-b border-rose-500/15">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-2.5 py-0.5 rounded-full border {{ look.theme_color }}">
+                                {{ look.badge }}
+                            </span>
+                            <span class="text-xs text-rose-300/70 font-semibold">{{ items|length }} moments captured</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white flex items-center gap-2">
+                            <span>{{ look.title }}</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-rose-100/70 max-w-2xl mt-1.5 font-serif italic">
+                            {{ look.desc }}
+                        </p>
+                    </div>
+
+                    <!-- View Mode Toggle & Section AI Magic -->
+                    {% if items|length > 0 %}
+                    <div class="flex items-center gap-2 self-start md:self-end flex-wrap">
+                        <button onclick="startAiMagic('{{ look.title }}')" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold border border-rose-400 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                            <span class="material-icons text-base text-amber-200">auto_awesome</span>
+                            <span>Play {{ look.title }} AI Magic</span>
+                        </button>
+                        <button onclick="toggleViewLayout('{{ look.id }}-row', this)" class="layout-toggle-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 text-xs font-bold transition-all shadow-md hover:scale-105">
+                            <span class="material-icons text-base">grid_view</span>
+                            <span class="toggle-label">View as Grid</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if items|length > 0 %}
+                <!-- Items Row / Grid Container -->
+                <div id="{{ look.id }}-row" class="netflix-row gap-5 pb-4">
+                    {% for item in items %}
+                    <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-white/10 w-72 sm:w-80 shrink-0 group">
+                        <div class="aspect-[3/4] overflow-hidden bg-black relative">
+                            {% if item.media_type == "video" %}
+                            <video src="{{ r2_url }}/{{ item.filename }}" class="w-full h-full object-cover" muted loop preload="metadata" onmouseover="this.play()" onmouseout="this.pause()"></video>
+                            <button onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ look.title }}')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
+                                <span class="material-icons text-5xl text-white drop-shadow-xl bg-primary/80 rounded-full p-2 group-hover:scale-110 transition-transform">play_arrow</span>
+                            </button>
+                            <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-white/20">
+                                <span class="material-icons text-xs text-rose-400">videocam</span> Video
+                            </span>
+                            {% else %}
+                            {% set photo_src = '/local-photos/' ~ item.filename if item.is_local else r2_url ~ '/' ~ item.filename %}
+                            <img src="{{ photo_src }}" alt="{{ look.title }}" loading="lazy" class="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-500" onclick="openPreweddingLightbox('{{ photo_src }}', '{{ item.note }}', '{{ look.title }}')" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 pointer-events-none">
+                                <span class="text-xs text-white font-medium flex items-center gap-1">
+                                    <span class="material-icons text-sm text-rose-400">zoom_in</span> Click to expand
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if item.note %}
+                        <div class="p-3.5 bg-surface-dark/95 border-t border-white/5">
+                            <p class="text-xs text-rose-100/90 font-serif italic line-clamp-2">"{{ item.note }}"</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- Empty Placeholder -->
+                <div class="rounded-2xl border border-dashed border-rose-500/20 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
+                    <span class="material-icons text-4xl text-rose-400/60 mb-2">{{ look.icon }}</span>
+                    <h3 class="text-lg font-bold text-white mb-1">Coming Soon: {{ look.title }}</h3>
+                    <p class="text-xs text-rose-200/60 max-w-md font-serif italic">This chapter's moments and frames will appear here soon.</p>
+                </div>
+                {% endif %}
+            </section>
+            {% endfor %}
+
+            <!-- Special Footer Navigation Link -->
+            <section class="pt-12 border-t border-rose-500/20 text-center">
+                <div class="max-w-2xl mx-auto space-y-4">
+                    <span class="font-cursive text-3xl text-rose-300 block">The Journey Continues</span>
+                    <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white">Relive Every Chapter</h3>
+                    <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                        <a href="/events" class="px-5 py-2.5 rounded-full bg-primary hover:bg-rose-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-primary/30 flex items-center gap-2">
+                            <span class="material-icons text-sm">event</span>
+                            <span>All Events &amp; Milestones</span>
+                        </a>
+                        <a href="/roka" class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
+                            <span class="material-icons text-sm text-rose-400">favorite</span>
+                            <span>Relive The Roka</span>
+                        </a>
+                        <a href="/wedding" class="px-5 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
+                            <span class="material-icons text-sm text-amber-400">celebration</span>
+                            <span>Wedding Celebrations</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Custom Pre-Wedding Video Modal -->
+    <div id="prewedding-video-modal" class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
+        <div class="absolute top-0 w-full z-20 p-6 flex items-center justify-between bg-gradient-to-b from-black/90 to-transparent">
+            <div class="flex items-center gap-4">
+                <button onclick="closePreweddingVideo()" class="text-white hover:text-rose-500 transition flex items-center gap-2">
+                    <span class="material-icons text-3xl">arrow_back</span>
+                </button>
+                <div>
+                    <h3 id="pw-video-title" class="text-lg font-bold text-white">Pre-Wedding Clip</h3>
+                    <p class="text-xs text-rose-300">Shaiwal &amp; Shaila Cinematic</p>
+                </div>
+            </div>
+            <button onclick="closePreweddingVideo()" class="text-white/70 hover:text-white p-2">
+                <span class="material-icons text-3xl">close</span>
+            </button>
+        </div>
+        <div id="pw-video-container" class="w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl flex items-center justify-center">
+            <!-- Dynamic Video -->
+        </div>
+    </div>
+
+    <!-- Prewedding Lightbox -->
+    <div id="pw-lightbox-modal" class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <button onclick="closePreweddingLightbox()" class="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50">
+            <span class="material-icons text-4xl">close</span>
+        </button>
+        <div class="relative max-w-5xl max-h-[85vh] flex flex-col items-center">
+            <img id="pw-lightbox-img" src="" alt="Prewedding photo" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl" />
+            <div id="pw-lightbox-meta" class="mt-4 text-center">
+                <span id="pw-lightbox-badge" class="text-xs uppercase font-extrabold tracking-widest text-rose-400 bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20"></span>
+                <p id="pw-lightbox-caption" class="text-sm font-serif italic text-rose-100/90 mt-2"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic -->
+    <script>
+        function toggleViewLayout(containerId, btn) {
+            const container = document.getElementById(containerId);
+            const label = btn.querySelector('.toggle-label');
+            const icon = btn.querySelector('.material-icons');
+            if (container.classList.contains('grid-view-mode')) {
+                container.classList.remove('grid-view-mode');
+                label.textContent = 'View as Grid';
+                icon.textContent = 'grid_view';
+            } else {
+                container.classList.add('grid-view-mode');
+                label.textContent = 'View as Slider';
+                icon.textContent = 'view_carousel';
+            }
+        }
+
+        function playPreweddingVideo(url, title) {
+            const modal = document.getElementById('prewedding-video-modal');
+            const container = document.getElementById('pw-video-container');
+            document.getElementById('pw-video-title').textContent = title || 'Pre-Wedding Clip';
+            
+            container.innerHTML = `
+                <video src="${url}" controls autoplay preload="auto" class="w-full h-full object-contain"></video>
+            `;
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 20);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreweddingVideo() {
+            const modal = document.getElementById('prewedding-video-modal');
+            const container = document.getElementById('pw-video-container');
+            modal.classList.add('hidden');
+            modal.classList.remove('opacity-100');
+            container.innerHTML = '';
+            document.body.style.overflow = '';
+        }
+
+        function openPreweddingLightbox(src, caption, badge) {
+            const modal = document.getElementById('pw-lightbox-modal');
+            const img = document.getElementById('pw-lightbox-img');
+            const captionEl = document.getElementById('pw-lightbox-caption');
+            const badgeEl = document.getElementById('pw-lightbox-badge');
+
+            img.src = src;
+            badgeEl.textContent = badge || 'Pre-Wedding';
+            captionEl.textContent = caption ? `"${caption}"` : '';
+
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 20);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreweddingLightbox() {
+            const modal = document.getElementById('pw-lightbox-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('opacity-100');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePreweddingVideo();
+                closePreweddingLightbox();
+            }
+        });
+    </script>
+
+    <!-- Prewedding Audio for AI Magic -->
+    <audio id="prewedding-magic-audio" src="/static/music/aaj_sajeya.mp3" preload="auto"></audio>
+    
+    <!-- Pre-Wedding AI Magic Component -->
+    {% include 'partials/ai_magic_prewedding.html' %}
+</body>
+</html>

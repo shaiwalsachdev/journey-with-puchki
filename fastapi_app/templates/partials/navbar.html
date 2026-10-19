@@ -75,6 +75,14 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
+        /* Seamless transparent navbar for cinematic full-bleed pages (Roka and Pre-Wedding) */
+        .cinematic-nav #navbar {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom: none !important;
+        }
+
         .birthday-mode #navbar {
             background: rgba(255, 240, 243, 0.95) !important;
             backdrop-filter: blur(12px);
@@ -136,48 +144,46 @@
             </a>
 
             <!-- Desktop Links Bar: Clean Direct Links (No More dropdown, No Wedding/Honeymoon) -->
-            <div class="hidden lg:flex items-center space-x-1 xl:space-x-2">
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'home' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+            <div class="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'home' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/">Home</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'timeline' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'timeline' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/timeline">Timeline</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'gallery' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'gallery' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/gallery">Gallery</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'roka' %}text-white font-bold bg-white/20{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
-                    href="/roka">Roka</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'birthday' %}bg-pink-500 text-white font-bold shadow-md shadow-pink-500/30{% else %}text-pink-600 dark:text-pink-400 hover:bg-pink-50 dark:hover:bg-pink-950/40{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-extrabold transition-all {% if page == 'birthday' %}bg-pink-500 text-white shadow-md shadow-pink-500/30{% else %}text-pink-400 hover:bg-pink-950/40{% endif %}"
                     href="/birthday">🎂 Birthday ✨</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'events' or page == 'upcoming' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'events' or page == 'upcoming' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/events">Events</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'wishlist' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'wishlist' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/wishlist">Wishlist</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'guestbook' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'guestbook' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/guestbook">Guestbook</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'music' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'music' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/music">Music</a>
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'dictionary' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'dictionary' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/dictionary">Dictionary</a>
                 {% if not settings.private_mode %}
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'coupons' %}bg-primary/10 text-primary font-bold{% elif page == 'roka' %}text-white/80 hover:text-white{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'coupons' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/coupons">Coupons</a>
                 {% endif %}
-                <a class="px-2.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all {% if page == 'planner' %}bg-primary/10 text-primary font-bold{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'planner' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/planner">✈️ AI Planner</a>
             </div>
 
             <!-- Play Theme Button & Mobile Toggle -->
             <div class="flex items-center gap-2">
                 <button id="play-theme-btn"
-                    class="hidden sm:flex items-center space-x-1.5 bg-primary/10 hover:bg-primary/20 text-primary px-3.5 py-1.5 rounded-full transition-all group border border-primary/20">
+                    class="hidden sm:flex items-center space-x-1.5 {% if page in ['roka', 'prewedding'] %}bg-rose-600/80 hover:bg-rose-600 text-white border-rose-400/50 shadow-lg shadow-rose-600/30{% else %}bg-primary/10 hover:bg-primary/20 text-primary border-primary/20{% endif %} px-4 py-2 rounded-full transition-all group border">
                     <span class="material-icons text-sm group-hover:animate-pulse">music_note</span>
-                    <span class="text-xs font-bold uppercase tracking-wider">Play Theme</span>
+                    <span class="text-xs font-extrabold uppercase tracking-wider">Play Theme</span>
                 </button>
             </div>
 
             <!-- Mobile Menu Button (Hamburger) -->
             <div class="lg:hidden flex items-center">
                 <button
-                    class="p-2 rounded-xl text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none mobile-menu-button"
+                    class="p-2 rounded-xl {% if page in ['roka', 'prewedding'] %}text-white hover:bg-white/10{% else %}text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-black/5 dark:hover:bg-white/10{% endif %} focus:outline-none mobile-menu-button"
                     aria-label="Toggle menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -194,8 +200,6 @@
         <a href="/" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Home</a>
         <a href="/timeline" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Timeline</a>
         <a href="/gallery" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Gallery</a>
-        <a href="/roka" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
-                class="material-icons text-sm mr-3 text-primary">favorite</span> Roka</a>
         <a href="/birthday"
             class="block py-2.5 px-4 rounded-xl text-primary font-bold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">cake</span> Birthday ✨</a>
@@ -300,20 +304,10 @@
                 audio.currentTime = parseFloat(savedTime);
             }
 
-            // Auto-play if it was playing
-            if (wasPlaying) {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => updateButtonState(true))
-                        .catch(error => {
-                            console.log("Auto-play prevented");
-                            updateButtonState(false);
-                            localStorage.setItem('themeAudioPlaying', 'false');
-                        });
-                }
-            } else {
-                updateButtonState(false);
-            }
+            // Always start muted / paused when opening the website (no surprise auto-play)
+            audio.pause();
+            updateButtonState(false);
+            localStorage.setItem('themeAudioPlaying', 'false');
 
             // Toggle Logic for ALL buttons
             buttons.forEach(btn => {

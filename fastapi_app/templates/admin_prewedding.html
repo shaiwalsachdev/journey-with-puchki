@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShaiX2 Admin: Pre-Wedding Creator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c91352", // Rose pink matching Roka creator theme
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211116",
+                        "surface-dark": "#2a1516",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-sans min-h-screen flex flex-col relative pb-28">
+    <!-- Header -->
+    <header class="h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-primary/10 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-30">
+        <div class="flex items-center gap-4">
+            <span class="text-2xl font-bold tracking-tight text-primary">Shai<span class="text-gray-800 dark:text-white">X2</span> Pre-Wedding</span>
+        </div>
+            <button type="button" onclick="openFastStudio(0)" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white transition-all text-xs font-bold shadow-lg shadow-rose-600/30">
+                <span class="material-icons text-sm">flash_on</span>
+                <span>Fast Tagging Studio (1-4 keys)</span>
+            </button>
+            <a href="/admin" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-xs font-medium">
+                Back to Admin
+            </a>
+            <a href="/admin/roka-creator" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-primary/20 bg-transparent text-primary hover:bg-primary/5 transition-colors text-xs font-medium">
+                Roka Creator
+            </a>
+            <a href="/pre-wedding" target="_blank" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary hover:bg-primary/90 text-white transition-colors text-xs font-semibold shadow-md">
+                View Page
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full space-y-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Pre-Wedding Memory Creator</h1>
+                <p class="text-gray-500 dark:text-gray-400">All photos from your shoot are displayed below in cards. Assign them to your 4 Looks, write captions, or use the <strong>Fast Tagging Studio</strong> to preview full-size and tag in 1 click or keyboard keys (1, 2, 3, 4, 5, Arrows)!</p>
+            </div>
+            <div>
+                <button type="button" onclick="openFastStudio(0)" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-rose-600 to-amber-500 hover:from-rose-500 hover:to-amber-400 text-white font-bold text-sm shadow-xl shadow-rose-600/30 hover:scale-105 active:scale-95 transition-all">
+                    <span class="material-icons text-xl">fullscreen</span>
+                    <span>Open Full-Screen Fast Tagger ✨</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Uploader Section -->
+        <section class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-primary/10 p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Upload New Media (Photos / Videos / Teasers)</h3>
+            <form action="/admin/prewedding-media/upload" method="post" enctype="multipart/form-data" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Select Files (Images/Videos)</label>
+                        <input type="file" name="files" multiple accept="image/*,video/*" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 border border-gray-300 dark:border-gray-700" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Look / Chapter</label>
+                        <select name="chapter" class="w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white px-4 py-2 focus:ring-primary focus:border-primary">
+                            <option value="Unassigned">Unassigned</option>
+                            <option value="Ethnic Look">1. Ethnic Look</option>
+                            <option value="Picnic Look">2. Picnic Look</option>
+                            <option value="City Look">3. City Look</option>
+                            <option value="Proposal Look">4. Proposal Look</option>
+                            <option value="Teaser & Videos">Teaser &amp; Videos</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Optional Note / Story caption</label>
+                    <input type="text" name="note" placeholder="Add a sweet note or quote..." class="w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white px-4 py-2 focus:ring-primary focus:border-primary">
+                </div>
+                <button type="submit" onclick="this.innerHTML='Uploading and Processing...'; this.disabled=true; this.form.submit();" class="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-medium transition-colors w-full md:w-auto">
+                    <span class="material-icons text-sm">cloud_upload</span> Upload Media
+                </button>
+            </form>
+        </section>
+
+        <!-- Existing Media Section -->
+        <section>
+            <div class="flex justify-between items-end mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Review &amp; Tag Media</h3>
+                <span class="text-xs text-gray-400 font-semibold">{{ media|length }} photos &amp; videos in gallery</span>
+            </div>
+
+            <!-- Unassigned Media (Exact Roka Creator Style) -->
+            <div class="flex items-center justify-between mb-4 border-b border-primary/20 pb-2 cursor-pointer hover:bg-white/5 px-2 rounded -mx-2 transition" onclick="toggleSection('unassigned-grid', 'unassigned-icon')">
+                <h4 class="text-lg font-semibold text-primary flex items-center gap-2 select-none">
+                    <span class="material-icons text-xl">new_releases</span> Unassigned (Needs Tagging)
+                    <span class="text-xs font-bold bg-primary/20 text-primary px-2.5 py-0.5 rounded-full ml-2">
+                        {{ media|selectattr("chapter", "equalto", "Unassigned")|list|length }}
+                    </span>
+                </h4>
+                <span class="material-icons text-gray-400 select-none" id="unassigned-icon">expand_less</span>
+            </div>
+
+            <div id="unassigned-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+                {% for item in media if item.chapter == "Unassigned" %}
+                {% set photo_url = '/local-photos/' ~ item.filename if item.is_local else r2_url ~ '/' ~ item.filename %}
+                <!-- Media Card (Identical to Roka Creator + Quick Fullscreen Studio Click) -->
+                <div class="bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/20 overflow-hidden shadow-sm group flex flex-col card-wrapper"
+                     data-id="{{ item.id }}"
+                     data-filename="{{ item.filename }}"
+                     data-src="{{ photo_url }}"
+                     data-type="{{ item.media_type }}"
+                     data-chapter="{{ item.chapter }}"
+                     data-note="{{ item.note or '' }}"
+                     data-order="{{ item.order }}">
+                    <div class="relative aspect-square bg-gray-100 dark:bg-gray-800 cursor-pointer overflow-hidden" onclick="openStudioForId('{{ item.id }}')">
+                        {% if item.media_type == "video" %}
+                            <video src="{{ photo_url }}" class="absolute inset-0 w-full h-full object-cover pointer-events-none" muted loop preload="metadata"></video>
+                            <span class="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-wider z-10 backdrop-blur-sm shadow-sm flex items-center gap-1">
+                                <span class="material-icons text-[14px]">videocam</span> VIDEO
+                            </span>
+                        {% else %}
+                            <img src="{{ photo_url }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                        {% endif %}
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-xs font-bold">
+                            <span class="material-icons text-sm text-amber-300">fullscreen</span>
+                            <span>Click to Zoom &amp; Fast Tag</span>
+                        </div>
+                        <span class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-mono px-2 py-0.5 rounded backdrop-blur-sm z-10">
+                            {{ item.filename }}
+                        </span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col">
+                        <form action="/admin/prewedding-media/{{ item.id }}" method="post" class="flex flex-col gap-3 h-full update-form" onsubmit="submitCard(event, this)">
+                            <div>
+                                <label class="text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1 block">Assign Look</label>
+                                <select name="chapter" class="w-full text-sm rounded bg-white dark:bg-gray-800 border-primary focus:ring-primary py-1 px-2 select-trigger">
+                                    <option value="Unassigned" selected>-- Select Look --</option>
+                                    <option value="Ethnic Look">1. Ethnic Look</option>
+                                    <option value="Picnic Look">2. Picnic Look</option>
+                                    <option value="City Look">3. City Look</option>
+                                    <option value="Proposal Look">4. Proposal Look</option>
+                                    <option value="Teaser & Videos">Teaser &amp; Videos</option>
+                                </select>
+                            </div>
+                            <div class="flex-1">
+                                <label class="text-xs font-semibold text-gray-500 mb-1 block">Note / Caption</label>
+                                <input type="text" name="note" value="{{ item.note }}" class="w-full text-sm rounded bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 py-1 px-2" placeholder="No note..." />
+                            </div>
+                            <div>
+                                <input type="hidden" name="order" value="{{ item.order }}" />
+                            </div>
+                            <div class="flex gap-2 mt-auto pt-2 form-actions">
+                                <button type="submit" class="save-btn flex-1 bg-primary hover:bg-primary/90 text-white text-xs font-bold py-2 rounded transition-colors shadow-lg">Save &amp; Move</button>
+                                <button type="button" onclick="if(confirm('Delete this item?')) { deleteItem('delete_{{ item.id }}', this.closest('.card-wrapper')) }" class="bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-900/30 w-10 flex items-center justify-center rounded transition-colors">
+                                    <span class="material-icons text-sm">delete</span>
+                                </button>
+                            </div>
+                        </form>
+                        <form id="delete_{{ item.id }}" action="/admin/prewedding-media/{{ item.id }}/delete" method="post" class="hidden"></form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <hr class="border-gray-200 dark:border-gray-700 mb-8" />
+
+            <!-- Assigned Media (Organized by Looks) -->
+            <div class="flex items-center justify-between mb-4 border-b border-gray-200 dark:border-gray-700 pb-2 cursor-pointer hover:bg-white/5 px-2 rounded -mx-2 transition" onclick="toggleSection('assigned-grid', 'assigned-icon')">
+                <h4 class="text-lg font-semibold text-gray-600 dark:text-gray-400 flex items-center gap-2 select-none">
+                    <span class="material-icons">collections_bookmark</span> Already Tagged Media
+                    <span class="text-xs font-bold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2.5 py-0.5 rounded-full ml-2">
+                        {{ media|rejectattr("chapter", "equalto", "Unassigned")|list|length }}
+                    </span>
+                </h4>
+                <span class="material-icons text-gray-500 select-none" id="assigned-icon">expand_less</span>
+            </div>
+
+            <div id="assigned-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for item in media if item.chapter != "Unassigned" %}
+                <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-primary/10 overflow-hidden shadow-sm group flex flex-col opacity-90 transition-opacity card-wrapper">
+                    <div class="relative aspect-square bg-gray-100 dark:bg-gray-800">
+                        {% if item.media_type == "video" %}
+                            <video src="{{ r2_url }}/{{ item.filename }}" class="absolute inset-0 w-full h-full object-cover" muted loop preload="metadata" controls></video>
+                            <span class="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-wider z-10 backdrop-blur-sm shadow-sm flex items-center gap-1">
+                                <span class="material-icons text-[14px]">videocam</span> VIDEO
+                            </span>
+                        {% else %}
+                            {% if item.is_local %}
+                            <img src="/local-photos/{{ item.filename }}" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                            {% else %}
+                            <img src="{{ r2_url }}/{{ item.filename }}" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                            {% endif %}
+                        {% endif %}
+                        <span class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded shadow">
+                            {{ item.chapter }}
+                        </span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col">
+                        <form action="/admin/prewedding-media/{{ item.id }}" method="post" class="flex flex-col gap-3 h-full update-form" onsubmit="submitCard(event, this)">
+                            <div>
+                                <label class="text-xs font-semibold text-gray-500 mb-1 block">Change Look</label>
+                                <select name="chapter" class="w-full text-sm rounded bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-primary py-1 px-2 select-trigger">
+                                    <option value="Ethnic Look" {% if item.chapter == 'Ethnic Look' %}selected{% endif %}>1. Ethnic Look</option>
+                                    <option value="Picnic Look" {% if item.chapter == 'Picnic Look' %}selected{% endif %}>2. Picnic Look</option>
+                                    <option value="City Look" {% if item.chapter == 'City Look' %}selected{% endif %}>3. City Look</option>
+                                    <option value="Proposal Look" {% if item.chapter == 'Proposal Look' %}selected{% endif %}>4. Proposal Look</option>
+                                    <option value="Teaser & Videos" {% if item.chapter == 'Teaser & Videos' %}selected{% endif %}>Teaser &amp; Videos</option>
+                                    <option value="Unassigned" {% if item.chapter == 'Unassigned' %}selected{% endif %}>Unassigned</option>
+                                </select>
+                            </div>
+                            <div class="flex-1">
+                                <label class="text-xs font-semibold text-gray-500 mb-1 block">Note / Caption</label>
+                                <input type="text" name="note" value="{{ item.note }}" class="w-full text-sm rounded bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 py-1 px-2" placeholder="No note..." />
+                            </div>
+                            <div>
+                                <input type="hidden" name="order" value="{{ item.order }}" />
+                            </div>
+                            <div class="flex gap-2 mt-auto pt-2 form-actions">
+                                <button type="submit" class="save-btn flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-primary dark:hover:bg-primary text-gray-800 dark:text-gray-200 hover:text-white text-xs font-bold py-2 rounded transition-colors">Save</button>
+                                <button type="button" onclick="if(confirm('Delete this item?')) { deleteItem('delete_{{ item.id }}', this.closest('.card-wrapper')) }" class="bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-900/30 w-10 flex items-center justify-center rounded transition-colors">
+                                    <span class="material-icons text-sm">delete</span>
+                                </button>
+                            </div>
+                        </form>
+                        <form id="delete_{{ item.id }}" action="/admin/prewedding-media/{{ item.id }}/delete" method="post" class="hidden"></form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Batch Save Button (Exact Roka Creator Style) -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button id="floating-save-all" onclick="saveAllSelected()" class="flex items-center gap-2 bg-primary hover:bg-[#a00d3f] text-white font-bold py-3.5 px-6 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 border border-white/20">
+            <span class="material-icons text-xl">done_all</span>
+            <span class="text-sm tracking-wide">Save All Tagged</span>
+        </button>
+    </div>
+
+    <!-- Full-Screen Fast Tagging Studio Modal -->
+    <div id="fast-tag-studio" class="fixed inset-0 z-[9999] bg-black/95 hidden flex flex-col select-none opacity-0 transition-opacity duration-200">
+        <!-- Top Studio Bar -->
+        <div class="h-16 px-6 border-b border-white/10 flex items-center justify-between bg-black/80 backdrop-blur-md shrink-0">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-rose-600 to-amber-500 text-white font-extrabold text-xs uppercase tracking-wider shadow">
+                    <span class="material-icons text-sm">flash_on</span> Fast Studio
+                </span>
+                <span id="studio-counter" class="text-xs sm:text-sm font-mono text-gray-300">Photo 1 of 489</span>
+                <span id="studio-filename" class="text-xs sm:text-sm font-mono font-bold text-amber-300 bg-white/10 px-2.5 py-0.5 rounded">DSC00001.jpg</span>
+            </div>
+
+            <!-- Keyboard shortcut cheatsheet pill -->
+            <div class="hidden md:flex items-center gap-2 text-[11px] font-mono text-gray-400 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                <span>Keys:</span>
+                <span class="px-1.5 py-0.5 rounded bg-white/10 text-white font-bold">1-4</span> <span>Assign</span>
+                <span class="px-1.5 py-0.5 rounded bg-white/10 text-white font-bold">&larr; / &rarr;</span> <span>Navigate</span>
+                <span class="px-1.5 py-0.5 rounded bg-white/10 text-white font-bold">Esc</span> <span>Close</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="closeFastStudio()" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
+                    <span class="material-icons text-2xl">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Center Studio Stage: Big Full Resolution Media -->
+        <div class="flex-1 relative flex items-center justify-center p-4 sm:p-8 overflow-hidden min-h-0 bg-neutral-950">
+            <!-- Nav buttons -->
+            <button type="button" onclick="studioPrev()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
+                <span class="material-icons text-3xl group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
+            </button>
+            <button type="button" onclick="studioNext()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
+                <span class="material-icons text-3xl group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+            </button>
+
+            <!-- Media Container -->
+            <div class="w-full h-full flex flex-col items-center justify-center relative">
+                <img id="studio-img" src="" alt="Shoot photo" class="max-w-full max-h-[66vh] object-contain rounded-xl shadow-2xl border border-white/10" />
+                <video id="studio-video" src="" controls class="max-w-full max-h-[66vh] object-contain rounded-xl shadow-2xl border border-white/10 hidden"></video>
+
+                <!-- Status Toast Overlay -->
+                <div id="studio-toast" class="absolute top-4 px-4 py-2 rounded-full bg-green-500/90 text-white text-xs font-bold shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-1.5 backdrop-blur-md">
+                    <span class="material-icons text-sm">check_circle</span>
+                    <span id="studio-toast-msg">Tagged &amp; Saved!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Studio Tagging Dock (1 Click To Tag & Auto-Next) -->
+        <div class="bg-black/90 border-t border-white/10 px-4 sm:px-8 py-4 shrink-0 flex flex-col gap-3">
+            <!-- Look Action Buttons -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 max-w-5xl mx-auto w-full">
+                <button type="button" onclick="studioTagLook('Ethnic Look')" class="studio-btn relative px-3 py-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/40 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-bold flex flex-col items-center justify-center gap-1 transition-all hover:scale-102 active:scale-95 group">
+                    <span class="absolute top-1 right-2 text-[10px] font-mono opacity-60 group-hover:opacity-100">Key 1</span>
+                    <span class="material-icons text-base text-amber-300">auto_awesome</span>
+                    <span>1. Ethnic Look</span>
+                </button>
+                <button type="button" onclick="studioTagLook('Picnic Look')" class="studio-btn relative px-3 py-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/40 border border-emerald-400/40 text-emerald-200 text-xs sm:text-sm font-bold flex flex-col items-center justify-center gap-1 transition-all hover:scale-102 active:scale-95 group">
+                    <span class="absolute top-1 right-2 text-[10px] font-mono opacity-60 group-hover:opacity-100">Key 2</span>
+                    <span class="material-icons text-base text-emerald-300">park</span>
+                    <span>2. Picnic Look</span>
+                </button>
+                <button type="button" onclick="studioTagLook('City Look')" class="studio-btn relative px-3 py-3 rounded-xl bg-sky-500/20 hover:bg-sky-500/40 border border-sky-400/40 text-sky-200 text-xs sm:text-sm font-bold flex flex-col items-center justify-center gap-1 transition-all hover:scale-102 active:scale-95 group">
+                    <span class="absolute top-1 right-2 text-[10px] font-mono opacity-60 group-hover:opacity-100">Key 3</span>
+                    <span class="material-icons text-base text-sky-300">location_city</span>
+                    <span>3. City Look</span>
+                </button>
+                <button type="button" onclick="studioTagLook('Proposal Look')" class="studio-btn relative px-3 py-3 rounded-xl bg-rose-500/20 hover:bg-rose-500/40 border border-rose-400/40 text-rose-200 text-xs sm:text-sm font-bold flex flex-col items-center justify-center gap-1 transition-all hover:scale-102 active:scale-95 group">
+                    <span class="absolute top-1 right-2 text-[10px] font-mono opacity-60 group-hover:opacity-100">Key 4</span>
+                    <span class="material-icons text-base text-rose-300">diamond</span>
+                    <span>4. Proposal Look</span>
+                </button>
+                <button type="button" onclick="studioTagLook('Teaser & Videos')" class="studio-btn relative px-3 py-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/40 border border-purple-400/40 text-purple-200 text-xs sm:text-sm font-bold flex flex-col items-center justify-center gap-1 transition-all hover:scale-102 active:scale-95 group">
+                    <span class="absolute top-1 right-2 text-[10px] font-mono opacity-60 group-hover:opacity-100">Key 5</span>
+                    <span class="material-icons text-base text-purple-300">movie</span>
+                    <span>5. Motion / Teaser</span>
+                </button>
+            </div>
+
+            <!-- Optional Quick Caption & Navigation Control -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 max-w-5xl mx-auto w-full pt-1 border-t border-white/5">
+                <div class="flex items-center gap-2 w-full sm:w-auto flex-1">
+                    <span class="material-icons text-sm text-gray-400">edit_note</span>
+                    <input id="studio-note-input" type="text" placeholder="Add optional caption/note (auto-saves on tag)..." class="bg-white/10 border border-white/20 rounded-lg text-xs text-white px-3 py-1.5 w-full max-w-md focus:outline-none focus:ring-1 focus:ring-rose-500" />
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span id="studio-current-tag" class="text-xs text-gray-300 font-medium px-2.5 py-1 rounded-full bg-white/5 border border-white/10">Currently: Unassigned</span>
+                    <button type="button" onclick="studioPrev()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-1 transition">
+                        <span class="material-icons text-sm">arrow_back</span> Prev
+                    </button>
+                    <button type="button" onclick="studioNext()" class="px-3.5 py-1.5 rounded-lg bg-primary hover:bg-primary/90 text-white text-xs font-bold flex items-center gap-1 transition shadow-lg">
+                        <span>Next</span> <span class="material-icons text-sm">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic (Fast Tagging Studio + Batch Save) -->
+    <script>
+        // Collect card elements and state
+        let studioItems = [];
+        let studioIdx = 0;
+        let isStudioOpen = false;
+
+        function refreshStudioItems() {
+            const cards = document.querySelectorAll('.card-wrapper');
+            studioItems = [];
+            cards.forEach((card, index) => {
+                studioItems.push({
+                    card: card,
+                    id: card.dataset.id,
+                    filename: card.dataset.filename,
+                    src: card.dataset.src,
+                    type: card.dataset.type,
+                    chapter: card.dataset.chapter || 'Unassigned',
+                    note: card.dataset.note || '',
+                    order: card.dataset.order || '0'
+                });
+            });
+        }
+
+        function openStudioForId(id) {
+            refreshStudioItems();
+            const idx = studioItems.findIndex(it => it.id === id);
+            openFastStudio(idx >= 0 ? idx : 0);
+        }
+
+        function openFastStudio(index = 0) {
+            refreshStudioItems();
+            if (studioItems.length === 0) {
+                alert('No media available to tag.');
+                return;
+            }
+            studioIdx = Math.max(0, Math.min(index, studioItems.length - 1));
+            const studio = document.getElementById('fast-tag-studio');
+            studio.classList.remove('hidden');
+            setTimeout(() => studio.classList.add('opacity-100'), 10);
+            isStudioOpen = true;
+            document.body.style.overflow = 'hidden';
+            renderStudioItem();
+        }
+
+        function closeFastStudio() {
+            const studio = document.getElementById('fast-tag-studio');
+            studio.classList.remove('opacity-100');
+            setTimeout(() => studio.classList.add('hidden'), 200);
+            isStudioOpen = false;
+            document.body.style.overflow = '';
+        }
+
+        function renderStudioItem() {
+            if (!isStudioOpen || studioItems.length === 0) return;
+            const item = studioItems[studioIdx];
+            document.getElementById('studio-counter').textContent = `Photo ${studioIdx + 1} of ${studioItems.length}`;
+            document.getElementById('studio-filename').textContent = item.filename;
+            document.getElementById('studio-note-input').value = item.note;
+
+            const currentTagEl = document.getElementById('studio-current-tag');
+            currentTagEl.textContent = `Current Look: ${item.chapter}`;
+            if (item.chapter !== 'Unassigned') {
+                currentTagEl.className = 'text-xs text-amber-300 font-bold px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/30';
+            } else {
+                currentTagEl.className = 'text-xs text-gray-300 font-medium px-2.5 py-1 rounded-full bg-white/5 border border-white/10';
+            }
+
+            const imgEl = document.getElementById('studio-img');
+            const videoEl = document.getElementById('studio-video');
+
+            if (item.type === 'video') {
+                imgEl.classList.add('hidden');
+                videoEl.classList.remove('hidden');
+                videoEl.src = item.src;
+                videoEl.play().catch(() => {});
+            } else {
+                videoEl.classList.add('hidden');
+                imgEl.classList.remove('hidden');
+                imgEl.src = item.src;
+            }
+
+            // Preload next image for instant navigation
+            if (studioIdx + 1 < studioItems.length && studioItems[studioIdx + 1].type !== 'video') {
+                const preloadImg = new Image();
+                preloadImg.src = studioItems[studioIdx + 1].src;
+            }
+        }
+
+        function studioNext() {
+            if (studioIdx < studioItems.length - 1) {
+                studioIdx++;
+                renderStudioItem();
+            } else {
+                showStudioToast('Reached the last photo! 🎉');
+            }
+        }
+
+        function studioPrev() {
+            if (studioIdx > 0) {
+                studioIdx--;
+                renderStudioItem();
+            }
+        }
+
+        async function studioTagLook(lookName) {
+            if (studioItems.length === 0) return;
+            const item = studioItems[studioIdx];
+            const noteInput = document.getElementById('studio-note-input');
+            const noteVal = noteInput ? noteInput.value.trim() : item.note;
+
+            // Update local memory item
+            item.chapter = lookName;
+            item.note = noteVal;
+
+            // Sync with DOM card form
+            if (item.card) {
+                item.card.dataset.chapter = lookName;
+                item.card.dataset.note = noteVal;
+                const form = item.card.querySelector('.update-form');
+                if (form) {
+                    const select = form.querySelector('.select-trigger');
+                    if (select) select.value = lookName;
+                    const noteEl = form.querySelector('input[name="note"]');
+                    if (noteEl) noteEl.value = noteVal;
+                }
+            }
+
+            // Fire async save to DB & R2
+            showStudioToast(`Tagged as "${lookName}"! Saving...`);
+            try {
+                const formData = new FormData();
+                formData.append('chapter', lookName);
+                formData.append('note', noteVal);
+                formData.append('order', item.order || '0');
+
+                fetch(`/admin/prewedding-media/${item.id}`, {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (e) {
+                console.error('Save error:', e);
+            }
+
+            // Instant auto-advance to next photo!
+            setTimeout(() => {
+                studioNext();
+            }, 180);
+        }
+
+        function showStudioToast(msg) {
+            const toast = document.getElementById('studio-toast');
+            const msgEl = document.getElementById('studio-toast-msg');
+            msgEl.textContent = msg;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(0)';
+            }, 1500);
+        }
+
+        // Global Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (!isStudioOpen) return;
+
+            // If user is actively typing in the caption input, don't trigger number shortcuts
+            const isTyping = document.activeElement && document.activeElement.id === 'studio-note-input';
+
+            if (e.key === 'Escape') {
+                closeFastStudio();
+                return;
+            }
+
+            if (isTyping) {
+                if (e.key === 'Enter') {
+                    document.activeElement.blur();
+                }
+                return;
+            }
+
+            // Look hotkeys (1, 2, 3, 4, 5)
+            if (e.key === '1') {
+                e.preventDefault();
+                studioTagLook('Ethnic Look');
+            } else if (e.key === '2') {
+                e.preventDefault();
+                studioTagLook('Picnic Look');
+            } else if (e.key === '3') {
+                e.preventDefault();
+                studioTagLook('City Look');
+            } else if (e.key === '4') {
+                e.preventDefault();
+                studioTagLook('Proposal Look');
+            } else if (e.key === '5') {
+                e.preventDefault();
+                studioTagLook('Teaser & Videos');
+            } else if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                studioNext();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                studioPrev();
+            }
+        });
+
+        function toggleSection(gridId, iconId) {
+            const grid = document.getElementById(gridId);
+            const icon = document.getElementById(iconId);
+            if (!grid || !icon) return;
+            if (grid.classList.contains('hidden')) {
+                grid.classList.remove('hidden');
+                icon.textContent = 'expand_less';
+            } else {
+                grid.classList.add('hidden');
+                icon.textContent = 'expand_more';
+            }
+        }
+
+        async function processSave(form) {
+            const formData = new FormData(form);
+            return fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+        }
+
+        async function submitCard(e, form) {
+            e.preventDefault();
+            const submitBtn = form.querySelector('.save-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            try {
+                const res = await processSave(form);
+                if (!res.ok) throw new Error('Save failed');
+                submitBtn.textContent = 'Saved! ✓';
+                submitBtn.classList.replace('bg-primary', 'bg-green-600');
+                submitBtn.classList.replace('hover:bg-primary/90', 'hover:bg-green-700');
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.replace('bg-green-600', 'bg-primary');
+                    submitBtn.classList.replace('hover:bg-green-700', 'hover:bg-primary/90');
+                }, 3000);
+            } catch (err) {
+                submitBtn.textContent = 'Error';
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+        }
+
+        async function deleteItem(deleteFormId, cardWrapper) {
+            const form = document.getElementById(deleteFormId);
+            if (!form) return;
+            try {
+                await fetch(form.action, { method: 'POST' });
+                cardWrapper.remove();
+            } catch (e) {
+                alert('Failed to delete item');
+            }
+        }
+
+        async function saveAllSelected() {
+            const btn = document.getElementById('floating-save-all');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="material-icons animate-spin text-xl">refresh</span><span>Saving...</span>';
+            btn.disabled = true;
+
+            const allForms = document.querySelectorAll('.update-form');
+            const promises = [];
+            allForms.forEach(form => {
+                const chap = form.querySelector('.select-trigger').value;
+                if (chap !== 'Unassigned') {
+                    promises.push(processSave(form));
+                }
+            });
+
+            if (promises.length === 0) {
+                btn.innerHTML = '<span class="material-icons text-xl">info</span><span>No tags selected</span>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                }, 2000);
+                return;
+            }
+
+            await Promise.all(promises);
+            btn.innerHTML = '<span class="material-icons text-xl">check_circle</span><span>All Saved!</span>';
+            btn.classList.replace('bg-primary', 'bg-green-600');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.replace('bg-green-600', 'bg-primary');
+                btn.disabled = false;
+                window.location.reload();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

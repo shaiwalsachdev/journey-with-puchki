@@ -182,6 +182,23 @@ async def delete_roka_media(media_id: str):
     db = get_db()
     await db.roka_media.delete_one(_build_id_query(media_id))
 
+# --- Pre-Wedding Media ---
+async def get_all_prewedding_media():
+    db = get_db()
+    return await db.prewedding_media.find({}, {"_id": 0}).sort("order", 1).to_list(length=None)
+
+async def add_prewedding_media(media: dict):
+    db = get_db()
+    await db.prewedding_media.insert_one(media)
+
+async def update_prewedding_media(media_id: str, data: dict):
+    db = get_db()
+    await db.prewedding_media.update_one(_build_id_query(media_id), {"$set": data})
+
+async def delete_prewedding_media(media_id: str):
+    db = get_db()
+    await db.prewedding_media.delete_one(_build_id_query(media_id))
+
 # --- Delete Operations ---
 async def delete_memory(memory_id: int):
     db = get_db()

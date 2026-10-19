@@ -1,0 +1,598 @@
+<style>
+    /* --- AI Magic Container --- */
+    #ai-magic-container {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+        background-color: #000;
+    }
+
+    #ai-magic-container.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* --- Image Layers --- */
+    .ai-magic-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        will-change: transform, opacity;
+        transition: opacity 1s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #ai-magic-container.vintage-mode .ai-magic-layer {
+        filter: grayscale(100%) sepia(40%) contrast(1.2) brightness(0.9) !important;
+    }
+
+    .ai-magic-layer.visible {
+        opacity: 1;
+    }
+
+    /* --- Progress Bar --- */
+    #ai-magic-progress-bar {
+        width: 0%;
+        transition: width linear;
+    }
+
+    @keyframes ken-burns-in {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.15); }
+    }
+
+    @keyframes ken-burns-out {
+        0% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes pan-right {
+        0% { transform: scale(1.1) translate(-2%, 0); }
+        100% { transform: scale(1.1) translate(2%, 0); }
+    }
+
+    @keyframes pan-left {
+        0% { transform: scale(1.1) translate(2%, 0); }
+        100% { transform: scale(1.1) translate(-2%, 0); }
+    }
+
+    @keyframes pan-up {
+        0% { transform: scale(1.1) translate(0, 2%); }
+        100% { transform: scale(1.1) translate(0, -2%); }
+    }
+
+    @keyframes pan-down {
+        0% { transform: scale(1.1) translate(0, -2%); }
+        100% { transform: scale(1.1) translate(0, 2%); }
+    }
+
+    /* Particles */
+    .ai-magic-particle {
+        position: absolute;
+        pointer-events: none;
+        z-index: 40;
+        will-change: transform, opacity;
+    }
+
+    @keyframes float-up {
+        0% {
+            transform: translateY(100vh) scale(0.5);
+            opacity: 0;
+        }
+        20% { opacity: 0.8; }
+        80% { opacity: 0.8; }
+        100% {
+            transform: translateY(-20vh) scale(1.2);
+            opacity: 0;
+        }
+    }
+</style>
+
+<!-- AI Magic Fullscreen Container -->
+<div id="ai-magic-container" class="fixed inset-0 z-[9999] overflow-hidden hidden select-none">
+
+    <!-- Active Image Layers for Crossfading -->
+    <div id="ai-magic-layer-a" class="ai-magic-layer"></div>
+    <div id="ai-magic-layer-b" class="ai-magic-layer"></div>
+
+    <!-- Canvas/Particle Container for dynamic sparkles, hearts, bokeh -->
+    <div id="ai-magic-particles" class="absolute inset-0 pointer-events-none z-[35]"></div>
+
+    <!-- Dynamic Overlay Effects (Light leaks, film grains, flashes) -->
+    <div id="ai-magic-light-leak"
+        class="absolute inset-0 pointer-events-none z-[38] mix-blend-screen opacity-0 transition-opacity duration-300 bg-gradient-to-tr from-rose-500/30 via-amber-500/20 to-transparent hidden">
+    </div>
+    <div id="ai-magic-shutter"
+        class="absolute inset-0 pointer-events-none z-[39] bg-white opacity-0 transition-opacity duration-75 hidden">
+    </div>
+
+    <!-- Dark Gradient Overlays for UI Readability -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60 pointer-events-none z-[40]">
+    </div>
+
+    <!-- Top Controls & Progress -->
+    <div class="absolute top-0 left-0 w-full z-[50] p-6 flex flex-col gap-4 pointer-events-none">
+        <!-- Progress Bar (Segments or continuous) -->
+        <div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden backdrop-blur-md">
+            <div id="ai-magic-progress-bar" class="h-full bg-rose-500 rounded-full shadow-[0_0_10px_#e11d48]"></div>
+        </div>
+
+        <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-3">
+                <span class="text-rose-400 font-extrabold text-sm sm:text-base tracking-widest uppercase flex items-center gap-1.5 drop-shadow-md">
+                    <span class="material-icons text-xl animate-spin">auto_awesome</span>
+                    <span>Pre-Wedding AI Magic ✨</span>
+                </span>
+                <span id="ai-magic-counter"
+                    class="text-xs bg-white/20 text-white font-mono px-3 py-1 rounded-full backdrop-blur-md border border-white/20 hidden">
+                    1 / 1
+                </span>
+            </div>
+
+            <div class="flex flex-col gap-3 pointer-events-auto z-50">
+                <button id="ai-magic-close"
+                    class="text-white hover:text-rose-400 transition-colors p-2 rounded-full hover:bg-white/10 backdrop-blur-sm bg-black/20"
+                    aria-label="Close AI Magic">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 drop-shadow-md" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <button id="ai-magic-favorite-btn"
+                    class="text-white hover:text-red-500 transition-colors p-2 rounded-full hover:bg-white/10 backdrop-blur-sm bg-black/20 hidden"
+                    title="Mark as Favorite">
+                    <span class="material-icons text-3xl drop-shadow-md">favorite_border</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Click Zones for Controls (Hidden during menu) -->
+    <div id="ai-magic-controls" class="absolute inset-0 z-[45] flex hidden">
+        <div id="ai-magic-prev-zone" class="w-1/4 h-full cursor-w-resize" title="Previous"></div>
+        <div id="ai-magic-playpause-zone" class="w-2/4 h-full cursor-pointer flex items-center justify-center group"
+            title="Play/Pause">
+            <div id="ai-magic-status-icon"
+                class="text-white/0 transform scale-50 transition-all duration-300 drop-shadow-2xl flex flex-col items-center">
+                <span class="material-icons" style="font-size: 80px;">pause_circle_outline</span>
+            </div>
+        </div>
+        <div id="ai-magic-next-zone" class="w-1/4 h-full cursor-e-resize" title="Next"></div>
+    </div>
+
+    <!-- Start Menu & Experience Settings -->
+    <div id="ai-magic-menu"
+        class="absolute inset-0 z-[60] flex flex-col items-center justify-center bg-black/75 backdrop-blur-md transition-opacity duration-500">
+        <h2 class="text-white text-3xl md:text-5xl font-display font-bold mb-4 drop-shadow-lg text-center px-4">Pre-Wedding AI Magic ✨</h2>
+        <p class="text-rose-200/80 text-sm md:text-base font-serif italic mb-8 text-center max-w-lg px-4">Experience all 4 iconic looks woven together into a dynamic cinematic visual symphony.</p>
+
+        <!-- Setting Controls -->
+        <div class="flex flex-col md:flex-row gap-6 mb-10 text-white/90">
+            <div class="flex flex-col items-center gap-2">
+                <label class="text-xs font-bold tracking-widest uppercase text-white/70">Pacing</label>
+                <div class="flex bg-white/10 rounded-full p-1 border border-white/20 backdrop-blur-md">
+                    <button onclick="setAiPacing('slow')" id="ai-pace-slow"
+                        class="px-4 py-2 rounded-full text-xs font-bold transition-all ai-pace-btn hover:bg-white/10">Slow</button>
+                    <button onclick="setAiPacing('balanced')" id="ai-pace-balanced"
+                        class="px-4 py-2 rounded-full text-xs font-bold transition-all ai-pace-btn bg-rose-600 text-white shadow-lg">Balanced</button>
+                    <button onclick="setAiPacing('fast')" id="ai-pace-fast"
+                        class="px-4 py-2 rounded-full text-xs font-bold transition-all ai-pace-btn hover:bg-white/10">Fast</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center gap-2">
+                <label class="text-xs font-bold tracking-widest uppercase text-white/70">Color Mood</label>
+                <div class="flex bg-white/10 rounded-full p-1 border border-white/20 backdrop-blur-md">
+                    <button onclick="setAiColor('default')" id="ai-color-default"
+                        class="px-4 py-2 rounded-full text-xs font-bold transition-all ai-color-btn bg-rose-600 text-white shadow-lg">Vibrant</button>
+                    <button onclick="setAiColor('bw')" id="ai-color-bw"
+                        class="px-4 py-2 rounded-full text-xs font-bold transition-all ai-color-btn hover:bg-white/10">B&amp;W</button>
+                    <button onclick="setAiColor('pink')" id="ai-color-pink"
+                        class="px-4 py-2 rounded-full text-xs font-bold transition-all ai-color-btn hover:bg-white/10 text-rose-200">Rose Warm</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center gap-2">
+                <label class="text-xs font-bold tracking-widest uppercase text-white/70">Photos per Look</label>
+                <div class="flex bg-white/10 rounded-full p-1 border border-white/20 backdrop-blur-md">
+                    <button onclick="setAiPhotoCount(5)" id="ai-count-5"
+                        class="px-3 py-2 rounded-full text-xs font-bold transition-all ai-count-btn hover:bg-white/10 text-white">5</button>
+                    <button onclick="setAiPhotoCount(10)" id="ai-count-10"
+                        class="px-3 py-2 rounded-full text-xs font-bold transition-all ai-count-btn bg-rose-600 text-white shadow-lg">10</button>
+                    <button onclick="setAiPhotoCount(20)" id="ai-count-20"
+                        class="px-3 py-2 rounded-full text-xs font-bold transition-all ai-count-btn hover:bg-white/10 text-white">20</button>
+                    <button onclick="setAiPhotoCount('all')" id="ai-count-all"
+                        class="px-3 py-2 rounded-full text-xs font-bold transition-all ai-count-btn hover:bg-white/10 text-white">All</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center max-w-5xl px-4 w-full">
+            <button onclick="beginPreweddingExperience()" class="group relative overflow-hidden rounded-full bg-gradient-to-r from-rose-600 to-amber-500 hover:from-rose-500 hover:to-amber-400 p-5 px-10 flex items-center gap-4 text-center shadow-2xl shadow-rose-600/50 hover:scale-105 transition-all">
+                <span class="text-3xl material-icons text-white">play_arrow</span>
+                <span class="text-white text-xl font-bold tracking-widest uppercase">Start Magical Experience</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chapter/Title Card Layer for Story Transitions -->
+    <div id="ai-magic-title-card"
+        class="absolute inset-0 z-[42] bg-black flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 hidden">
+        <h1 id="ai-magic-chapter-title"
+            class="text-white text-5xl md:text-7xl font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-[0_0_30px_rgba(225,29,72,0.4)] mb-4 translate-y-10 transition-transform duration-1000">
+        </h1>
+        <p id="ai-magic-chapter-subtitle"
+            class="text-rose-200/90 text-xl md:text-3xl font-serif italic transition-opacity duration-1000 max-w-3xl text-center px-8 leading-relaxed" style="opacity: 0;">
+        </p>
+    </div>
+
+    <!-- Bottom Metadata -->
+    <div class="absolute bottom-0 left-0 w-full p-8 z-[50] pointer-events-none transform translate-y-0 transition-transform duration-500 ease-out hidden"
+        id="ai-magic-meta-container">
+        <h2 id="ai-magic-title"
+            class="text-white text-3xl sm:text-5xl font-extrabold font-display drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] mb-2 tracking-tight">
+            Summoning Magic...
+        </h2>
+        <div class="flex items-center gap-4">
+            <span id="ai-magic-date"
+                class="text-white/90 text-sm font-medium drop-shadow-md bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">October 10, 2026</span>
+            <span id="ai-magic-type"
+                class="px-3 py-1 bg-rose-600/80 backdrop-blur-md rounded-full text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-rose-600/30">Pre-Wedding</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('ai-magic-container');
+        const layerA = document.getElementById('ai-magic-layer-a');
+        const layerB = document.getElementById('ai-magic-layer-b');
+        const particles = document.getElementById('ai-magic-particles');
+        const lightLeak = document.getElementById('ai-magic-light-leak');
+        const shutter = document.getElementById('ai-magic-shutter');
+        const progressBar = document.getElementById('ai-magic-progress-bar');
+        const counterEl = document.getElementById('ai-magic-counter');
+        const closeBtn = document.getElementById('ai-magic-close');
+        const menu = document.getElementById('ai-magic-menu');
+        const controls = document.getElementById('ai-magic-controls');
+        const metaContainer = document.getElementById('ai-magic-meta-container');
+        const titleEl = document.getElementById('ai-magic-title');
+        const dateEl = document.getElementById('ai-magic-date');
+        const titleCard = document.getElementById('ai-magic-title-card');
+        const chapterTitleEl = document.getElementById('ai-magic-chapter-title');
+        const chapterSubtitleEl = document.getElementById('ai-magic-chapter-subtitle');
+        const prevZone = document.getElementById('ai-magic-prev-zone');
+        const nextZone = document.getElementById('ai-magic-next-zone');
+        const playPauseZone = document.getElementById('ai-magic-playpause-zone');
+        const statusIcon = document.getElementById('ai-magic-status-icon');
+
+        let isActive = false;
+        let isPlaying = true;
+        let playlist = [];
+        let currentIndex = -1;
+        let currentLayer = 'A';
+        let slideTimer = null;
+        let progressAnim = null;
+        let currentPace = 'balanced';
+        let currentColorTheme = 'default';
+        let currentPhotoCount = 10;
+        let currentExploreChapter = null;
+        let particleInterval = null;
+
+        const durations = { slow: 7000, balanced: 5000, fast: 3500 };
+
+        window.setAiPacing = function (pace) {
+            currentPace = pace;
+            document.querySelectorAll('.ai-pace-btn').forEach(b => b.classList.remove('bg-rose-600', 'text-white', 'shadow-lg'));
+            document.getElementById(`ai-pace-${pace}`)?.classList.add('bg-rose-600', 'text-white', 'shadow-lg');
+        };
+
+        window.setAiColor = function (color) {
+            currentColorTheme = color;
+            document.querySelectorAll('.ai-color-btn').forEach(b => b.classList.remove('bg-rose-600', 'text-white', 'shadow-lg'));
+            document.getElementById(`ai-color-${color}`)?.classList.add('bg-rose-600', 'text-white', 'shadow-lg');
+            if (color === 'bw') container.classList.add('vintage-mode');
+            else container.classList.remove('vintage-mode');
+        };
+
+        window.setAiPhotoCount = function (count) {
+            currentPhotoCount = count;
+            document.querySelectorAll('.ai-count-btn').forEach(b => b.classList.remove('bg-rose-600', 'shadow-lg'));
+            document.getElementById(`ai-count-${count}`)?.classList.add('bg-rose-600', 'shadow-lg');
+        };
+
+        window.startAiMagic = function (chapterName = null) {
+            if (isActive) return;
+            isActive = true;
+            currentExploreChapter = typeof chapterName === 'string' ? chapterName : null;
+
+            container.classList.remove('hidden');
+            menu.classList.remove('hidden');
+            menu.style.opacity = '1';
+            controls.classList.add('hidden');
+            metaContainer.classList.add('hidden');
+
+            void container.offsetWidth;
+            container.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            playlist = [];
+            currentIndex = -1;
+            isPlaying = true;
+            layerA.classList.remove('visible');
+            layerB.classList.remove('visible');
+            layerA.innerHTML = '';
+            layerB.innerHTML = '';
+
+            if (currentExploreChapter) {
+                menu.classList.add('hidden');
+                beginPreweddingExperience();
+            }
+        };
+
+        window.beginPreweddingExperience = async function () {
+            menu.style.opacity = '0';
+            setTimeout(() => {
+                menu.classList.add('hidden');
+                controls.classList.remove('hidden');
+                metaContainer.classList.remove('hidden');
+            }, 400);
+
+            titleEl.textContent = "Summoning Pre-Wedding Magic...";
+            buildPlaylist();
+
+            // Play background music if available
+            const audio = document.getElementById('prewedding-magic-audio');
+            if (audio) audio.play().catch(e => console.log('Audio autoplay handled:', e));
+
+            startParticles();
+
+            if (playlist.length > 0) {
+                playNext();
+            } else {
+                titleEl.textContent = "No photos added to looks yet. Upload in Admin!";
+            }
+        };
+
+        function stopAiMagic() {
+            isActive = false;
+            clearTimeout(slideTimer);
+            clearInterval(particleInterval);
+            if (progressAnim) progressAnim.cancel();
+
+            container.classList.remove('active');
+            setTimeout(() => {
+                container.classList.add('hidden');
+                layerA.innerHTML = '';
+                layerB.innerHTML = '';
+                particles.innerHTML = '';
+            }, 500);
+
+            document.body.style.overflow = '';
+            const audio = document.getElementById('prewedding-magic-audio');
+            if (audio) audio.pause();
+        }
+
+        closeBtn.addEventListener('click', stopAiMagic);
+
+        function buildPlaylist() {
+            const lookSections = document.querySelectorAll('#looks-start section');
+            let items = [];
+
+            lookSections.forEach((sec, idx) => {
+                const title = sec.querySelector('h2 span')?.textContent.trim() || `Look ${idx + 1}`;
+                const desc = sec.querySelector('p.italic')?.textContent.trim() || '';
+
+                if (currentExploreChapter && currentExploreChapter !== title) return;
+
+                items.push({
+                    type: 'chapter',
+                    title: title,
+                    note: desc
+                });
+
+                const imgEls = sec.querySelectorAll('.photo-card img');
+                let sectionPhotos = [];
+                imgEls.forEach(img => {
+                    const src = img.getAttribute('src');
+                    const note = img.closest('.photo-card')?.querySelector('p')?.textContent.replace(/"/g, '').trim() || '';
+                    if (src) {
+                        sectionPhotos.push({
+                            type: 'photo',
+                            url: src,
+                            title: title,
+                            note: note
+                        });
+                    }
+                });
+
+                // Shuffle
+                for (let i = sectionPhotos.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [sectionPhotos[i], sectionPhotos[j]] = [sectionPhotos[j], sectionPhotos[i]];
+                }
+
+                if (!currentExploreChapter && currentPhotoCount !== 'all') {
+                    sectionPhotos = sectionPhotos.slice(0, currentPhotoCount);
+                }
+
+                items = items.concat(sectionPhotos);
+            });
+
+            // If no photos have been assigned to sections yet, dynamically load shoot photos so AI Magic works immediately!
+            const totalPhotos = items.filter(it => it.type === 'photo').length;
+            if (totalPhotos === 0) {
+                const sampleShootFiles = [
+                    'DSC00001.jpg', 'DSC00003.jpg', 'DSC00008.jpg', 'DSC00013.jpg', 'DSC00016.jpg',
+                    'DSC00021.jpg', 'DSC00026.jpg', 'DSC00029.jpg', 'DSC00030.jpg', 'DSC00031.jpg',
+                    'DSC00035.jpg', 'DSC00040.jpg', 'DSC00047.jpg', 'DSC00055.jpg', 'DSC00072.jpg',
+                    'DSC00093.jpg', 'DSC00110.jpg', 'DSC00124.jpg', 'DSC00150.jpg', 'DSC00203.jpg'
+                ];
+                items = [{
+                    type: 'chapter',
+                    title: 'Pre-Wedding Shoot Preview',
+                    note: 'A glimpse of our magical frames across all 4 looks'
+                }];
+                sampleShootFiles.forEach(fn => {
+                    items.push({
+                        type: 'photo',
+                        url: `/local-photos/${fn}`,
+                        title: 'Pre-Wedding Preview',
+                        note: 'Moments from our special shoot'
+                    });
+                });
+            }
+
+            playlist = items;
+        }
+
+        function playNext() {
+            if (!isActive || playlist.length === 0) return;
+            currentIndex++;
+            if (currentIndex >= playlist.length) currentIndex = 0;
+            renderItem(currentIndex);
+        }
+
+        function playPrev() {
+            if (!isActive || playlist.length === 0) return;
+            currentIndex--;
+            if (currentIndex < 0) currentIndex = playlist.length - 1;
+            renderItem(currentIndex);
+        }
+
+        function renderItem(index) {
+            clearTimeout(slideTimer);
+            if (progressAnim) progressAnim.cancel();
+            const item = playlist[index];
+            if (!item) return;
+
+            counterEl.classList.remove('hidden');
+            counterEl.textContent = `${index + 1} / ${playlist.length}`;
+
+            if (item.type === 'chapter') {
+                showChapterCard(item);
+                return;
+            }
+
+            titleCard.classList.add('hidden');
+            titleCard.style.opacity = '0';
+
+            const incomingLayer = currentLayer === 'A' ? layerB : layerA;
+            const outgoingLayer = currentLayer === 'A' ? layerA : layerB;
+            currentLayer = currentLayer === 'A' ? 'B' : 'A';
+
+            const anims = ['ken-burns-in', 'ken-burns-out', 'pan-right', 'pan-left', 'pan-up', 'pan-down'];
+            const chosenAnim = anims[Math.floor(Math.random() * anims.length)];
+
+            incomingLayer.innerHTML = `
+                <img src="${item.url}" class="w-full h-full object-contain max-h-screen" style="animation: ${chosenAnim} ${durations[currentPace] + 1000}ms ease-out forwards;" />
+            `;
+
+            incomingLayer.classList.add('visible');
+            outgoingLayer.classList.remove('visible');
+
+            titleEl.textContent = item.note || item.title;
+            dateEl.textContent = item.title;
+
+            // Flash effect
+            shutter.classList.remove('hidden');
+            shutter.style.opacity = '0.7';
+            setTimeout(() => { shutter.style.opacity = '0'; }, 40);
+            setTimeout(() => { shutter.classList.add('hidden'); }, 150);
+
+            // Animate progress bar
+            const duration = durations[currentPace];
+            progressAnim = progressBar.animate([
+                { width: '0%' },
+                { width: '100%' }
+            ], {
+                duration: duration,
+                fill: 'forwards'
+            });
+
+            if (isPlaying) {
+                slideTimer = setTimeout(playNext, duration);
+            }
+        }
+
+        function showChapterCard(item) {
+            titleCard.classList.remove('hidden');
+            titleCard.style.opacity = '1';
+            chapterTitleEl.textContent = item.title;
+            chapterSubtitleEl.textContent = item.note || 'A celebration of love & style';
+            chapterSubtitleEl.style.opacity = '1';
+
+            layerA.classList.remove('visible');
+            layerB.classList.remove('visible');
+
+            const duration = 3000;
+            progressAnim = progressBar.animate([
+                { width: '0%' },
+                { width: '100%' }
+            ], {
+                duration: duration,
+                fill: 'forwards'
+            });
+
+            if (isPlaying) {
+                slideTimer = setTimeout(playNext, duration);
+            }
+        }
+
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playNext();
+                showStatusIcon('play_circle_outline');
+            } else {
+                clearTimeout(slideTimer);
+                if (progressAnim) progressAnim.pause();
+                showStatusIcon('pause_circle_outline');
+            }
+        }
+
+        function showStatusIcon(iconName) {
+            statusIcon.querySelector('.material-icons').textContent = iconName;
+            statusIcon.style.opacity = '1';
+            statusIcon.style.transform = 'scale(1)';
+            setTimeout(() => {
+                statusIcon.style.opacity = '0';
+                statusIcon.style.transform = 'scale(0.5)';
+            }, 600);
+        }
+
+        prevZone.addEventListener('click', playPrev);
+        nextZone.addEventListener('click', playNext);
+        playPauseZone.addEventListener('click', togglePlayPause);
+
+        document.addEventListener('keydown', (e) => {
+            if (!isActive) return;
+            if (e.key === 'Escape') stopAiMagic();
+            if (e.key === 'ArrowRight' || e.key === ' ') playNext();
+            if (e.key === 'ArrowLeft') playPrev();
+        });
+
+        function startParticles() {
+            clearInterval(particleInterval);
+            const emojis = ['✨', '💖', '💍', '🌸', '🥂', '🌹'];
+            particleInterval = setInterval(() => {
+                if (!isActive) return;
+                const p = document.createElement('div');
+                p.className = 'ai-magic-particle';
+                p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                p.style.left = Math.random() * 95 + 'vw';
+                p.style.bottom = '-40px';
+                p.style.fontSize = Math.floor(Math.random() * 20 + 16) + 'px';
+                p.style.animation = `float-up ${Math.random() * 3 + 4}s linear forwards`;
+                particles.appendChild(p);
+
+                setTimeout(() => p.remove(), 7000);
+            }, 800);
+        }
+    });
+</script>

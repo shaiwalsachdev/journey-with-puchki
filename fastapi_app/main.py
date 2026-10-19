@@ -25,6 +25,7 @@ from fastapi_app.database import (
     get_all_wishlist, add_wishlist_item, delete_wishlist_item, update_wishlist_item,
     get_all_dictionary, add_dictionary_word, save_all_dictionary, delete_dictionary_word, update_dictionary_word,
     get_all_roka_media, add_roka_media, update_roka_media, delete_roka_media,
+    get_all_prewedding_media, add_prewedding_media, update_prewedding_media, delete_prewedding_media,
     get_all_ai_plans, save_ai_plan, get_ai_plan
 )
 from fastapi_app.storage import upload_file, get_photo_url, R2_PUBLIC_URL, get_s3_client, R2_BUCKET_NAME, delete_file
@@ -37,6 +38,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Mount Static Files (still needed for CSS, JS, music, and other non-photo assets)
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+
+# Mount Local Photos directly for pristine full-resolution previews
+PHOTOS_DIR = os.path.join(os.path.dirname(BASE_DIR), "Photos")
+if os.path.exists(PHOTOS_DIR):
+    app.mount("/local-photos", StaticFiles(directory=PHOTOS_DIR), name="local_photos")
 
 # Templates
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
@@ -1649,6 +1655,255 @@ async def delete_roka_item(request: Request, media_id: str):
     
     await delete_roka_media(media_id)
     return RedirectResponse(url="/admin/roka-creator", status_code=303)
+
+
+# --- Pre-Wedding Page ---
+
+@app.get("/pre-wedding", response_class=HTMLResponse)
+async def read_prewedding(request: Request):
+    media = await get_all_prewedding_media()
+    
+    hero_media = None
+    first_video = None
+    chapters_map = {
+        "Ethnic Look": [],
+        "Picnic Look": [],
+        "City Look": [],
+        "Proposal Look": [],
+        "Teaser & Videos": [],
+        "Unassigned": []
+    }
+    for item in media:
+        if item.get("media_type") == "video":
+            if not first_video:
+                first_video = item
+            if "teaser" in item.get("filename", "").lower() or "hero" in item.get("filename", "").lower():
+                hero_media = item
+                
+        ch = item.get("chapter", "Unassigned")
+        if ch not in chapters_map:
+            chapters_map[ch] = []
+        chapters_map[ch].append(item)
+        
+    if not hero_media:
+        hero_media = first_video
+        
+    settings = request.state.settings
+    return templates.TemplateResponse("memory_prewedding.html", {
+        "request": request, 
+        "hero_media": hero_media,
+        "first_video": first_video,
+        "chapters_map": chapters_map,
+        "media": media,
+        "r2_url": R2_PUBLIC_URL,
+        "settings": settings,
+        "page": "prewedding"
+    })
+
+
+# --- Pre-Wedding Admin Creator ---
+
+@app.get("/admin/prewedding-creator", response_class=HTMLResponse)
+async def prewedding_creator(request: Request):
+    if request.cookies.get("session") != "admin_logged_in":
+        return RedirectResponse(url="/login?next=/admin/prewedding-creator")
+    settings = request.state.settings
+    media = await get_all_prewedding_media()
+    
+    # Check local Photos directory
+    photos_dir = os.path.join(os.path.dirname(BASE_DIR), "Photos")
+    local_photos = []
+    if os.path.exists(photos_dir):
+        import glob
+        for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp", "*.mov", "*.mp4"):
+            local_photos.extend(glob.glob(os.path.join(photos_dir, ext)))
+            local_photos.extend(glob.glob(os.path.join(photos_dir, ext.upper())))
+        local_photos = sorted(list(set(local_photos)))
+        local_photos = [os.path.basename(p) for p in local_photos]
+        
+    return templates.TemplateResponse("admin_prewedding.html", {
+        "request": request,
+        "settings": settings,
+        "media": media,
+        "r2_url": R2_PUBLIC_URL,
+        "local_photos": local_photos,
+        "total_local_count": len(local_photos)
+    })
+
+@app.post("/admin/prewedding-media/upload")
+async def upload_prewedding_media(
+    request: Request,
+    chapter: str = Form("Unassigned"),
+    note: str = Form(""),
+    files: List[UploadFile] = File(...)
+):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    import time
+    from fastapi_app.media_optimizer import optimize_file_bytes
+    import io
+    import uuid
+
+    upload_tasks = []
+    for file in files:
+        if file.filename and file.size > 0:
+            content = await file.read()
+            filename = file.filename
+            content_type = file.content_type or ""
+
+            try:
+                content, filename, content_type = optimize_file_bytes(content, filename)
+            except Exception as e:
+                print(f"Media optimization failed for {filename}: {e}")
+            
+            media_type = "video" if "video" in content_type else "image"
+            r2_key = f"prewedding/{int(time.time())}_{filename}"
+            upload_tasks.append({
+                "key": r2_key,
+                "content": content,
+                "content_type": content_type,
+                "media": {
+                    "id": str(uuid.uuid4()),
+                    "filename": r2_key,
+                    "chapter": chapter,
+                    "note": note,
+                    "media_type": media_type,
+                    "order": int(time.time())
+                }
+            })
+            
+    if upload_tasks:
+        import concurrent.futures
+        def _upload(task):
+            upload_file(io.BytesIO(task["content"]), task["key"], task["content_type"])
+        with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
+            list(executor.map(_upload, upload_tasks))
+            
+    for task in upload_tasks:
+        await add_prewedding_media(task["media"])
+
+    return RedirectResponse(url="/admin/prewedding-creator", status_code=303)
+
+
+@app.post("/admin/prewedding-media/batch-upload-local")
+async def batch_upload_local_prewedding(
+    request: Request,
+    chapter: str = Form("Unassigned"),
+    filenames: List[str] = Form(...)
+):
+    """Batch compresses and uploads selected photos from local Photos directory to R2."""
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    import time
+    from fastapi_app.media_optimizer import optimize_image_bytes, optimize_file_bytes
+    import io
+    import uuid
+    import concurrent.futures
+
+    photos_dir = os.path.join(os.path.dirname(BASE_DIR), "Photos")
+    
+    # Clean filenames in case received comma separated or individual
+    target_names = []
+    for fn in filenames:
+        for sub in fn.split(","):
+            sub = sub.strip()
+            if sub:
+                target_names.append(sub)
+    target_names = list(dict.fromkeys(target_names))
+
+    uploaded_count = 0
+    errors = []
+
+    def _process_and_upload(fname):
+        local_path = os.path.join(photos_dir, fname)
+        if not os.path.exists(local_path):
+            return None
+        with open(local_path, "rb") as f:
+            raw_bytes = f.read()
+
+        try:
+            content, new_fn, content_type = optimize_image_bytes(raw_bytes, fname)
+        except Exception:
+            try:
+                content, new_fn, content_type = optimize_file_bytes(raw_bytes, fname)
+            except Exception as e:
+                return {"error": str(e), "file": fname}
+
+        media_type = "video" if "video" in content_type else "image"
+        r2_key = f"prewedding/{int(time.time())}_{new_fn}"
+        
+        upload_file(io.BytesIO(content), r2_key, content_type)
+        return {
+            "id": str(uuid.uuid4()),
+            "filename": r2_key,
+            "chapter": chapter,
+            "note": "",
+            "media_type": media_type,
+            "order": int(time.time())
+        }
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
+        results = list(executor.map(_process_and_upload, target_names))
+
+    for res in results:
+        if res and "error" not in res:
+            await add_prewedding_media(res)
+            uploaded_count += 1
+        elif res and "error" in res:
+            errors.append(res)
+
+    return JSONResponse(content={
+        "status": "success",
+        "uploaded_count": uploaded_count,
+        "errors": errors
+    })
+
+
+@app.post("/admin/prewedding-media/{media_id}")
+async def update_prewedding_item(request: Request, media_id: str, chapter: str = Form(...), note: str = Form(""), order: float = Form(0)):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+
+    # Check if item needs compression and upload to R2
+    from fastapi_app.database import get_db
+    db = get_db()
+    existing = await db.prewedding_media.find_one({"$or": [{"id": media_id}, {"_id": media_id}]})
+    
+    update_data = {
+        "chapter": chapter,
+        "note": note,
+        "order": order
+    }
+
+    if existing and existing.get("is_local") and not str(existing.get("filename", "")).startswith("prewedding/"):
+        fname = existing.get("filename")
+        photos_dir = os.path.join(os.path.dirname(BASE_DIR), "Photos")
+        local_path = os.path.join(photos_dir, fname)
+        if os.path.exists(local_path):
+            import io
+            import time
+            from fastapi_app.media_optimizer import optimize_image_bytes
+            with open(local_path, "rb") as f:
+                raw_bytes = f.read()
+            content, new_fn, content_type = optimize_image_bytes(raw_bytes, fname)
+            r2_key = f"prewedding/{int(time.time())}_{new_fn}"
+            upload_file(io.BytesIO(content), r2_key, content_type)
+            update_data["filename"] = r2_key
+            update_data["is_local"] = False
+
+    await update_prewedding_media(media_id, update_data)
+    return RedirectResponse(url="/admin/prewedding-creator", status_code=303)
+
+
+@app.post("/admin/prewedding-media/{media_id}/delete")
+async def delete_prewedding_item(request: Request, media_id: str):
+    if request.cookies.get("session") != "admin_logged_in":
+        return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
+    
+    await delete_prewedding_media(media_id)
+    return RedirectResponse(url="/admin/prewedding-creator", status_code=303)
 
 
 # --- Wishlist ---

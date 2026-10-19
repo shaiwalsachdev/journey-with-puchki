@@ -10,3 +10,7 @@ Photos-3-001/
 Photos-3-001.zip
 *.zip
 invitations/
+Photos/
+fastapi_app/static/prewedding_thumbs/
+uvicorn.log
+*.log

@@ -139,32 +139,64 @@
         </div>
 
         <!-- Milestone Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl mb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mb-20">
 
             <!-- Roka - DONE -->
-            <div class="milestone-done rounded-3xl shadow-lg p-8 text-center border border-green-500/20 relative overflow-hidden">
-                <div class="sparkle" style="top:12%;left:14%;animation-delay:0s"></div>
-                <div class="sparkle" style="top:72%;right:10%;animation-delay:1.2s"></div>
-                <div class="absolute top-0 right-0 p-5 opacity-10">
-                    <span class="material-icons text-7xl text-green-500">favorite</span>
+            <div class="milestone-done rounded-3xl shadow-lg p-6 sm:p-8 text-center border border-green-500/20 relative overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div class="sparkle" style="top:12%;left:14%;animation-delay:0s"></div>
+                    <div class="sparkle" style="top:72%;right:10%;animation-delay:1.2s"></div>
+                    <div class="absolute top-0 right-0 p-5 opacity-10">
+                        <span class="material-icons text-7xl text-green-500">favorite</span>
+                    </div>
+                    <div class="icon-float inline-block mb-3">
+                        <span class="text-4xl sm:text-5xl">🤝</span>
+                    </div>
+                    <span class="event-badge inline-block px-4 py-1.5 rounded-full text-xs sm:text-sm font-extrabold uppercase tracking-widest text-primary mb-3">
+                        March 12, 2026
+                    </span>
+                    <h3 class="font-serif text-2xl md:text-3xl mb-1 text-gray-900 dark:text-white">The Roka</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mb-6 italic">The beginning of forever</p>
                 </div>
-                <div class="icon-float inline-block mb-4">
-                    <span class="text-5xl">🤝</span>
-                </div>
-                <span class="event-badge inline-block px-5 py-2 rounded-full text-base font-extrabold uppercase tracking-widest text-primary mb-3">
-                    March 12, 2026
-                </span>
-                <h3 class="font-serif text-3xl md:text-4xl mb-2 text-gray-900 dark:text-white">The Roka</h3>
-                <p class="text-sm text-gray-400 mb-6 italic">The beginning of forever</p>
-                <div class="flex flex-col items-center gap-4">
-                    <span class="inline-flex items-center gap-2 text-green-500 font-bold text-base">
-                        <span class="material-icons text-xl">check_circle</span>
+                <div class="flex flex-col items-center gap-3 mt-auto">
+                    <span class="inline-flex items-center gap-1.5 text-green-500 font-bold text-sm">
+                        <span class="material-icons text-lg">check_circle</span>
                         Already Rokafied! 🎉
                     </span>
                     <a href="/roka"
-                        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary to-rose-600 text-white font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-primary/30">
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary to-rose-600 text-white font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-primary/30">
                         <span class="material-icons text-sm">auto_stories</span>
                         Relive the Roka
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pre-Wedding - IN PROGRESS / EXPLORE -->
+            <div class="milestone-done rounded-3xl shadow-lg p-6 sm:p-8 text-center border border-rose-500/20 relative overflow-hidden flex flex-col justify-between bg-gradient-to-b from-rose-500/5 to-transparent">
+                <div>
+                    <div class="sparkle" style="top:15%;left:10%;animation-delay:0.3s"></div>
+                    <div class="sparkle" style="top:75%;right:15%;animation-delay:1.5s"></div>
+                    <div class="absolute top-0 right-0 p-5 opacity-10">
+                        <span class="material-icons text-7xl text-rose-500">photo_camera</span>
+                    </div>
+                    <div class="icon-float inline-block mb-3">
+                        <span class="text-4xl sm:text-5xl">📸✨</span>
+                    </div>
+                    <span class="event-badge inline-block px-4 py-1.5 rounded-full text-xs sm:text-sm font-extrabold uppercase tracking-widest text-rose-500 dark:text-rose-400 mb-3 bg-rose-500/10 border border-rose-500/20">
+                        October 10, 2026
+                    </span>
+                    <h3 class="font-serif text-2xl md:text-3xl mb-1 text-gray-900 dark:text-white">Pre-Wedding</h3>
+                    <p class="text-xs sm:text-sm text-gray-400 mb-6 italic">Four magical looks &amp; stories</p>
+                </div>
+                <div class="flex flex-col items-center gap-3 mt-auto">
+                    <span class="inline-flex items-center gap-1.5 text-rose-500 font-bold text-sm">
+                        <span class="material-icons text-lg">auto_awesome</span>
+                        Moments in Frames 💖
+                    </span>
+                    <a href="/pre-wedding"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-amber-500 text-white font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-rose-500/30">
+                        <span class="material-icons text-sm">movie_filter</span>
+                        View Pre-Wedding
                     </a>
                 </div>
             </div>
@@ -270,7 +302,7 @@
             <p class="text-sm text-gray-400 mt-2 italic">Some chapters haven't been written yet...</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto">
             <div class="locked-card relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer">
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
                     <span class="material-icons text-5xl mb-3 opacity-50 lock-icon">lock</span>
@@ -279,27 +311,6 @@
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
-            <!-- Pre-Wedding Shoot - UNLOCKED (Memory 52) -->
-            <a href="/memory/52" class="milestone-card relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer block border border-pink-300/40 dark:border-pink-500/20 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all" style="background: linear-gradient(135deg, #2d1b69 0%, #a21caf 50%, #e11d48 100%);">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-40" style="background-image: url('{{ r2_url }}/uploads/52/IMG_2828.jpg');"></div>
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center relative z-10">
-                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-extrabold uppercase tracking-widest text-pink-200 mb-2 border border-white/20">
-                        <span class="material-icons text-xs text-pink-300">check_circle</span> Oct 10, 2026 · Captured! 📸
-                    </span>
-                    <h5 class="font-serif text-2xl md:text-3xl font-bold mb-1">Pre-Wedding Shoot</h5>
-                    <p class="text-xs uppercase tracking-widest text-pink-100 font-semibold mb-3">Shoot Day &amp; Dream Proposal 💍</p>
-
-                    <div class="flex items-center gap-1.5 text-xs font-bold bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20">
-                        <span class="text-pink-300">15 Gorgeous Photos · Memory #52</span>
-                    </div>
-
-                    <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-white bg-white/20 hover:bg-white hover:text-pink-600 px-4 py-1.5 rounded-full transition-all border border-white/30 shadow">
-                        <span>View Pre-Wedding Story</span>
-                        <span class="material-icons text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </span>
-                </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </a>
             <!-- Honeymoon - UNLOCKED -->
             <a href="/honeymoon" class="milestone-card relative aspect-[4/3] rounded-3xl overflow-hidden group cursor-pointer block border border-rose-300/40 dark:border-rose-500/20 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all" style="background: linear-gradient(135deg, #4a0e8f 0%, #c31432 100%);">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-30" style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1000&auto=format&fit=crop');"></div>
