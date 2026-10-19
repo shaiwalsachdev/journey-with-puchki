@@ -390,16 +390,32 @@
         </div>
     </div>
 
-    <!-- Prewedding Lightbox -->
-    <div id="pw-lightbox-modal" class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
-        <button onclick="closePreweddingLightbox()" class="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50">
-            <span class="material-icons text-4xl">close</span>
+    <!-- Prewedding Lightbox with Full Navigation & Keyboard Support -->
+    <div id="pw-lightbox-modal" class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4 select-none">
+        <!-- Top Toolbar -->
+        <div class="absolute top-0 left-0 w-full p-4 md:p-6 flex items-center justify-between z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+            <div class="flex items-center gap-3">
+                <span id="pw-lightbox-badge" class="text-xs uppercase font-extrabold tracking-widest text-rose-400 bg-rose-500/20 px-3.5 py-1 rounded-full border border-rose-500/30"></span>
+                <span id="pw-lightbox-counter" class="text-xs font-mono text-gray-300 bg-white/10 px-2.5 py-0.5 rounded-full"></span>
+            </div>
+            <button onclick="closePreweddingLightbox()" class="text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors">
+                <span class="material-icons text-3xl">close</span>
+            </button>
+        </div>
+
+        <!-- Prev / Next Navigation Buttons -->
+        <button type="button" onclick="pwLightboxPrev()" class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
+            <span class="material-icons text-3xl md:text-4xl group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
         </button>
-        <div class="relative max-w-5xl max-h-[85vh] flex flex-col items-center">
-            <img id="pw-lightbox-img" src="" alt="Prewedding photo" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl" />
-            <div id="pw-lightbox-meta" class="mt-4 text-center">
-                <span id="pw-lightbox-badge" class="text-xs uppercase font-extrabold tracking-widest text-rose-400 bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20"></span>
-                <p id="pw-lightbox-caption" class="text-sm font-serif italic text-rose-100/90 mt-2"></p>
+        <button type="button" onclick="pwLightboxNext()" class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
+            <span class="material-icons text-3xl md:text-4xl group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+        </button>
+
+        <!-- Center Image Stage -->
+        <div class="relative max-w-5xl max-h-[82vh] w-full flex flex-col items-center justify-center px-12 md:px-16">
+            <img id="pw-lightbox-img" src="" alt="Prewedding photo" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl border border-white/10 transition-all duration-300" />
+            <div id="pw-lightbox-meta" class="mt-4 text-center max-w-2xl px-4">
+                <p id="pw-lightbox-caption" class="text-sm md:text-base font-serif italic text-rose-100/95 leading-relaxed"></p>
             </div>
         </div>
     </div>
@@ -443,32 +459,103 @@
             document.body.style.overflow = '';
         }
 
+        // --- Lightbox Gallery List & Navigation ---
+        let pwGallery = [];
+        let pwCurrentIndex = -1;
+        let isPwLightboxOpen = false;
+
+        function refreshPwGallery() {
+            pwGallery = [];
+            const photoCards = document.querySelectorAll('#looks-start .photo-card');
+            photoCards.forEach((card) => {
+                const img = card.querySelector('img');
+                if (img) {
+                    const section = card.closest('section');
+                    const lookTitle = section ? (section.querySelector('h2 span')?.textContent.trim() || 'Pre-Wedding') : 'Pre-Wedding';
+                    const caption = card.querySelector('p')?.textContent.replace(/"/g, '').trim() || '';
+                    pwGallery.push({
+                        src: img.getAttribute('src'),
+                        caption: caption,
+                        badge: lookTitle
+                    });
+                }
+            });
+        }
+
         function openPreweddingLightbox(src, caption, badge) {
+            refreshPwGallery();
+            pwCurrentIndex = pwGallery.findIndex(item => item.src === src);
+            if (pwCurrentIndex === -1) {
+                pwGallery.push({ src, caption, badge });
+                pwCurrentIndex = pwGallery.length - 1;
+            }
+
             const modal = document.getElementById('pw-lightbox-modal');
-            const img = document.getElementById('pw-lightbox-img');
-            const captionEl = document.getElementById('pw-lightbox-caption');
-            const badgeEl = document.getElementById('pw-lightbox-badge');
-
-            img.src = src;
-            badgeEl.textContent = badge || 'Pre-Wedding';
-            captionEl.textContent = caption ? `"${caption}"` : '';
-
             modal.classList.remove('hidden');
             setTimeout(() => modal.classList.add('opacity-100'), 20);
             document.body.style.overflow = 'hidden';
+            isPwLightboxOpen = true;
+
+            renderPwLightboxSlide();
+        }
+
+        function renderPwLightboxSlide() {
+            if (!isPwLightboxOpen || pwGallery.length === 0) return;
+            const current = pwGallery[pwCurrentIndex];
+            const img = document.getElementById('pw-lightbox-img');
+            const captionEl = document.getElementById('pw-lightbox-caption');
+            const badgeEl = document.getElementById('pw-lightbox-badge');
+            const counterEl = document.getElementById('pw-lightbox-counter');
+
+            img.src = current.src;
+            badgeEl.textContent = current.badge || 'Pre-Wedding';
+            captionEl.textContent = current.caption ? `"${current.caption}"` : '';
+            counterEl.textContent = `${pwCurrentIndex + 1} / ${pwGallery.length}`;
+
+            // Preload adjacent images
+            if (pwCurrentIndex + 1 < pwGallery.length) {
+                const nextImg = new Image();
+                nextImg.src = pwGallery[pwCurrentIndex + 1].src;
+            }
+            if (pwCurrentIndex - 1 >= 0) {
+                const prevImg = new Image();
+                prevImg.src = pwGallery[pwCurrentIndex - 1].src;
+            }
+        }
+
+        function pwLightboxNext() {
+            if (pwGallery.length === 0) return;
+            pwCurrentIndex = (pwCurrentIndex + 1) % pwGallery.length;
+            renderPwLightboxSlide();
+        }
+
+        function pwLightboxPrev() {
+            if (pwGallery.length === 0) return;
+            pwCurrentIndex = (pwCurrentIndex - 1 + pwGallery.length) % pwGallery.length;
+            renderPwLightboxSlide();
         }
 
         function closePreweddingLightbox() {
             const modal = document.getElementById('pw-lightbox-modal');
-            modal.classList.add('hidden');
             modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 200);
             document.body.style.overflow = '';
+            isPwLightboxOpen = false;
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
+            if (isPwLightboxOpen) {
+                if (e.key === 'Escape') {
+                    closePreweddingLightbox();
+                } else if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    pwLightboxNext();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    pwLightboxPrev();
+                }
+            } else if (e.key === 'Escape') {
                 closePreweddingVideo();
-                closePreweddingLightbox();
             }
         });
     </script>
