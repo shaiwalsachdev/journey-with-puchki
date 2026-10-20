@@ -1670,6 +1670,7 @@ async def read_prewedding(request: Request):
         "Picnic Look": [],
         "City Look": [],
         "Proposal Look": [],
+        "Photographer Shortlisting": [],
         "Teaser & Videos": [],
         "Unassigned": []
     }

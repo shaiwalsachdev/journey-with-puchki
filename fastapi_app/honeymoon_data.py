@@ -293,6 +293,24 @@ DEFAULT_HONEYMOON_DATA = {
                 "due_date": "Due: Dec 10–12, 2026 (strictly 72 hrs prior)",
                 "detail": "Submit online at ica.gov.sg strictly within 3 days (72 hours) before landing in Singapore (Dec 10-12). Free of cost.",
                 "done": False
+            },
+            {
+                "id": "v12",
+                "title": "Air Suvidha Self-Declaration (Before Landing in India)",
+                "due_date": "Due: Dec 20–21, 2026 (before boarding return flight)",
+                "detail": "Complete self-declaration form online on the official Air Suvidha portal before landing back in India (New Delhi). Official portal: airsuvidha.civilaviation.gov.in",
+                "doc_url": "https://airsuvidha.civilaviation.gov.in/",
+                "doc_name": "Air Suvidha Portal",
+                "done": False
+            },
+            {
+                "id": "v13",
+                "title": "Fast Track Immigration (FTI-TTP) e-Gates Registration",
+                "due_date": "Apply Online (Gratis / Free of cost)",
+                "detail": "Register for India Fast Track Immigration – Trusted Traveller Programme (FTI-TTP) to use automated e-Gates for swift, queue-free immigration clearance at Delhi IGI and major airports. Official portal: ftittp.mha.gov.in",
+                "doc_url": "https://ftittp.mha.gov.in/",
+                "doc_name": "FTI-TTP Official Portal",
+                "done": False
             }
         ]
     },
