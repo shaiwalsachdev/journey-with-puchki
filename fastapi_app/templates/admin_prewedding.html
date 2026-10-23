@@ -516,6 +516,18 @@
             renderStudioItem();
         }
 
+        function closeFastStudio() {
+            const studio = document.getElementById('fast-tag-studio');
+            if (!studio) return;
+            studio.classList.remove('opacity-100');
+            setTimeout(() => {
+                studio.classList.add('hidden');
+            }, 200);
+            isStudioOpen = false;
+            document.body.style.overflow = '';
+            studioResetZoom();
+        }
+
         // Zoom & Pan State for Fast Studio
         let studioZoom = 1;
         let studioPanX = 0;
