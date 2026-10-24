@@ -1,0 +1,177 @@
+{% extends "tv_base.html" %}
+
+{% block title %}The Sagan & Wedding Cinema • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-wedding-container {
+        padding: 30px 54px 60px 54px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+    .tv-wedding-hero {
+        position: relative;
+        width: 100%;
+        height: 52vh;
+        min-height: 380px;
+        border-radius: 16px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        border: 2px solid rgba(255, 42, 109, 0.4);
+    }
+    .tv-wedding-vignette {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.6) 60%, transparent 100%);
+    }
+    .tv-wedding-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 24px;
+    }
+    .tv-wedding-card {
+        border-radius: 14px;
+        background: #181324;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 220px;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-wedding-card-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .tv-wedding-time {
+        font-size: 13px;
+        color: #ffd166;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .tv-wedding-venue {
+        font-size: 14px;
+        color: #cbd5e1;
+        line-height: 1.4;
+    }
+    @media (max-width: 768px) {
+        .tv-wedding-container { padding: 20px; }
+        .tv-wedding-hero { height: 38vh; padding: 20px; }
+        .tv-wedding-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">Sacred Unions &amp; Invitations</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">favorite</span>
+                Sagan, Haldi, &amp; The Grand Wedding
+            </h1>
+            <p class="tv-page-subtitle">Schedule, venues, invitations, and rituals for our big celebration.</p>
+        </div>
+        <div style="font-size: 14px; color: #94a3b8; text-align: right;">
+            Press <b>OK</b> on Remote to browse<br>
+            Back to exit
+        </div>
+    </div>
+
+    <div class="tv-wedding-container">
+        <!-- Hero Banner -->
+        <div class="tv-wedding-hero" style="background-image: url('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp');">
+            <div class="tv-wedding-vignette"></div>
+            <div style="position: relative; z-index: 10; max-width: 800px;">
+                <span class="tv-badge" style="margin-bottom: 10px;">#Shaigothershai</span>
+                <h2 style="font-size: 42px; font-weight: 800; margin-bottom: 10px;">Shaiwal &amp; Shaila Manaktahla</h2>
+                <p style="color: #cbd5e1; font-size: 17px; line-height: 1.5;">
+                    December 5 &amp; 6, 2026 • Together with our families, we invite you to join us as our forever officially begins.
+                </p>
+            </div>
+        </div>
+
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">event</span> Wedding Functions &amp; Venues
+        </h2>
+
+        <div class="tv-wedding-grid">
+            <!-- Sagan -->
+            <div class="tv-wedding-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px;">GRAND EVENING</span>
+                    <div class="tv-wedding-card-title">💍 Sagan &amp; Ring Ceremony</div>
+                    <div class="tv-wedding-time">🗓️ Saturday, December 5, 2026 • 7:30 PM Onwards</div>
+                    <div class="tv-wedding-venue">
+                        <b>Venue:</b> Mint Hall, The Sheridan by Kawatra's<br>
+                        Faridabad, Haryana (Violet Line Metro)
+                    </div>
+                </div>
+                <div style="color: #a78bfa; font-size: 13px; margin-top: 14px;">Dress Code: Indo-Western / Formal Glam</div>
+            </div>
+
+            <!-- Haldi -->
+            <div class="tv-wedding-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px; background: rgba(234, 179, 8, 0.25); border-color: #eab308; color: #fde047;">MORNING BLESSINGS</span>
+                    <div class="tv-wedding-card-title">✨ Haldi Ceremony</div>
+                    <div class="tv-wedding-time">🗓️ Sunday, December 6, 2026 • 11:00 AM Onwards</div>
+                    <div class="tv-wedding-venue">
+                        <b>Venue:</b> Opera Hall, Meriton Hotel<br>
+                        Nehru Place, New Delhi (Magenta Line Metro)
+                    </div>
+                </div>
+                <div style="color: #fde047; font-size: 13px; margin-top: 14px;">Dress Code: Shades of Yellow &amp; Sunshine Bright</div>
+            </div>
+
+            <!-- Wedding -->
+            <div class="tv-wedding-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px;">THE SACRED UNION</span>
+                    <div class="tv-wedding-card-title">👰🤵 The Wedding &amp; Pheras</div>
+                    <div class="tv-wedding-time">🗓️ Sunday, December 6, 2026 • 8:00 PM Onwards</div>
+                    <div class="tv-wedding-venue">
+                        <b>Venue:</b> Rosella by SK<br>
+                        Sector 28, Faridabad, Haryana
+                    </div>
+                </div>
+                <div style="color: #ff4d8d; font-size: 13px; margin-top: 14px;">Dress Code: Traditional Royal &amp; Ethnic Splendor</div>
+            </div>
+
+            <!-- Blessings & Satsang -->
+            <div class="tv-wedding-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px; background: rgba(249, 115, 22, 0.25); border-color: #f97316; color: #fdba74;">DIVINE BLESSINGS</span>
+                    <div class="tv-wedding-card-title">🪔 Satsang &amp; Dinner</div>
+                    <div class="tv-wedding-time">🗓️ Thursday, December 10, 2026 • 4:30 PM Onwards</div>
+                    <div class="tv-wedding-venue">
+                        <b>Venue:</b> Shri Anandpur Satsang Bhawan<br>
+                        LDA Colony, Lucknow
+                    </div>
+                </div>
+                <div style="color: #fdba74; font-size: 13px; margin-top: 14px;">Seeking Guru's divine blessings</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-wedding-card'));
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}

@@ -425,6 +425,82 @@ async def tv_events(request: Request):
     })
 
 
+@app.get("/tv/roka", response_class=HTMLResponse)
+async def tv_roka(request: Request):
+    """TV Roka ceremony photo cinema."""
+    from fastapi_app.database import get_all_roka_media
+    from fastapi_app.storage import R2_PUBLIC_URL
+    settings = request.state.settings
+
+    media = await get_all_roka_media()
+    photos = []
+    for item in media:
+        if item.get("media_type") == "image":
+            fn = item.get("filename")
+            photos.append({
+                "url": f"{R2_PUBLIC_URL}/{fn}" if fn else "",
+                "chapter": item.get("chapter", "Ceremony Highlight")
+            })
+
+    hero_url = photos[0]["url"] if photos else f"{R2_PUBLIC_URL}/prewedding/1792437927_DSC00890.webp"
+    return templates.TemplateResponse("tv_roka.html", {
+        "request": request,
+        "active_page": "events",
+        "settings": settings,
+        "photos": photos[:100],
+        "hero_url": hero_url
+    })
+
+
+@app.get("/tv/pre-wedding", response_class=HTMLResponse)
+async def tv_prewedding(request: Request):
+    """TV Pre-wedding photo cinema."""
+    from fastapi_app.database import get_all_prewedding_media
+    from fastapi_app.storage import R2_PUBLIC_URL
+    settings = request.state.settings
+
+    media = await get_all_prewedding_media()
+    photos = []
+    for item in media:
+        if item.get("media_type") == "image":
+            fn = item.get("filename")
+            photos.append({
+                "url": f"{R2_PUBLIC_URL}/{fn}" if fn else "",
+                "chapter": item.get("chapter", "Pre-Wedding Look")
+            })
+
+    hero_url = f"{R2_PUBLIC_URL}/prewedding/1792437927_DSC00890.webp"
+    return templates.TemplateResponse("tv_prewedding.html", {
+        "request": request,
+        "active_page": "events",
+        "settings": settings,
+        "photos": photos[:100],
+        "hero_url": hero_url
+    })
+
+
+@app.get("/tv/wedding", response_class=HTMLResponse)
+async def tv_wedding(request: Request):
+    """TV Sagan & Wedding functions page."""
+    settings = request.state.settings
+    return templates.TemplateResponse("tv_wedding.html", {
+        "request": request,
+        "active_page": "events",
+        "settings": settings
+    })
+
+
+@app.get("/tv/honeymoon", response_class=HTMLResponse)
+async def tv_honeymoon(request: Request):
+    """TV Singapore & Disney Cruise honeymoon itinerary."""
+    settings = request.state.settings
+    return templates.TemplateResponse("tv_honeymoon.html", {
+        "request": request,
+        "active_page": "events",
+        "settings": settings
+    })
+
+
 @app.get("/tv/wishlist", response_class=HTMLResponse)
 async def tv_wishlist(request: Request):
     """TV Instagram & shared wishlist view."""

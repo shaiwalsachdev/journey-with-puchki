@@ -1,0 +1,150 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Our Singapore & Disney Cruise Honeymoon • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-honeymoon-container {
+        padding: 30px 54px 60px 54px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+    .tv-honeymoon-hero {
+        position: relative;
+        width: 100%;
+        height: 52vh;
+        min-height: 380px;
+        border-radius: 16px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        border: 2px solid rgba(168, 85, 247, 0.4);
+    }
+    .tv-honeymoon-vignette {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.55) 60%, transparent 100%);
+    }
+    .tv-honeymoon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 24px;
+    }
+    .tv-honeymoon-card {
+        border-radius: 14px;
+        background: #181324;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 220px;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-honeymoon-card-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    @media (max-width: 768px) {
+        .tv-honeymoon-container { padding: 20px; }
+        .tv-honeymoon-hero { height: 38vh; padding: 20px; }
+        .tv-honeymoon-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge" style="background: rgba(168, 85, 247, 0.25); border-color: #a855f7; color: #c084fc;">
+                8 Nights Romantic Voyage
+            </div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #a855f7;">flight_takeoff</span>
+                Singapore &amp; Disney Adventure Cruise
+            </h1>
+            <p class="tv-page-subtitle">December 13–21, 2026 • Marina Bay Sands, Universal Studios, and Disney Ocean Magic.</p>
+        </div>
+        <div style="font-size: 14px; color: #94a3b8; text-align: right;">
+            Press <b>OK</b> to browse<br>
+            Back to return to Events
+        </div>
+    </div>
+
+    <div class="tv-honeymoon-container">
+        <!-- Hero Banner -->
+        <div class="tv-honeymoon-hero" style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1200&auto=format&fit=crop');">
+            <div class="tv-honeymoon-vignette"></div>
+            <div style="position: relative; z-index: 10; max-width: 800px;">
+                <span class="tv-badge" style="margin-bottom: 10px; background: rgba(255, 42, 109, 0.3); border-color: #ff2a6d; color: #fff;">
+                    🚢 Disney Adventure Cruise
+                </span>
+                <h2 style="font-size: 42px; font-weight: 800; margin-bottom: 10px;">Our Dream Honeymoon Itinerary</h2>
+                <p style="color: #cbd5e1; font-size: 17px; line-height: 1.5;">
+                    Setting sail from Singapore into the open seas. Castle fireworks at sea, luxury staterooms, fine dining, and endless romance.
+                </p>
+            </div>
+        </div>
+
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">explore</span> Itinerary Chapters &amp; Stays
+        </h2>
+
+        <div class="tv-honeymoon-grid">
+            <!-- Singapore Exploration -->
+            <div class="tv-honeymoon-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px;">CITY CHAPTER</span>
+                    <div class="tv-honeymoon-card-title">🏙️ Singapore City Stays</div>
+                    <div style="color: #ffd166; font-size: 13px; font-weight: 700; margin-bottom: 8px;">🗓️ Dec 13–15 &amp; Dec 20–21, 2026</div>
+                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.4;">
+                        Marina Bay Sands SkyPark, Gardens by the Bay light show, Jewel Changi waterfall, Universal Studios, and street food feast in Chinatown.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disney Adventure Cruise -->
+            <div class="tv-honeymoon-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px; background: rgba(168, 85, 247, 0.25); border-color: #a855f7; color: #c084fc;">CRUISE VOYAGE</span>
+                    <div class="tv-honeymoon-card-title">🚢 Disney Ocean Cruise</div>
+                    <div style="color: #ffd166; font-size: 13px; font-weight: 700; margin-bottom: 8px;">🗓️ Dec 15–19, 2026 • 4 Nights at Sea</div>
+                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.4;">
+                        Private verandah stateroom, Broadway-caliber Disney theater shows, couples spa, deck pools, and evening deck fireworks over the sea.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Packing & Outfits -->
+            <div class="tv-honeymoon-card tv-focusable" tabindex="0">
+                <div>
+                    <span class="tv-badge" style="margin-bottom: 8px; background: rgba(16, 185, 129, 0.25); border-color: #10b981; color: #34d399;">PREPARATION</span>
+                    <div class="tv-honeymoon-card-title">👗 Outfits &amp; Essentials</div>
+                    <div style="color: #ffd166; font-size: 13px; font-weight: 700; margin-bottom: 8px;">Resort Casuals &amp; Evening Glam</div>
+                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.4;">
+                        Tropical daytime coordinates, cruise formal dinner gowns, universal adapter, and action cameras for capturing underwater memories.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-honeymoon-card'));
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}
