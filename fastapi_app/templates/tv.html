@@ -374,21 +374,39 @@
                 <span class="material-icons">photo_library</span>
                 <span class="label">Gallery</span>
             </a>
-            <a href="/music" class="side-btn focusable" tabindex="0">
-                <span class="material-icons">album</span>
-                <span class="label">DJ Lounge</span>
+            <a href="/birthday" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">cake</span>
+                <span class="label">Birthday ✨</span>
             </a>
-            <a href="/wedding" class="side-btn focusable" tabindex="0">
-                <span class="material-icons">favorite</span>
-                <span class="label">Wedding</span>
-            </a>
-            <a href="/vault" class="side-btn focusable" tabindex="0">
-                <span class="material-icons">lock</span>
-                <span class="label">Vault</span>
+            <a href="/events" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">event</span>
+                <span class="label">Events</span>
             </a>
             <a href="/wishlist" class="side-btn focusable" tabindex="0">
-                <span class="material-icons">card_giftcard</span>
+                <span class="material-icons">stars</span>
                 <span class="label">Wishlist</span>
+            </a>
+            <a href="/guestbook" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">import_contacts</span>
+                <span class="label">Guestbook</span>
+            </a>
+            <a href="/music" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">music_note</span>
+                <span class="label">Music</span>
+            </a>
+            <a href="/dictionary" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">book</span>
+                <span class="label">Dictionary</span>
+            </a>
+            {% if not settings.private_mode %}
+            <a href="/coupons" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">card_giftcard</span>
+                <span class="label">Coupons</span>
+            </a>
+            {% endif %}
+            <a href="/planner" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">flight_takeoff</span>
+                <span class="label">AI Planner</span>
             </a>
         </nav>
     </aside>
@@ -443,7 +461,7 @@
 
             <!-- Row 2: Roka & Wedding Cinema -->
             <section class="row-section">
-                <h2 class="row-title">💍 Roka &amp; Wedding Cinema</h2>
+                <h2 class="row-title">💍 Roka &amp; Celebration Cinema</h2>
                 <div class="row-track" id="row-roka">
                     {% for r in roka_photos %}
                     <div class="card focusable" tabindex="0" 
@@ -467,34 +485,34 @@
 
             <!-- Row 3: Special Date Nights -->
             <section class="row-section">
-                <h2 class="row-title">🕯️ Date Nights, Pottery &amp; Surprises</h2>
+                <h2 class="row-title">🕯️ Date Nights, Pottery &amp; Celebrations</h2>
                 <div class="row-track" id="row-dates">
-                    <a href="/memory/2" class="card focusable" tabindex="0" style="text-decoration:none;">
-                        <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg" alt="Pottery Date" />
+                    <a href="/memory/26" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/26/IMG_0930.webp" alt="Pottery Date" />
                         <div class="card-info">
                             <div class="card-title">Clay &amp; Pottery Date</div>
                             <div class="card-meta"><span>Date Experience</span><span>Hands in Clay</span></div>
                         </div>
                     </a>
-                    <a href="/memory/18" class="card focusable" tabindex="0" style="text-decoration:none;">
-                        <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/candle_1.jpg" alt="Candle Night" />
+                    <a href="/memory/8" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/8/Novemeber%2022_1.webp" alt="Candle Night" />
                         <div class="card-info">
-                            <div class="card-title">Candle Making Date</div>
+                            <div class="card-title">First Candle Light Dinner</div>
                             <div class="card-meta"><span>Date Experience</span><span>Warm Glow</span></div>
                         </div>
                     </a>
                     <a href="/birthday" class="card focusable" tabindex="0" style="text-decoration:none;">
-                        <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/birthday_special.jpg" alt="Birthday Special" />
+                        <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/25/IMG_0389.webp" alt="Birthday Special" />
                         <div class="card-info">
                             <div class="card-title">Birthday Celebration ✨</div>
                             <div class="card-meta"><span>Special Milestone</span><span>Love</span></div>
                         </div>
                     </a>
-                    <a href="/honeymoon" class="card focusable" tabindex="0" style="text-decoration:none;">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Honeymoon" />
+                    <a href="/events" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="Events" />
                         <div class="card-info">
-                            <div class="card-title">Honeymoon Dreams</div>
-                            <div class="card-meta"><span>Future Trip</span><span>Paradise</span></div>
+                            <div class="card-title">Events &amp; Milestones</div>
+                            <div class="card-meta"><span>Memories</span><span>Together</span></div>
                         </div>
                     </a>
                 </div>

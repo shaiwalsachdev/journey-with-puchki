@@ -272,14 +272,17 @@ async def tv_experience(request: Request):
     settings = request.state.settings
 
     raw_memories = await get_all_memories()
+    # Apply standard privacy mode filtering: hides ID 1 (Hinge), hot memories, and redacts safe titles
+    filtered_memories = process_memories_for_display(raw_memories, settings)
+
     memories = []
-    for m in raw_memories:
+    for m in filtered_memories:
         m_copy = dict(m)
         photos = m.get("photos") or []
         if photos and len(photos) > 0:
             m_copy["photo_url"] = f"{R2_PUBLIC_URL}/uploads/{m['id']}/{photos[0]}"
         else:
-            m_copy["photo_url"] = "https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg"
+            m_copy["photo_url"] = f"{R2_PUBLIC_URL}/uploads/26/IMG_0930.webp"
         memories.append(m_copy)
 
     all_roka = await get_all_roka_media()
@@ -295,7 +298,7 @@ async def tv_experience(request: Request):
     hero = {
         "title": "The Start of Forever",
         "description": "Reliving all our most beautiful milestones, dates, laughter, and timeless memories.",
-        "photo_url": memories[0]["photo_url"] if memories else "https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg"
+        "photo_url": memories[0]["photo_url"] if memories else "https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp"
     }
 
     return templates.TemplateResponse("tv.html", {
