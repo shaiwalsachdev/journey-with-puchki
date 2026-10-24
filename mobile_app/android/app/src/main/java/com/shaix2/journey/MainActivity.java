@@ -26,8 +26,8 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    // Remote Live Production URL hosted on Render
-    public static final String APP_URL = "https://journey-with-puchki.onrender.com/";
+    // Remote Live Production URL hosted on Render - Direct to Netflix TV experience
+    public static final String APP_URL = "https://journey-with-puchki.onrender.com/tv";
 
     private WebView mWebView;
     private ProgressBar mProgressBar;
