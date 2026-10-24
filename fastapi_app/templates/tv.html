@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shaiflix • Journey with Puchki</title>
+    <title>Journey with Puchki • TV Edition</title>
     <!-- Google Fonts & Material Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <style>
         * {
@@ -24,67 +24,136 @@
             overflow-y: scroll;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            display: flex;
         }
         body::-webkit-scrollbar { display: none; }
 
-        /* Netflix Header Navigation */
-        .tv-nav {
+        /* Left-Side Netflix / Apple TV Vertical Navigation Bar */
+        .tv-sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 70px;
+            bottom: 0;
+            width: 90px;
+            background: linear-gradient(90deg, rgba(8, 6, 14, 0.98) 0%, rgba(8, 6, 14, 0.85) 85%, transparent 100%);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 48px;
-            background: linear-gradient(180deg, rgba(11,8,19,0.95) 0%, rgba(11,8,19,0) 100%);
+            justify-content: flex-start;
+            padding: 28px 0;
             z-index: 1000;
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .brand {
+        /* Sidebar Expands Elegantly When Focused */
+        .tv-sidebar:focus-within, .tv-sidebar.expanded {
+            width: 250px;
+            background: rgba(10, 7, 18, 0.97);
+            box-shadow: 10px 0 40px rgba(0,0,0,0.8);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 24px;
+            gap: 16px;
+            width: 100%;
+            padding: 0 22px;
+            margin-bottom: 36px;
+        }
+
+        .brand-avatar {
+            width: 46px;
+            height: 46px;
+            min-width: 46px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e50914;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.5);
+        }
+
+        .brand-title {
+            font-size: 16px;
             font-weight: 800;
-            color: #e50914;
+            color: #ffffff;
             letter-spacing: 0.5px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
-        .brand span.sub {
-            font-family: 'Dancing Script', cursive;
-            color: #ff4d8d;
-            font-size: 26px;
-            font-weight: 700;
+        .tv-sidebar:focus-within .brand-title, .tv-sidebar.expanded .brand-title {
+            opacity: 1;
         }
 
-        .nav-items {
+        .sidebar-nav {
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            padding: 0 16px;
         }
 
-        .nav-btn {
-            background: rgba(255,255,255,0.08);
-            border: 2px solid transparent;
-            color: #ccc;
+        .side-btn {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: #94a3b8;
+            text-decoration: none;
             font-size: 15px;
             font-weight: 600;
-            padding: 8px 18px;
-            border-radius: 9999px;
-            cursor: pointer;
-            text-decoration: none;
+            border: 2px solid transparent;
             transition: all 0.2s ease;
+        }
+
+        .side-btn .material-icons {
+            font-size: 24px;
+            min-width: 24px;
+        }
+
+        .side-btn span.label {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .tv-sidebar:focus-within .side-btn span.label, .tv-sidebar.expanded .side-btn span.label {
+            opacity: 1;
+        }
+
+        .side-btn.active {
+            color: #ffffff;
+            background: rgba(229, 9, 20, 0.2);
+            border-color: rgba(229, 9, 20, 0.4);
+        }
+
+        /* TV Remote Glowing Focus */
+        .focusable:focus, .card:focus, .side-btn:focus, .btn-play:focus, .btn-info:focus {
+            outline: none !important;
+            border-color: #ff2a6d !important;
+            box-shadow: 0 0 25px rgba(255, 42, 109, 0.95), 0 0 10px #ffffff !important;
+            color: #ffffff !important;
+            background: rgba(255, 42, 109, 0.25) !important;
+            transform: scale(1.06) !important;
+            z-index: 50 !important;
+        }
+
+        /* Main App Canvas - Offset for Left Sidebar */
+        .tv-content-canvas {
+            margin-left: 90px;
+            width: calc(100vw - 90px);
+            min-height: 100vh;
         }
 
         /* Netflix Hero Billboard */
         .hero-billboard {
             position: relative;
-            width: 100vw;
-            height: 60vh;
+            width: 100%;
+            height: 62vh;
             min-height: 440px;
             display: flex;
             align-items: flex-end;
-            padding: 0 54px 48px 54px;
+            padding: 0 54px 44px 54px;
             background-size: cover;
             background-position: center;
             transition: background-image 0.5s ease;
@@ -93,14 +162,14 @@
         .hero-vignette {
             position: absolute;
             inset: 0;
-            background: linear-gradient(0deg, #0b0813 5%, rgba(11,8,19,0.5) 45%, rgba(11,8,19,0.1) 100%),
+            background: linear-gradient(0deg, #0b0813 6%, rgba(11,8,19,0.5) 45%, rgba(11,8,19,0.1) 100%),
                         linear-gradient(90deg, #0b0813 0%, rgba(11,8,19,0.6) 40%, transparent 100%);
         }
 
         .hero-content {
             position: relative;
             z-index: 10;
-            max-width: 680px;
+            max-width: 720px;
         }
 
         .hero-badge {
@@ -117,7 +186,7 @@
         }
 
         .hero-title {
-            font-size: 42px;
+            font-size: 44px;
             font-weight: 800;
             line-height: 1.15;
             margin-bottom: 12px;
@@ -126,7 +195,7 @@
 
         .hero-desc {
             font-size: 16px;
-            color: #d1d5db;
+            color: #cbd5e1;
             line-height: 1.4;
             margin-bottom: 22px;
             display: -webkit-box;
@@ -251,15 +320,6 @@
             justify-content: space-between;
         }
 
-        /* TV Remote D-Pad Focus Glowing State */
-        .focusable:focus, .card:focus, .nav-btn:focus, .btn-play:focus, .btn-info:focus {
-            outline: none !important;
-            border-color: #ff2a6d !important;
-            box-shadow: 0 0 25px rgba(255, 42, 109, 0.9), 0 0 10px #ffffff !important;
-            transform: scale(1.08) !important;
-            z-index: 50 !important;
-        }
-
         /* Fullscreen Cinema Modal for TV */
         #theater-modal {
             display: none;
@@ -294,128 +354,154 @@
 </head>
 <body>
 
-    <!-- Netflix Navigation -->
-    <header class="tv-nav">
-        <div class="brand">
-            <span class="material-icons" style="font-size: 32px;">favorite</span>
-            SHAIFLIX <span class="sub">Journey with Puchki</span>
+    <!-- Left-Side Vertical Navigation Bar (Netflix / Smart TV Style) -->
+    <aside class="tv-sidebar" id="tv-sidebar">
+        <div class="sidebar-brand">
+            <img class="brand-avatar" src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="ShaiX2" />
+            <div class="brand-title">Puchki &amp; Shaiwal</div>
         </div>
-        <nav class="nav-items">
-            <a href="/tv" class="nav-btn focusable" tabindex="0">Home</a>
-            <a href="/timeline" class="nav-btn focusable" tabindex="0">Timeline</a>
-            <a href="/gallery" class="nav-btn focusable" tabindex="0">Gallery</a>
-            <a href="/music" class="nav-btn focusable" tabindex="0">DJ Music</a>
-            <a href="/wedding" class="nav-btn focusable" tabindex="0">Wedding</a>
-            <a href="/vault" class="nav-btn focusable" tabindex="0">Vault</a>
-            <a href="/wishlist" class="nav-btn focusable" tabindex="0">Wishlist</a>
+
+        <nav class="sidebar-nav">
+            <a href="/tv" class="side-btn active focusable" tabindex="0">
+                <span class="material-icons">home</span>
+                <span class="label">Home</span>
+            </a>
+            <a href="/timeline" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">timeline</span>
+                <span class="label">Timeline</span>
+            </a>
+            <a href="/gallery" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">photo_library</span>
+                <span class="label">Gallery</span>
+            </a>
+            <a href="/music" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">album</span>
+                <span class="label">DJ Lounge</span>
+            </a>
+            <a href="/wedding" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">favorite</span>
+                <span class="label">Wedding</span>
+            </a>
+            <a href="/vault" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">lock</span>
+                <span class="label">Vault</span>
+            </a>
+            <a href="/wishlist" class="side-btn focusable" tabindex="0">
+                <span class="material-icons">card_giftcard</span>
+                <span class="label">Wishlist</span>
+            </a>
         </nav>
-    </header>
+    </aside>
 
-    <!-- Netflix Hero Billboard -->
-    <section class="hero-billboard" id="hero-billboard" style="background-image: url('{{ hero.photo_url }}');">
-        <div class="hero-vignette"></div>
-        <div class="hero-content">
-            <span class="hero-badge">Featured Milestone</span>
-            <h1 class="hero-title" id="hero-title">{{ hero.title }}</h1>
-            <p class="hero-desc" id="hero-desc">{{ hero.description }}</p>
-            <div class="hero-actions">
-                <button class="btn-play focusable" id="btn-slideshow" tabindex="0">
-                    <span class="material-icons">play_arrow</span> Play Slideshow
-                </button>
-                <button class="btn-info focusable" id="btn-inspect" tabindex="0">
-                    <span class="material-icons">info_outline</span> View Fullscreen
-                </button>
+    <!-- Main Content Canvas -->
+    <div class="tv-content-canvas">
+
+        <!-- Netflix Hero Billboard -->
+        <section class="hero-billboard" id="hero-billboard" style="background-image: url('{{ hero.photo_url }}');">
+            <div class="hero-vignette"></div>
+            <div class="hero-content">
+                <span class="hero-badge">Featured Milestone</span>
+                <h1 class="hero-title" id="hero-title">{{ hero.title }}</h1>
+                <p class="hero-desc" id="hero-desc">{{ hero.description }}</p>
+                <div class="hero-actions">
+                    <button class="btn-play focusable" id="btn-slideshow" tabindex="0">
+                        <span class="material-icons">play_arrow</span> Play Slideshow
+                    </button>
+                    <button class="btn-info focusable" id="btn-inspect" tabindex="0">
+                        <span class="material-icons">info_outline</span> View Fullscreen
+                    </button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Netflix Rows -->
-    <main class="rows-container">
+        <!-- Netflix Rows -->
+        <main class="rows-container">
 
-        <!-- Row 1: All Memories (Chronological) -->
-        <section class="row-section">
-            <h2 class="row-title">❤️ Reliving Our Memories</h2>
-            <div class="row-track" id="row-memories">
-                {% for m in memories %}
-                <div class="card focusable" tabindex="0" 
-                     data-title="{{ m.title }}" 
-                     data-desc="{{ m.description }}" 
-                     data-src="{{ m.photo_url }}" 
-                     data-date="{{ m.date }}"
-                     data-type="{{ m.media_type | default('image') }}">
-                    <img src="{{ m.photo_url }}" alt="{{ m.title }}" loading="lazy" />
-                    <div class="card-info">
-                        <div class="card-title">{{ m.title }}</div>
-                        <div class="card-meta">
-                            <span>{{ m.date }}</span>
-                            <span>Memory #{{ m.id }}</span>
+            <!-- Row 1: All Memories (Chronological) -->
+            <section class="row-section">
+                <h2 class="row-title">❤️ Reliving Our Memories</h2>
+                <div class="row-track" id="row-memories">
+                    {% for m in memories %}
+                    <div class="card focusable" tabindex="0" 
+                         data-title="{{ m.title }}" 
+                         data-desc="{{ m.description }}" 
+                         data-src="{{ m.photo_url }}" 
+                         data-date="{{ m.date }}"
+                         data-type="{{ m.media_type | default('image') }}">
+                        <img src="{{ m.photo_url }}" alt="{{ m.title }}" loading="lazy" />
+                        <div class="card-info">
+                            <div class="card-title">{{ m.title }}</div>
+                            <div class="card-meta">
+                                <span>{{ m.date }}</span>
+                                <span>Memory #{{ m.id }}</span>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        </section>
+            </section>
 
-        <!-- Row 2: Roka & Wedding Cinema -->
-        <section class="row-section">
-            <h2 class="row-title">💍 Roka &amp; Wedding Cinema</h2>
-            <div class="row-track" id="row-roka">
-                {% for r in roka_photos %}
-                <div class="card focusable" tabindex="0" 
-                     data-title="{{ r.caption | default('Our Roka Moment') }}" 
-                     data-desc="Ceremony & Celebration with Family" 
-                     data-src="{{ r.photo_url }}" 
-                     data-date="Oct 2026"
-                     data-type="image">
-                    <img src="{{ r.photo_url }}" alt="Roka Moment" loading="lazy" />
-                    <div class="card-info">
-                        <div class="card-title">{{ r.caption | default('Our Special Milestone') }}</div>
-                        <div class="card-meta">
-                            <span>Roka Chapter</span>
-                            <span>✨ Forever</span>
+            <!-- Row 2: Roka & Wedding Cinema -->
+            <section class="row-section">
+                <h2 class="row-title">💍 Roka &amp; Wedding Cinema</h2>
+                <div class="row-track" id="row-roka">
+                    {% for r in roka_photos %}
+                    <div class="card focusable" tabindex="0" 
+                         data-title="{{ r.caption | default('Our Roka Moment') }}" 
+                         data-desc="Ceremony & Celebration with Family" 
+                         data-src="{{ r.photo_url }}" 
+                         data-date="Oct 2026"
+                         data-type="image">
+                        <img src="{{ r.photo_url }}" alt="Roka Moment" loading="lazy" />
+                        <div class="card-info">
+                            <div class="card-title">{{ r.caption | default('Our Special Milestone') }}</div>
+                            <div class="card-meta">
+                                <span>Roka Chapter</span>
+                                <span>✨ Forever</span>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        </section>
+            </section>
 
-        <!-- Row 3: Special Date Nights -->
-        <section class="row-section">
-            <h2 class="row-title">🕯️ Date Nights, Pottery &amp; Surprises</h2>
-            <div class="row-track" id="row-dates">
-                <a href="/memory/2" class="card focusable" tabindex="0" style="text-decoration:none;">
-                    <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg" alt="Pottery Date" />
-                    <div class="card-info">
-                        <div class="card-title">Clay &amp; Pottery Date</div>
-                        <div class="card-meta"><span>Date Experience</span><span>Hands in Clay</span></div>
-                    </div>
-                </a>
-                <a href="/memory/18" class="card focusable" tabindex="0" style="text-decoration:none;">
-                    <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/candle_1.jpg" alt="Candle Night" />
-                    <div class="card-info">
-                        <div class="card-title">Candle Making Date</div>
-                        <div class="card-meta"><span>Date Experience</span><span>Warm Glow</span></div>
-                    </div>
-                </a>
-                <a href="/birthday" class="card focusable" tabindex="0" style="text-decoration:none;">
-                    <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/birthday_special.jpg" alt="Birthday Special" />
-                    <div class="card-info">
-                        <div class="card-title">Birthday Celebration ✨</div>
-                        <div class="card-meta"><span>Special Milestone</span><span>Love</span></div>
-                    </div>
-                </a>
-                <a href="/honeymoon" class="card focusable" tabindex="0" style="text-decoration:none;">
-                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Honeymoon" />
-                    <div class="card-info">
-                        <div class="card-title">Honeymoon Dreams</div>
-                        <div class="card-meta"><span>Future Trip</span><span>Paradise</span></div>
-                    </div>
-                </a>
-            </div>
-        </section>
+            <!-- Row 3: Special Date Nights -->
+            <section class="row-section">
+                <h2 class="row-title">🕯️ Date Nights, Pottery &amp; Surprises</h2>
+                <div class="row-track" id="row-dates">
+                    <a href="/memory/2" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg" alt="Pottery Date" />
+                        <div class="card-info">
+                            <div class="card-title">Clay &amp; Pottery Date</div>
+                            <div class="card-meta"><span>Date Experience</span><span>Hands in Clay</span></div>
+                        </div>
+                    </a>
+                    <a href="/memory/18" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/candle_1.jpg" alt="Candle Night" />
+                        <div class="card-info">
+                            <div class="card-title">Candle Making Date</div>
+                            <div class="card-meta"><span>Date Experience</span><span>Warm Glow</span></div>
+                        </div>
+                    </a>
+                    <a href="/birthday" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/birthday_special.jpg" alt="Birthday Special" />
+                        <div class="card-info">
+                            <div class="card-title">Birthday Celebration ✨</div>
+                            <div class="card-meta"><span>Special Milestone</span><span>Love</span></div>
+                        </div>
+                    </a>
+                    <a href="/honeymoon" class="card focusable" tabindex="0" style="text-decoration:none;">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Honeymoon" />
+                        <div class="card-info">
+                            <div class="card-title">Honeymoon Dreams</div>
+                            <div class="card-meta"><span>Future Trip</span><span>Paradise</span></div>
+                        </div>
+                    </a>
+                </div>
+            </section>
 
-    </main>
+        </main>
+    </div>
 
     <!-- Fullscreen Cinema Theater Modal for TV -->
     <div id="theater-modal">
@@ -517,7 +603,7 @@
 
             // TV Remote Key Controls
             window.addEventListener('keydown', (e) => {
-                // TV Back Button (27 / 10009 / Android back)
+                // TV Back Button
                 if (e.key === 'Escape' || e.keyCode === 27 || e.keyCode === 10009) {
                     if (theaterModal.classList.contains('active')) {
                         e.preventDefault();
