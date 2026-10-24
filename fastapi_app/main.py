@@ -425,6 +425,17 @@ async def tv_events(request: Request):
     })
 
 
+@app.get("/tv/story", response_class=HTMLResponse)
+async def tv_story(request: Request):
+    """TV Our Story in Data & Love."""
+    settings = request.state.settings
+    return templates.TemplateResponse("tv_story.html", {
+        "request": request,
+        "active_page": "story",
+        "settings": settings
+    })
+
+
 @app.get("/tv/roka", response_class=HTMLResponse)
 async def tv_roka(request: Request):
     """TV Roka ceremony photo cinema."""

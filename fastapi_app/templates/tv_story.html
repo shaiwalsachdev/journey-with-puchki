@@ -1,0 +1,201 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Our Story in Data & Love • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-story-container {
+        padding: 30px 54px 60px 54px;
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+    }
+    .tv-story-hero {
+        position: relative;
+        width: 100%;
+        height: 52vh;
+        min-height: 380px;
+        border-radius: 16px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        border: 2px solid rgba(255, 42, 109, 0.4);
+    }
+    .tv-story-vignette {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.6) 60%, transparent 100%);
+    }
+    .tv-protagonists-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    .tv-protagonist-card {
+        background: #181324;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .tv-stat-card {
+        background: #181324;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 22px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-code-card {
+        background: #0f0a18;
+        border: 1px solid rgba(255, 42, 109, 0.3);
+        border-radius: 16px;
+        padding: 24px;
+        font-family: monospace;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #38bdf8;
+    }
+    @media (max-width: 768px) {
+        .tv-story-container { padding: 20px; }
+        .tv-protagonists-grid, .tv-stats-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">The Statistical Probability of Love</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">favorite</span>
+                ShaiX2: Our Story in Data &amp; Love
+            </h1>
+            <p class="tv-page-subtitle">Curated by destiny, proven by data, and sealed forever in love.</p>
+        </div>
+        <div style="font-size: 14px; color: #94a3b8; text-align: right;">
+            Press <b>OK</b> on remote to browse<br>
+            Back to return Home
+        </div>
+    </div>
+
+    <div class="tv-story-container">
+        <!-- Hero Banner -->
+        <div class="tv-story-hero" style="background-image: url('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp');">
+            <div class="tv-story-vignette"></div>
+            <div style="position: relative; z-index: 10; max-width: 800px;">
+                <span class="tv-badge" style="margin-bottom: 10px;">Est. 2025 • Forever</span>
+                <h2 style="font-size: 42px; font-weight: 800; margin-bottom: 8px;">A Collision of Two Souls</h2>
+                <p style="color: #cbd5e1; font-size: 17px; line-height: 1.5;">
+                    When logic meets emotion. Two distinct timelines converging into one shared future, verified by ancient cosmos and modern algorithms.
+                </p>
+            </div>
+        </div>
+
+        <!-- The Protagonists -->
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">people</span> The Protagonists
+        </h2>
+
+        <div class="tv-protagonists-grid">
+            <!-- Shaila -->
+            <div class="tv-protagonist-card tv-focusable" tabindex="0">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="tv-badge" style="background: rgba(255, 42, 109, 0.25); border-color: #ff2a6d; color: #ff4d8d;">BRIDE</span>
+                    <span style="font-size: 13px; color: #94a3b8;">March 15, 1995</span>
+                </div>
+                <h3 style="font-size: 28px; font-weight: 800; color: #ffffff;">Shaila Manaktahla</h3>
+                <p style="color: #cbd5e1; font-size: 15px;">FP&amp;A Manager @ Genpact • MBA from IBS Gurgaon</p>
+                <div style="background: rgba(255, 42, 109, 0.1); border-left: 3px solid #ff2a6d; padding: 10px 14px; border-radius: 6px; color: #cbd5e1; font-size: 14px;">
+                    “Investment Thesis: Projected ROI = Infinite%, Risk Level = 0.00%.”
+                </div>
+            </div>
+
+            <!-- Shaiwal -->
+            <div class="tv-protagonist-card tv-focusable" tabindex="0">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="tv-badge" style="background: rgba(56, 189, 248, 0.25); border-color: #38bdf8; color: #38bdf8;">GROOM</span>
+                    <span style="font-size: 13px; color: #94a3b8;">July 20, 1994</span>
+                </div>
+                <h3 style="font-size: 28px; font-weight: 800; color: #ffffff;">Shaiwal Sachdev</h3>
+                <p style="color: #cbd5e1; font-size: 15px;">Engineering Manager (AI) @ Infoedge • BTech from IIIT Allahabad</p>
+                <div style="background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; padding: 10px 14px; border-radius: 6px; color: #cbd5e1; font-size: 14px;">
+                    “Pull Request #1: Merge `shaiwal` into `shaila/main`. All CI/CD checks have passed.”
+                </div>
+            </div>
+        </div>
+
+        <!-- The Stats of Us -->
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">bar_chart</span> The Mathematics of Love
+        </h2>
+
+        <div class="tv-stats-grid">
+            <div class="tv-stat-card tv-focusable" tabindex="0">
+                <span class="material-icons" style="font-size: 32px; color: #ff2a6d;">stars</span>
+                <div style="font-size: 30px; font-weight: 800; color: #ffffff;">32 / 36</div>
+                <div style="font-size: 13px; color: #94a3b8;">Kundli Alignment Score</div>
+            </div>
+
+            <div class="tv-stat-card tv-focusable" tabindex="0">
+                <span class="material-icons" style="font-size: 32px; color: #10b981;">pets</span>
+                <div style="font-size: 30px; font-weight: 800; color: #10b981;">99.9%</div>
+                <div style="font-size: 13px; color: #94a3b8;">Dog Adoption Probability</div>
+            </div>
+
+            <div class="tv-stat-card tv-focusable" tabindex="0">
+                <span class="material-icons" style="font-size: 32px; color: #f59e0b;">restaurant</span>
+                <div style="font-size: 30px; font-weight: 800; color: #f59e0b;">500+</div>
+                <div style="font-size: 13px; color: #94a3b8;">Pizzas, Pastas &amp; Sushis</div>
+            </div>
+
+            <div class="tv-stat-card tv-focusable" tabindex="0">
+                <span class="material-icons" style="font-size: 32px; color: #a855f7;">favorite</span>
+                <div style="font-size: 30px; font-weight: 800; color: #a855f7;">Infinite</div>
+                <div style="font-size: 13px; color: #94a3b8;">Compound Interest of Love</div>
+            </div>
+        </div>
+
+        <!-- The Algorithm of Us -->
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">code</span> The Algorithm of Us
+        </h2>
+
+        <div class="tv-code-card tv-focusable" tabindex="0">
+            <span style="color: #c084fc;">def</span> <span style="color: #60a5fa;">simulate_future</span>(shaiwal, shaila):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;love = <span style="color: #f97316;">float</span>(<span style="color: #4ade80;">'inf'</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c084fc;">while</span> <span style="color: #f97316;">True</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shaiwal.support(shaila)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shaila.inspire(shaiwal)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c084fc;">if</span> date_night: eat_pesto_danish()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;love += <span style="color: #f97316;">1</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c084fc;">return</span> <span style="color: #4ade80;">"Happily Ever After ❤️"</span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-focusable'));
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}
