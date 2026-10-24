@@ -1,0 +1,152 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Events & Milestones • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-events-container {
+        padding: 30px 54px 60px 54px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+    }
+    .tv-events-hero {
+        width: 100%;
+        height: 48vh;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        border: 2px solid rgba(255, 42, 109, 0.3);
+    }
+    .tv-events-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.5) 60%, transparent 100%);
+    }
+    .tv-events-content {
+        position: relative;
+        z-index: 10;
+        max-width: 800px;
+    }
+    .tv-events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+    }
+    .tv-event-card {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: #181324;
+        cursor: pointer;
+        height: 240px;
+        position: relative;
+        text-decoration: none;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-event-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .tv-event-card-body {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(11,8,19,0.95) 0%, rgba(11,8,19,0.3) 60%, transparent 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 18px;
+    }
+    @media (max-width: 768px) {
+        .tv-events-container { padding: 20px 20px 60px 20px; }
+        .tv-events-hero { height: 35vh; padding: 20px; }
+        .tv-events-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">Wedding &amp; Celebrations</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">celebration</span>
+                Events &amp; Milestones
+            </h1>
+            <p class="tv-page-subtitle">From our Roka ceremony to Sagan, Pre-wedding, and the Wedding of our dreams.</p>
+        </div>
+    </div>
+
+    <div class="tv-events-container">
+        <!-- Hero Featured Event -->
+        <div class="tv-events-hero" style="background-image: url('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp');">
+            <div class="tv-events-content">
+                <span class="tv-badge" style="background: rgba(255, 42, 109, 0.4); border-color: #ff2a6d; color: #fff; margin-bottom: 10px;">
+                    💍 The Grand Roka &amp; Forever Chapter
+                </span>
+                <h2 style="font-size: 38px; font-weight: 800; margin-bottom: 10px;">The Day We Decided on Forever</h2>
+                <p style="color: #cbd5e1; font-size: 16px; line-height: 1.5;">
+                    Surrounded by families, unconditional warmth, laughter, and blessing as two souls become one journey.
+                </p>
+            </div>
+        </div>
+
+        <div style="font-size: 20px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">auto_awesome</span> Event Highlights &amp; Cinema
+        </div>
+
+        <div class="tv-events-grid">
+            <a href="/tv/memory/26" class="tv-event-card tv-focusable" tabindex="0">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/26/IMG_0930.webp" alt="Pottery Date" />
+                <div class="tv-event-card-body">
+                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">EXPERIENCE CHAPTER</span>
+                    <div style="font-size: 18px; font-weight: 800;">Clay &amp; Pottery Date</div>
+                    <div style="color: #94a3b8; font-size: 13px;">🗓️ April 2026</div>
+                </div>
+            </a>
+
+            <a href="/tv/memory/8" class="tv-event-card tv-focusable" tabindex="0">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/8/Novemeber%2022_1.webp" alt="First Candle Night" />
+                <div class="tv-event-card-body">
+                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">DATE NIGHT</span>
+                    <div style="font-size: 18px; font-weight: 800;">First Candle Light Dinner</div>
+                    <div style="color: #94a3b8; font-size: 13px;">🗓️ Nov 22, 2025</div>
+                </div>
+            </a>
+
+            <a href="/tv/birthday" class="tv-event-card tv-focusable" tabindex="0">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/25/IMG_0389.webp" alt="Birthday Special" />
+                <div class="tv-event-card-body">
+                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">BIRTHDAY CELEBRATION</span>
+                    <div style="font-size: 18px; font-weight: 800;">Puchki's Birthday ✨</div>
+                    <div style="color: #94a3b8; font-size: 13px;">🗓️ October Milestone</div>
+                </div>
+            </a>
+
+            <div class="tv-event-card tv-focusable" tabindex="0" onclick="window.tvTheater.open('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp', 'Pre-Wedding & Roka Cinema', 'Two lives intertwining forever.', 'Oct 2026')">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="Roka Cinema" />
+                <div class="tv-event-card-body">
+                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">CEREMONY</span>
+                    <div style="font-size: 18px; font-weight: 800;">Roka &amp; Family Blessings</div>
+                    <div style="color: #94a3b8; font-size: 13px;">🗓️ October 2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-event-card'));
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}

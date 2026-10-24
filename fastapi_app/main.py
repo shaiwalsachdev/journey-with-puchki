@@ -304,10 +304,215 @@ async def tv_experience(request: Request):
     return templates.TemplateResponse("tv.html", {
         "request": request,
         "page": "tv",
+        "active_page": "home",
         "settings": settings,
         "memories": memories,
         "roka_photos": roka_photos[:30],
         "hero": hero
+    })
+
+
+# --- TV Suite Routes (/tv/...) ---
+
+@app.get("/tv/memory/{memory_id}", response_class=HTMLResponse)
+async def tv_memory_detail(request: Request, memory_id: int):
+    """TV Cinema experience for an individual memory."""
+    from fastapi_app.database import get_all_memories
+    from fastapi_app.storage import R2_PUBLIC_URL
+    settings = request.state.settings
+
+    memories = await get_all_memories()
+    processed_memories = process_memories_for_display(memories, settings, always_include_hot=True)
+    memory = next((m for m in processed_memories if m["id"] == memory_id), None)
+
+    if not memory:
+        return RedirectResponse(url="/tv/timeline")
+
+    mem_copy = dict(memory)
+    # Format photos to full URLs
+    full_photos = []
+    for p in mem_copy.get("photos", []):
+        if p.startswith("http://") or p.startswith("https://"):
+            full_photos.append(p)
+        else:
+            full_photos.append(f"{R2_PUBLIC_URL}/uploads/{memory_id}/{p}")
+    mem_copy["photos"] = full_photos
+
+    return templates.TemplateResponse("tv_memory.html", {
+        "request": request,
+        "active_page": "timeline",
+        "memory": mem_copy,
+        "settings": settings
+    })
+
+
+@app.get("/tv/timeline", response_class=HTMLResponse)
+async def tv_timeline(request: Request):
+    """TV-optimized horizontal chronological timeline."""
+    from fastapi_app.database import get_all_memories
+    from fastapi_app.storage import R2_PUBLIC_URL
+    settings = request.state.settings
+
+    raw_memories = await get_all_memories()
+    filtered_memories = process_memories_for_display(raw_memories, settings)
+
+    memories = []
+    for m in filtered_memories:
+        m_copy = dict(m)
+        photos = m.get("photos") or []
+        if photos and len(photos) > 0:
+            m_copy["photo_url"] = f"{R2_PUBLIC_URL}/uploads/{m['id']}/{photos[0]}"
+        else:
+            m_copy["photo_url"] = f"{R2_PUBLIC_URL}/uploads/26/IMG_0930.webp"
+        memories.append(m_copy)
+
+    return templates.TemplateResponse("tv_timeline.html", {
+        "request": request,
+        "active_page": "timeline",
+        "settings": settings,
+        "memories": memories
+    })
+
+
+@app.get("/tv/gallery", response_class=HTMLResponse)
+async def tv_gallery(request: Request):
+    """TV photo gallery grid."""
+    from fastapi_app.storage import R2_PUBLIC_URL
+    settings = request.state.settings
+    gallery_items = await get_filtered_memories(settings)
+
+    return templates.TemplateResponse("tv_gallery.html", {
+        "request": request,
+        "active_page": "gallery",
+        "settings": settings,
+        "items": gallery_items[:60],
+        "r2_url": R2_PUBLIC_URL
+    })
+
+
+@app.get("/tv/birthday", response_class=HTMLResponse)
+async def tv_birthday(request: Request):
+    """TV Birthday special showcase."""
+    from fastapi_app.database import get_all_memories
+    from fastapi_app.storage import R2_PUBLIC_URL
+    settings = request.state.settings
+
+    memories = await get_all_memories()
+    bday_mem = next((m for m in memories if m.get("id") == 25), None)
+    photos = []
+    if bday_mem and bday_mem.get("photos"):
+        for p in bday_mem["photos"]:
+            photos.append(f"{R2_PUBLIC_URL}/uploads/25/{p}")
+    else:
+        photos.append("https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/25/IMG_0389.webp")
+
+    return templates.TemplateResponse("tv_birthday.html", {
+        "request": request,
+        "active_page": "birthday",
+        "settings": settings,
+        "photos": photos
+    })
+
+
+@app.get("/tv/events", response_class=HTMLResponse)
+async def tv_events(request: Request):
+    """TV Events & milestone cinema."""
+    settings = request.state.settings
+    return templates.TemplateResponse("tv_events.html", {
+        "request": request,
+        "active_page": "events",
+        "settings": settings
+    })
+
+
+@app.get("/tv/wishlist", response_class=HTMLResponse)
+async def tv_wishlist(request: Request):
+    """TV Instagram & shared wishlist view."""
+    from fastapi_app.database import get_all_wishlist
+    settings = request.state.settings
+    items = await get_all_wishlist()
+
+    return templates.TemplateResponse("tv_wishlist.html", {
+        "request": request,
+        "active_page": "wishlist",
+        "settings": settings,
+        "items": items
+    })
+
+
+@app.get("/tv/guestbook", response_class=HTMLResponse)
+async def tv_guestbook(request: Request):
+    """TV Guestbook notes & wishes."""
+    from fastapi_app.database import get_all_guestbook
+    settings = request.state.settings
+    notes = await get_all_guestbook()
+
+    return templates.TemplateResponse("tv_guestbook.html", {
+        "request": request,
+        "active_page": "guestbook",
+        "settings": settings,
+        "notes": notes
+    })
+
+
+@app.get("/tv/music", response_class=HTMLResponse)
+async def tv_music(request: Request):
+    """TV Music streaming lounge."""
+    settings = request.state.settings
+    return templates.TemplateResponse("tv_music.html", {
+        "request": request,
+        "active_page": "music",
+        "settings": settings
+    })
+
+
+@app.get("/tv/dictionary", response_class=HTMLResponse)
+async def tv_dictionary(request: Request):
+    """TV Puchki dictionary flashcards."""
+    from fastapi_app.database import get_all_dictionary
+    settings = request.state.settings
+    words = await get_all_dictionary()
+
+    return templates.TemplateResponse("tv_dictionary.html", {
+        "request": request,
+        "active_page": "dictionary",
+        "settings": settings,
+        "words": words
+    })
+
+
+@app.get("/tv/coupons", response_class=HTMLResponse)
+async def tv_coupons(request: Request):
+    """TV Romantic coupons redeem screen."""
+    from fastapi_app.database import get_all_coupons
+    settings = request.state.settings
+    if settings.get("private_mode"):
+        return RedirectResponse(url="/tv")
+
+    coupons = await get_all_coupons()
+    return templates.TemplateResponse("tv_coupons.html", {
+        "request": request,
+        "active_page": "coupons",
+        "settings": settings,
+        "coupons": coupons
+    })
+
+
+@app.get("/tv/planner", response_class=HTMLResponse)
+async def tv_planner(request: Request):
+    """TV Travel & date planner."""
+    from fastapi_app.database import get_all_ai_plans
+    settings = request.state.settings
+    try:
+        plans = await get_all_ai_plans()
+    except Exception:
+        plans = []
+
+    return templates.TemplateResponse("tv_planner.html", {
+        "request": request,
+        "active_page": "planner",
+        "settings": settings,
+        "plans": plans
     })
 
 

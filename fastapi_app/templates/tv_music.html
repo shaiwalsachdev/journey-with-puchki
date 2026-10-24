@@ -1,0 +1,194 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Puchki & Shaiwal Music Lounge • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-music-container {
+        padding: 30px 54px 60px 54px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+    .tv-music-player-card {
+        background: linear-gradient(135deg, rgba(231, 44, 48, 0.2) 0%, rgba(18, 14, 28, 0.95) 100%);
+        border: 2px solid rgba(231, 44, 48, 0.4);
+        border-radius: 20px;
+        padding: 36px;
+        display: flex;
+        gap: 36px;
+        align-items: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    .tv-music-art {
+        width: 180px;
+        height: 180px;
+        min-width: 180px;
+        border-radius: 16px;
+        object-fit: cover;
+        box-shadow: 0 8px 30px rgba(255, 42, 109, 0.4);
+        border: 2px solid #ff2a6d;
+    }
+    .tv-tracklist {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .tv-track-row {
+        background: #181324;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-track-row.playing {
+        border-color: #ff2a6d;
+        background: rgba(255, 42, 109, 0.15);
+    }
+    @media (max-width: 768px) {
+        .tv-music-container { padding: 20px 20px 60px 20px; }
+        .tv-music-player-card { flex-direction: column; text-align: center; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">ShaiX2 Audio Lounge</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">music_note</span>
+                Music, Melodies &amp; Romantic Vibes
+            </h1>
+            <p class="tv-page-subtitle">Songs that soundtrack our road trips, dates, and slow dancing evenings.</p>
+        </div>
+    </div>
+
+    <div class="tv-music-container">
+        <!-- Now Playing TV Banner -->
+        <div class="tv-music-player-card">
+            <img class="tv-music-art" id="current-art" src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="Track Art" />
+            <div style="flex-grow: 1;">
+                <span class="tv-badge" style="margin-bottom: 8px;">NOW STREAMING ON TV</span>
+                <h2 id="current-title" style="font-size: 32px; font-weight: 800; margin-bottom: 6px;">Ambient Romance</h2>
+                <p id="current-artist" style="color: #cbd5e1; font-size: 16px; margin-bottom: 20px;">Dedicated to Puchki</p>
+                <div style="display: flex; gap: 14px;">
+                    <button class="tv-btn tv-focusable" id="btn-toggle-play" tabindex="0">
+                        <span class="material-icons" id="play-icon">play_arrow</span> Play Track
+                    </button>
+                    <button class="tv-btn tv-btn-secondary tv-focusable" id="btn-next-track" tabindex="0">
+                        <span class="material-icons">skip_next</span> Next
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <audio id="audio-stream" preload="metadata"></audio>
+
+        <!-- Track List -->
+        <h2 style="font-size: 22px; font-weight: 700;">🎶 Curated Playlists</h2>
+        <div class="tv-tracklist" id="tv-tracklist">
+            <!-- Dynamically populated or fallback -->
+            <div class="tv-track-row tv-focusable playing" tabindex="0"
+                 data-src="https://pub-2f3b9fa1398c4f2bbd716e25dc590a3c.r2.dev/audio/ambient_love.mp3"
+                 data-title="Ambient Love (Theme)"
+                 data-artist="ShaiX2 Forever">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span class="material-icons" style="color: #ff2a6d;">music_note</span>
+                    <div>
+                        <div style="font-weight: 700; font-size: 16px;">Ambient Love (Theme)</div>
+                        <div style="color: #94a3b8; font-size: 13px;">ShaiX2 Original Soundtrack</div>
+                    </div>
+                </div>
+                <span class="tv-badge">Playing</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const audio = document.getElementById('audio-stream');
+        const playBtn = document.getElementById('btn-toggle-play');
+        const playIcon = document.getElementById('play-icon');
+        const titleEl = document.getElementById('current-title');
+        const artistEl = document.getElementById('current-artist');
+
+        // Load songs from music API
+        fetch('/api/music/sections')
+            .then(res => res.json())
+            .then(data => {
+                const tracklist = document.getElementById('tv-tracklist');
+                if (data && data.sections && data.sections.length > 0) {
+                    tracklist.innerHTML = '';
+                    let allSongs = [];
+                    data.sections.forEach(sec => {
+                        if (sec.songs) allSongs.push(...sec.songs);
+                    });
+
+                    allSongs.slice(0, 15).forEach((song, i) => {
+                        const row = document.createElement('div');
+                        row.className = 'tv-track-row tv-focusable';
+                        row.tabIndex = 0;
+                        row.setAttribute('data-src', song.audio_url || 'https://pub-2f3b9fa1398c4f2bbd716e25dc590a3c.r2.dev/audio/ambient_love.mp3');
+                        row.setAttribute('data-title', song.title);
+                        row.setAttribute('data-artist', song.artist || 'Special Soundtrack');
+                        row.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <span class="material-icons" style="color: #ff2a6d;">play_circle</span>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 16px;">${song.title}</div>
+                                    <div style="color: #94a3b8; font-size: 13px;">${song.artist || 'Romantic Track'}</div>
+                                </div>
+                            </div>
+                            <span style="font-size: 13px; color: #94a3b8;">${song.duration || '3:30'}</span>
+                        `;
+                        row.addEventListener('click', () => {
+                            playSong(song.audio_url, song.title, song.artist);
+                            document.querySelectorAll('.tv-track-row').forEach(r => r.classList.remove('playing'));
+                            row.classList.add('playing');
+                        });
+                        row.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter' || e.keyCode === 13) row.click();
+                        });
+                        tracklist.appendChild(row);
+                    });
+                }
+            })
+            .catch(() => {});
+
+        function playSong(url, title, artist) {
+            if (!url) return;
+            audio.src = url;
+            audio.play().then(() => {
+                playIcon.textContent = 'pause';
+                playBtn.innerHTML = '<span class="material-icons">pause</span> Pause Track';
+            }).catch(() => {});
+            titleEl.textContent = title;
+            artistEl.textContent = artist;
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                if (!audio.src) {
+                    const firstRow = document.querySelector('.tv-track-row');
+                    if (firstRow) firstRow.click();
+                } else {
+                    audio.play();
+                    playBtn.innerHTML = '<span class="material-icons">pause</span> Pause Track';
+                }
+            } else {
+                audio.pause();
+                playBtn.innerHTML = '<span class="material-icons">play_arrow</span> Play Track';
+            }
+        });
+
+        setTimeout(() => playBtn.focus(), 300);
+    });
+</script>
+{% endblock %}

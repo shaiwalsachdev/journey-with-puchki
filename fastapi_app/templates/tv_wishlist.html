@@ -1,0 +1,141 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Our Wishlist & Dreams • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-wishlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 24px;
+        padding: 30px 54px 60px 54px;
+    }
+    .tv-wish-card {
+        border-radius: 14px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: #161222;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-wish-media {
+        width: 100%;
+        height: 220px;
+        position: relative;
+        overflow: hidden;
+        background: #0f0b18;
+    }
+    .tv-wish-media img, .tv-wish-media video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .tv-wish-body {
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex-grow: 1;
+    }
+    .tv-wish-category {
+        font-size: 11px;
+        font-weight: 800;
+        color: #ff4d8d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .tv-wish-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.3;
+    }
+    .tv-wish-notes {
+        font-size: 13px;
+        color: #94a3b8;
+        line-height: 1.4;
+    }
+    @media (max-width: 768px) {
+        .tv-wishlist-grid { padding: 20px 20px 60px 20px; grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">Future Dreams &amp; Plans</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">stars</span>
+                ShaiX2 Shared Wishlist
+            </h1>
+            <p class="tv-page-subtitle">Destinations to explore, date ideas, home decor, and wishes we are fulfilling together.</p>
+        </div>
+        <div style="font-size: 14px; color: #94a3b8; text-align: right;">
+            Press <b>OK</b> to View in Cinema Mode<br>
+            Use <b>D-Pad</b> to navigate
+        </div>
+    </div>
+
+    <div class="tv-wishlist-grid">
+        {% for wish in items %}
+        <div class="tv-wish-card tv-focusable" tabindex="0"
+             data-src="{{ wish.media_url | default(wish.image_url) }}"
+             data-title="{{ wish.title }}"
+             data-desc="{{ wish.notes | default('') }}"
+             data-date="{{ wish.date_str | default(wish.created_at_str) }}">
+            <div class="tv-wish-media">
+                {% if wish.is_video or (wish.media_url and (wish.media_url.endswith('.mp4') or wish.media_url.endswith('.mov'))) %}
+                <video src="{{ wish.media_url | default(wish.image_url) }}" muted preload="metadata"></video>
+                {% else %}
+                <img src="{{ wish.media_url | default(wish.image_url) }}" alt="{{ wish.title }}" loading="lazy" />
+                {% endif %}
+            </div>
+            <div class="tv-wish-body">
+                <div class="tv-wish-category">
+                    <span>{{ wish.category | default('Shared Dream') }}</span>
+                    {% if wish.status == 'completed' %}
+                    <span style="color: #10b981;">✓ Fulfilled</span>
+                    {% else %}
+                    <span style="color: #ff4d8d;">✨ Wish</span>
+                    {% endif %}
+                </div>
+                <div class="tv-wish-title">{{ wish.title }}</div>
+                {% if wish.notes %}
+                <div class="tv-wish-notes">{{ wish.notes }}</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-wish-card'));
+        cards.forEach(c => {
+            c.addEventListener('click', () => {
+                const src = c.getAttribute('data-src');
+                const title = c.getAttribute('data-title');
+                const desc = c.getAttribute('data-desc');
+                const date = c.getAttribute('data-date');
+                if (src) window.tvTheater.open(src, title, desc, date);
+            });
+            c.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    c.click();
+                }
+            });
+        });
+        if (cards.length > 0) {
+            setTimeout(() => cards[0].focus(), 300);
+        }
+    });
+</script>
+{% endblock %}

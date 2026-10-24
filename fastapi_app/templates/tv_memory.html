@@ -1,0 +1,220 @@
+{% extends "tv_base.html" %}
+
+{% block title %}{{ memory.title }} • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-memory-hero {
+        position: relative;
+        width: 100%;
+        height: 52vh;
+        min-height: 380px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px 54px;
+    }
+    .tv-memory-vignette {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.6) 50%, rgba(11,8,19,0.3) 100%);
+    }
+    .tv-memory-meta-content {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+    }
+    .tv-memory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+        padding: 30px 54px 60px 54px;
+    }
+    .tv-photo-card {
+        aspect-ratio: 16/10;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: #191424;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-photo-card img, .tv-photo-card video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .tv-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 18px;
+    }
+    .tv-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e50914;
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .tv-btn-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+    @media (max-width: 768px) {
+        .tv-memory-hero { padding: 24px 20px; height: 40vh; }
+        .tv-memory-grid { padding: 20px 20px 60px 20px; grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Banner with Memory Title, Date, and Story -->
+    <div class="tv-memory-hero" style="background-image: url('{{ memory.photos[0] | default('') }}');">
+        <div class="tv-memory-vignette"></div>
+        <div class="tv-memory-meta-content">
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+                <span class="tv-badge">Memory #{{ memory.id }}</span>
+                {% if memory.date %}
+                <span style="background: rgba(255, 42, 109, 0.3); border: 1px solid #ff2a6d; color: #ffffff; font-size: 14px; font-weight: 800; padding: 4px 14px; border-radius: 9999px; box-shadow: 0 0 12px rgba(255, 42, 109, 0.5);">
+                    🗓️ {{ memory.date }}
+                </span>
+                {% endif %}
+                {% if memory.days_journey %}
+                <span style="color: #cbd5e1; font-size: 14px; font-weight: 600;">{{ memory.days_journey }}</span>
+                {% endif %}
+            </div>
+            <h1 style="font-size: 42px; font-weight: 800; margin-bottom: 10px; line-height: 1.15;">{{ memory.title }}</h1>
+            <p style="color: #cbd5e1; font-size: 18px; line-height: 1.5; max-width: 800px;">
+                {{ memory.description | striptags }}
+            </p>
+            <div class="tv-actions">
+                <button class="tv-btn tv-focusable" id="btn-slideshow" tabindex="0">
+                    <span class="material-icons">slideshow</span> Play Slideshow
+                </button>
+                <a href="/tv/timeline" class="tv-btn tv-btn-secondary tv-focusable" tabindex="0">
+                    <span class="material-icons">arrow_back</span> Back to Timeline
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photos Grid for TV -->
+    <div style="padding: 24px 54px 0 54px;">
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 10px;">
+            <span class="material-icons" style="color: #ff2a6d;">photo_library</span> Moments Captured ({{ memory.photos | length }})
+        </h2>
+    </div>
+
+    <div class="tv-memory-grid" id="tv-photos-grid">
+        {% for photo in memory.photos %}
+        <div class="tv-photo-card tv-focusable" tabindex="0"
+             data-src="{{ photo }}"
+             data-title="{{ memory.title }}"
+             data-desc="{{ memory.description | striptags }}"
+             data-date="{{ memory.date }}">
+            {% if photo.endswith('.mov') or photo.endswith('.mp4') or photo.endswith('.webm') %}
+            <video src="{{ photo }}" preload="metadata" muted playsinline></video>
+            {% else %}
+            <img src="{{ photo }}" alt="{{ memory.title }}" loading="lazy" />
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const photoCards = Array.from(document.querySelectorAll('.tv-photo-card'));
+        let currentPhotoIndex = 0;
+        let slideshowTimer = null;
+
+        photoCards.forEach((card, idx) => {
+            card.addEventListener('click', () => {
+                currentPhotoIndex = idx;
+                const src = card.getAttribute('data-src');
+                const title = card.getAttribute('data-title');
+                const desc = card.getAttribute('data-desc');
+                const date = card.getAttribute('data-date');
+                window.tvTheater.open(src, title, desc, date);
+            });
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    card.click();
+                }
+            });
+        });
+
+        // Slideshow Button
+        const btnSlideshow = document.getElementById('btn-slideshow');
+        if (btnSlideshow) {
+            btnSlideshow.addEventListener('click', () => {
+                if (photoCards.length === 0) return;
+                currentPhotoIndex = 0;
+                photoCards[0].click();
+                if (slideshowTimer) clearInterval(slideshowTimer);
+                slideshowTimer = setInterval(() => {
+                    const modal = document.getElementById('tv-theater-modal');
+                    if (!modal.classList.contains('active')) {
+                        clearInterval(slideshowTimer);
+                        return;
+                    }
+                    currentPhotoIndex = (currentPhotoIndex + 1) % photoCards.length;
+                    const c = photoCards[currentPhotoIndex];
+                    window.tvTheater.open(
+                        c.getAttribute('data-src'),
+                        c.getAttribute('data-title'),
+                        c.getAttribute('data-desc'),
+                        c.getAttribute('data-date')
+                    );
+                }, 4000);
+            });
+        }
+
+        // TV Left/Right Remote Navigation in Fullscreen Modal
+        window.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('tv-theater-modal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'ArrowRight' || e.keyCode === 39) {
+                    e.preventDefault();
+                    currentPhotoIndex = (currentPhotoIndex + 1) % photoCards.length;
+                    const c = photoCards[currentPhotoIndex];
+                    window.tvTheater.open(
+                        c.getAttribute('data-src'),
+                        c.getAttribute('data-title'),
+                        c.getAttribute('data-desc'),
+                        c.getAttribute('data-date')
+                    );
+                } else if (e.key === 'ArrowLeft' || e.keyCode === 37) {
+                    e.preventDefault();
+                    currentPhotoIndex = (currentPhotoIndex - 1 + photoCards.length) % photoCards.length;
+                    const c = photoCards[currentPhotoIndex];
+                    window.tvTheater.open(
+                        c.getAttribute('data-src'),
+                        c.getAttribute('data-title'),
+                        c.getAttribute('data-desc'),
+                        c.getAttribute('data-date')
+                    );
+                }
+            }
+        });
+
+        // Auto-focus first photo or slideshow button
+        if (btnSlideshow) {
+            setTimeout(() => btnSlideshow.focus(), 300);
+        } else if (photoCards.length > 0) {
+            setTimeout(() => photoCards[0].focus(), 300);
+        }
+    });
+</script>
+{% endblock %}

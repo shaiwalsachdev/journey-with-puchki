@@ -389,45 +389,45 @@
                 <span class="material-icons">home</span>
                 <span class="label">Home</span>
             </a>
-            <a href="/timeline" class="side-btn focusable" tabindex="0">
+            <a href="/tv/timeline" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">timeline</span>
                 <span class="label">Timeline</span>
             </a>
-            <a href="/gallery" class="side-btn focusable" tabindex="0">
+            <a href="/tv/gallery" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">photo_library</span>
                 <span class="label">Gallery</span>
             </a>
-            <a href="/birthday" class="side-btn focusable" tabindex="0">
+            <a href="/tv/birthday" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">cake</span>
                 <span class="label">Birthday ✨</span>
             </a>
-            <a href="/events" class="side-btn focusable" tabindex="0">
+            <a href="/tv/events" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">event</span>
                 <span class="label">Events</span>
             </a>
-            <a href="/wishlist" class="side-btn focusable" tabindex="0">
+            <a href="/tv/wishlist" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">stars</span>
                 <span class="label">Wishlist</span>
             </a>
-            <a href="/guestbook" class="side-btn focusable" tabindex="0">
+            <a href="/tv/guestbook" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">import_contacts</span>
                 <span class="label">Guestbook</span>
             </a>
-            <a href="/music" class="side-btn focusable" tabindex="0">
+            <a href="/tv/music" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">music_note</span>
                 <span class="label">Music</span>
             </a>
-            <a href="/dictionary" class="side-btn focusable" tabindex="0">
+            <a href="/tv/dictionary" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">book</span>
                 <span class="label">Dictionary</span>
             </a>
             {% if not settings.private_mode %}
-            <a href="/coupons" class="side-btn focusable" tabindex="0">
+            <a href="/tv/coupons" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">card_giftcard</span>
                 <span class="label">Coupons</span>
             </a>
             {% endif %}
-            <a href="/planner" class="side-btn focusable" tabindex="0">
+            <a href="/tv/planner" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">flight_takeoff</span>
                 <span class="label">AI Planner</span>
             </a>
@@ -467,6 +467,7 @@
                 <div class="row-track" id="row-memories">
                     {% for m in memories %}
                     <div class="card focusable" tabindex="0" 
+                         data-id="{{ m.id }}"
                          data-title="{{ m.title }}" 
                          data-desc="{{ m.description }}" 
                          data-src="{{ m.photo_url }}" 
@@ -513,7 +514,7 @@
             <section class="row-section">
                 <h2 class="row-title">🕯️ Date Nights, Pottery &amp; Celebrations</h2>
                 <div class="row-track" id="row-dates">
-                    <a href="/memory/26" class="card focusable" tabindex="0" style="text-decoration:none;"
+                    <a href="/tv/memory/26" class="card focusable" tabindex="0" style="text-decoration:none;"
                        data-title="Clay &amp; Pottery Date"
                        data-desc="Hands covered in clay making pots together"
                        data-src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/26/IMG_0930.webp"
@@ -524,7 +525,7 @@
                             <div class="card-meta"><span>April 2026</span><span>Date Experience</span></div>
                         </div>
                     </a>
-                    <a href="/memory/8" class="card focusable" tabindex="0" style="text-decoration:none;"
+                    <a href="/tv/memory/8" class="card focusable" tabindex="0" style="text-decoration:none;"
                        data-title="First Candle Light Dinner"
                        data-desc="Candlelight, great food, and magical conversations"
                        data-src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/8/Novemeber%2022_1.webp"
@@ -535,7 +536,7 @@
                             <div class="card-meta"><span>Nov 22, 2025</span><span>Date Experience</span></div>
                         </div>
                     </a>
-                    <a href="/birthday" class="card focusable" tabindex="0" style="text-decoration:none;"
+                    <a href="/tv/birthday" class="card focusable" tabindex="0" style="text-decoration:none;"
                        data-title="Birthday Celebration ✨"
                        data-desc="Celebrating Puchki's special birthday"
                        data-src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/25/IMG_0389.webp"
@@ -546,7 +547,7 @@
                             <div class="card-meta"><span>Special Milestone</span><span>Love</span></div>
                         </div>
                     </a>
-                    <a href="/events" class="card focusable" tabindex="0" style="text-decoration:none;"
+                    <a href="/tv/events" class="card focusable" tabindex="0" style="text-decoration:none;"
                        data-title="Events &amp; Milestones"
                        data-desc="From Roka to Sagan and celebrations"
                        data-src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp"

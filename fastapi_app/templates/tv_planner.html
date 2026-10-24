@@ -1,0 +1,94 @@
+{% extends "tv_base.html" %}
+
+{% block title %}AI Travel & Date Planner • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-planner-container {
+        padding: 30px 54px 60px 54px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+    }
+    .tv-plan-card {
+        background: #181324;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-plan-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .tv-plan-body {
+        font-size: 16px;
+        color: #cbd5e1;
+        line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+        .tv-planner-container { padding: 20px 20px 60px 20px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">Smart Date &amp; Vacation Copilot</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">flight_takeoff</span>
+                AI Vacation &amp; Date Itineraries
+            </h1>
+            <p class="tv-page-subtitle">Romantic getaways, surprise date blueprints, and journey plans tailored for us.</p>
+        </div>
+    </div>
+
+    <div class="tv-planner-container">
+        {% for plan in plans %}
+        <div class="tv-plan-card tv-focusable" tabindex="0">
+            <div class="tv-plan-title">
+                <span class="material-icons" style="color: #ff2a6d;">map</span>
+                {{ plan.title }}
+            </div>
+            <div class="tv-plan-body">
+                {{ plan.content | safe }}
+            </div>
+            <div style="font-size: 13px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px;">
+                🗓️ {{ plan.date | default('Planned for Future') }}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if not plans %}
+        <div class="tv-plan-card tv-focusable" tabindex="0">
+            <div class="tv-plan-title">
+                <span class="material-icons" style="color: #ff2a6d;">explore</span>
+                Upcoming Dream Getaway: Japan &amp; Bali 🌸
+            </div>
+            <div class="tv-plan-body">
+                Cherry blossoms, relaxing private onsens, breathtaking tea estates, street ramen tours, and quiet sunsets by the cliffside ocean villas.
+            </div>
+            <div style="font-size: 13px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px;">
+                🗓️ Honeymoon &amp; Beyond
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-plan-card'));
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}

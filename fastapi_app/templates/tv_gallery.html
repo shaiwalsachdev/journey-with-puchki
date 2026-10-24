@@ -1,0 +1,105 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Moments Gallery • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 18px;
+        padding: 30px 54px 60px 54px;
+    }
+    .tv-gallery-card {
+        aspect-ratio: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: #191424;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-gallery-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .tv-gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(11,8,19,0.9) 0%, transparent 60%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 12px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    .tv-gallery-card:focus .tv-gallery-overlay, .tv-gallery-card:hover .tv-gallery-overlay {
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .tv-gallery-grid { padding: 20px 20px 60px 20px; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">HD Photo Collection</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">photo_library</span>
+                Every Little Moment Gallery
+            </h1>
+            <p class="tv-page-subtitle">A visual celebration of candid laughter, travels, and unforgettable days together.</p>
+        </div>
+        <div style="font-size: 14px; color: #94a3b8; text-align: right;">
+            Press <b>OK</b> for Cinema Theater<br>
+            Use <b>Arrow Keys</b> to navigate
+        </div>
+    </div>
+
+    <div class="tv-gallery-grid">
+        {% for item in items %}
+        <div class="tv-gallery-card tv-focusable" tabindex="0"
+             data-src="{{ r2_url }}/uploads/{{ item.id }}/{{ item.photo }}"
+             data-title="{{ item.title }}"
+             data-desc="Memory #{{ item.id }}"
+             data-date="{{ item.date }}">
+            <img src="{{ r2_url }}/uploads/{{ item.id }}/{{ item.photo }}" alt="{{ item.title }}" loading="lazy" />
+            <div class="tv-gallery-overlay">
+                <div style="font-size: 13px; font-weight: 800; color: #ffffff;">{{ item.title }}</div>
+                <div style="font-size: 11px; color: #ff4d8d;">🗓️ {{ item.date }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-gallery-card'));
+        cards.forEach(c => {
+            c.addEventListener('click', () => {
+                const src = c.getAttribute('data-src');
+                const title = c.getAttribute('data-title');
+                const desc = c.getAttribute('data-desc');
+                const date = c.getAttribute('data-date');
+                if (src) window.tvTheater.open(src, title, desc, date);
+            });
+            c.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    c.click();
+                }
+            });
+        });
+        if (cards.length > 0) {
+            setTimeout(() => cards[0].focus(), 300);
+        }
+    });
+</script>
+{% endblock %}

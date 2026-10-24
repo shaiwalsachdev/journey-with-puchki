@@ -1,0 +1,122 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Celebrating Puchki's Birthday ✨ • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-birthday-hero {
+        position: relative;
+        width: 100%;
+        height: 55vh;
+        min-height: 400px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px 54px;
+        border-bottom: 2px solid rgba(244, 37, 89, 0.4);
+    }
+    .tv-birthday-vignette {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.5) 60%, transparent 100%);
+    }
+    .tv-birthday-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 30px 54px 60px 54px;
+    }
+    .tv-bday-card {
+        aspect-ratio: 4/5;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: #181324;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-bday-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .tv-bday-card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(11,8,19,0.9) 0%, transparent 50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 14px;
+    }
+    @media (max-width: 768px) {
+        .tv-birthday-hero { padding: 20px; height: 38vh; }
+        .tv-birthday-grid { padding: 20px 20px 60px 20px; grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-birthday-hero" style="background-image: url('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/25/IMG_0389.webp');">
+        <div class="tv-birthday-vignette"></div>
+        <div style="position: relative; z-index: 10; max-width: 800px;">
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+                <span class="tv-badge" style="background: rgba(244, 37, 89, 0.3); border-color: #f42559; color: #fff;">🎂 Birthday Milestone</span>
+                <span style="background: rgba(255, 42, 109, 0.3); border: 1px solid #ff2a6d; color: #fff; font-size: 13px; font-weight: 800; padding: 4px 12px; border-radius: 9999px;">
+                    🗓️ October Special
+                </span>
+            </div>
+            <h1 style="font-size: 46px; font-weight: 800; line-height: 1.15; margin-bottom: 12px;">
+                Happy Birthday, Puchki! ✨
+            </h1>
+            <p style="color: #cbd5e1; font-size: 18px; line-height: 1.5;">
+                Every birthday with you is brighter, sweeter, and more unforgettable than the last. Here's to reliving all the laughter, surprises, cakes, and golden moments.
+            </p>
+        </div>
+    </div>
+
+    <div style="padding: 24px 54px 0 54px;">
+        <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+            <span class="material-icons" style="color: #ff2a6d;">cake</span> Birthday Memories &amp; Surprises
+        </h2>
+    </div>
+
+    <div class="tv-birthday-grid">
+        {% for photo in photos %}
+        <div class="tv-bday-card tv-focusable" tabindex="0"
+             data-src="{{ photo.url | default(photo) }}"
+             data-title="Birthday Celebration ✨"
+             data-desc="Celebrating Puchki's special birthday"
+             data-date="October Milestone">
+            <img src="{{ photo.url | default(photo) }}" alt="Birthday Celebration" loading="lazy" />
+            <div class="tv-bday-card-overlay">
+                <span style="color: #ff4d8d; font-size: 12px; font-weight: 800;">BIRTHDAY MOMENT</span>
+                <span style="color: #cbd5e1; font-size: 11px;">✨ Forever Love</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-bday-card'));
+        cards.forEach(c => {
+            c.addEventListener('click', () => {
+                const src = c.getAttribute('data-src');
+                const title = c.getAttribute('data-title');
+                const desc = c.getAttribute('data-desc');
+                const date = c.getAttribute('data-date');
+                if (src) window.tvTheater.open(src, title, desc, date);
+            });
+            c.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.keyCode === 13) c.click();
+            });
+        });
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}

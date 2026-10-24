@@ -1,0 +1,85 @@
+{% extends "tv_base.html" %}
+
+{% block title %}Guestbook Notes • ShaiX2 TV{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tv-guestbook-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 22px;
+        padding: 30px 54px 60px 54px;
+    }
+    .tv-guest-card {
+        border-radius: 14px;
+        background: #181324;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 180px;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tv-guest-message {
+        font-size: 16px;
+        color: #f1f5f9;
+        line-height: 1.5;
+        font-style: italic;
+    }
+    .tv-guest-author {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .tv-guest-name {
+        font-size: 15px;
+        font-weight: 800;
+        color: #ff4d8d;
+    }
+    .tv-guest-date {
+        font-size: 12px;
+        color: #64748b;
+    }
+    @media (max-width: 768px) {
+        .tv-guestbook-grid { padding: 20px 20px 60px 20px; grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="tv-page-header">
+        <div>
+            <div class="tv-badge">Warm Wishes &amp; Blessings</div>
+            <h1 class="tv-page-title">
+                <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">import_contacts</span>
+                Wedding Guestbook
+            </h1>
+            <p class="tv-page-subtitle">Messages of love, laughter, and lifelong happiness from family and loved ones.</p>
+        </div>
+    </div>
+
+    <div class="tv-guestbook-grid">
+        {% for note in notes %}
+        <div class="tv-guest-card tv-focusable" tabindex="0">
+            <div class="tv-guest-message">“{{ note.message }}”</div>
+            <div class="tv-guest-author">
+                <span class="tv-guest-name">{{ note.name }}</span>
+                <span class="tv-guest-date">🗓️ {{ note.created_at_str | default(note.date) }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = Array.from(document.querySelectorAll('.tv-guest-card'));
+        if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+    });
+</script>
+{% endblock %}
