@@ -58,7 +58,16 @@ def compress_video(input_path, output_path):
     return True
 
 def convert_heic(input_path, output_path):
-    subprocess.run(["sips", "-s", "format", "jpeg", input_path, "--out", output_path], check=True, capture_output=True)
+    # sips converts HEIC to JPEG, but doesn't bake in EXIF orientation.
+    # We use PIL's ImageOps.exif_transpose to ensure proper upright orientation.
+    temp_jpg = output_path + ".temp.jpg"
+    subprocess.run(["sips", "-s", "format", "jpeg", input_path, "--out", temp_jpg], check=True, capture_output=True)
+    from PIL import Image, ImageOps
+    with Image.open(temp_jpg) as img:
+        transposed = ImageOps.exif_transpose(img)
+        transposed.save(output_path, "JPEG", quality=90)
+    if os.path.exists(temp_jpg):
+        os.remove(temp_jpg)
     return True
 
 async def main():

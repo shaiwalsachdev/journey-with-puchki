@@ -249,8 +249,15 @@
                     })
                 });
                 
-                const result = await response.json();
-                if (result.status === 'success') {
+                const text = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(text);
+                } catch (e) {
+                    throw new Error(`Server returned status ${response.status} (${response.statusText || 'HTML error page'})`);
+                }
+                
+                if (response.ok && result.status === 'success') {
                     status.classList.remove('animate-pulse');
                     status.classList.add('text-green-400', 'pointer-events-auto');
                     status.innerHTML = `Saved! Updating view... <button onclick="document.getElementById('rotate-status').classList.add('hidden')" class="ml-2 bg-green-500/20 px-2 py-0.5 rounded text-white hover:bg-green-500/40 transition">Close</button>`;
