@@ -47,12 +47,12 @@
             white-space: nowrap;
         }
 
-        /* Sidebar Expands Elegantly When Focused */
-        .tv-sidebar:focus-within, .tv-sidebar.expanded {
+        /* Sidebar Expands Elegantly When Focused or Hovered */
+        .tv-sidebar:hover, .tv-sidebar:focus-within, .tv-sidebar.expanded {
             width: 250px;
-            background: rgba(10, 7, 18, 0.97);
-            box-shadow: 10px 0 40px rgba(0,0,0,0.8);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 7, 18, 0.98);
+            box-shadow: 10px 0 40px rgba(0,0,0,0.85);
+            border-right: 1px solid rgba(255, 42, 109, 0.25);
         }
 
         .sidebar-brand {
@@ -80,9 +80,9 @@
             color: #ffffff;
             letter-spacing: 0.5px;
             opacity: 0;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.25s ease;
         }
-        .tv-sidebar:focus-within .brand-title, .tv-sidebar.expanded .brand-title {
+        .tv-sidebar:hover .brand-title, .tv-sidebar:focus-within .brand-title, .tv-sidebar.expanded .brand-title {
             opacity: 1;
         }
 
@@ -125,6 +125,7 @@
             font-weight: 600;
             border: 2px solid transparent;
             transition: color 0.2s ease;
+            width: 100%;
         }
 
         .side-btn .material-icons {
@@ -134,9 +135,10 @@
 
         .side-btn span.label {
             opacity: 0;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.25s ease;
+            white-space: nowrap;
         }
-        .tv-sidebar:focus-within .side-btn span.label, .tv-sidebar.expanded .side-btn span.label {
+        .tv-sidebar:hover .side-btn span.label, .tv-sidebar:focus-within .side-btn span.label, .tv-sidebar.expanded .side-btn span.label {
             opacity: 1;
         }
 
@@ -680,16 +682,39 @@
                 sidebarIndicator.style.height = `${btnRect.height}px`;
             }
 
+            const tvSidebar = document.getElementById('tv-sidebar');
+
             sideButtons.forEach(btn => {
                 btn.addEventListener('focus', () => {
+                    if (tvSidebar) tvSidebar.classList.add('expanded');
                     moveIndicator(btn);
                     sideButtons.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
+                });
+                btn.addEventListener('blur', () => {
+                    setTimeout(() => {
+                        const hasFocus = tvSidebar && tvSidebar.contains(document.activeElement);
+                        if (!hasFocus && tvSidebar) {
+                            tvSidebar.classList.remove('expanded');
+                        }
+                    }, 50);
                 });
                 btn.addEventListener('mouseenter', () => {
                     moveIndicator(btn);
                 });
             });
+
+            if (tvSidebar) {
+                tvSidebar.addEventListener('mouseenter', () => {
+                    tvSidebar.classList.add('expanded');
+                });
+                tvSidebar.addEventListener('mouseleave', () => {
+                    const hasFocus = tvSidebar.contains(document.activeElement);
+                    if (!hasFocus) {
+                        tvSidebar.classList.remove('expanded');
+                    }
+                });
+            }
 
             // Initial positioning on the active button
             const activeInitialBtn = document.querySelector('.side-btn.active') || sideButtons[0];
