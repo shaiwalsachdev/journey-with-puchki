@@ -441,7 +441,10 @@
         <section class="hero-billboard" id="hero-billboard" style="background-image: url('{{ hero.photo_url }}');">
             <div class="hero-vignette"></div>
             <div class="hero-content">
-                <span class="hero-badge">Featured Milestone</span>
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+                    <span class="hero-badge" style="margin-bottom: 0;">Featured Milestone</span>
+                    <span id="hero-date" style="background: rgba(255, 42, 109, 0.2); border: 1px solid rgba(255, 42, 109, 0.5); color: #ff4d8d; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px;">{{ hero.date | default('OUR TIMELINE') }}</span>
+                </div>
                 <h1 class="hero-title" id="hero-title">{{ hero.title }}</h1>
                 <p class="hero-desc" id="hero-desc">{{ hero.description }}</p>
                 <div class="hero-actions">
@@ -549,6 +552,7 @@
         <img id="theater-media" src="" alt="Fullscreen view" />
         <div class="theater-overlay">
             <div>
+                <div id="theater-date" style="display: inline-block; background: rgba(255, 42, 109, 0.25); border: 1px solid #ff2a6d; color: #ff4d8d; font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 9999px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"></div>
                 <h2 id="theater-title" style="font-size: 32px; font-weight: 800; margin-bottom: 6px;"></h2>
                 <p id="theater-desc" style="color: #cbd5e1; font-size: 18px;"></p>
             </div>
@@ -583,17 +587,23 @@
             const btnInfo = document.getElementById('btn-inspect');
 
             // When focusing any card, smoothly update the Hero Billboard (Netflix preview style)
+            const heroDate = document.getElementById('hero-date');
+
             activeCards.forEach((card, idx) => {
                 card.addEventListener('focus', () => {
                     currentCardIndex = idx;
                     const src = card.getAttribute('data-src');
                     const title = card.getAttribute('data-title');
                     const desc = card.getAttribute('data-desc');
+                    const date = card.getAttribute('data-date');
 
                     if (src && title) {
                         billboard.style.backgroundImage = `url('${src}')`;
                         heroTitle.textContent = title;
                         heroDesc.textContent = desc || "A timeless moment together.";
+                        if (heroDate && date) {
+                            heroDate.textContent = `🗓️ ${date}`;
+                        }
                     }
 
                     // Auto-scroll track into view
@@ -606,14 +616,20 @@
                 });
             });
 
+            const theaterDate = document.getElementById('theater-date');
+
             function openTheater(card) {
                 const src = card.getAttribute('data-src');
                 const title = card.getAttribute('data-title');
                 const desc = card.getAttribute('data-desc');
+                const date = card.getAttribute('data-date');
 
                 theaterMedia.src = src;
                 theaterTitle.textContent = title;
                 theaterDesc.textContent = desc || '';
+                if (theaterDate) {
+                    theaterDate.textContent = date ? `🗓️ ${date}` : 'TIMELIGHT MOMENT';
+                }
                 theaterModal.classList.add('active');
             }
 
