@@ -2714,11 +2714,18 @@ async def api_add_new_blessing(request: Request):
     await add_guestbook_entry(data)
     return {"status": "success", "message": "Blessing added successfully"}
 
-@app.post("/api/admin/new_dictionary/new")
-async def api_add_new_dictionary(request: Request):
-    data = await request.json()
-    await add_dictionary_word(data)
-    return {"status": "success", "message": "Dictionary word added successfully"}
+@app.get("/download/app")
+@app.get("/download/apk")
+async def download_apk():
+    from fastapi.responses import FileResponse, RedirectResponse
+    local_apk = "fastapi_app/static/downloads/shaix2.apk"
+    if os.path.exists(local_apk):
+        return FileResponse(
+            local_apk,
+            media_type="application/vnd.android.package-archive",
+            filename="shaix2.apk"
+        )
+    return RedirectResponse(url=f"{R2_PUBLIC_URL}/downloads/shaix2.apk", status_code=302)
 
 
 @app.post("/api/rotate-photo")
