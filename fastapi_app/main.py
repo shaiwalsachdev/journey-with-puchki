@@ -348,7 +348,9 @@ async def tv_memory_detail(request: Request, memory_id: int):
 
 @app.get("/tv/timeline", response_class=HTMLResponse)
 async def tv_timeline(request: Request):
-    """TV-optimized horizontal chronological timeline."""
+    """TV-optimized chronological timeline grid, sorted by date descending."""
+    import re
+    from datetime import datetime
     from fastapi_app.database import get_all_memories
     from fastapi_app.storage import R2_PUBLIC_URL
     settings = request.state.settings
@@ -356,8 +358,36 @@ async def tv_timeline(request: Request):
     raw_memories = await get_all_memories()
     filtered_memories = process_memories_for_display(raw_memories, settings)
 
+    def parse_memory_date_key(d_str, fallback_id=0):
+        if not d_str:
+            return datetime(1970, 1, 1), fallback_id
+        s = str(d_str).strip()
+        formats = ['%B %d, %Y', '%b %d, %Y', '%B %Y', '%b %Y', '%Y-%m-%d']
+        for fmt in formats:
+            try:
+                return datetime.strptime(s, fmt), fallback_id
+            except ValueError:
+                pass
+        m = re.search(r'([A-Za-z]+)\s*-\s*([A-Za-z]+)\s+(\d{4})', s)
+        if m:
+            try:
+                return datetime.strptime(f"{m.group(2)} {m.group(3)}", '%B %Y'), fallback_id
+            except ValueError:
+                pass
+        y = re.search(r'\b(20\d\d)\b', s)
+        if y:
+            return datetime(int(y.group(1)), 1, 1), fallback_id
+        return datetime(1970, 1, 1), fallback_id
+
+    # Sort descending by date (most recent milestones first)
+    sorted_memories = sorted(
+        filtered_memories,
+        key=lambda m: parse_memory_date_key(m.get("date"), m.get("id", 0)),
+        reverse=True
+    )
+
     memories = []
-    for m in filtered_memories:
+    for m in sorted_memories:
         m_copy = dict(m)
         photos = m.get("photos") or []
         if photos and len(photos) > 0:
