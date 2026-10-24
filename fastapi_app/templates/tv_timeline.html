@@ -1,6 +1,6 @@
 {% extends "tv_base.html" %}
 
-{% block title %}Memory Lane Timeline • ShaiX2 TV{% endblock %}
+{% block title %}Memory Lane Timeline Grid • ShaiX2 TV{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -10,25 +10,22 @@
         flex-direction: column;
         gap: 28px;
     }
-    .tv-timeline-row {
-        display: flex;
-        gap: 20px;
-        overflow-x: auto;
-        padding: 16px 6px;
-        scroll-behavior: smooth;
-        scrollbar-width: none;
+    /* Responsive TV Multi-column Grid */
+    .tv-timeline-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
     }
-    .tv-timeline-row::-webkit-scrollbar { display: none; }
     .tv-card-timeline {
-        flex: 0 0 340px;
-        height: 220px;
-        border-radius: 12px;
+        border-radius: 14px;
         overflow: hidden;
         position: relative;
         cursor: pointer;
         border: 3px solid transparent;
         background: #191424;
         text-decoration: none;
+        height: 240px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
         transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .tv-card-timeline img {
@@ -40,28 +37,29 @@
     .tv-card-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(0deg, rgba(11,8,19,0.95) 0%, rgba(11,8,19,0.4) 60%, transparent 100%);
+        background: linear-gradient(0deg, rgba(11,8,19,0.96) 0%, rgba(11,8,19,0.5) 55%, transparent 100%);
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        padding: 16px;
+        padding: 18px;
     }
     .tv-card-date {
         display: inline-flex;
         align-items: center;
-        gap: 4px;
-        background: rgba(255, 42, 109, 0.3);
+        gap: 5px;
+        background: rgba(255, 42, 109, 0.35);
         border: 1px solid #ff2a6d;
         color: #ffffff;
         font-size: 11px;
         font-weight: 800;
-        padding: 2px 8px;
+        padding: 3px 9px;
         border-radius: 9999px;
         margin-bottom: 6px;
         width: fit-content;
+        box-shadow: 0 0 10px rgba(255, 42, 109, 0.4);
     }
     .tv-card-title {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 800;
         color: #ffffff;
         white-space: nowrap;
@@ -71,7 +69,7 @@
     }
     .tv-card-desc {
         font-size: 12px;
-        color: #94a3b8;
+        color: #cbd5e1;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -80,7 +78,8 @@
     }
     @media (max-width: 768px) {
         .tv-timeline-container { padding: 20px 20px 60px 20px; }
-        .tv-card-timeline { flex: 0 0 260px; height: 180px; }
+        .tv-timeline-grid { grid-template-columns: 1fr; }
+        .tv-card-timeline { height: 210px; }
     }
 </style>
 {% endblock %}
@@ -91,19 +90,19 @@
             <div class="tv-badge">Chronological Chapters</div>
             <h1 class="tv-page-title">
                 <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">timeline</span>
-                Memory Lane: Our Timeline
+                Memory Lane: All Memories
             </h1>
-            <p class="tv-page-subtitle">Every chapter of our journey together, beautifully ordered with memories and dates.</p>
+            <p class="tv-page-subtitle">Every memory and chapter laid out in a full TV grid with dates and stories.</p>
         </div>
         <div style="font-size: 14px; color: #94a3b8; text-align: right;">
-            Press <b>OK</b> on TV Remote to enter Memory<br>
-            Use <b>Left/Right</b> to browse
+            Press <b>OK</b> on TV Remote to open memory<br>
+            Use <b>Up/Down/Left/Right</b> to browse grid
         </div>
     </div>
 
     <div class="tv-timeline-container">
-        <!-- Milestone Grid Track -->
-        <div class="tv-timeline-row">
+        <!-- Multi-row TV Grid -->
+        <div class="tv-timeline-grid">
             {% for m in memories %}
             <a href="/tv/memory/{{ m.id }}" class="tv-card-timeline tv-focusable" tabindex="0">
                 <img src="{{ m.photo_url }}" alt="{{ m.title }}" loading="lazy" />
@@ -127,7 +126,12 @@
         }
         cards.forEach(c => {
             c.addEventListener('focus', () => {
-                c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+            });
+            c.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    c.click();
+                }
             });
         });
     });

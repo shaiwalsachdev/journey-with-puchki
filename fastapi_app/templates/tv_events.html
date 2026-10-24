@@ -8,66 +8,87 @@
         padding: 30px 54px 60px 54px;
         display: flex;
         flex-direction: column;
-        gap: 28px;
-    }
-    .tv-events-hero {
-        width: 100%;
-        height: 48vh;
-        border-radius: 16px;
-        overflow: hidden;
-        position: relative;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        align-items: flex-end;
-        padding: 40px;
-        border: 2px solid rgba(255, 42, 109, 0.3);
-    }
-    .tv-events-hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(0deg, #0b0813 0%, rgba(11,8,19,0.5) 60%, transparent 100%);
-    }
-    .tv-events-content {
-        position: relative;
-        z-index: 10;
-        max-width: 800px;
+        gap: 36px;
     }
     .tv-events-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: 26px;
     }
     .tv-event-card {
-        border-radius: 12px;
+        border-radius: 16px;
         overflow: hidden;
         border: 3px solid transparent;
         background: #181324;
         cursor: pointer;
-        height: 240px;
+        height: 290px;
         position: relative;
         text-decoration: none;
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
     }
     .tv-event-card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
     }
     .tv-event-card-body {
         position: absolute;
         inset: 0;
-        background: linear-gradient(0deg, rgba(11,8,19,0.95) 0%, rgba(11,8,19,0.3) 60%, transparent 100%);
+        background: linear-gradient(0deg, rgba(11,8,19,0.96) 0%, rgba(11,8,19,0.55) 50%, rgba(11,8,19,0.1) 100%);
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        padding: 18px;
+        padding: 22px;
+    }
+    .tv-event-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        width: fit-content;
+        margin-bottom: 8px;
+    }
+    .tv-tag-completed {
+        background: rgba(16, 185, 129, 0.25);
+        border: 1px solid #10b981;
+        color: #34d399;
+    }
+    .tv-tag-upcoming {
+        background: rgba(255, 42, 109, 0.25);
+        border: 1px solid #ff2a6d;
+        color: #ff4d8d;
+    }
+    .tv-event-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .tv-event-date {
+        font-size: 13px;
+        color: #ffd166;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .tv-event-desc {
+        font-size: 13px;
+        color: #cbd5e1;
+        line-height: 1.4;
     }
     @media (max-width: 768px) {
         .tv-events-container { padding: 20px 20px 60px 20px; }
-        .tv-events-hero { height: 35vh; padding: 20px; }
         .tv-events-grid { grid-template-columns: 1fr; }
+        .tv-event-card { height: 240px; }
     }
 </style>
 {% endblock %}
@@ -75,69 +96,110 @@
 {% block content %}
     <div class="tv-page-header">
         <div>
-            <div class="tv-badge">Wedding &amp; Celebrations</div>
+            <div class="tv-badge">Wedding &amp; Celebration Chapters</div>
             <h1 class="tv-page-title">
                 <span class="material-icons" style="font-size: 38px; color: #ff2a6d;">celebration</span>
-                Events &amp; Milestones
+                All Events &amp; Milestones
             </h1>
-            <p class="tv-page-subtitle">From our Roka ceremony to Sagan, Pre-wedding, and the Wedding of our dreams.</p>
+            <p class="tv-page-subtitle">Every grand milestone of our story: The Roka, Pre-Wedding, Sagan &amp; Ring Ceremony, The Wedding, and Honeymoon.</p>
+        </div>
+        <div style="font-size: 14px; color: #94a3b8; text-align: right;">
+            Press <b>OK</b> on Remote to Open Cinema<br>
+            Use <b>D-Pad</b> to navigate
         </div>
     </div>
 
     <div class="tv-events-container">
-        <!-- Hero Featured Event -->
-        <div class="tv-events-hero" style="background-image: url('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp');">
-            <div class="tv-events-content">
-                <span class="tv-badge" style="background: rgba(255, 42, 109, 0.4); border-color: #ff2a6d; color: #fff; margin-bottom: 10px;">
-                    💍 The Grand Roka &amp; Forever Chapter
-                </span>
-                <h2 style="font-size: 38px; font-weight: 800; margin-bottom: 10px;">The Day We Decided on Forever</h2>
-                <p style="color: #cbd5e1; font-size: 16px; line-height: 1.5;">
-                    Surrounded by families, unconditional warmth, laughter, and blessing as two souls become one journey.
-                </p>
-            </div>
-        </div>
-
-        <div style="font-size: 20px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-            <span class="material-icons" style="color: #ff2a6d;">auto_awesome</span> Event Highlights &amp; Cinema
-        </div>
-
         <div class="tv-events-grid">
+
+            <!-- 1. The Roka Ceremony -->
+            <a href="/tv/memory/26" class="tv-event-card tv-focusable" tabindex="0">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="The Roka Ceremony" />
+                <div class="tv-event-card-body">
+                    <span class="tv-event-tag tv-tag-completed">✓ Already Rokafied</span>
+                    <div class="tv-event-title">🤝 The Roka Ceremony</div>
+                    <div class="tv-event-date">🗓️ March 12, 2026</div>
+                    <div class="tv-event-desc">The official start of forever. Two families uniting with blessings, warm smiles, and eternal promise.</div>
+                </div>
+            </a>
+
+            <!-- 2. Pre-Wedding Shoot -->
+            <div class="tv-event-card tv-focusable" tabindex="0" onclick="window.tvTheater.open('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp', 'Pre-Wedding Cinema: Four Looks & Stories', 'Capturing laughter, royal poses, and candid moments in frame.', 'October 10, 2026')">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="Pre-Wedding" />
+                <div class="tv-event-card-body">
+                    <span class="tv-event-tag tv-tag-completed">✨ Moments Captured</span>
+                    <div class="tv-event-title">📸 Pre-Wedding Shoot</div>
+                    <div class="tv-event-date">🗓️ October 10, 2026</div>
+                    <div class="tv-event-desc">Four magical looks and stories captured in frame. Relive our cinematic portraits together.</div>
+                </div>
+            </div>
+
+            <!-- 3. Sagan & Ring Ceremony -->
+            <div class="tv-event-card tv-focusable" tabindex="0" onclick="window.tvTheater.open('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1200&auto=format&fit=crop', 'Sagan & Ring Ceremony', 'When the ring seals the promise in front of all our loved ones.', 'December 5, 2026')">
+                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1200&auto=format&fit=crop" alt="Sagan & Ring Ceremony" />
+                <div class="tv-event-card-body">
+                    <span class="tv-event-tag tv-tag-upcoming">💍 Milestone Promise</span>
+                    <div class="tv-event-title">💍 Sagan &amp; Ring Ceremony</div>
+                    <div class="tv-event-date">🗓️ December 5, 2026</div>
+                    <div class="tv-event-desc">When the diamond ring seals the promise forever in front of family, music, and celebratory joy.</div>
+                </div>
+            </div>
+
+            <!-- 4. The Grand Wedding -->
+            <div class="tv-event-card tv-focusable" tabindex="0" onclick="window.tvTheater.open('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop', 'The Grand Wedding', 'The day our forever officially begins with pheras, sindoor, and eternal vows.', 'December 6, 2026')">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop" alt="The Grand Wedding" />
+                <div class="tv-event-card-body">
+                    <span class="tv-event-tag tv-tag-upcoming">👰🤵 The Grand Wedding</span>
+                    <div class="tv-event-title">👰🤵 The Wedding Day</div>
+                    <div class="tv-event-date">🗓️ December 6, 2026</div>
+                    <div class="tv-event-desc">The sacred pheras, sindoor, varmala, and seven lifetime vows as husband and wife.</div>
+                </div>
+            </div>
+
+            <!-- 5. Honeymoon: Singapore & Disney Cruise -->
+            <div class="tv-event-card tv-focusable" tabindex="0" onclick="window.tvTheater.open('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1200&auto=format&fit=crop', 'Our Honeymoon: Singapore & Disney Cruise', '13–21 Dec 2026 • 8 Nights of Disney Cruise, Marina Bay, and romance.', 'Dec 13–21, 2026')">
+                <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1200&auto=format&fit=crop" alt="Honeymoon in Singapore" />
+                <div class="tv-event-card-body">
+                    <span class="tv-event-tag tv-tag-upcoming" style="background: rgba(147, 51, 234, 0.25); border-color: #a855f7; color: #c084fc;">🚢 Disney Cruise &amp; Singapore</span>
+                    <div class="tv-event-title">🚢 The Honeymoon</div>
+                    <div class="tv-event-date">🗓️ December 13–21, 2026</div>
+                    <div class="tv-event-desc">8 magical nights exploring Singapore, Gardens by the Bay, and the Disney Adventure Cruise.</div>
+                </div>
+            </div>
+
+            <!-- 6. Special Date Milestones -->
+            <a href="/tv/memory/8" class="tv-event-card tv-focusable" tabindex="0">
+                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/8/Novemeber%2022_1.webp" alt="First Candle Light Dinner" />
+                <div class="tv-event-card-body">
+                    <span class="tv-event-tag tv-tag-completed">🕯️ Date Night</span>
+                    <div class="tv-event-title">🕯️ First Candle Light Dinner</div>
+                    <div class="tv-event-date">🗓️ November 22, 2025</div>
+                    <div class="tv-event-desc">Our first candle-lit dinner with heartfelt talk, laughter, and that quiet feeling of falling in love.</div>
+                </div>
+            </a>
+
+            <!-- 7. Pottery Date Experience -->
             <a href="/tv/memory/26" class="tv-event-card tv-focusable" tabindex="0">
                 <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/26/IMG_0930.webp" alt="Pottery Date" />
                 <div class="tv-event-card-body">
-                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">EXPERIENCE CHAPTER</span>
-                    <div style="font-size: 18px; font-weight: 800;">Clay &amp; Pottery Date</div>
-                    <div style="color: #94a3b8; font-size: 13px;">🗓️ April 2026</div>
+                    <span class="tv-event-tag tv-tag-completed">🏺 Date Experience</span>
+                    <div class="tv-event-title">🏺 Clay &amp; Pottery Date</div>
+                    <div class="tv-event-date">🗓️ April 2026</div>
+                    <div class="tv-event-desc">Hands deep in terracotta clay shaping pots and smiling across the spinning wheel.</div>
                 </div>
             </a>
 
-            <a href="/tv/memory/8" class="tv-event-card tv-focusable" tabindex="0">
-                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/8/Novemeber%2022_1.webp" alt="First Candle Night" />
-                <div class="tv-event-card-body">
-                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">DATE NIGHT</span>
-                    <div style="font-size: 18px; font-weight: 800;">First Candle Light Dinner</div>
-                    <div style="color: #94a3b8; font-size: 13px;">🗓️ Nov 22, 2025</div>
-                </div>
-            </a>
-
+            <!-- 8. Puchki's Birthday Celebration -->
             <a href="/tv/birthday" class="tv-event-card tv-focusable" tabindex="0">
                 <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/25/IMG_0389.webp" alt="Birthday Special" />
                 <div class="tv-event-card-body">
-                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">BIRTHDAY CELEBRATION</span>
-                    <div style="font-size: 18px; font-weight: 800;">Puchki's Birthday ✨</div>
-                    <div style="color: #94a3b8; font-size: 13px;">🗓️ October Milestone</div>
+                    <span class="tv-event-tag tv-tag-completed">🎂 Birthday Special</span>
+                    <div class="tv-event-title">🎂 Puchki's Birthday ✨</div>
+                    <div class="tv-event-date">🗓️ October Milestone</div>
+                    <div class="tv-event-desc">Balloons, cake surprises, and celebrating the sweetest human being on earth.</div>
                 </div>
             </a>
 
-            <div class="tv-event-card tv-focusable" tabindex="0" onclick="window.tvTheater.open('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp', 'Pre-Wedding & Roka Cinema', 'Two lives intertwining forever.', 'Oct 2026')">
-                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437927_DSC00890.webp" alt="Roka Cinema" />
-                <div class="tv-event-card-body">
-                    <span style="color: #ff4d8d; font-size: 11px; font-weight: 800;">CEREMONY</span>
-                    <div style="font-size: 18px; font-weight: 800;">Roka &amp; Family Blessings</div>
-                    <div style="color: #94a3b8; font-size: 13px;">🗓️ October 2026</div>
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}
@@ -147,6 +209,13 @@
     document.addEventListener('DOMContentLoaded', () => {
         const cards = Array.from(document.querySelectorAll('.tv-event-card'));
         if (cards.length > 0) setTimeout(() => cards[0].focus(), 300);
+        cards.forEach(c => {
+            c.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    c.click();
+                }
+            });
+        });
     });
 </script>
 {% endblock %}
