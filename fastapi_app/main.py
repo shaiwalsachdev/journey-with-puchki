@@ -268,17 +268,34 @@ async def tv_experience(request: Request):
     """Ultra-lightweight 60fps Netflix-style TV interface optimized for Android TV / Chromecast."""
     import random
     from fastapi_app.database import get_all_roka_media, get_all_memories
+    from fastapi_app.storage import R2_PUBLIC_URL
     settings = request.state.settings
 
-    memories = await get_all_memories()
+    raw_memories = await get_all_memories()
+    memories = []
+    for m in raw_memories:
+        m_copy = dict(m)
+        photos = m.get("photos") or []
+        if photos and len(photos) > 0:
+            m_copy["photo_url"] = f"{R2_PUBLIC_URL}/uploads/{m['id']}/{photos[0]}"
+        else:
+            m_copy["photo_url"] = "https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg"
+        memories.append(m_copy)
+
     all_roka = await get_all_roka_media()
-    roka_photos = [m for m in all_roka if m.get("media_type") == "image"]
+    roka_photos = []
+    for r in all_roka:
+        if r.get("media_type") == "image":
+            r_copy = dict(r)
+            filename = r.get("filename")
+            r_copy["photo_url"] = f"{R2_PUBLIC_URL}/{filename}" if filename else ""
+            roka_photos.append(r_copy)
     random.shuffle(roka_photos)
 
     hero = {
         "title": "The Start of Forever",
         "description": "Reliving all our most beautiful milestones, dates, laughter, and timeless memories.",
-        "photo_url": memories[0].get("photo_url") if memories else "https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg"
+        "photo_url": memories[0]["photo_url"] if memories else "https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg"
     }
 
     return templates.TemplateResponse("tv.html", {
