@@ -263,6 +263,34 @@ async def home(request: Request):
     })
 
 
+@app.get("/tv", response_class=HTMLResponse)
+async def tv_experience(request: Request):
+    """Ultra-lightweight 60fps Netflix-style TV interface optimized for Android TV / Chromecast."""
+    import random
+    from fastapi_app.database import get_all_roka_media, get_all_memories
+    settings = request.state.settings
+
+    memories = await get_all_memories()
+    all_roka = await get_all_roka_media()
+    roka_photos = [m for m in all_roka if m.get("media_type") == "image"]
+    random.shuffle(roka_photos)
+
+    hero = {
+        "title": "The Start of Forever",
+        "description": "Reliving all our most beautiful milestones, dates, laughter, and timeless memories.",
+        "photo_url": memories[0].get("photo_url") if memories else "https://res.cloudinary.com/dv94v0r5n/image/upload/v1728038500/journey/pottery_1.jpg"
+    }
+
+    return templates.TemplateResponse("tv.html", {
+        "request": request,
+        "page": "tv",
+        "settings": settings,
+        "memories": memories,
+        "roka_photos": roka_photos[:30],
+        "hero": hero
+    })
+
+
 @app.get("/honeymoon", response_class=HTMLResponse)
 async def honeymoon_page(request: Request):
     from fastapi_app.database import get_honeymoon_data, save_honeymoon_data
