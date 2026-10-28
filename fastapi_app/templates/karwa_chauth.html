@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Karwa Chauth Special • ShaiX2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Rozha+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+
+  :root {
+    --maroon: #5c0f22;
+    --rani: #b3123f;
+    --rani-2: #d6336a;
+    --gold: #f2bf4c;
+    --gold-2: #ffdf8a;
+    --cream: #fff1dc;
+    --blush: #fbd9cf;
+    --mehendi: #7a2e0e;
+    --skin: #f2c7a1;
+    --dusk: #2b1840;
+    --dusk-2: #4c2554;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; background: var(--maroon); }
+  body { font-family: 'Kalam', cursive; color: var(--cream); -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  .hidden { display: none !important; }
+  .scene { position: fixed; inset: 0; display: none; overflow: hidden; }
+  .scene.show { display: block; animation: fade .9s ease both; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .rozha { font-family: 'Rozha One', serif; font-weight: 400; line-height: .98; }
+  .h1 { font-size: clamp(46px, 13.4vw, 98px); }
+  .h2 { font-size: clamp(38px, 11vw, 78px); }
+  .sub { font-size: clamp(18px, 5vw, 23px); margin-top: 6px; opacity: .9; line-height: 1.2; }
+  /* gota-patti border shared by the textile scenes */
+  .gota { position: absolute; left: 0; right: 0; height: 26px; pointer-events: none; z-index: 2;
+    background:
+      radial-gradient(circle at 13px 13px, var(--gold-2) 0 4px, var(--gold) 4.5px 7px, transparent 7.5px) 0 0 / 26px 26px,
+      linear-gradient(180deg, transparent 0 9px, rgba(242,191,76,.55) 9px 17px, transparent 17px); }
+  .gota.top { top: 0; } .gota.bot { bottom: 0; }
+  .btn { position: relative; padding: 13px 28px 11px; border-radius: 999px; font-family: 'Kalam'; font-weight: 700; font-size: 21px;
+    background: linear-gradient(180deg, var(--gold-2), var(--gold)); color: var(--maroon);
+    box-shadow: 0 0 0 3px var(--maroon), 0 0 0 5px var(--gold), 0 14px 28px -10px rgba(0,0,0,.5); transition: transform .15s; }
+  .btn:active { transform: scale(.95); }
+  .btn.ghost { background: transparent; color: var(--cream); box-shadow: 0 0 0 2px rgba(255,241,220,.6); }
+  .btn.pulse::after { content: ''; position: absolute; inset: -9px; border-radius: inherit; border: 2px solid var(--gold); opacity: 0; animation: halo 1.9s ease-out infinite; }
+  @keyframes halo { 0% { opacity: .8; transform: scale(.92); } 100% { opacity: 0; transform: scale(1.2); } }
+  .dock { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 6% max(36px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 12px; z-index: 30; }
+  .chrome { font-size: 15px; opacity: .75; min-height: 20px; letter-spacing: .02em; }
+
+  /* ───────── 1 · the fast ───────── */
+  #fast { background:
+      radial-gradient(circle at 50% 120%, rgba(214,51,106,.45), transparent 60%),
+      radial-gradient(circle, rgba(242,191,76,.12) 1.5px, transparent 2px) 0 0 / 22px 22px,
+      linear-gradient(180deg, #7a1430, var(--maroon)); }
+  #fast .head { position: absolute; left: 0; right: 0; top: calc(max(26px, 4vh) + 22px); text-align: center; padding: 0 6%; z-index: 3; }
+  #fast .head .h1 { color: var(--gold-2); }
+  .dial { position: absolute; left: 50%; top: 31%; width: min(84vw, 440px); aspect-ratio: 2 / 1.12; transform: translateX(-50%); }
+  .dial svg { width: 100%; height: 100%; overflow: visible; }
+  #sunDot { transition: transform .9s cubic-bezier(.4,1.4,.5,1); }
+  .dial .stamp { position: absolute; left: 0; right: 0; bottom: -12%; text-align: center; font-size: clamp(16px, 4.4vw, 20px); color: var(--blush); }
+  #alarms { position: absolute; left: 6%; right: 6%; top: calc(31% + min(84vw, 440px) * .56 + 40px); height: 96px; text-align: center; }
+  #alarms p { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Rozha One'; font-size: clamp(26px, 7.4vw, 40px); line-height: 1.05; color: var(--cream);
+    opacity: 0; transform: translateY(12px) rotate(-1.5deg); transition: none; }
+  #alarms p.in { opacity: 1; transform: rotate(-1.5deg); transition: .4s cubic-bezier(.3,1.6,.5,1); }
+  #alarms p#realOne { color: var(--gold-2); }
+  .hungry { position: absolute; right: 5%; bottom: 150px; width: 104px; border-radius: 50%; overflow: hidden; background: var(--blush); box-shadow: 0 0 0 4px var(--gold); z-index: 3; transition: transform .5s; }
+  .hungry img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; mix-blend-mode: multiply; }
+  .hungry.wobble { animation: wob .5s; }
+  @keyframes wob { 30% { transform: rotate(-10deg) scale(1.05); } 70% { transform: rotate(8deg); } }
+  #fast .meter { width: min(70vw, 300px); }
+  #fast .meter .bar { height: 12px; border-radius: 99px; background: rgba(255,241,220,.15); box-shadow: inset 0 0 0 2px rgba(242,191,76,.5); overflow: hidden; }
+  #fast .meter .bar i { display: block; height: 100%; width: var(--hp, 92%); background: linear-gradient(90deg, var(--rani-2), var(--gold)); transition: width .6s; }
+  #fast .meter p { font-size: 14px; opacity: .8; margin-bottom: 4px; text-align: center; }
+
+  /* ───────── 2 · the channi ───────── */
+  #channi { background: linear-gradient(180deg, #170d2b 0%, var(--dusk) 38%, var(--dusk-2) 66%, #a24a6a 88%, #e98a7e 100%); touch-action: none; }
+  #channi .stars i { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: .6; animation: tw 3s ease-in-out infinite; }
+  @keyframes tw { 50% { opacity: .15; } }
+  #moonK { position: absolute; width: 74px; height: 74px; border-radius: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle at 40% 38%, #fffbea, #ffe9b8 60%, #f3cf8a); box-shadow: 0 0 40px 10px rgba(255,236,190,.45), 0 0 120px 30px rgba(255,200,160,.25); }
+  #moonK::after { content: ''; position: absolute; left: 22%; top: 30%; width: 18%; height: 14%; border-radius: 50%; background: rgba(220,180,120,.35); box-shadow: 22px 14px 0 -2px rgba(220,180,120,.3); }
+  #channi .head { position: absolute; left: 0; right: 0; top: max(26px, 4vh); text-align: center; padding: 0 6%; z-index: 3; pointer-events: none; transition: opacity .5s; }
+  #channi .head .h2 { color: var(--gold-2); }
+  #channi.aligned .head { opacity: 0; }
+  .parapet { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: 2;
+    background: repeating-linear-gradient(90deg, transparent 0 46px, rgba(0,0,0,.18) 46px 50px), linear-gradient(180deg, #6b2a3e, #3e1424); box-shadow: inset 0 6px 0 #8a3a52; }
+  .kdiya { position: absolute; left: 10%; bottom: 112px; width: 54px; z-index: 3; }
+  .kdiya .fl { transform-origin: 50% 100%; animation: flk 1s ease-in-out infinite alternate; }
+  @keyframes flk { to { transform: scale(.9, 1.08) skewX(-4deg); } }
+  #sieve { position: absolute; width: min(56vw, 240px); aspect-ratio: 1; transform: translate(-50%, -50%); z-index: 6; cursor: grab; touch-action: none; }
+  #sieve .inner { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; background: rgba(23,13,43,.25); }
+  #sieve .inner .look { position: absolute; width: 74px; height: 74px; border-radius: 50%; transform: translate(-50%, -50%) scale(1.25);
+    background: radial-gradient(circle at 40% 38%, #fffbea, #ffe9b8 60%, #f3cf8a); box-shadow: 0 0 30px 10px rgba(255,236,190,.55); transition: opacity 1.2s; }
+  #sieve .inner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s .4s; background: var(--blush); }
+  #channi.lowered #sieve .inner img { opacity: 1; }
+  #channi.lowered #sieve .inner .look { opacity: 0; }
+  #sieve .mesh { position: absolute; inset: 9%; border-radius: 50%; pointer-events: none;
+    background: repeating-linear-gradient(45deg, rgba(242,191,76,.75) 0 1.4px, transparent 1.4px 9px), repeating-linear-gradient(-45deg, rgba(242,191,76,.75) 0 1.4px, transparent 1.4px 9px); transition: opacity 1.2s; }
+  #channi.lowered #sieve .mesh { opacity: .35; }
+  #sieve .rim { position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+    box-shadow: inset 0 0 0 10px #c98f2c, inset 0 0 0 13px #8a5a14, inset 0 0 0 16px var(--gold), 0 18px 40px rgba(0,0,0,.45);
+    background: radial-gradient(circle, transparent 0 calc(50% - 16px), rgba(255,223,138,.0) 50%); }
+  #sieve .rim::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px dashed rgba(255,223,138,.55); }
+  #channi.aligned #sieve { transition: left .4s, top .4s; }
+  #channi.aligned #sieve .rim { box-shadow: inset 0 0 0 10px #c98f2c, inset 0 0 0 13px #8a5a14, inset 0 0 0 16px var(--gold), 0 0 60px 10px rgba(255,223,138,.55); }
+  #channi .msg { position: absolute; left: 6%; right: 6%; bottom: 140px; text-align: center; z-index: 4; pointer-events: none; }
+  #channi .msg p { font-family: 'Rozha One'; font-size: clamp(28px, 8vw, 44px); line-height: 1.05; color: var(--cream); display: none; text-shadow: 0 2px 18px rgba(0,0,0,.4); }
+  #channi .msg p.in { display: block; animation: rise .6s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  #channi .dock .chrome { color: var(--cream); }
+
+  /* ───────── 3 · the thali ───────── */
+  #thali { background:
+      radial-gradient(circle at 50% 50%, rgba(255,241,220,.0) 0 40%, rgba(92,15,34,.25) 80%),
+      repeating-conic-gradient(from 0deg at 50% 54%, #c4163f 0 7.5deg, #b3123f 7.5deg 15deg); }
+  #thali .head { position: absolute; left: 0; right: 0; top: calc(max(26px, 4vh) + 20px); text-align: center; padding: 0 6%; z-index: 3; }
+  #thali .head .h2 { color: var(--gold-2); text-shadow: 0 3px 0 var(--maroon); }
+  .plate { position: absolute; left: 50%; top: 54%; width: min(90vw, 50vh, 460px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+    background:
+      radial-gradient(circle, transparent 0 60%, rgba(122,46,14,.25) 60.5% 61.5%, transparent 62% 70%, rgba(122,46,14,.3) 70.5% 71.5%, transparent 72%),
+      radial-gradient(circle at 36% 30%, #fff3c4, #f2c258 45%, #c98f2c 80%, #9a6a1c);
+    box-shadow: 0 0 0 6px #b5801f, 0 0 0 9px #ffdf8a, 0 24px 40px -10px rgba(40,0,10,.6); }
+  .plate .rangoli { position: absolute; inset: 30%; border-radius: 50%; opacity: .55; background: radial-gradient(circle, #b3123f 0 10%, transparent 11% 30%, rgba(179,18,63,.6) 31% 34%, transparent 35%), repeating-conic-gradient(rgba(179,18,63,.35) 0 10deg, transparent 10deg 30deg); -webkit-mask: radial-gradient(circle, #000 0 66%, transparent 67%); mask: radial-gradient(circle, #000 0 66%, transparent 67%); }
+  .it { position: absolute; width: 27%; aspect-ratio: 1; transform: translate(-50%, -50%); transition: transform .3s; }
+  .it:active { transform: translate(-50%, -50%) scale(.92); }
+  .it svg { width: 100%; height: 100%; overflow: visible; }
+  .it.done::after { content: '✓'; position: absolute; right: 2%; top: 2%; width: 24px; height: 24px; border-radius: 50%; background: var(--maroon); color: var(--gold-2); font-size: 14px; display: grid; place-items: center; font-family: 'Kalam'; font-weight: 700; }
+  .it .f { opacity: 0; transform-origin: 50% 100%; transform-box: fill-box; transition: opacity .4s; }
+  .it.done .f { opacity: 1; animation: flk 1s ease-in-out infinite alternate; }
+  .it .water { transform-origin: 50% 100%; transform-box: fill-box; transition: transform 1.2s; }
+  .it.done .water { transform: scaleY(.15); }
+  .it .bite { opacity: 0; transition: opacity .3s; }
+  .it.done .bite { opacity: 1; }
+  .it .pour { opacity: 0; }
+  .it.done .pour { animation: pour 1.4s ease-in-out; }
+  @keyframes pour { 10%, 80% { opacity: 1; } 100% { opacity: 0; } }
+  #rites { position: absolute; left: 6%; right: 6%; bottom: 112px; height: 80px; z-index: 4; }
+  #rites p { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Rozha One'; font-size: clamp(22px, 6.2vw, 32px); line-height: 1.05; color: var(--cream); text-shadow: 0 2px 0 var(--maroon), 0 0 20px rgba(92,15,34,.8);
+    opacity: 0; transform: translateY(10px); transition: none; }
+  #rites p.in { opacity: 1; transform: none; transition: .45s; }
+
+  /* ───────── 4 · find the name in the mehendi ───────── */
+  #mehendi { background:
+      radial-gradient(circle at 50% 45%, #fff6e8, #fbe1cf 60%, #f3c7b8); color: var(--maroon); }
+  #mehendi .head { position: absolute; left: 0; right: 0; top: max(28px, 4vh); text-align: center; padding: 0 6%; z-index: 3; transition: opacity .5s; }
+  #mehendi .head .h2 { color: var(--rani); }
+  #mehendi .head .sub { color: var(--mehendi); }
+  #mehendi.found .head { opacity: 0; }
+  .handwrap { position: absolute; left: 50%; top: calc(max(28px, 4vh) + 112px); bottom: 104px; aspect-ratio: 300 / 430; transform: translateX(-50%); max-width: 88vw; z-index: 2; }
+  .hand { width: 100%; height: 100%; transform-origin: var(--ox, 50%) var(--oy, 50%); transition: transform 1.3s cubic-bezier(.6,0,.2,1), opacity .8s; }
+  .hand svg { width: 100%; height: 100%; overflow: visible; display: block; }
+  #mehendi.zoom .hand { transform: scale(2.6); }
+  #mehendi.found .hand { opacity: .16; }
+  #hiddenName { font-family: 'Kalam'; font-weight: 700; font-size: 11.5px; fill: #7a2e0e; transition: fill .6s; }
+  #mehendi.zoom #hiddenName { fill: #b3123f; }
+  .miss { position: absolute; width: 40px; height: 40px; border-radius: 50%; border: 3px solid var(--rani); transform: translate(-50%, -50%) scale(.4); opacity: .9; pointer-events: none; animation: miss .6s ease-out forwards; z-index: 5; }
+  @keyframes miss { to { transform: translate(-50%, -50%) scale(1.6); opacity: 0; } }
+  .halo-hint { position: absolute; width: 90px; height: 90px; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 4; opacity: 0;
+    box-shadow: 0 0 0 3px rgba(179,18,63,.5), 0 0 30px rgba(179,18,63,.4); animation: hh 1.4s ease-in-out infinite; }
+  #mehendi.hint .halo-hint { opacity: 1; }
+  @keyframes hh { 50% { transform: translate(-50%, -50%) scale(1.2); } }
+  #mehendi .tries { position: absolute; left: 0; right: 0; bottom: 64px; text-align: center; height: 26px; z-index: 4; }
+  #mehendi .tries p { display: none; font-size: 19px; color: var(--mehendi); }
+  #mehendi .tries p.in { display: block; animation: rise .4s; }
+  #mehendi .finale { position: absolute; left: 0; right: 0; top: 18%; text-align: center; padding: 0 7%; z-index: 6; opacity: 0; transform: translateY(14px); transition: 1s .3s; pointer-events: none; }
+  #mehendi.found .finale { opacity: 1; transform: none; pointer-events: auto; }
+  .finale .pre { font-size: clamp(22px, 6vw, 30px); color: var(--mehendi); }
+  .finale .name { font-family: 'Rozha One'; font-size: clamp(76px, 23vw, 170px); line-height: 1; color: var(--rani); text-shadow: 0 4px 0 rgba(242,191,76,.6); }
+  .finale .post { font-size: clamp(21px, 5.8vw, 28px); line-height: 1.2; margin-top: 8px; color: var(--maroon); }
+  .finale .sign { font-family: 'Rozha One'; font-size: 22px; margin-top: 12px; color: var(--mehendi); }
+  .finale .ph { width: 110px; height: 110px; margin: 0 auto 14px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 4px var(--gold), 0 0 0 8px rgba(179,18,63,.25); background: #fff; }
+  .finale .ph img { width: 100%; height: 100%; object-fit: cover; display: block; mix-blend-mode: multiply; }
+  #mehendi .dock .btn.ghost { color: var(--maroon); box-shadow: 0 0 0 2px var(--maroon); }
+  #mehendi .gota { opacity: .9; }
+
+  @media (min-width: 900px) {
+    .hungry { right: calc(50% - 460px); }
+    #alarms { left: 20%; right: 20%; }
+  }
+  @media (max-height: 720px) {
+    .dial { top: 27%; }
+    .hungry { width: 80px; bottom: 140px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .2s !important; }
+  }
+
+  /* Back to Home Button */
+  .back-home-btn {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--gold-2);
+    border: 1px solid rgba(242, 191, 76, 0.4);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+  }
+  .back-home-btn:hover {
+    background: rgba(242, 191, 76, 0.2);
+    transform: translateY(-2px);
+    color: #fff;
+    border-color: var(--gold);
+  }
+  
+  /* 🌸 Floating Petals & Flowers Animation */
+  .petal-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 15;
+  }
+  .petal {
+    position: absolute;
+    top: -40px;
+    user-select: none;
+    pointer-events: none;
+    animation: petalFall linear infinite;
+  }
+  @keyframes petalFall {
+    0% {
+      transform: translateY(0) rotate(0deg) translateX(0);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translateY(50vh) rotate(180deg) translateX(25px);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(105vh) rotate(360deg) translateX(-20px);
+      opacity: 0;
+    }
+  }
+
+  /* Shortlisted Pre-wedding photos Polaroid stack in Scene 4 */
+  .prewed-stack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 14px auto 8px;
+    max-width: 90vw;
+    flex-wrap: wrap;
+  }
+  .prewed-card {
+    background: #fff;
+    padding: 5px 5px 14px 5px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35), 0 0 0 2px rgba(242,191,76,0.6);
+    transform: rotate(var(--rot, 0deg));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 96px;
+    flex-shrink: 0;
+  }
+  @media(min-width: 640px) {
+    .prewed-card { width: 115px; padding: 6px 6px 18px 6px; }
+  }
+  .prewed-card:hover {
+    transform: scale(1.15) rotate(0deg) !important;
+    z-index: 20;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.5), 0 0 0 3px #ffd700;
+  }
+  .prewed-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+  }
+  .prewed-card span {
+    display: block;
+    font-size: 10px;
+    text-align: center;
+    color: #5c0f22;
+    font-weight: 700;
+    margin-top: 4px;
+    font-family: 'Kalam';
+  }
+
+  /* Extra cute badges */
+  .cute-float-gif {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    background: #fff;
+    overflow: hidden;
+    z-index: 5;
+    animation: float 4s ease-in-out infinite;
+  }
+  .cute-float-gif img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Better positioning for Shaiwal portrait in channi */
+  #sieve .inner img {
+    object-position: center top;
+  }
+  
+  /* 🧲 Authentic Fridge Magnet System (from user reference photo) */
+  .magnet-board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 16px auto 10px;
+    max-width: 95vw;
+    flex-wrap: wrap;
+    perspective: 1000px;
+  }
+  .fridge-magnet {
+    position: relative;
+    width: 110px;
+    height: 145px;
+    border-radius: 14px;
+    padding: 7px 7px 10px 7px;
+    box-shadow: 
+      0 12px 28px rgba(0,0,0,0.5),
+      0 2px 5px rgba(0,0,0,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.7),
+      inset 0 -2px 0 rgba(0,0,0,0.25);
+    transform: rotate(var(--rot, 0deg));
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  @media(min-width: 640px) {
+    .fridge-magnet { width: 130px; height: 172px; padding: 9px 9px 12px 9px; }
+  }
+  .fridge-magnet:hover {
+    transform: translateY(-8px) scale(1.12) rotate(0deg) !important;
+    z-index: 30;
+    box-shadow: 
+      0 22px 40px rgba(0,0,0,0.65),
+      0 0 0 3px #ffd700,
+      inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+  .fridge-magnet.peach {
+    background: linear-gradient(145deg, #ffbfa6, #f89e7e);
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .fridge-magnet.red {
+    background: linear-gradient(145deg, #d3322b, #b51a14);
+    border: 1px solid rgba(255,180,180,0.3);
+  }
+  .fridge-magnet.rose {
+    background: linear-gradient(145deg, #f09595, #e07272);
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .magnet-heart-cutout {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    width: 20px;
+    height: 20px;
+    background: rgba(0,0,0,0.35);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") center/contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") center/contain no-repeat;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.6);
+    z-index: 5;
+  }
+  .magnet-photo-window {
+    width: 100%;
+    height: 100%;
+    border-radius: 9px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+  }
+  .magnet-photo-window img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .fridge-magnet:hover .magnet-photo-window img {
+    transform: scale(1.08);
+  }
+  .magnet-caption {
+    position: absolute;
+    bottom: 3px;
+    right: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.95);
+    font-family: 'Kalam', cursive;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    z-index: 6;
+  }
+  .magnet-quote-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 6px 4px;
+    text-align: center;
+    color: #fff;
+    background: #c8231c;
+    border-radius: 9px;
+  }
+  .magnet-quote-badge {
+    background: #fff;
+    color: #c8231c;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-family: 'Rozha One', serif;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin: 2px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .magnet-quote-script {
+    font-family: 'Kalam', cursive;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.1;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  /* 💌 Floating Header Quick Actions */
+  .header-actions {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+  }
+  .action-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--gold-2);
+    border: 1px solid rgba(242, 191, 76, 0.5);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: all 0.25s ease;
+  }
+  .action-pill-btn:hover {
+    background: rgba(242, 191, 76, 0.25);
+    transform: translateY(-2px);
+    color: #fff;
+    border-color: var(--gold);
+  }
+
+  /* 💌 Festive Modal Backdrop & Card */
+  .kc-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 5, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .kc-modal-backdrop.open {
+    display: flex;
+    animation: fadeInModal 0.3s ease forwards;
+  }
+  @keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .kc-modal-content {
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #fff7ed 0%, #fff1f2 50%, #fef3c7 100%);
+    color: #5c0f22;
+    border-radius: 28px;
+    border: 4px solid var(--gold);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 40px rgba(242,191,76,0.4);
+    padding: 24px;
+    position: relative;
+    transform: scale(0.9);
+    animation: popModal 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  @keyframes popModal {
+    to { transform: scale(1); }
+  }
+  .kc-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(92, 15, 34, 0.1);
+    color: #5c0f22;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .kc-modal-close:hover {
+    background: #5c0f22;
+    color: #fff;
+    transform: rotate(90deg);
+  }
+
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
+  
+  window.openPromiseLetter = function() {
+    const m = document.getElementById('promiseModal');
+    if (m) m.classList.add('open');
+    if (window.confetti) confetti({ particleCount: 70, spread: 70, origin: { y: 0.5 } });
+  };
+
+  window.openGreetingModal = function() {
+    const m = document.getElementById('greetingModal');
+    if (m) m.classList.add('open');
+    if (window.confetti) confetti({ particleCount: 50, spread: 60, origin: { y: 0.5 } });
+  };
+  window.openQuotesModal = function() {
+    const m = document.getElementById('quotesModal');
+    if (m) m.classList.add('open');
+  };
+  window.closeModal = function(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('open');
+  };
+  window.closeOnBackdrop = function(e, id) {
+    if (e.target && e.target.id === id) {
+      window.closeModal(id);
+    }
+  };
+
+  </script>
+</head>
+<body>
+  <a href="/" class="back-home-btn">
+  <!-- Floating Flower Petals -->
+  <div class="petal-container" id="petalContainer"></div>
+
+    <span class="material-icons" style="font-size: 18px;">arrow_back</span> Back to Journey
+  </a>
+  <div class="header-actions">
+    <button class="action-pill-btn" id="bgMusicBtn" onclick="toggleBgMusic()">
+      <span id="musicIcon">🎵</span> <span id="musicText">Play Music</span>
+    </button>
+    <button class="action-pill-btn" onclick="openGreetingModal()">
+      <span>💌</span> Greeting Card
+    </button>
+    <button class="action-pill-btn" onclick="openQuotesModal()">
+      <span>📜</span> Quotes
+    </button>
+  </div>
+
+
+<section class="scene show" id="fast" data-lovely-page="the fast">
+  <div class="gota top"></div>
+  <div class="head">
+    <h1 class="rozha h1" data-lovely-id="t1">nirjala mode: on.</h1>
+    <p class="sub" data-lovely-id="t2">no food. no water. just vibes and you.</p>
+  </div>
+  <div class="dial">
+    <svg viewBox="0 0 400 224" aria-hidden="true">
+      <path d="M20 210 A180 180 0 0 1 380 210" fill="none" stroke="rgba(242,191,76,.45)" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"></path>
+      <path d="M0 212 L400 212" stroke="rgba(242,191,76,.6)" stroke-width="3"></path>
+      <g id="sunDot" transform="translate(48.02097340963729 113.5511769037806)"><circle cx="0" cy="0" r="20" fill="#ffb347"></circle><circle cx="0" cy="0" r="30" fill="rgba(255,179,71,.25)"></circle></g>
+      <g id="moonDot" opacity="0"><circle cx="380" cy="150" r="22" fill="#fff3d2"></circle><circle cx="380" cy="150" r="36" fill="rgba(255,243,210,.2)"></circle></g>
+    </svg>
+    <p class="stamp" data-lovely-id="t3">fasting since 4:52 am</p>
+  </div>
+  <div id="alarms">
+    <p data-lovely-id="t4">that's a streetlight, jaan.</p>
+    <p data-lovely-id="t5">that's neighbour aunty's torch.</p>
+    <p data-lovely-id="t6">that's a plane. sit down.</p>
+    <p data-lovely-id="t7">that's literally a roti. you're hallucinating.</p>
+    <p id="realOne" data-lovely-id="t8">…wait. it's here. it's actually here.</p>
+  </div>
+  <div class="hungry" id="hungry"><img src="/static/images/karwa_chauth/sad_01.gif" alt="me, hungry" data-lovely-id="i1"></div>
+  <div class="dock">
+    <div class="meter"><p data-lovely-id="t9">patience</p><div class="bar"><i id="hp"></i></div></div>
+    <button class="btn pulse" id="btnAsk" data-lovely-id="t10">is the moon out yet?</button>
+    <button class="btn hidden" id="btnRoof" data-lovely-id="t11">run to the roof →</button>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · the channi ═══════════ -->
+<section class="scene" id="channi" data-lovely-page="the channi">
+  <div class="stars" id="kstars"><i style="left: 39.1187%; top: 32.225%; animation-delay: -2.06799s;"></i><i style="left: 89.4447%; top: 44.8598%; animation-delay: -1.25812s;"></i><i style="left: 76.5351%; top: 6.91912%; animation-delay: -2.19254s;"></i><i style="left: 56.4949%; top: 37.2173%; animation-delay: -1.7616s;"></i><i style="left: 6.89781%; top: 10.8645%; animation-delay: -0.166612s;"></i><i style="left: 70.4402%; top: 53.667%; animation-delay: -0.657463s;"></i><i style="left: 20.5511%; top: 53.1493%; animation-delay: -1.14463s;"></i><i style="left: 5.37577%; top: 30.5793%; animation-delay: -1.73811s;"></i><i style="left: 75.043%; top: 6.32642%; animation-delay: -1.23201s;"></i><i style="left: 45.8211%; top: 29.7341%; animation-delay: -1.07346s;"></i><i style="left: 99.79%; top: 2.56031%; animation-delay: -1.35029s;"></i><i style="left: 29.2695%; top: 5.3775%; animation-delay: -1.50543s;"></i><i style="left: 3.30734%; top: 39.4496%; animation-delay: -0.304319s;"></i><i style="left: 17.2452%; top: 30.7737%; animation-delay: -0.913986s;"></i><i style="left: 53.4126%; top: 21.7467%; animation-delay: -2.91545s;"></i><i style="left: 53.5326%; top: 10.0591%; animation-delay: -1.96846s;"></i><i style="left: 85.091%; top: 45.1844%; animation-delay: -1.29839s;"></i><i style="left: 95.5556%; top: 35.5651%; animation-delay: -1.16419s;"></i><i style="left: 76.6171%; top: 17.9917%; animation-delay: -1.11704s;"></i><i style="left: 62.5529%; top: 7.60526%; animation-delay: -1.84973s;"></i><i style="left: 80.1584%; top: 47.4591%; animation-delay: -0.0171858s;"></i><i style="left: 73.0191%; top: 14.5771%; animation-delay: -2.40738s;"></i><i style="left: 64.1285%; top: 0.666628%; animation-delay: -2.19456s;"></i><i style="left: 94.5568%; top: 41.856%; animation-delay: -1.48817s;"></i><i style="left: 41.7908%; top: 18.935%; animation-delay: -2.42351s;"></i><i style="left: 33.4233%; top: 29.0664%; animation-delay: -1.15192s;"></i><i style="left: 35.9588%; top: 7.36342%; animation-delay: -2.56252s;"></i><i style="left: 22.8648%; top: 1.91955%; animation-delay: -0.329007s;"></i><i style="left: 65.7769%; top: 28.1131%; animation-delay: -2.57312s;"></i><i style="left: 4.05197%; top: 8.76647%; animation-delay: -0.269729s;"></i><i style="left: 21.1406%; top: 31.2957%; animation-delay: -1.30335s;"></i><i style="left: 51.75%; top: 25.1369%; animation-delay: -0.0999277s;"></i><i style="left: 17.7117%; top: 17.9776%; animation-delay: -1.38399s;"></i><i style="left: 48.6315%; top: 37.3264%; animation-delay: -2.37195s;"></i><i style="left: 83.968%; top: 14.3021%; animation-delay: -1.09733s;"></i><i style="left: 17.8248%; top: 3.9182%; animation-delay: -0.0522335s;"></i><i style="left: 0.0944893%; top: 23.2406%; animation-delay: -0.796814s;"></i><i style="left: 0.425583%; top: 25.0638%; animation-delay: -0.149645s;"></i><i style="left: 89.4388%; top: 38.1478%; animation-delay: -2.63391s;"></i><i style="left: 98.4458%; top: 47.588%; animation-delay: -0.0887839s;"></i><i style="left: 84.7671%; top: 34.4681%; animation-delay: -1.35489s;"></i><i style="left: 17.0681%; top: 54.2944%; animation-delay: -0.989613s;"></i><i style="left: 6.24304%; top: 21.7439%; animation-delay: -2.22611s;"></i><i style="left: 22.3502%; top: 43.3692%; animation-delay: -1.50993s;"></i><i style="left: 89.7538%; top: 20.1725%; animation-delay: -1.51267s;"></i><i style="left: 68.6271%; top: 26.3285%; animation-delay: -0.590786s;"></i><i style="left: 10.1229%; top: 24.5458%; animation-delay: -0.195013s;"></i><i style="left: 50.1876%; top: 8.71421%; animation-delay: -2.81132s;"></i><i style="left: 82.9239%; top: 40.3529%; animation-delay: -2.4997s;"></i><i style="left: 77.5661%; top: 11.0388%; animation-delay: -2.4574s;"></i></div>
+  <div id="moonK"></div>
+  <div class="head">
+    <h2 class="rozha h2" data-lovely-id="t12">first, the moon.</h2>
+    <p class="sub" data-lovely-id="t13">drag the channi over it.</p>
+  </div>
+  <div class="parapet"></div>
+  <svg class="kdiya" viewBox="0 0 60 50" aria-hidden="true"><path class="fl" d="M30 2 C36 12 37 20 30 26 C23 20 24 12 30 2Z" fill="#ffd27a"></path><path d="M4 26 Q30 32 56 26 Q50 46 30 46 Q10 46 4 26Z" fill="#b4532a"></path></svg>
+  <div id="sieve">
+    <div class="inner"><i class="look" id="lookMoon"></i><img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792438600_DSC00903.webp" alt="my moon (you)" loading="lazy" data-lovely-id="i2"></div>
+    <div class="mesh"></div>
+    <div class="rim"></div>
+  </div>
+  <div class="msg">
+    <p id="mMoon" data-lovely-id="t14">there it is. pretty.</p>
+    <p id="mYou" data-lovely-id="t15">but honestly? mine's prettier.</p>
+  </div>
+  <div class="dock">
+    <p class="chrome" id="sieveTally"></p>
+    <button class="btn hidden" id="btnLower" data-lovely-id="t16">now, look at me</button>
+    <button class="btn hidden" id="btnThali" data-lovely-id="t17">break the fast →</button>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · the thali ═══════════ -->
+<section class="scene" id="thali" data-lovely-page="the thali">
+  <div class="gota top"></div>
+  <div class="head">
+    <h2 class="rozha h2" data-lovely-id="t18">the thali.</h2>
+    <p class="sub" data-lovely-id="t19">do it in order. mummy is watching.</p>
+  </div>
+  <div class="plate">
+    <div class="rangoli"></div>
+    <button class="it" data-i="0" style="left:50%;top:22%" aria-label="diya">
+      <svg viewBox="0 0 80 80"><ellipse cx="40" cy="62" rx="30" ry="8" fill="rgba(90,40,0,.25)"></ellipse><path class="f" d="M40 14 C48 26 50 36 40 44 C30 36 32 26 40 14Z" fill="#ffd27a"></path><path d="M10 44 Q40 50 70 44 Q64 66 40 66 Q16 66 10 44Z" fill="#b4532a"></path><path d="M10 44 Q40 52 70 44 Q40 40 10 44Z" fill="#7a2e0e"></path></svg>
+    </button>
+    <button class="it" data-i="1" style="left:78%;top:46%" aria-label="karwa">
+      <svg viewBox="0 0 80 80"><ellipse cx="40" cy="70" rx="24" ry="6" fill="rgba(90,40,0,.25)"></ellipse><path d="M22 30 Q14 52 26 66 L54 66 Q66 52 58 30Z" fill="#c0612e"></path><rect x="26" y="20" width="28" height="12" rx="4" fill="#a24d22"></rect><path d="M58 40 L74 30 L72 36 L58 48Z" fill="#a24d22"></path><path d="M26 46 Q40 52 54 46" stroke="#f2bf4c" stroke-width="3" fill="none"></path><circle cx="40" cy="56" r="3" fill="#f2bf4c"></circle><path class="pour" d="M74 32 Q82 50 70 76" stroke="#8fd3ff" stroke-width="4" fill="none" stroke-linecap="round"></path></svg>
+    </button>
+    <button class="it" data-i="2" style="left:50%;top:76%" aria-label="glass of water">
+      <svg viewBox="0 0 80 80"><ellipse cx="40" cy="72" rx="18" ry="5" fill="rgba(90,40,0,.25)"></ellipse><path d="M24 14 L56 14 L52 70 L28 70Z" fill="rgba(255,255,255,.45)" stroke="#fff" stroke-width="2.5"></path><path class="water" d="M26.5 32 L53.5 32 L52 70 L28 70Z" fill="#8fd3ff"></path></svg>
+    </button>
+    <button class="it" data-i="3" style="left:22%;top:46%" aria-label="sweets">
+      <svg viewBox="0 0 80 80"><ellipse cx="40" cy="62" rx="28" ry="7" fill="rgba(90,40,0,.25)"></ellipse><circle cx="30" cy="44" r="13" fill="#f29a1c"></circle><circle cx="50" cy="46" r="13" fill="#ffb53d"></circle><circle cx="40" cy="30" r="13" fill="#f7a92c"></circle><circle class="bite" cx="50" cy="24" r="9" fill="#e9a84a"></circle><circle cx="36" cy="26" r="2" fill="#fff4c8"></circle><circle cx="26" cy="40" r="2" fill="#fff4c8"></circle></svg>
+    </button>
+  </div>
+  <div id="rites">
+    <p data-lovely-id="t20">diya lit. officially ready to be judged.</p>
+    <p data-lovely-id="t21">arghya to the moon. done. (you're next.)</p>
+    <p data-lovely-id="t22">first sip of water. from your hands. 14 hours, worth it.</p>
+    <p data-lovely-id="t23">first bite. now i can be nice again.</p>
+  </div>
+  <div class="dock">
+    <p class="chrome" id="riteTally"></p>
+    <button class="btn hidden" id="btnMehendi" data-lovely-id="t24">one more thing…</button>
+  </div>
+</section>
+
+<!-- ═══════════ 4 · mehendi ═══════════ -->
+<section class="scene" id="mehendi" data-lovely-page="find your name">
+  <div class="gota top"></div>
+  <div class="head">
+    <h2 class="rozha h2" data-lovely-id="t25">find your name.</h2>
+    <p class="sub" data-lovely-id="t26">it's hidden in my mehendi. tradition. tap it.</p>
+  </div>
+  <div class="handwrap" id="handwrap">
+    <div class="hand" id="hand">
+      <svg id="handSvg" viewBox="0 0 300 430" aria-hidden="false">
+        <g id="skin" fill="#f2c7a1"><rect x="66" y="186" width="170" height="196" rx="66"></rect><rect x="96" y="330" width="112" height="110" rx="20"></rect><g transform="rotate(-7 92 210)"><rect x="74" y="76" width="36" height="160" rx="18"></rect></g><g transform="rotate(-1 133 210)"><rect x="114" y="42" width="38" height="186" rx="19"></rect></g><g transform="rotate(5 174 210)"><rect x="156" y="58" width="36" height="170" rx="18"></rect></g><g transform="rotate(13 212 230)"><rect x="196" y="112" width="32" height="134" rx="16"></rect></g><g transform="rotate(-40 64 300)"><rect x="34" y="206" width="38" height="128" rx="19"></rect></g></g>
+        <g id="art" fill="none" stroke="#7a2e0e" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-7 92 210)"><path d="M74 108 L74 94 A18 18 0 0 1 110 94 L110 108 Q92 116 74 108Z" fill="#7a2e0e" stroke="none"></path><path d="M77 128 Q92 134 107 128" stroke-width="2.4"></path><path d="M77 135 Q92 141 107 135" stroke-width="1.4" stroke-dasharray="1 4"></path><path d="M92 150 q-8 -6 -10 -14 q8 2 10 14Z M92 150 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M92 168 q-8 -6 -10 -14 q8 2 10 14Z M92 168 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M92 186 q-8 -6 -10 -14 q8 2 10 14Z M92 186 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M78 165.60000000000002 Q92 173.60000000000002 106 165.60000000000002" stroke-width="2"></path><circle cx="83" cy="175.60000000000002" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="92" cy="175.60000000000002" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="101" cy="175.60000000000002" r="1.6" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(-1 133 210)"><path d="M114 75 L114 61 A19 19 0 0 1 152 61 L152 75 Q133 83 114 75Z" fill="#7a2e0e" stroke="none"></path><path d="M117 95 Q133 101 149 95" stroke-width="2.4"></path><path d="M117 102 Q133 108 149 102" stroke-width="1.4" stroke-dasharray="1 4"></path><path d="M133 117 q-8 -6 -10 -14 q8 2 10 14Z M133 117 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M133 135 q-8 -6 -10 -14 q8 2 10 14Z M133 135 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M133 153 q-8 -6 -10 -14 q8 2 10 14Z M133 153 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M118 146.16000000000003 Q133 154.16000000000003 148 146.16000000000003" stroke-width="2"></path><circle cx="123.5" cy="156.16000000000003" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="133" cy="156.16000000000003" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="142.5" cy="156.16000000000003" r="1.6" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(5 174 210)"><path d="M156 90 L156 76 A18 18 0 0 1 192 76 L192 90 Q174 98 156 90Z" fill="#7a2e0e" stroke="none"></path><path d="M159 110 Q174 116 189 110" stroke-width="2.4"></path><path d="M159 117 Q174 123 189 117" stroke-width="1.4" stroke-dasharray="1 4"></path><path d="M174 132 q-8 -6 -10 -14 q8 2 10 14Z M174 132 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M174 150 q-8 -6 -10 -14 q8 2 10 14Z M174 150 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M174 168 q-8 -6 -10 -14 q8 2 10 14Z M174 168 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M160 153.2 Q174 161.2 188 153.2" stroke-width="2"></path><circle cx="165" cy="163.2" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="174" cy="163.2" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="183" cy="163.2" r="1.6" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(13 212 230)"><path d="M196 142 L196 128 A16 16 0 0 1 228 128 L228 142 Q212 150 196 142Z" fill="#7a2e0e" stroke="none"></path><path d="M199 162 Q212 168 225 162" stroke-width="2.4"></path><path d="M199 169 Q212 175 225 169" stroke-width="1.4" stroke-dasharray="1 4"></path><path d="M212 184 q-8 -6 -10 -14 q8 2 10 14Z M212 184 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M212 202 q-8 -6 -10 -14 q8 2 10 14Z M212 202 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M212 220 q-8 -6 -10 -14 q8 2 10 14Z M212 220 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M200 187.04000000000002 Q212 195.04000000000002 224 187.04000000000002" stroke-width="2"></path><circle cx="204" cy="197.04000000000002" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="212" cy="197.04000000000002" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="220" cy="197.04000000000002" r="1.6" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(-40 64 300)"><path d="M34 239 L34 225 A19 19 0 0 1 72 225 L72 239 Q53 247 34 239Z" fill="#7a2e0e" stroke="none"></path><path d="M37 259 Q53 265 69 259" stroke-width="2.4"></path><path d="M37 266 Q53 272 69 266" stroke-width="1.4" stroke-dasharray="1 4"></path><path d="M53 281 q-8 -6 -10 -14 q8 2 10 14Z M53 281 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M53 299 q-8 -6 -10 -14 q8 2 10 14Z M53 299 q8 -6 10 -14 q-8 2 -10 14Z" stroke-width="1.5"></path><path d="M38 277.68 Q53 285.68 68 277.68" stroke-width="2"></path><circle cx="43.5" cy="287.68" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="53" cy="287.68" r="1.6" fill="#7a2e0e" stroke="none"></circle><circle cx="62.5" cy="287.68" r="1.6" fill="#7a2e0e" stroke="none"></circle></g><circle cx="160" cy="262" r="50" stroke-width="2.4" stroke-dasharray="none"></circle><circle cx="160" cy="262" r="38" stroke-width="1.4" stroke-dasharray="2 4"></circle><circle cx="160" cy="262" r="24" stroke-width="2.4" stroke-dasharray="none"></circle><circle cx="160" cy="262" r="9" fill="#7a2e0e" stroke="none"></circle><g transform="rotate(0 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(30 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(60 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(90 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(120 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(150 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(180 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(210 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(240 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(270 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(300 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><g transform="rotate(330 160 262)"><path d="M160 238 q-7 -8 0 -14 q7 6 0 14Z" stroke-width="1.6"></path><circle cx="160" cy="206" r="2" fill="#7a2e0e" stroke="none"></circle></g><path d="M210 262 L204 262" stroke-width="1.4"></path><path d="M208.2962913144534 274.94095225512604 L202.50073635671902 273.3880379845109" stroke-width="1.4"></path><path d="M203.30127018922195 287 L198.10511776651532 284" stroke-width="1.4"></path><path d="M195.35533905932738 297.3553390593274 L191.1126983722081 293.1126983722081" stroke-width="1.4"></path><path d="M185 305.30127018922195 L182 300.1051177665153" stroke-width="1.4"></path><path d="M172.94095225512604 310.2962913144534 L171.3880379845109 304.500736356719" stroke-width="1.4"></path><path d="M160 312 L160 306" stroke-width="1.4"></path><path d="M147.05904774487396 310.2962913144534 L148.61196201548907 304.500736356719" stroke-width="1.4"></path><path d="M135 305.30127018922195 L138 300.1051177665153" stroke-width="1.4"></path><path d="M124.64466094067262 297.3553390593274 L128.8873016277919 293.1126983722081" stroke-width="1.4"></path><path d="M116.69872981077806 287 L121.8948822334847 284" stroke-width="1.4"></path><path d="M111.70370868554659 274.94095225512604 L117.499263643281 273.3880379845109" stroke-width="1.4"></path><path d="M110 262 L116 262" stroke-width="1.4"></path><path d="M111.70370868554659 249.059047744874 L117.49926364328098 250.6119620154891" stroke-width="1.4"></path><path d="M116.69872981077808 237 L121.89488223348471 240" stroke-width="1.4"></path><path d="M124.64466094067262 226.64466094067262 L128.8873016277919 230.8873016277919" stroke-width="1.4"></path><path d="M134.99999999999997 218.69872981077808 L137.99999999999997 223.8948822334847" stroke-width="1.4"></path><path d="M147.05904774487396 213.7037086855466 L148.6119620154891 219.49926364328098" stroke-width="1.4"></path><path d="M160 212 L160 218" stroke-width="1.4"></path><path d="M172.940952255126 213.7037086855466 L171.3880379845109 219.49926364328098" stroke-width="1.4"></path><path d="M185 218.69872981077808 L182 223.8948822334847" stroke-width="1.4"></path><path d="M195.35533905932738 226.64466094067262 L191.1126983722081 230.8873016277919" stroke-width="1.4"></path><path d="M203.30127018922192 236.99999999999997 L198.1051177665153 239.99999999999997" stroke-width="1.4"></path><path d="M208.2962913144534 249.05904774487396 L202.50073635671902 250.6119620154891" stroke-width="1.4"></path><path d="M78 280 C96 300 92 330 120 340 C140 346 150 330 168 338" stroke-width="1.8"></path><path d="M86 296 q-9 -4 -12 -12 q9 2 12 12Z" stroke-width="1.4"></path><path d="M96 318 q9 -4 12 -12 q-9 2 -12 12Z" stroke-width="1.4"></path><path d="M132 340 q-9 -4 -12 -12 q9 2 12 12Z" stroke-width="1.4"></path><path d="M154 334 q9 -4 12 -12 q-9 2 -12 12Z" stroke-width="1.4"></path><path d="M70 330 q-9 -4 -12 -12 q9 2 12 12Z" stroke-width="1.4"></path><path d="M140 300 q9 -4 12 -12 q-9 2 -12 12Z" stroke-width="1.4"></path><circle cx="100" cy="300" r="1.8" fill="#7a2e0e" stroke="none"></circle><circle cx="126" cy="326" r="1.8" fill="#7a2e0e" stroke="none"></circle><circle cx="90" cy="336" r="1.8" fill="#7a2e0e" stroke="none"></circle><circle cx="146" cy="318" r="1.8" fill="#7a2e0e" stroke="none"></circle><circle cx="118" cy="292" r="1.8" fill="#7a2e0e" stroke="none"></circle><path d="M98 356 Q152 364 206 356" stroke-width="2.6" stroke-dasharray="none"></path><path d="M98 368 Q152 376 206 368" stroke-width="1.4" stroke-dasharray="1 5"></path><path d="M98 380 Q152 388 206 380" stroke-width="2.6" stroke-dasharray="none"></path><path d="M102 384 q6 10 12 0" stroke-width="1.8"></path><path d="M114 384 q6 10 12 0" stroke-width="1.8"></path><path d="M126 384 q6 10 12 0" stroke-width="1.8"></path><path d="M138 384 q6 10 12 0" stroke-width="1.8"></path><path d="M150 384 q6 10 12 0" stroke-width="1.8"></path><path d="M162 384 q6 10 12 0" stroke-width="1.8"></path><path d="M174 384 q6 10 12 0" stroke-width="1.8"></path><path d="M186 384 q6 10 12 0" stroke-width="1.8"></path><path d="M198 384 q6 10 12 0" stroke-width="1.8"></path><path d="M152 392 l0 30 M140 404 q12 10 24 0" stroke-width="1.8"></path></g>
+        <text id="hiddenName" x="0" y="0" text-anchor="middle" transform="translate(112 316) rotate(-24)" data-lovely-id="t27">Shaiwal</text>
+      </svg>
+    </div>
+    <i class="halo-hint" id="haloHint"></i>
+  </div>
+  <div class="tries">
+    <p data-lovely-id="t28">nope. look closer.</p>
+    <p data-lovely-id="t29">closer… near the thumb, maybe?</p>
+    <p data-lovely-id="t30">okay okay, it's glowing now.</p>
+  </div>
+  <div class="finale">
+    <div class="ph"><img src="/static/images/karwa_chauth/cuddling_01.gif" alt="us" loading="lazy" data-lovely-id="i3"></div>
+    <p class="pre" data-lovely-id="t31">happy karwa chauth,</p>
+    <h2 class="name" data-lovely-id="t32">Shaiwal</h2>
+    <p class="post" data-lovely-id="t33">saat janam? done. but order dinner first.</p>
+    
+    <!-- Special Karwa Chauth Promise Envelope -->
+    <div style="margin: 18px auto 6px; max-width: 320px;">
+      <button onclick="openPromiseLetter()" class="btn pulse" style="font-size: 16px; padding: 10px 22px; display: inline-flex; items-center; gap: 8px;">
+        <span>💍</span> Open Shaiwal's Promise Letter
+      </button>
+    </div>
+
+    <!-- Shortlisted Prewedding Photos Fridge Magnets (from reference) -->
+    <div class="magnet-board">
+      <!-- Magnet 1: Peach coral photo -->
+      <div class="fridge-magnet peach" style="--rot: -4deg;" title="Royal Look">
+        <span class="magnet-heart-cutout"></span>
+        <div class="magnet-photo-window">
+          <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437391_DSC00003.webp" alt="Us 1">
+        </div>
+        <span class="magnet-caption">Royal Us ✨</span>
+      </div>
+
+      <!-- Magnet 2: Deep Red Typography Quote (Exact phrase from reference) -->
+      <div class="fridge-magnet red" style="--rot: 2deg;" title="I Belong With You">
+        <span class="magnet-heart-cutout"></span>
+        <div class="magnet-photo-window">
+          <div class="magnet-quote-content">
+            <span class="magnet-quote-badge">I BELONG</span>
+            <span class="magnet-quote-script">with you</span>
+            <span class="magnet-quote-badge">YOU BELONG</span>
+            <span class="magnet-quote-script">with me ❤️</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Magnet 3: Rose Photo -->
+      <div class="fridge-magnet rose" style="--rot: -2deg;" title="Shaiwal • Chaand">
+        <span class="magnet-heart-cutout"></span>
+        <div class="magnet-photo-window">
+          <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792438600_DSC00903.webp" alt="My Moon">
+        </div>
+        <span class="magnet-caption">My Moon 🌙</span>
+      </div>
+
+      <!-- Magnet 4: Peach photo -->
+      <div class="fridge-magnet peach" style="--rot: 4deg;" title="Together Forever">
+        <span class="magnet-heart-cutout"></span>
+        <div class="magnet-photo-window">
+          <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792437411_DSC00040.webp" alt="Us 3">
+        </div>
+        <span class="magnet-caption">Saat Janam 💖</span>
+      </div>
+    </div>
+
+
+    <p class="sign" data-lovely-id="t34">— Puchki 💖</p>
+  </div>
+  <div class="dock">
+    <button class="btn ghost hidden" id="btnAgain" data-lovely-id="t35">wait for the moon again ↺</button>
+  </div>
+</section>
+
+  <script>
+
+(function () {
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const NS = 'http://www.w3.org/2000/svg';
+  function show(id) { $$('.scene').forEach(s => s.classList.toggle('show', s.id === id)); }
+  function mk(tag, a, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p && p.appendChild(e); return e; }
+
+  /* ── 1 · the fast ── */
+  const alarms = $$('#alarms p'), FALSE = alarms.length - 1;
+  let asks = 0;
+  const sun = $('#sunDot');
+  function sunAt(t) { const a = Math.PI * (1 - t); sun.setAttribute('transform', `translate(${200 + Math.cos(a) * 180} ${210 - Math.sin(a) * 180})`); }
+  sunAt(.18);
+  $('#btnAsk').addEventListener('click', () => {
+    alarms.forEach(a => a.classList.remove('in'));
+    if (asks < FALSE) {
+      alarms[asks].classList.add('in');
+      asks++;
+      sunAt(.18 + asks * .17);
+      $('#hp').style.setProperty('--hp', Math.max(6, 92 - asks * 22) + '%');
+      const h = $('#hungry'); h.classList.remove('wobble'); void h.offsetWidth; h.classList.add('wobble');
+      if (navigator.vibrate) { try { navigator.vibrate(15); } catch (e) {} }
+    } else {
+      $('#realOne').classList.add('in');
+      sunAt(1); sun.setAttribute('opacity', 0);
+      $('#moonDot').setAttribute('opacity', 1);
+      $('#btnAsk').classList.add('hidden');
+      setTimeout(() => $('#btnRoof').classList.remove('hidden'), 500);
+    }
+  });
+  $('#btnRoof').addEventListener('click', startChanni);
+
+  /* ── 2 · the channi ── */
+  const ch = $('#channi'), sieve = $('#sieve'), moonK = $('#moonK'), look = $('#lookMoon');
+  const ks = $('#kstars');
+  for (let i = 0; i < 50; i++) { const s = document.createElement('i'); s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 55 + '%'; s.style.animationDelay = -Math.random() * 3 + 's'; ks.appendChild(s); }
+  let mx = 0, my = 0, sx = 0, sy = 0, aligned = false, drag = false, off = { x: 0, y: 0 };
+  function placeMoon() { mx = innerWidth * .5; my = innerHeight * .36; moonK.style.left = mx + 'px'; moonK.style.top = my + 'px'; }
+  function placeSieve(x, y) {
+    sx = Math.max(60, Math.min(innerWidth - 60, x)); sy = Math.max(90, Math.min(innerHeight - 120, y));
+    sieve.style.left = sx + 'px'; sieve.style.top = sy + 'px';
+    const r = sieve.getBoundingClientRect(), inner = r.width * .82;
+    look.style.left = (mx - sx + inner / 2) + 'px'; look.style.top = (my - sy + inner / 2) + 'px';
+    if (aligned) return;
+    const d = Math.hypot(sx - mx, sy - my);
+    $('#sieveTally').textContent = d < 90 ? 'almost…' : 'drag the channi';
+    if (d < 34) align();
+  }
+  function align() {
+    aligned = true; drag = false;
+    ch.classList.add('aligned');
+    placeSieve(mx, my);
+    $('#sieveTally').textContent = '';
+    $('#mMoon').classList.add('in');
+    if (navigator.vibrate) { try { navigator.vibrate([20, 40, 20]); } catch (e) {} }
+    setTimeout(() => $('#btnLower').classList.remove('hidden'), 900);
+  }
+  sieve.addEventListener('pointerdown', e => { if (aligned) return; drag = true; off = { x: e.clientX - sx, y: e.clientY - sy }; try { sieve.setPointerCapture(e.pointerId); } catch (er) {} });
+  sieve.addEventListener('pointermove', e => { if (drag) placeSieve(e.clientX - off.x, e.clientY - off.y); });
+  ['pointerup', 'pointercancel'].forEach(ev => sieve.addEventListener(ev, () => { drag = false; }));
+  ch.addEventListener('pointerdown', e => { if (aligned || e.target.closest('#sieve') || e.target.closest('.dock')) return; placeSieve(e.clientX, e.clientY); });
+  function startChanni() {
+    aligned = false;
+    ch.classList.remove('aligned', 'lowered');
+    $$('#channi .msg p').forEach(p => p.classList.remove('in'));
+    $('#btnLower').classList.add('hidden'); $('#btnThali').classList.add('hidden');
+    show('channi');
+    placeMoon(); placeSieve(innerWidth * .5, innerHeight * .68);
+  }
+  addEventListener('resize', () => { if (ch.classList.contains('show')) { placeMoon(); placeSieve(aligned ? mx : sx, aligned ? my : sy); } });
+  $('#btnLower').addEventListener('click', () => {
+    ch.classList.add('lowered');
+    $('#mMoon').classList.remove('in'); $('#mYou').classList.add('in');
+    $('#btnLower').classList.add('hidden');
+    setTimeout(() => $('#btnThali').classList.remove('hidden'), 1800);
+  });
+  $('#btnThali').addEventListener('click', startThali);
+
+  /* ── 3 · the thali (in order) ── */
+  const its = $$('.plate .it'), rites = $$('#rites p');
+  let step = 0;
+  function startThali() {
+    step = 0;
+    its.forEach(i => i.classList.remove('done'));
+    rites.forEach(r => r.classList.remove('in'));
+    $('#btnMehendi').classList.add('hidden');
+    $('#riteTally').textContent = 'start with the diya';
+    show('thali');
+  }
+  const NEXT = ['start with the diya', 'now the karwa', 'now the water', 'now the sweet', ''];
+  its.forEach(b => b.addEventListener('click', () => {
+    const i = +b.dataset.i;
+    if (i !== step) { $('#riteTally').textContent = 'uh-uh. ' + NEXT[step] + '.'; b.animate && b.animate([{ transform: 'translate(-50%,-50%) rotate(0)' }, { transform: 'translate(-50%,-50%) rotate(-8deg)' }, { transform: 'translate(-50%,-50%) rotate(8deg)' }, { transform: 'translate(-50%,-50%) rotate(0)' }], { duration: 360 }); return; }
+    b.classList.add('done');
+    rites.forEach(r => r.classList.remove('in'));
+    rites[i].classList.add('in');
+    step++;
+    $('#riteTally').textContent = NEXT[step];
+    if (step >= its.length) setTimeout(() => $('#btnMehendi').classList.remove('hidden'), 1200);
+  }));
+  $('#btnMehendi').addEventListener('click', startMehendi);
+
+  /* ── 4 · the mehendi hand ── */
+  (function drawHand() {
+    const skin = $('#skin'), art = $('#art');
+    const fingers = [
+      { x: 74, y: 76, w: 36, h: 160, r: -7, cx: 92, cy: 210 },
+      { x: 114, y: 42, w: 38, h: 186, r: -1, cx: 133, cy: 210 },
+      { x: 156, y: 58, w: 36, h: 170, r: 5, cx: 174, cy: 210 },
+      { x: 196, y: 112, w: 32, h: 134, r: 13, cx: 212, cy: 230 },
+      { x: 34, y: 206, w: 38, h: 128, r: -40, cx: 64, cy: 300 }
+    ];
+    mk('rect', { x: 66, y: 186, width: 170, height: 196, rx: 66 }, skin);
+    mk('rect', { x: 96, y: 330, width: 112, height: 110, rx: 20 }, skin);
+    fingers.forEach(f => {
+      const g = mk('g', { transform: `rotate(${f.r} ${f.cx} ${f.cy})` }, skin);
+      mk('rect', { x: f.x, y: f.y, width: f.w, height: f.h, rx: f.w / 2 }, g);
+      const a = mk('g', { transform: `rotate(${f.r} ${f.cx} ${f.cy})` }, art);
+      // filled tip
+      const tip = `M${f.x} ${f.y + f.w / 2 + 14} L${f.x} ${f.y + f.w / 2} A${f.w / 2} ${f.w / 2} 0 0 1 ${f.x + f.w} ${f.y + f.w / 2} L${f.x + f.w} ${f.y + f.w / 2 + 14} Q${f.x + f.w / 2} ${f.y + f.w / 2 + 22} ${f.x} ${f.y + f.w / 2 + 14}Z`;
+      mk('path', { d: tip, fill: '#7a2e0e', stroke: 'none' }, a);
+      const b1 = f.y + f.w / 2 + 34, b2 = f.y + f.h * .56;
+      mk('path', { d: `M${f.x + 3} ${b1} Q${f.x + f.w / 2} ${b1 + 6} ${f.x + f.w - 3} ${b1}`, 'stroke-width': 2.4 }, a);
+      mk('path', { d: `M${f.x + 3} ${b1 + 7} Q${f.x + f.w / 2} ${b1 + 13} ${f.x + f.w - 3} ${b1 + 7}`, 'stroke-width': 1.4, 'stroke-dasharray': '1 4' }, a);
+      // vine of leaves down the finger
+      for (let k = 0; k < 3; k++) {
+        const yy = b1 + 22 + k * 18; if (yy > f.y + f.h - 18) break;
+        const xm = f.x + f.w / 2;
+        mk('path', { d: `M${xm} ${yy} q-8 -6 -10 -14 q8 2 10 14Z M${xm} ${yy} q8 -6 10 -14 q-8 2 -10 14Z`, 'stroke-width': 1.5 }, a);
+      }
+      mk('path', { d: `M${f.x + 4} ${b2} Q${f.x + f.w / 2} ${b2 + 8} ${f.x + f.w - 4} ${b2}`, 'stroke-width': 2 }, a);
+      for (let k = 0; k < 3; k++) mk('circle', { cx: f.x + f.w * (.25 + k * .25), cy: b2 + 10, r: 1.6, fill: '#7a2e0e', stroke: 'none' }, a);
+    });
+    // palm mandala
+    const cx0 = 160, cy0 = 262;
+    [50, 38, 24].forEach((r, i) => mk('circle', { cx: cx0, cy: cy0, r, 'stroke-width': i === 1 ? 1.4 : 2.4, 'stroke-dasharray': i === 1 ? '2 4' : 'none' }, art));
+    mk('circle', { cx: cx0, cy: cy0, r: 9, fill: '#7a2e0e', stroke: 'none' }, art);
+    for (let i = 0; i < 12; i++) {
+      const g = mk('g', { transform: `rotate(${i * 30} ${cx0} ${cy0})` }, art);
+      mk('path', { d: `M${cx0} ${cy0 - 24} q-7 -8 0 -14 q7 6 0 14Z`, 'stroke-width': 1.6 }, g);
+      mk('circle', { cx: cx0, cy: cy0 - 56, r: 2, fill: '#7a2e0e', stroke: 'none' }, g);
+    }
+    for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; mk('path', { d: `M${cx0 + Math.cos(a) * 50} ${cy0 + Math.sin(a) * 50} L${cx0 + Math.cos(a) * 44} ${cy0 + Math.sin(a) * 44}`, 'stroke-width': 1.4 }, art); }
+    // vines around the hidden name near the thumb base
+    mk('path', { d: 'M78 280 C96 300 92 330 120 340 C140 346 150 330 168 338', 'stroke-width': 1.8 }, art);
+    [[86, 296], [96, 318], [132, 340], [154, 334], [70, 330], [140, 300]].forEach(([x, y], i) => mk('path', { d: `M${x} ${y} q${i % 2 ? 9 : -9} -4 ${i % 2 ? 12 : -12} -12 q${i % 2 ? -9 : 9} 2 ${i % 2 ? -12 : 12} 12Z`, 'stroke-width': 1.4 }, art));
+    [[100, 300], [126, 326], [90, 336], [146, 318], [118, 292]].forEach(([x, y]) => mk('circle', { cx: x, cy: y, r: 1.8, fill: '#7a2e0e', stroke: 'none' }, art));
+    // wrist bands
+    [356, 368, 380].forEach((y, i) => mk('path', { d: `M98 ${y} Q152 ${y + 8} 206 ${y}`, 'stroke-width': i === 1 ? 1.4 : 2.6, 'stroke-dasharray': i === 1 ? '1 5' : 'none' }, art));
+    for (let i = 0; i < 9; i++) mk('path', { d: `M${102 + i * 12} 384 q6 10 12 0`, 'stroke-width': 1.8 }, art);
+    mk('path', { d: 'M152 392 l0 30 M140 404 q12 10 24 0', 'stroke-width': 1.8 }, art);
+  })();
+  const mehendi = $('#mehendi'), hiddenName = $('#hiddenName');
+  let misses = 0, foundIt = false;
+  function namePoint() { const r = hiddenName.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+  function startMehendi() {
+    misses = 0; foundIt = false;
+    mehendi.classList.remove('zoom', 'found', 'hint');
+    $$('.tries p').forEach(p => p.classList.remove('in'));
+    $('#btnAgain').classList.add('hidden');
+    show('mehendi');
+  }
+  $('#handwrap').addEventListener('pointerdown', e => {
+    if (foundIt) return;
+    const p = namePoint();
+    const d = Math.hypot(e.clientX - p.x, e.clientY - p.y);
+    if (d < Math.max(36, innerWidth * .09)) return found();
+    const m = document.createElement('i'); m.className = 'miss';
+    const w = $('#handwrap').getBoundingClientRect();
+    m.style.left = (e.clientX - w.left) + 'px'; m.style.top = (e.clientY - w.top) + 'px';
+    $('#handwrap').appendChild(m); setTimeout(() => m.remove(), 700);
+    $$('.tries p').forEach(t => t.classList.remove('in'));
+    $$('.tries p')[Math.min(misses, 2)].classList.add('in');
+    misses++;
+    if (misses >= 3) {
+      const hh = $('#haloHint');
+      hh.style.left = (p.x - w.left) + 'px'; hh.style.top = (p.y - w.top) + 'px';
+      mehendi.classList.add('hint');
+    }
+  });
+  function found() {
+    foundIt = true;
+    mehendi.classList.remove('hint');
+    $$('.tries p').forEach(t => t.classList.remove('in'));
+    const p = namePoint(), h = $('#hand').getBoundingClientRect();
+    $('#hand').style.setProperty('--ox', ((p.x - h.left) / h.width * 100) + '%');
+    $('#hand').style.setProperty('--oy', ((p.y - h.top) / h.height * 100) + '%');
+    mehendi.classList.add('zoom');
+    if (navigator.vibrate) { try { navigator.vibrate([20, 30, 60]); } catch (e) {} }
+    setTimeout(() => { mehendi.classList.remove('zoom'); mehendi.classList.add('found'); 
+    if (window.confetti) {
+      confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
+      setTimeout(() => confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0 } }), 400);
+      setTimeout(() => confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 1 } }), 800);
+    }
+ }, reduce ? 500 : 2200);
+    setTimeout(() => $('#btnAgain').classList.remove('hidden'), 3400);
+  }
+  $('#btnAgain').addEventListener('click', () => {
+    asks = 0; sunAt(.18); sun.setAttribute('opacity', 1); $('#moonDot').setAttribute('opacity', 0);
+    alarms.forEach(a => a.classList.remove('in'));
+    $('#hp').style.setProperty('--hp', '92%');
+    $('#btnAsk').classList.remove('hidden'); $('#btnRoof').classList.add('hidden');
+    show('fast');
+  });
+
+
+  
+  let isPlayingMusic = false;
+  window.toggleBgMusic = function() {
+    const audio = document.getElementById('kcAudio');
+    const icon = document.getElementById('musicIcon');
+    const text = document.getElementById('musicText');
+    const btn = document.getElementById('bgMusicBtn');
+    if (!audio) return;
+    if (audio.paused) {
+      audio.play().then(() => {
+        isPlayingMusic = true;
+        icon.textContent = '🔊';
+        text.textContent = 'Pause Music';
+        btn.style.borderColor = 'var(--gold)';
+        btn.style.boxShadow = '0 0 15px rgba(242,191,76,0.6)';
+      }).catch(err => console.log('Audio autoplay blocked:', err));
+    } else {
+      audio.pause();
+      isPlayingMusic = false;
+      icon.textContent = '🎵';
+      text.textContent = 'Play Music';
+      btn.style.borderColor = 'rgba(242,191,76,0.5)';
+      btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+    }
+  };
+
+  // Auto-play audio on first user touch/click anywhere on page
+  document.addEventListener('pointerdown', function startOnTouch() {
+    const audio = document.getElementById('kcAudio');
+    if (audio && audio.paused && !isPlayingMusic) {
+      audio.play().then(() => {
+        isPlayingMusic = true;
+        const icon = document.getElementById('musicIcon');
+        const text = document.getElementById('musicText');
+        const btn = document.getElementById('bgMusicBtn');
+        if (icon) icon.textContent = '🔊';
+        if (text) text.textContent = 'Pause Music';
+        if (btn) btn.style.boxShadow = '0 0 15px rgba(242,191,76,0.6)';
+      }).catch(() => {});
+    }
+  }, { once: true });
+
+  // Generate floating flower petals (marigold, rose, petals)
+  (function createPetals() {
+    const pc = document.getElementById('petalContainer');
+    if (!pc) return;
+    const flowers = ['🌸', '🌺', '🌼', '✨', '🥀', '💛', '💖'];
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = flowers[i % flowers.length];
+      p.style.left = (Math.random() * 100) + 'vw';
+      p.style.fontSize = (14 + Math.random() * 18) + 'px';
+      p.style.animationDuration = (6 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 8) + 's';
+      pc.appendChild(p);
+    }
+  })();
+
+})();
+
+  
+  
+  window.openPromiseLetter = function() {
+    const m = document.getElementById('promiseModal');
+    if (m) m.classList.add('open');
+    if (window.confetti) confetti({ particleCount: 70, spread: 70, origin: { y: 0.5 } });
+  };
+
+  window.openGreetingModal = function() {
+    const m = document.getElementById('greetingModal');
+    if (m) m.classList.add('open');
+    if (window.confetti) confetti({ particleCount: 50, spread: 60, origin: { y: 0.5 } });
+  };
+  window.openQuotesModal = function() {
+    const m = document.getElementById('quotesModal');
+    if (m) m.classList.add('open');
+  };
+  window.closeModal = function(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('open');
+  };
+  window.closeOnBackdrop = function(e, id) {
+    if (e.target && e.target.id === id) {
+      window.closeModal(id);
+    }
+  };
+
+  </script>
+
+  
+  <!-- 💍 Shaiwal's Promise Letter Modal -->
+  <div class="kc-modal-backdrop" id="promiseModal" onclick="closeOnBackdrop(event, 'promiseModal')">
+    <div class="kc-modal-content" style="border-color: #ffd700;">
+      <button class="kc-modal-close" onclick="closeModal('promiseModal')">✕</button>
+      <div style="text-align: center; margin-bottom: 14px;">
+        <span style="font-size: 34px;">💍</span>
+        <h3 class="rozha" style="font-size: 28px; color: #b3123f; margin-top: 4px;">My Karwa Chauth Vow</h3>
+        <p style="font-size: 13px; color: #7a2e0e; font-weight: bold; letter-spacing: 0.12em; text-transform: uppercase;">For My Wifey To Be • Puchki</p>
+      </div>
+      <div style="background: #fff; border: 2px solid rgba(242,191,76,0.9); border-radius: 18px; padding: 20px; font-family: 'Kalam', cursive; font-size: 17px; line-height: 1.5; color: #5c0f22; box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);">
+        <p style="margin-bottom: 10px;">
+          🌸 <strong>1.</strong> I promise to always bring your favorite treats right after you open your fast.
+        </p>
+        <p style="margin-bottom: 10px;">
+          🌸 <strong>2.</strong> I promise to be your personal cheerleader, listener, and safe space, through all seasons of life.
+        </p>
+        <p style="margin-bottom: 10px;">
+          🌸 <strong>3.</strong> I promise to keep looking at you through every channi and every chaand, loving you more with each passing year.
+        </p>
+        <p style="margin-top: 14px; text-align: right; font-weight: bold; font-size: 19px; color: #b3123f;">
+          Sealed with infinite love, Shai 💖
+        </p>
+      </div>
+      <div style="text-align: center; margin-top: 18px;">
+        <button class="btn" onclick="closeModal('promiseModal')">Keep Forever ❤️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 💌 Festive Greeting Card Modal -->
+  <div class="kc-modal-backdrop" id="greetingModal" onclick="closeOnBackdrop(event, 'greetingModal')">
+    <div class="kc-modal-content">
+      <button class="kc-modal-close" onclick="closeModal('greetingModal')">✕</button>
+      <div style="text-align: center; margin-bottom: 16px;">
+        <span style="font-size: 32px;">💌</span>
+        <h3 class="rozha" style="font-size: 28px; color: #b3123f; margin-top: 6px;">Karwa Chauth Mubarak, Puchki!</h3>
+        <p style="font-size: 14px; color: #7a2e0e; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase;">A Royal Letter for My Jaan</p>
+      </div>
+      <div style="background: rgba(179,18,63,0.06); border: 2px dashed rgba(242,191,76,0.8); border-radius: 18px; padding: 18px; font-family: 'Kalam', cursive; font-size: 18px; line-height: 1.4; color: #5c0f22;">
+        <p style="margin-bottom: 12px;">
+          "Dearest Puchki, thank you for filling every single day of our lives with warmth, smiles, and sweet unconditional care. Watching you fast for me today melts my heart completely."
+        </p>
+        <p style="margin-bottom: 12px;">
+          "May this auspicious Karwa Chauth bring you lifelong laughter, endless happiness, and lots of delicious dinner after the moon rises! Saat janam? Done deal."
+        </p>
+        <div style="text-align: right; font-weight: bold; font-size: 20px; color: #b3123f; margin-top: 14px;">
+          — Forever Yours, Shaiwal 💖
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn" onclick="closeModal('greetingModal')">Close Card ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📜 Romantic Quotes Modal -->
+  <div class="kc-modal-backdrop" id="quotesModal" onclick="closeOnBackdrop(event, 'quotesModal')">
+    <div class="kc-modal-content">
+      <button class="kc-modal-close" onclick="closeModal('quotesModal')">✕</button>
+      <div style="text-align: center; margin-bottom: 16px;">
+        <span style="font-size: 32px;">📜</span>
+        <h3 class="rozha" style="font-size: 28px; color: #b3123f; margin-top: 6px;">Karwa Chauth Quotes</h3>
+        <p style="font-size: 14px; color: #7a2e0e; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase;">Words From Shaiwal's Heart</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: #fff; padding: 14px 16px; border-radius: 14px; border-left: 4px solid #b3123f; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <p style="font-family: 'Kalam', cursive; font-size: 18px; color: #5c0f22; line-height: 1.3;">
+            "चाँद की चमक भी फीकी लगे तेरे नूर के आगे,<br/>बस एक तू ही रहे हर दुआ में मेरे आगे। 🌙"
+          </p>
+        </div>
+        <div style="background: #fff; padding: 14px 16px; border-radius: 14px; border-left: 4px solid #f2bf4c; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <p style="font-family: 'Kalam', cursive; font-size: 18px; color: #5c0f22; line-height: 1.3;">
+            "The moon is in the sky, but my entire universe is standing right in front of me with the channi. ✨"
+          </p>
+        </div>
+        <div style="background: #fff; padding: 14px 16px; border-radius: 14px; border-left: 4px solid #d3322b; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+          <p style="font-family: 'Kalam', cursive; font-size: 18px; color: #5c0f22; line-height: 1.3;">
+            "I belong with you, you belong with me. Happy first Karwa Chauth journey together! ❤️"
+          </p>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn" onclick="closeModal('quotesModal')">Back to Moment 🪔</button>
+      </div>
+    </div>
+  </div>
+
+
+  <audio id="kcAudio" src="/static/audio/karwa_chauth_song.mp3" loop preload="auto"></audio>
+</body>
+</html>
