@@ -996,21 +996,7 @@
     }
   };
 
-  // Auto-play audio on first user touch/click anywhere on page
-  document.addEventListener('pointerdown', function startOnTouch() {
-    const audio = document.getElementById('kcAudio');
-    if (audio && audio.paused && !isPlayingMusic) {
-      audio.play().then(() => {
-        isPlayingMusic = true;
-        const icon = document.getElementById('musicIcon');
-        const text = document.getElementById('musicText');
-        const btn = document.getElementById('bgMusicBtn');
-        if (icon) icon.textContent = '🔊';
-        if (text) text.textContent = 'Pause Music';
-        if (btn) btn.style.boxShadow = '0 0 15px rgba(242,191,76,0.6)';
-      }).catch(() => {});
-    }
-  }, { once: true });
+  // Audio only plays when user explicitly clicks the Play Music button
 
   // Generate floating flower petals (marigold, rose, petals)
   (function createPetals() {
