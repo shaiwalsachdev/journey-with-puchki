@@ -151,8 +151,14 @@
                     href="/timeline">Timeline</a>
                 <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'gallery' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/gallery">Gallery</a>
+                {% if settings.birthday_mode %}
                 <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-extrabold transition-all {% if page == 'birthday' %}bg-pink-500 text-white shadow-md shadow-pink-500/30{% else %}text-pink-400 hover:bg-pink-950/40{% endif %}"
                     href="/birthday">🎂 Birthday ✨</a>
+                {% endif %}
+                {% if settings.karwa_chauth_mode %}
+                <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-extrabold transition-all {% if page == 'karwa_chauth' %}bg-amber-500 text-maroon shadow-md shadow-amber-500/30{% else %}text-amber-400 hover:bg-amber-950/40{% endif %}"
+                    href="/karwa-chauth">🌙 Karwa Chauth</a>
+                {% endif %}
                 <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'events' or page == 'upcoming' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
                     href="/events">Events</a>
                 <a class="px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all {% if page == 'wishlist' %}bg-primary/20 text-primary{% elif page in ['roka', 'prewedding'] %}text-white hover:text-white hover:bg-white/15{% else %}text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-black/5 dark:hover:bg-white/5{% endif %}"
@@ -200,9 +206,16 @@
         <a href="/" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Home</a>
         <a href="/timeline" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Timeline</a>
         <a href="/gallery" class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5">Gallery</a>
+        {% if settings.birthday_mode %}
         <a href="/birthday"
             class="block py-2.5 px-4 rounded-xl text-primary font-bold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">cake</span> Birthday ✨</a>
+        {% endif %}
+        {% if settings.karwa_chauth_mode %}
+        <a href="/karwa-chauth"
+            class="block py-2.5 px-4 rounded-xl text-amber-500 font-bold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                class="material-icons text-sm mr-3 text-amber-500">nights_stay</span> Karwa Chauth 🌙</a>
+        {% endif %}
         <a href="/events"
             class="block py-2.5 px-4 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                 class="material-icons text-sm mr-3 text-primary">event</span> Events</a>

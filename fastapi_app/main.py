@@ -139,18 +139,11 @@ async def update_settings_route(request: Request):
         return JSONResponse(status_code=401, content={"status": "error", "message": "Unauthorized"})
 
     data = await request.json()
-    current_settings = await get_settings()
+    allowed_keys = ["private_mode", "birthday_mode", "karwa_chauth_mode", "theme", "hero_images"]
+    update_dict = {k: data[k] for k in allowed_keys if k in data}
 
-    if "private_mode" in data:
-        current_settings["private_mode"] = data["private_mode"]
-    if "birthday_mode" in data:
-        current_settings["birthday_mode"] = data["birthday_mode"]
-    if "theme" in data:
-        current_settings["theme"] = data["theme"]
-    if "hero_images" in data:
-        current_settings["hero_images"] = data["hero_images"]
-
-    await save_settings(current_settings)
+    from fastapi_app.database import update_settings_fields
+    current_settings = await update_settings_fields(update_dict)
     return {"status": "success", "settings": current_settings}
 
 
@@ -423,9 +416,12 @@ async def tv_gallery(request: Request):
 @app.get("/tv/birthday", response_class=HTMLResponse)
 async def tv_birthday(request: Request):
     """TV Birthday special showcase."""
+    settings = request.state.settings
+    is_admin = request.cookies.get("session") == "admin_logged_in"
+    if not settings.get("birthday_mode") and not is_admin:
+        return RedirectResponse(url="/tv", status_code=303)
     from fastapi_app.database import get_all_memories
     from fastapi_app.storage import R2_PUBLIC_URL
-    settings = request.state.settings
 
     memories = await get_all_memories()
     bday_mem = next((m for m in memories if m.get("id") == 25), None)
@@ -670,6 +666,9 @@ async def wedding_page(request: Request):
 @app.get("/karva-chauth", response_class=HTMLResponse)
 async def karwa_chauth_page(request: Request):
     settings = request.state.settings
+    is_admin = request.cookies.get("session") == "admin_logged_in"
+    if not settings.get("karwa_chauth_mode") and not is_admin:
+        return RedirectResponse(url="/", status_code=303)
     return templates.TemplateResponse("karwa_chauth.html", {
         "request": request,
         "page": "karwa_chauth",
@@ -1398,6 +1397,9 @@ async def delete_honeymoon_document(doc_id: str):
 @app.get("/birthday", response_class=HTMLResponse)
 async def birthday(request: Request):
     settings = request.state.settings
+    is_admin = request.cookies.get("session") == "admin_logged_in"
+    if not settings.get("birthday_mode") and not is_admin:
+        return RedirectResponse(url="/", status_code=303)
     memories = await get_all_memories()
     
     # Optional logic to pick "hot" tagged memories to pass to the template

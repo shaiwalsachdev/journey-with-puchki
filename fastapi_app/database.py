@@ -73,7 +73,7 @@ async def get_all_chat_logs(limit: int = 100):
 async def get_settings():
     db = get_db()
     settings = await db.settings.find_one({}, {"_id": 0})
-    defaults = {"private_mode": False, "theme": "classic", "birthday_mode": False, "hero_images": []}
+    defaults = {"private_mode": False, "theme": "classic", "birthday_mode": False, "karwa_chauth_mode": False, "hero_images": []}
     if settings:
         # Ensure all default keys exist
         for key, val in defaults.items():
@@ -85,6 +85,12 @@ async def get_settings():
 async def save_settings(settings: dict):
     db = get_db()
     await db.settings.replace_one({}, settings, upsert=True)
+
+async def update_settings_fields(fields: dict):
+    db = get_db()
+    if fields:
+        await db.settings.update_one({}, {"$set": fields}, upsert=True)
+    return await get_settings()
 
 # --- Coupons ---
 async def get_all_coupons():

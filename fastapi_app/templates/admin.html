@@ -161,6 +161,12 @@
                     <span class="material-icons text-lg">cake</span> Birthday 🎂
                 </a>
                 {% endif %}
+                {% if settings.karwa_chauth_mode %}
+                <a href="/karwa-chauth"
+                    class="flex items-center gap-2 px-4 py-2 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-colors text-sm font-medium">
+                    <span class="material-icons text-lg">nights_stay</span> Karwa Chauth 🌙
+                </a>
+                {% endif %}
                 <a href="/"
                     class="flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/20 bg-transparent text-primary hover:bg-primary/5 transition-colors text-sm font-medium">
                     <span class="material-icons text-lg">visibility</span> View Site
@@ -200,7 +206,7 @@
                         </div>
                         <div class="flex items-center gap-4 bg-surface-dark/50 p-2 rounded-xl border border-primary/10">
                             <span class="text-xs font-medium uppercase tracking-wider text-gray-500 pl-2">Status:</span>
-                            <label class="flex items-center cursor-pointer relative" for="global-privacy-toggle">
+                            <label class="flex items-center cursor-pointer relative">
                                 <input class="sr-only peer" id="global-privacy-toggle" type="checkbox" {% if
                                     settings.private_mode %}checked{% endif %}>
                                 <div
@@ -239,7 +245,7 @@
                         <div
                             class="flex items-center gap-4 bg-surface-dark/50 p-2 rounded-xl border border-pink-500/10">
                             <span class="text-xs font-medium uppercase tracking-wider text-gray-500 pl-2">Status:</span>
-                            <label class="flex items-center cursor-pointer relative" for="global-birthday-toggle">
+                            <label class="flex items-center cursor-pointer relative">
                                 <input class="sr-only peer" id="global-birthday-toggle" type="checkbox" {% if
                                     settings.birthday_mode %}checked{% endif %}>
                                 <div
@@ -248,6 +254,46 @@
                                 <span
                                     class="ml-3 text-sm font-medium text-gray-300 peer-checked:text-pink-500 transition-colors"
                                     id="birthday-toggle-text">{% if settings.birthday_mode %}Active{% else %}Inactive{%
+                                    endif
+                                    %}</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Global Karwa Chauth Feature Switch -->
+                <section class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden group mb-8">
+                    <div
+                        class="absolute top-0 right-0 p-32 bg-amber-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                        <div class="flex items-start gap-4 max-w-2xl">
+                            <div class="p-3 bg-amber-500/10 rounded-xl text-amber-500">
+                                <span class="material-icons text-3xl">nights_stay</span>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    Karwa Chauth Feature 🌙
+                                    <span
+                                        class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-400 font-bold tracking-wide uppercase">Special</span>
+                                </h2>
+                                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm leading-relaxed">
+                                    When activated, the Karwa Chauth special section, explore card, and full interactive page (/karwa-chauth) are enabled and visible across the homepage and navigation.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-4 bg-surface-dark/50 p-2 rounded-xl border border-amber-500/10">
+                            <span class="text-xs font-medium uppercase tracking-wider text-gray-500 pl-2">Status:</span>
+                            <label class="flex items-center cursor-pointer relative">
+                                <input class="sr-only peer" id="global-karwa-chauth-toggle" type="checkbox" {% if
+                                    settings.karwa_chauth_mode %}checked{% endif %}>
+                                <div
+                                    class="w-14 h-7 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-amber-500/50 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500">
+                                </div>
+                                <span
+                                    class="ml-3 text-sm font-medium text-gray-300 peer-checked:text-amber-400 transition-colors"
+                                    id="karwa-chauth-toggle-text">{% if settings.karwa_chauth_mode %}Active{% else %}Inactive{%
                                     endif
                                     %}</span>
                             </label>
@@ -1885,22 +1931,30 @@
             const toggleText = document.getElementById('birthday-toggle-text');
             if (toggleText) toggleText.textContent = isBirthday ? 'Active' : 'Inactive';
 
-            // Select theme birthday explicitly if turned ON
+            const payload = { birthday_mode: isBirthday };
             if (isBirthday) {
-                updateTheme('birthday');
+                payload.theme = 'birthday';
+                initTheme('birthday');
+                themeRadios.forEach(radio => {
+                    if (radio.value === 'birthday') radio.checked = true;
+                });
             }
 
             try {
                 const response = await fetch('/api/settings', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ birthday_mode: isBirthday })
+                    body: JSON.stringify(payload)
                 });
                 const data = await response.json();
                 console.log('Birthday mode updated:', data);
+                if (!response.ok || data.status === 'error') {
+                    throw new Error(data.message || 'Server error');
+                }
             } catch (error) {
                 console.error('Error updating settings:', error);
                 if (sourceElement) sourceElement.checked = !isBirthday;
+                if (toggleText) toggleText.textContent = !isBirthday ? 'Active' : 'Inactive';
                 alert('Failed to update birthday mode');
             }
         }
@@ -1913,6 +1967,30 @@
         const birthdayToggle = document.getElementById('global-birthday-toggle');
         if (birthdayToggle) {
             birthdayToggle.addEventListener('change', (e) => updateBirthdayMode(e.target.checked, birthdayToggle));
+        }
+
+        async function updateKarwaChauthMode(isKC, sourceElement) {
+            const toggleText = document.getElementById('karwa-chauth-toggle-text');
+            if (toggleText) toggleText.textContent = isKC ? 'Active' : 'Inactive';
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ karwa_chauth_mode: isKC })
+                });
+                const data = await response.json();
+                console.log('Karwa Chauth mode updated:', data);
+            } catch (error) {
+                console.error('Error updating settings:', error);
+                if (sourceElement) sourceElement.checked = !isKC;
+                alert('Failed to update Karwa Chauth mode');
+            }
+        }
+
+        const karwaChauthToggle = document.getElementById('global-karwa-chauth-toggle');
+        if (karwaChauthToggle) {
+            karwaChauthToggle.addEventListener('change', (e) => updateKarwaChauthMode(e.target.checked, karwaChauthToggle));
         }
 
         // --- Theme Switcher Logic ---

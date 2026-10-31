@@ -480,8 +480,14 @@
                     <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                         href="/coupons">Coupons</a>
                     {% endif %}
+                    {% if settings.birthday_mode %}
                     <a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
                         href="/birthday">🎂 Birthday ✨</a>
+                    {% endif %}
+                    {% if settings.karwa_chauth_mode %}
+                    <a class="text-sm font-medium text-amber-500 hover:text-amber-400 transition-colors font-semibold"
+                        href="/karwa-chauth">🌙 Karwa Chauth</a>
+                    {% endif %}
                     <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                         href="/wishlist">Wishlist</a>
                     <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
@@ -517,9 +523,16 @@
                 class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                     class="material-icons text-sm mr-3 text-primary">card_giftcard</span> Coupons</a>
             {% endif %}
+            {% if settings.birthday_mode %}
             <a href="/birthday"
                 class="block py-3 px-6 text-primary font-medium hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                     class="material-icons text-sm mr-3 text-primary">cake</span> 🎂 Birthday ✨</a>
+            {% endif %}
+            {% if settings.karwa_chauth_mode %}
+            <a href="/karwa-chauth"
+                class="block py-3 px-6 text-amber-500 font-medium hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
+                    class="material-icons text-sm mr-3 text-amber-500">nights_stay</span> 🌙 Karwa Chauth</a>
+            {% endif %}
             <a href="/events"
                 class="block py-3 px-6 text-sm hover:bg-gray-50 dark:hover:bg-white/5 flex items-center"><span
                     class="material-icons text-sm mr-3 text-primary">event</span> Events</a>
@@ -595,11 +608,13 @@
                 ... to forever 💍
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
+                {% if settings.karwa_chauth_mode %}
                 <a href="/karwa-chauth"
                     class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white px-8 py-4 rounded-full text-lg font-bold hover:opacity-95 transition-all transform hover:scale-105 shadow-2xl shadow-rose-500/40 flex items-center gap-2 border border-amber-300/60 animate-bounce-slight">
                     <span>🌙 Karwa Chauth Special</span>
                     <span class="text-xl">✨</span>
                 </a>
+                {% endif %}
                 <a href="/wedding"
                     class="bg-gradient-to-r from-amber-400 via-amber-500 to-rose-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:opacity-95 transition-all transform hover:scale-105 shadow-2xl shadow-amber-500/30 flex items-center gap-2 border border-amber-300/40">
                     <span>Wedding &amp; Sagan</span>
@@ -696,6 +711,7 @@
     <section class="relative z-20 -mt-24 pb-20 px-4" id="explore">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {% if settings.karwa_chauth_mode %}
                 <!-- Karwa Chauth Special Card -->
                 <a class="group relative h-64 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-rose-500/50 bg-gradient-to-br from-rose-950 via-red-900 to-amber-950 border-2 border-amber-400/80 sm:col-span-2 lg:col-span-1" href="/karwa-chauth">
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-35" style="background-image: url('https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1792438600_DSC00903.webp');"></div>
@@ -712,6 +728,7 @@
                         <p class="text-white/95 font-medium text-xs mt-2 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-100">Interactive Love Moment &amp; Note</p>
                     </div>
                 </a>
+                {% endif %}
 
                 <!-- Wedding & Sagan Card -->
                 <a class="group relative h-64 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-amber-500/50 bg-gradient-to-br from-amber-900 via-rose-950 to-stone-900 border-2 border-amber-400/60 sm:col-span-2 lg:col-span-1" href="/wedding">
@@ -798,6 +815,7 @@
                 {% endif %}
 
                 <!-- Birthday -->
+                {% if settings.birthday_mode %}
                 <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-pink-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/birthday">
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('{{ r2_url }}/images/favourites/IMG_9292.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-400/80 to-pink-600/80 backdrop-blur-[2px] opacity-90 group-hover:opacity-80 transition-opacity animate-pulse-slow"></div>
@@ -809,6 +827,7 @@
                         <p class="text-white/90 font-medium text-sm mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-100">Special celebration mode</p>
                     </div>
                 </a>
+                {% endif %}
 
                 <!-- Events & Milestones -->
                 <a class="group relative h-64 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-indigo-600/30 bg-white dark:bg-gray-800 border border-white/20" href="/events">
@@ -955,6 +974,7 @@
     </section>
 
     <!-- Karwa Chauth Special Section -->
+    {% if settings.karwa_chauth_mode %}
     <section class="py-20 relative overflow-hidden bg-gradient-to-b from-[#3a0d17] via-[#5c0f22] to-[#25060e] text-white">
         <!-- Floating decorative glowing stars & hearts -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-40">
@@ -1222,6 +1242,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
 
     <!-- Happy Food Dance Video Section -->

@@ -401,10 +401,12 @@
                 <span class="material-icons">photo_library</span>
                 <span class="label">Gallery</span>
             </a>
+            {% if settings.birthday_mode %}
             <a href="/tv/birthday" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">cake</span>
                 <span class="label">Birthday ✨</span>
             </a>
+            {% endif %}
             <a href="/tv/events" class="side-btn focusable" tabindex="0">
                 <span class="material-icons">event</span>
                 <span class="label">Events</span>
@@ -540,6 +542,7 @@
                             <div class="card-meta"><span>Nov 22, 2025</span><span>Date Experience</span></div>
                         </div>
                     </a>
+                    {% if settings.birthday_mode %}
                     <a href="/tv/birthday" class="card focusable" tabindex="0" style="text-decoration:none;"
                        data-title="Birthday Celebration ✨"
                        data-desc="Celebrating Puchki's special birthday"
@@ -551,6 +554,7 @@
                             <div class="card-meta"><span>Special Milestone</span><span>Love</span></div>
                         </div>
                     </a>
+                    {% endif %}
                     <a href="/tv/events" class="card focusable" tabindex="0" style="text-decoration:none;"
                        data-title="Events &amp; Milestones"
                        data-desc="From Roka to Sagan and celebrations"

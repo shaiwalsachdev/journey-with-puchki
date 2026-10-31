@@ -85,24 +85,34 @@ WEDDING_DETAILS = {
     ],
     "videos": [
         {
+            "id": "wedding-invite-bride",
+            "title": "Bride's Family Wedding Invite",
+            "sub": "Official Video Invitation from Shaila (Bride's Family)",
+            "duration": "1:04",
+            "badge": "Bride's Family Special 👰",
+            "video_url": "/static/videos/wedding_invite_bride.mp4",
+            "poster_url": "/static/videos/wedding_invite_bride_poster.jpg",
+            "features": ["Shaila & Shaiwal Love Story", "Sagan & Wedding Details", "Bride's Family Blessings"]
+        },
+        {
             "id": "wedding-invite-haldi",
-            "title": "Wedding Invite + Haldi Version",
-            "sub": "Complete Invitation including Haldi Ceremony, Sagan & Wedding Details",
+            "title": "Groom's Family Wedding Invite + Haldi Version",
+            "sub": "Complete Invitation from Groom's Family including Haldi Ceremony, Sagan & Wedding Details",
             "duration": "1:24",
-            "badge": "Full Extended Version",
+            "badge": "Groom's Family (Extended) 🤵",
             "video_url": "/static/videos/wedding_invite_haldi.mp4",
             "poster_url": "/static/videos/wedding_invite_haldi_poster.jpg",
-            "features": ["Includes Haldi Ceremony at Meriton", "Complete Family Greetings", "Full Soundtrack"]
+            "features": ["Includes Haldi Ceremony at Meriton", "Groom's Family Greetings", "Full Extended Soundtrack"]
         },
         {
             "id": "wedding-invite",
-            "title": "Wedding Invite",
-            "sub": "Official Sagan & Wedding Video Invitation",
+            "title": "Groom's Family Wedding Invite",
+            "sub": "Official Sagan & Wedding Video Invitation from Groom's Family",
             "duration": "0:42",
-            "badge": "Main Invite Version",
+            "badge": "Groom's Family (Main) 🤵",
             "video_url": "/static/videos/wedding_invite.mp4",
             "poster_url": "/static/videos/wedding_invite_poster.jpg",
-            "features": ["Sagan & Ring Ceremony", "Varmala & Wedding Evening", "Compressed Web Optimized"]
+            "features": ["Sagan & Ring Ceremony", "Varmala & Wedding Evening", "Groom's Family Edition"]
         }
     ],
     "rsvp_contacts": [

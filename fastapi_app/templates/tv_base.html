@@ -305,10 +305,12 @@
                 <span class="material-icons">photo_library</span>
                 <span class="label">Gallery</span>
             </a>
+            {% if settings.birthday_mode %}
             <a href="/tv/birthday" class="side-btn {% if active_page == 'birthday' %}active{% endif %} tv-focusable" tabindex="0">
                 <span class="material-icons">cake</span>
                 <span class="label">Birthday ✨</span>
             </a>
+            {% endif %}
             <a href="/tv/events" class="side-btn {% if active_page == 'events' %}active{% endif %} tv-focusable" tabindex="0">
                 <span class="material-icons">event</span>
                 <span class="label">Events</span>
