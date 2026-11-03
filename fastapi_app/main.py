@@ -2050,6 +2050,7 @@ async def read_prewedding(request: Request):
     first_video = None
     chapters_map = {
         "Best Moments & Highlights": [],
+        "Photographer Cuts & Edits": [],
         "Teaser & Videos": [],
         "Ethnic Look": [],
         "Picnic Look": [],

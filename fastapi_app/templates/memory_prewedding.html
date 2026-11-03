@@ -183,6 +183,11 @@
                         ✨ Best Moments
                     </a>
                     {% endif %}
+                    {% if chapters_map['Photographer Cuts & Edits'] and chapters_map['Photographer Cuts & Edits']|length > 0 %}
+                    <a href="#photographer-cuts" class="px-4 py-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500/50 border border-emerald-400/60 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
+                        ✂️ Photographer Cuts
+                    </a>
+                    {% endif %}
                     {% if chapters_map['Teaser & Videos'] and chapters_map['Teaser & Videos']|length > 0 %}
                     <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-purple-500/30 hover:bg-purple-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-100 shadow-md transition-all hover:scale-105">
                         🎬 Teaser &amp; Videos
@@ -240,6 +245,14 @@
                     "icon": "auto_awesome",
                     "theme_color": "border-amber-400/40 text-amber-300",
                     "desc": "Handpicked favorite clips cropped directly from our pre-wedding shoot — radiant smiles, playful twirls, romantic glances, and warm embraces."
+                },
+                {
+                    "title": "Photographer Cuts & Edits",
+                    "id": "photographer-cuts",
+                    "badge": "Custom Edit",
+                    "icon": "content_cut",
+                    "theme_color": "border-emerald-400/40 text-emerald-300",
+                    "desc": "Custom cut video prepared with exact frame cuts (0:06-0:15, 0:36-0:38, 0:56-0:59, 1:17-1:28, 1:31-1:35, 2:38-2:42, 2:50-2:52, 3:23-3:28, 3:30-3:32, 3:52-3:59) for direct photographer reference."
                 },
                 {
                     "title": "Teaser & Videos",
