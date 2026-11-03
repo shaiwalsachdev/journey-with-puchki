@@ -185,7 +185,12 @@
                     {% endif %}
                     {% if chapters_map['Photographer Cuts & Edits'] and chapters_map['Photographer Cuts & Edits']|length > 0 %}
                     <a href="#photographer-cuts" class="px-4 py-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500/50 border border-emerald-400/60 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
-                        ✂️ Photographer Cuts
+                        ✂️ Master Cut
+                    </a>
+                    {% endif %}
+                    {% if chapters_map['Cut Shots for Photographer'] and chapters_map['Cut Shots for Photographer']|length > 0 %}
+                    <a href="#cut-shots" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
+                        🎬 Cut Shots (To Trim)
                     </a>
                     {% endif %}
                     {% if chapters_map['Teaser & Videos'] and chapters_map['Teaser & Videos']|length > 0 %}
@@ -249,10 +254,18 @@
                 {
                     "title": "Photographer Cuts & Edits",
                     "id": "photographer-cuts",
-                    "badge": "Custom Edit",
+                    "badge": "Master Cut",
                     "icon": "content_cut",
                     "theme_color": "border-emerald-400/40 text-emerald-300",
                     "desc": "Custom cut video prepared with exact frame cuts (0:06-0:15, 0:34-0:39, 0:55-1:01, 1:17-1:35, 2:38-2:42, 2:50-2:52, 3:23-3:28, 3:30-3:32, 3:52-3:59) for direct photographer reference."
+                },
+                {
+                    "title": "Cut Shots for Photographer",
+                    "id": "cut-shots",
+                    "badge": "Shots to Remove",
+                    "icon": "videocam_off",
+                    "theme_color": "border-rose-400/40 text-rose-300",
+                    "desc": "Every individual shot/segment requested to be removed, isolated so you and the photographer can review each cut individually."
                 },
                 {
                     "title": "Teaser & Videos",
