@@ -2049,12 +2049,13 @@ async def read_prewedding(request: Request):
     hero_media = None
     first_video = None
     chapters_map = {
+        "Best Moments & Highlights": [],
+        "Teaser & Videos": [],
         "Ethnic Look": [],
         "Picnic Look": [],
         "City Look": [],
         "Proposal Look": [],
         "Photographer Shortlisting": [],
-        "Teaser & Videos": [],
         "Unassigned": []
     }
     for item in media:

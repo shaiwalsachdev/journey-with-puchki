@@ -178,7 +178,17 @@
 
                 <!-- Navigation Quick Anchor Tabs (High Visibility Look Buttons) -->
                 <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
-                    <a href="#ethnic-look" class="px-4 py-2 rounded-full bg-amber-500/30 hover:bg-amber-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-100 shadow-md transition-all hover:scale-105">
+                    {% if chapters_map['Best Moments & Highlights'] and chapters_map['Best Moments & Highlights']|length > 0 %}
+                    <a href="#best-moments-highlights" class="px-4 py-2 rounded-full bg-amber-500/30 hover:bg-amber-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-100 shadow-md transition-all hover:scale-105">
+                        ✨ Best Moments
+                    </a>
+                    {% endif %}
+                    {% if chapters_map['Teaser & Videos'] and chapters_map['Teaser & Videos']|length > 0 %}
+                    <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-purple-500/30 hover:bg-purple-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-100 shadow-md transition-all hover:scale-105">
+                        🎬 Teaser &amp; Videos
+                    </a>
+                    {% endif %}
+                    <a href="#ethnic-look" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
                         🥻 Ethnic Look
                     </a>
                     <a href="#picnic-look" class="px-4 py-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500/50 border border-emerald-400/60 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
@@ -193,11 +203,7 @@
                     <a href="#photographer-shortlisting" class="px-4 py-2 rounded-full bg-indigo-500/30 hover:bg-indigo-500/50 border border-indigo-400/60 text-xs sm:text-sm font-extrabold text-indigo-100 shadow-md transition-all hover:scale-105">
                         📸 Photographer Shortlisting
                     </a>
-                    {% if chapters_map['Teaser & Videos'] and chapters_map['Teaser & Videos']|length > 0 %}
-                    <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-purple-500/30 hover:bg-purple-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-100 shadow-md transition-all hover:scale-105">
-                        🎬 Teaser &amp; Videos
-                    </a>
-                    {% endif %}
+
                 </div>
 
                 <!-- Action Buttons (Bold, High Contrast, Like Roka) -->
@@ -228,11 +234,27 @@
 
             {% set looks_config = [
                 {
+                    "title": "Best Moments & Highlights",
+                    "id": "best-moments-highlights",
+                    "badge": "Highlights",
+                    "icon": "auto_awesome",
+                    "theme_color": "border-amber-400/40 text-amber-300",
+                    "desc": "Handpicked favorite clips cropped directly from our pre-wedding shoot — radiant smiles, playful twirls, romantic glances, and warm embraces."
+                },
+                {
+                    "title": "Teaser & Videos",
+                    "id": "teaser-and-videos",
+                    "badge": "Motion",
+                    "icon": "movie",
+                    "theme_color": "border-purple-400/30 text-purple-300",
+                    "desc": "Cinematic motion teasers, full cuts, and unedited raw footage bringing our pre-wedding journey to life."
+                },
+                {
                     "title": "Ethnic Look",
                     "id": "ethnic-look",
                     "badge": "Look 01",
                     "icon": "auto_awesome",
-                    "theme_color": "border-amber-400/30 text-amber-300",
+                    "theme_color": "border-rose-400/30 text-rose-300",
                     "desc": "Draped in heritage and timeless royal charm. Intricate fabrics, regal smiles, and a celebration of tradition."
                 },
                 {
