@@ -666,9 +666,6 @@ async def wedding_page(request: Request):
 @app.get("/karva-chauth", response_class=HTMLResponse)
 async def karwa_chauth_page(request: Request):
     settings = request.state.settings
-    is_admin = request.cookies.get("session") == "admin_logged_in"
-    if not settings.get("karwa_chauth_mode") and not is_admin:
-        return RedirectResponse(url="/", status_code=303)
     return templates.TemplateResponse("karwa_chauth.html", {
         "request": request,
         "page": "karwa_chauth",
