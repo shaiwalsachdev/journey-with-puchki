@@ -2076,6 +2076,14 @@ async def read_prewedding(request: Request):
     if not hero_media:
         hero_media = first_video
         
+    # Get guestbook wishes to feature in the blessings reveal
+    guestbook_wishes = []
+    try:
+        gb_cursor = db.guestbook.find({}, {"_id": 0, "name": 1, "message": 1, "date": 1}).sort("id", 1).limit(8)
+        guestbook_wishes = await gb_cursor.to_list(8)
+    except Exception as e:
+        guestbook_wishes = []
+
     settings = request.state.settings
     return templates.TemplateResponse("memory_prewedding.html", {
         "request": request, 
@@ -2083,6 +2091,7 @@ async def read_prewedding(request: Request):
         "first_video": first_video,
         "chapters_map": chapters_map,
         "media": media,
+        "guestbook_wishes": guestbook_wishes,
         "r2_url": R2_PUBLIC_URL,
         "settings": settings,
         "page": "prewedding"

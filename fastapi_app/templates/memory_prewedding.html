@@ -5,7 +5,15 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Pre-Wedding Story | Shaiwal &amp; Shaila</title>
+    <!-- Social Share Preview Meta Tags -->
+    <meta property="og:title" content="Shaiwal & Shaila • Pre-Wedding Story & Countdown Walkway" />
+    <meta property="og:description" content="Framed in laughter, sealed in four timeless styles. Watch our official 4K cinematic teaser, explore the 7-day countdown walkway, and vertical Instagram reels." />
+    <meta property="og:image" content="{{ r2_url }}/prewedding/1794596409_save_the_date.webp" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Great+Vibes&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script id="tailwind-config">
@@ -135,6 +143,15 @@
         .animate-spin-slow {
             animation: spinSlow 6s linear infinite;
         }
+
+        /* Wax seal pulse */
+        @keyframes sealPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(225, 29, 72, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(245, 158, 11, 0.7); }
+        }
+        .animate-seal {
+            animation: sealPulse 2.5s infinite ease-in-out;
+        }
     </style>
 </head>
 
@@ -145,6 +162,17 @@
     <div class="sparkle-node" style="top: 220px; right: 10%; animation-delay: 1.4s;"></div>
     <div class="sparkle-node" style="top: 480px; left: 14%; animation-delay: 2.1s;"></div>
     <div class="sparkle-node" style="top: 600px; right: 20%; animation-delay: 0.9s;"></div>
+
+    <!-- Floating Audio & Sparkle Controller Pill (Bottom Right) -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        <button id="floating-music-btn" onclick="toggleBackgroundRomanticMusic()" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/80 hover:bg-black text-white border border-rose-400/40 shadow-2xl backdrop-blur-md text-xs font-bold transition-all hover:scale-105 active:scale-95 group">
+            <span id="floating-music-icon" class="material-icons text-base text-rose-400 group-hover:rotate-12 transition-transform">music_note</span>
+            <span id="floating-music-text">Play Romantic Audio</span>
+        </button>
+        <button onclick="fireRomanticConfettiShower()" title="Celebrate with Confetti!" class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all">
+            <span class="material-icons text-lg">celebration</span>
+        </button>
+    </div>
 
     <!-- Navbar: included directly -->
     <div class="cinematic-nav fixed top-0 w-full z-[100] transition-colors duration-500 bg-gradient-to-b from-black/90 pb-8 to-transparent">
@@ -174,7 +202,7 @@
             {% endif %}
 
             <div class="absolute inset-0 hero-vignette z-10 pointer-events-none"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/80 to-transparent w-full md:w-[68vw] z-10 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/85 to-transparent w-full md:w-[70vw] z-10 pointer-events-none"></div>
 
             <div class="relative z-20 max-w-3xl pt-6 md:pt-0">
                 <!-- Badge -->
@@ -217,18 +245,14 @@
                         <span class="material-icons text-sm text-rose-300">movie</span>
                         <span>4K Teaser &amp; Videos</span>
                     </a>
-                    <a href="#ethnic-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
-                        🥻 Ethnic Look
-                    </a>
-                    <a href="#picnic-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
-                        🧺 Picnic Look
-                    </a>
-                    <a href="#city-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-sky-100 shadow-md transition-all hover:scale-105">
-                        🏙️ City Look
-                    </a>
-                    <a href="#proposal-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
-                        💍 Proposal Look
-                    </a>
+                    <button onclick="openSecretLoveLetter()" class="px-4 py-2 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-xs sm:text-sm font-extrabold text-amber-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                        <span class="material-icons text-sm text-amber-300">mail</span>
+                        <span>💌 Secret Letter</span>
+                    </button>
+                    <button onclick="openShareModal()" class="px-4 py-2 rounded-full bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-xs sm:text-sm font-extrabold text-white shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                        <span class="material-icons text-sm">share</span>
+                        <span>Share With Family</span>
+                    </button>
                 </div>
 
                 <!-- Action Buttons -->
@@ -239,9 +263,9 @@
                         <span>Play 4K Teaser</span>
                     </button>
                     {% endif %}
-                    <button onclick="document.getElementById('countdown-walkway').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 via-rose-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-amber-300/30 hover:scale-105 active:scale-95">
+                    <button onclick="openSecretLoveLetter()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 via-rose-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-amber-300/30 hover:scale-105 active:scale-95">
                         <span class="material-icons text-2xl text-amber-200 group-hover:rotate-12 transition-transform">favorite</span>
-                        <span>Countdown Walkway</span>
+                        <span>Unseal Surprise Letter 💌</span>
                     </button>
                     <button onclick="startAiMagic()" class="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-6 py-3 rounded-xl font-extrabold transition shadow-xl text-sm sm:text-base border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95">
                         <span class="material-icons text-xl text-amber-300">auto_awesome</span>
@@ -256,6 +280,49 @@
 
         <!-- Dynamic Main Content Wrapper -->
         <div id="content-start" class="relative z-30 px-4 sm:px-8 lg:px-16 space-y-24 pb-28">
+
+            <!-- ========================================== -->
+            <!-- SECTION 0: LIVE WEDDING COUNTDOWN BANNER   -->
+            <!-- ========================================== -->
+            <section class="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-rose-950/40 via-surface-dark to-amber-950/30 border border-amber-400/30 shadow-2xl backdrop-blur-xl">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold border border-rose-400/30 mb-2">
+                            <span class="material-icons text-xs text-rose-400 animate-spin">access_time</span>
+                            <span>The Big Day Countdown</span>
+                        </div>
+                        <h3 class="text-2xl sm:text-3xl font-cinzel font-bold text-white">Counting Down to Dec 5 &amp; 6, 2026</h3>
+                        <p class="text-xs sm:text-sm text-rose-200/80 font-serif italic mt-1">Every second brings us closer to "I Do" forever.</p>
+                    </div>
+
+                    <!-- Live Digital Timer Boxes -->
+                    <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-days" class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
+                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Days</span>
+                        </div>
+                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-hours" class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
+                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Hours</span>
+                        </div>
+                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-minutes" class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
+                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Mins</span>
+                        </div>
+                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-seconds" class="block text-2xl sm:text-4xl font-extrabold text-rose-400 font-mono animate-pulse">--</span>
+                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Secs</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="openShareModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2">
+                            <span class="material-icons text-base">share</span>
+                            <span>Share Link</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             <!-- ========================================== -->
             <!-- SECTION 1: SAVE THE DATE & COUNTDOWN WALKWAY -->
@@ -777,6 +844,41 @@
             </section>
             {% endfor %}
 
+            <!-- ========================================== -->
+            <!-- SECTION 5: FAMILY BLESSINGS & WISHES WALL  -->
+            <!-- ========================================== -->
+            {% if guestbook_wishes and guestbook_wishes|length > 0 %}
+            <section class="relative rounded-3xl p-6 sm:p-10 bg-surface-dark/80 border border-white/10 shadow-2xl">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                    <div>
+                        <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-rose-400/40 text-rose-300 bg-rose-500/10">
+                            Heartfelt Messages
+                        </span>
+                        <h3 class="text-2xl sm:text-4xl font-cinzel font-bold text-white mt-2">Family &amp; Friends Love</h3>
+                        <p class="text-xs sm:text-sm text-rose-200/80 font-serif italic mt-1">Warm blessings pouring in as we step closer to the wedding day.</p>
+                    </div>
+                    <a href="/guestbook" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto">
+                        <span class="material-icons text-sm text-rose-400">edit_note</span>
+                        <span>Sign The Guestbook</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {% for wish in guestbook_wishes[:4] %}
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 hover:border-rose-400/40 transition-colors flex flex-col justify-between shadow-lg">
+                        <p class="text-xs text-rose-100/90 font-serif italic leading-relaxed mb-4">
+                            "{{ wish.message }}"
+                        </p>
+                        <div class="flex items-center justify-between border-t border-white/10 pt-3">
+                            <span class="text-xs font-bold text-amber-300">{{ wish.name }}</span>
+                            <span class="text-[10px] font-mono text-white/50">{{ wish.date }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
             <!-- Special Footer Navigation Link -->
             <section class="pt-12 border-t border-rose-500/20 text-center">
                 <div class="max-w-2xl mx-auto space-y-4">
@@ -837,6 +939,106 @@
         </div>
     </div>
 
+    <!-- SURPRISE REVEAL: Interactive Wax-Sealed Secret Love Letter Modal -->
+    <div id="love-letter-modal" class="fixed inset-0 z-[10000] bg-black/95 hidden opacity-0 transition-opacity duration-500 flex items-center justify-center p-4">
+        <div class="relative w-full max-w-xl bg-gradient-to-br from-[#1b0811] via-[#12050b] to-[#250d18] border-2 border-amber-400/40 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-rose-600/30 overflow-hidden">
+            <!-- Close icon -->
+            <button onclick="closeSecretLoveLetter()" class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-rose-600 transition">
+                <span class="material-icons text-2xl">close</span>
+            </button>
+
+            <!-- State 1: Sealed Envelope -->
+            <div id="letter-sealed-view" class="text-center py-6 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
+                    <span>A Letter For Shaila</span>
+                </div>
+                <h3 class="text-3xl sm:text-4xl font-cinzel font-bold text-white tracking-wide">
+                    Confidential &bull; Only For Puchki
+                </h3>
+                <p class="text-sm sm:text-base text-rose-200/80 font-serif italic max-w-md mx-auto">
+                    "Written from the heart on the night of our Pre-Wedding shoot, sealed with love and waiting for you to unwrap."
+                </p>
+
+                <!-- Wax Seal Click Trigger -->
+                <div class="py-4 flex flex-col items-center cursor-pointer group" onclick="unsealLetter()">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-rose-700 via-rose-600 to-amber-500 flex items-center justify-center text-white border-4 border-amber-300/80 shadow-2xl group-hover:scale-110 active:scale-95 transition-all animate-seal">
+                        <span class="text-4xl font-serif">💌</span>
+                    </div>
+                    <span class="mt-4 text-xs font-extrabold uppercase tracking-widest text-amber-300 group-hover:text-white transition-colors flex items-center gap-1.5">
+                        <span class="material-icons text-sm text-amber-400">touch_app</span>
+                        Tap To Break The Seal
+                    </span>
+                </div>
+            </div>
+
+            <!-- State 2: Unsealed Heartfelt Letter -->
+            <div id="letter-open-view" class="hidden space-y-6 max-h-[75vh] overflow-y-auto pr-1">
+                <div class="flex items-center justify-between border-b border-amber-400/20 pb-3">
+                    <span class="text-xs font-mono uppercase tracking-widest text-amber-300">October 10, 2026 &bull; Sandoz Night</span>
+                    <span class="text-xs text-rose-300 font-serif italic">To My Forever Puchki ❤️</span>
+                </div>
+
+                <div class="space-y-4 text-sm sm:text-base text-rose-100/90 font-serif leading-relaxed italic">
+                    <p>
+                        "My dearest Puchki,
+                    </p>
+                    <p>
+                        Watching you twirl in that ethnic saree, laughing under the picnic sunlight, and running together across city streets today felt like living inside my favorite movie. But the moment you held my hands during the proposal setup, with your sparkling eyes and that shy radiant smile, my heart knew once again that choosing you is the easiest, most beautiful decision I will ever make.
+                    </p>
+                    <p>
+                        No matter how long the drives were or how tired we got, sitting opposite you at Cafe Sandoz, watching you savor every single bite of that warm Gulab Jamun with the biggest childish smile on your face... that was my true highlight of the entire day.
+                    </p>
+                    <p>
+                        Counting down these final days till December 5 &amp; 6 is making my heartbeat race in the best way possible. I cannot wait to stand beside you as your husband and love you through every lifetime.
+                    </p>
+                    <p class="pt-2 text-right not-italic font-bold text-amber-300 font-sans">
+                        Forever &amp; Always Yours,<br>
+                        <span class="font-cursive text-3xl text-rose-300 font-normal">Shaiwal</span>
+                    </p>
+                </div>
+
+                <div class="pt-4 border-t border-amber-400/20 flex flex-wrap gap-3 items-center justify-between">
+                    <button onclick="fireRomanticConfettiShower()" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition">
+                        <span class="material-icons text-sm">celebration</span>
+                        <span>Send More Confetti!</span>
+                    </button>
+                    <button onclick="closeSecretLoveLetter()" class="text-xs text-rose-300 hover:text-white transition">
+                        Close Letter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARE LINK POPUP MODAL -->
+    <div id="share-link-modal" class="fixed inset-0 z-[10000] bg-black/90 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-surface-dark border border-amber-400/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <button onclick="closeShareModal()" class="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-rose-600 transition">
+                <span class="material-icons text-xl">close</span>
+            </button>
+
+            <div class="text-center space-y-2">
+                <span class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-2xl">
+                    💌
+                </span>
+                <h3 class="text-2xl font-cinzel font-bold text-white">Share Our Story</h3>
+                <p class="text-xs text-rose-200/80 font-serif italic">Send this magical pre-wedding link to friends, cousins, and family.</p>
+            </div>
+
+            <!-- Share Buttons -->
+            <div class="space-y-3">
+                <button onclick="shareViaWhatsApp()" class="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg hover:scale-[1.02]">
+                    <span class="material-icons text-base">chat</span>
+                    <span>Share on WhatsApp</span>
+                </button>
+                <button onclick="copyPreweddingLink()" id="btn-copy-link" class="w-full py-3 px-4 rounded-xl bg-white/15 hover:bg-white/25 text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/20 transition hover:scale-[1.02]">
+                    <span class="material-icons text-base">content_copy</span>
+                    <span id="copy-link-text">Copy Magic Link</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Prewedding Lightbox with Full Navigation & Keyboard Support -->
     <div id="pw-lightbox-modal" class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4 select-none">
         <!-- Top Toolbar -->
@@ -867,8 +1069,147 @@
         </div>
     </div>
 
+    <!-- Background Romantic Audio -->
+    <audio id="romantic-bg-audio" src="/static/music/aaj_sajeya.mp3" loop preload="auto"></audio>
+
     <!-- JS Logic -->
     <script>
+        // --- Live Wedding Countdown to Dec 6, 2026 ---
+        const targetWeddingDate = new Date('2026-12-06T20:00:00').getTime();
+
+        function updateLiveCountdown() {
+            const now = new Date().getTime();
+            const difference = targetWeddingDate - now;
+
+            if (difference <= 0) {
+                document.getElementById('pw-cd-days').textContent = '00';
+                document.getElementById('pw-cd-hours').textContent = '00';
+                document.getElementById('pw-cd-minutes').textContent = '00';
+                document.getElementById('pw-cd-seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('pw-cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('pw-cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('pw-cd-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('pw-cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateLiveCountdown, 1000);
+        updateLiveCountdown();
+
+        // --- Background Music Control ---
+        let isRomanticAudioPlaying = false;
+        function toggleBackgroundRomanticMusic() {
+            const audio = document.getElementById('romantic-bg-audio');
+            const icon = document.getElementById('floating-music-icon');
+            const label = document.getElementById('floating-music-text');
+
+            if (!audio) return;
+            if (isRomanticAudioPlaying) {
+                audio.pause();
+                isRomanticAudioPlaying = false;
+                icon.textContent = 'music_note';
+                label.textContent = 'Play Romantic Audio';
+            } else {
+                audio.play().then(() => {
+                    isRomanticAudioPlaying = true;
+                    icon.textContent = 'volume_up';
+                    label.textContent = 'Playing: Aaj Sajeya';
+                    fireRomanticConfettiShower();
+                }).catch(err => {
+                    console.log('Audio autoplay prevented:', err);
+                });
+            }
+        }
+
+        // --- Confetti Shower ---
+        function fireRomanticConfettiShower() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.65 },
+                    colors: ['#E11D48', '#FDA4AF', '#F59E0B', '#FDF2F4', '#FFD700']
+                });
+            }
+        }
+
+        // --- Secret Love Letter Modal ---
+        function openSecretLoveLetter() {
+            const modal = document.getElementById('love-letter-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 20);
+            document.body.style.overflow = 'hidden';
+            fireRomanticConfettiShower();
+        }
+
+        function closeSecretLoveLetter() {
+            const modal = document.getElementById('love-letter-modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+        }
+
+        function unsealLetter() {
+            const sealedView = document.getElementById('letter-sealed-view');
+            const openView = document.getElementById('letter-open-view');
+            
+            // Grand confetti blast
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 120,
+                    spread: 90,
+                    origin: { y: 0.5 },
+                    colors: ['#FFD700', '#F43F5E', '#FDA4AF', '#FFFFFF']
+                });
+            }
+
+            // Play background music automatically if not already playing
+            if (!isRomanticAudioPlaying) {
+                toggleBackgroundRomanticMusic();
+            }
+
+            sealedView.classList.add('hidden');
+            openView.classList.remove('hidden');
+        }
+
+        // --- Share Modal ---
+        function openShareModal() {
+            const modal = document.getElementById('share-link-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 20);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('share-link-modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 200);
+            document.body.style.overflow = '';
+        }
+
+        function copyPreweddingLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const text = document.getElementById('copy-link-text');
+                text.textContent = 'Copied to Clipboard! ✨';
+                fireRomanticConfettiShower();
+                setTimeout(() => {
+                    text.textContent = 'Copy Magic Link';
+                }, 2500);
+            });
+        }
+
+        function shareViaWhatsApp() {
+            const text = "💍 Relive Shaiwal & Shaila's Pre-Wedding Journey, 4K Teaser, and the 7-Day Countdown Walkway! ✨ Check it out here: " + window.location.href;
+            window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
+        }
+
         // --- Walkway vs Tile Grid Toggle ---
         function toggleWalkwayView(mode) {
             const trackContainer = document.getElementById('walkway-track-container');
@@ -906,6 +1247,7 @@
         function triggerReelHeart(btn) {
             const heartIcon = btn.querySelector('.material-icons');
             heartIcon.classList.add('scale-125', 'text-red-500');
+            fireRomanticConfettiShower();
             setTimeout(() => {
                 heartIcon.classList.remove('scale-125');
             }, 300);
@@ -1068,13 +1410,21 @@
             } else if (e.key === 'Escape') {
                 closePreweddingVideo();
                 closeFullReelPlayer();
+                closeSecretLoveLetter();
+                closeShareModal();
+            }
+        });
+
+        // Trigger welcome confetti on first page visit if opened from shared link
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#countdown-walkway' || window.location.search.includes('reveal=true')) {
+                setTimeout(() => {
+                    fireRomanticConfettiShower();
+                }, 800);
             }
         });
     </script>
 
-    <!-- Prewedding Audio for AI Magic -->
-    <audio id="prewedding-magic-audio" src="/static/music/aaj_sajeya.mp3" preload="auto"></audio>
-    
     <!-- Pre-Wedding AI Magic Component -->
     {% include 'partials/ai_magic_prewedding.html' %}
 </body>
