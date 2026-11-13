@@ -60,7 +60,7 @@
             transform-origin: center center;
         }
         .photo-card:hover {
-            transform: translateY(-6px) scale(1.03);
+            transform: translateY(-6px) scale(1.02);
             z-index: 20;
             box-shadow: 0 16px 36px rgba(225, 29, 72, 0.25);
         }
@@ -109,6 +109,32 @@
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
             }
         }
+
+        /* Phone mockup for Instagram reels */
+        .phone-mockup {
+            border: 8px solid #231219;
+            box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.25), inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: #000;
+        }
+
+        /* Floating pulse animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        /* Spin disc animation */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spinSlow 6s linear infinite;
+        }
     </style>
 </head>
 
@@ -120,7 +146,7 @@
     <div class="sparkle-node" style="top: 480px; left: 14%; animation-delay: 2.1s;"></div>
     <div class="sparkle-node" style="top: 600px; right: 20%; animation-delay: 0.9s;"></div>
 
-    <!-- Navbar: included directly (same as Roka page) -->
+    <!-- Navbar: included directly -->
     <div class="cinematic-nav fixed top-0 w-full z-[100] transition-colors duration-500 bg-gradient-to-b from-black/90 pb-8 to-transparent">
         {% set page = 'prewedding' %}
         {% include 'partials/navbar.html' %}
@@ -148,13 +174,13 @@
             {% endif %}
 
             <div class="absolute inset-0 hero-vignette z-10 pointer-events-none"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/70 to-transparent w-full md:w-[65vw] z-10 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/80 to-transparent w-full md:w-[68vw] z-10 pointer-events-none"></div>
 
             <div class="relative z-20 max-w-3xl pt-6 md:pt-0">
                 <!-- Badge -->
                 <div class="inline-flex items-center gap-2 mb-4 px-3.5 py-1 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-extrabold uppercase tracking-widest backdrop-blur-md">
                     <span class="material-icons text-sm text-rose-400 animate-pulse">favorite</span>
-                    <span>The Four Looks Experience</span>
+                    <span>The Official 4K Cinematic Experience</span>
                 </div>
 
                 <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 gold-shimmer uppercase leading-[1.1]">
@@ -168,59 +194,58 @@
                     <span class="text-rose-300 bg-rose-500/20 px-3 py-0.5 rounded-full border border-rose-400/40">October 10, 2026</span>
                     <span class="text-[#46d369] bg-[#46d369]/10 px-2 py-0.5 rounded border border-[#46d369]/20">100% Romance</span>
                     <span>4 Iconic Looks</span>
-                    <span class="border border-white/30 px-2 py-0.5 rounded text-white/90">Teasers &amp; Frames</span>
-                    <span class="border border-rose-400/40 text-rose-300 px-2 py-0.5 rounded text-xs">4K Quality</span>
+                    <span class="border border-amber-400/50 text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded font-bold">✨ 4K Official Teaser</span>
+                    <span class="border border-purple-400/50 text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded font-bold">📱 Instagram Reels</span>
+                    <span class="border border-white/30 px-2 py-0.5 rounded text-white/90">Save the Date Walkway</span>
                 </div>
 
                 <p class="text-base sm:text-lg text-rose-100/90 leading-relaxed mb-8 max-w-2xl font-serif italic">
-                    From timeless ethnic grace to spontaneous sunny picnics, bustling city skylines, and our unforgettable proposal look — every frame is a chapter of us.
+                    From the winding path of our countdown days and vibrant Instagram reels to timeless ethnic grace, sunny picnics, city streets, and our romantic proposal — every single frame is a forever memory of us.
                 </p>
 
-                <!-- Navigation Quick Anchor Tabs (High Visibility Look Buttons) -->
+                <!-- Navigation Quick Anchor Tabs -->
                 <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
-                    {% if chapters_map['Best Moments & Highlights'] and chapters_map['Best Moments & Highlights']|length > 0 %}
-                    <a href="#best-moments-highlights" class="px-4 py-2 rounded-full bg-amber-500/30 hover:bg-amber-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-100 shadow-md transition-all hover:scale-105">
-                        ✨ Best Moments
+                    <a href="#countdown-walkway" class="px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/30 to-rose-500/30 hover:from-amber-500/50 hover:to-rose-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                        <span class="material-icons text-sm text-amber-300">favorite</span>
+                        <span>Save the Date &amp; Walkway</span>
                     </a>
-                    {% endif %}
-                    {% if chapters_map['Teaser & Videos'] and chapters_map['Teaser & Videos']|length > 0 %}
-                    <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-purple-500/30 hover:bg-purple-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-100 shadow-md transition-all hover:scale-105">
-                        🎬 Teaser &amp; Videos (Master Cut &amp; Raw)
+                    <a href="#instagram-reels" class="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                        <span class="material-icons text-sm text-pink-300">play_circle</span>
+                        <span>Instagram Reels</span>
                     </a>
-                    {% endif %}
-                    <a href="#ethnic-look" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
+                    <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                        <span class="material-icons text-sm text-rose-300">movie</span>
+                        <span>4K Teaser &amp; Videos</span>
+                    </a>
+                    <a href="#ethnic-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
                         🥻 Ethnic Look
                     </a>
-                    <a href="#picnic-look" class="px-4 py-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500/50 border border-emerald-400/60 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
+                    <a href="#picnic-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-emerald-100 shadow-md transition-all hover:scale-105">
                         🧺 Picnic Look
                     </a>
-                    <a href="#city-look" class="px-4 py-2 rounded-full bg-sky-500/30 hover:bg-sky-500/50 border border-sky-400/60 text-xs sm:text-sm font-extrabold text-sky-100 shadow-md transition-all hover:scale-105">
+                    <a href="#city-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-sky-100 shadow-md transition-all hover:scale-105">
                         🏙️ City Look
                     </a>
-                    <a href="#proposal-look" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
+                    <a href="#proposal-look" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105">
                         💍 Proposal Look
                     </a>
-                    <a href="#photographer-shortlisting" class="px-4 py-2 rounded-full bg-indigo-500/30 hover:bg-indigo-500/50 border border-indigo-400/60 text-xs sm:text-sm font-extrabold text-indigo-100 shadow-md transition-all hover:scale-105">
-                        📸 Photographer Shortlisting
-                    </a>
-
                 </div>
 
-                <!-- Action Buttons (Bold, High Contrast, Like Roka) -->
+                <!-- Action Buttons -->
                 <div class="flex flex-wrap items-center gap-4">
                     {% if hero_media and hero_media.media_type == "video" %}
-                    <button onclick="playPreweddingVideo('{{ r2_url }}/{{ hero_media.filename }}', 'Pre-Wedding Teaser')" class="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-extrabold hover:bg-white/90 transition shadow-2xl text-sm sm:text-base hover:scale-105 active:scale-95">
-                        <span class="material-icons text-2xl text-black">play_arrow</span>
-                        Play Teaser
+                    <button onclick="playPreweddingVideo('{{ r2_url }}/{{ hero_media.filename }}', '✨ Official 4K Pre-Wedding Teaser')" class="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-extrabold hover:bg-white/90 transition shadow-2xl text-sm sm:text-base hover:scale-105 active:scale-95 group">
+                        <span class="material-icons text-2xl text-rose-600 group-hover:scale-110 transition-transform">play_arrow</span>
+                        <span>Play 4K Teaser</span>
                     </button>
                     {% endif %}
-                    <button onclick="startAiMagic()" class="flex items-center gap-2 bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 hover:from-rose-500 hover:to-amber-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-rose-400/30 hover:scale-105 active:scale-95">
-                        <span class="material-icons text-2xl text-amber-200 group-hover:rotate-12 transition-transform">auto_awesome</span>
-                        <span>AI Magic ✨</span>
+                    <button onclick="document.getElementById('countdown-walkway').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 via-rose-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-amber-300/30 hover:scale-105 active:scale-95">
+                        <span class="material-icons text-2xl text-amber-200 group-hover:rotate-12 transition-transform">favorite</span>
+                        <span>Countdown Walkway</span>
                     </button>
-                    <button onclick="document.getElementById('looks-start').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl font-extrabold transition shadow-xl text-sm sm:text-base border border-white/30 backdrop-blur-md hover:scale-105 active:scale-95">
-                        <span class="material-icons text-xl text-white">photo_library</span>
-                        Browse Looks
+                    <button onclick="startAiMagic()" class="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-6 py-3 rounded-xl font-extrabold transition shadow-xl text-sm sm:text-base border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95">
+                        <span class="material-icons text-xl text-amber-300">auto_awesome</span>
+                        AI Magic ✨
                     </button>
                 </div>
             </div>
@@ -229,9 +254,400 @@
             <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0F070A] z-10 pointer-events-none"></div>
         </section>
 
-        <!-- Dynamic Looks Sections -->
-        <div id="looks-start" class="relative z-30 px-4 sm:px-8 lg:px-16 space-y-20 pb-28">
+        <!-- Dynamic Main Content Wrapper -->
+        <div id="content-start" class="relative z-30 px-4 sm:px-8 lg:px-16 space-y-24 pb-28">
 
+            <!-- ========================================== -->
+            <!-- SECTION 1: SAVE THE DATE & COUNTDOWN WALKWAY -->
+            <!-- ========================================== -->
+            {% set countdown_items = chapters_map.get('Save the Date & Countdown Walkway', []) %}
+            <section id="countdown-walkway" class="scroll-mt-28 relative">
+                <!-- Ambient Glow Behind Countdown -->
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-rose-600/10 filter blur-[100px] pointer-events-none -z-10"></div>
+
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-amber-400/40 text-amber-300 bg-amber-500/10 flex items-center gap-1.5">
+                                <span class="material-icons text-xs text-amber-400">hourglass_top</span>
+                                Path to Forever
+                            </span>
+                            <span class="text-xs text-rose-300/80 font-semibold">Save the Date &amp; 7-Day Countdown</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide">
+                            The Wedding Walkway
+                        </h2>
+                        <p class="text-xs sm:text-sm text-rose-200/80 max-w-2xl mt-2 font-serif italic">
+                            Follow our golden trail from 7 days to go, counting down every heart-fluttering sunrise to the magical moment we become one.
+                        </p>
+                    </div>
+
+                    <!-- View Switcher (Walkway vs Tile Grid) -->
+                    <div class="flex items-center gap-2 self-start md:self-end">
+                        <button onclick="toggleWalkwayView('walkway')" id="btn-walkway-view" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold border border-amber-300 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                            <span class="material-icons text-base">timeline</span>
+                            <span>Walkway Path</span>
+                        </button>
+                        <button onclick="toggleWalkwayView('grid')" id="btn-grid-view" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold transition-all shadow-md hover:scale-105">
+                            <span class="material-icons text-base">grid_view</span>
+                            <span>Tile Grid View</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Featured: Official Save The Date Spotlight -->
+                {% set std_item = None %}
+                {% for item in countdown_items %}
+                    {% if 'save_the_date' in item.filename or item.order == 0 %}
+                        {% set std_item = item %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if std_item %}
+                <div class="mb-14 relative rounded-3xl overflow-hidden bg-gradient-to-br from-rose-950/40 via-surface-dark to-amber-950/20 border border-amber-400/30 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <!-- Poster Preview with Glow & Zoom -->
+                        <div class="lg:col-span-5 flex justify-center">
+                            <div class="relative group cursor-pointer max-w-xs sm:max-w-sm rounded-2xl overflow-hidden shadow-2xl border-2 border-amber-300/40 hover:border-amber-300 transition-all duration-500 hover:scale-[1.02]" onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', 'Save The Date: Shaiwal & Shaila', '💌 Official Save The Date')">
+                                <img src="{{ r2_url }}/{{ std_item.filename }}" alt="Official Save The Date" class="w-full h-auto object-cover rounded-2xl" loading="lazy" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+                                    <span class="text-xs text-amber-200 font-bold flex items-center gap-1.5">
+                                        <span class="material-icons text-base text-amber-300">zoom_in</span>
+                                        Click to view full Save the Date poster
+                                    </span>
+                                </div>
+                                <span class="absolute top-3 left-3 bg-rose-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                    Official Announcement
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Announcement Details -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+                                <span class="material-icons text-sm text-amber-400">celebration</span>
+                                <span>Save The Date</span>
+                            </div>
+                            <h3 class="text-3xl sm:text-4xl font-cinzel font-bold text-white tracking-wide leading-tight">
+                                Shaiwal &amp; Shaila
+                            </h3>
+                            <p class="font-cursive text-2xl sm:text-3xl text-rose-300">
+                                The Beginning of Forever
+                            </p>
+                            <p class="text-sm sm:text-base text-rose-100/85 leading-relaxed font-serif italic">
+                                "Two hearts, one soul, and an eternity of smiles ahead. Mark your calendars and join our joyous celebration as we step hand-in-hand into married life."
+                            </p>
+                            <div class="pt-4 flex flex-wrap gap-4 items-center">
+                                <button onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', 'Save The Date: Shaiwal & Shaila', '💌 Official Save The Date')" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95">
+                                    <span class="material-icons text-base">fullscreen</span>
+                                    <span>Expand Save The Date</span>
+                                </button>
+                                <a href="#walkway-track-container" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all border border-white/20">
+                                    <span class="material-icons text-base text-rose-400">arrow_downward</span>
+                                    <span>Follow The 7-Day Path</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- WALKWAY VIEW (Stepped Walkway Path 7 -> 1) -->
+                <div id="walkway-track-container" class="transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <span class="text-xs uppercase font-extrabold tracking-wider text-amber-300 flex items-center gap-1.5">
+                            <span class="material-icons text-sm text-amber-400">hiking</span>
+                            Stepped Walkway (Scroll along the path)
+                        </span>
+                        <span class="text-xs text-rose-300/70">Swipe or scroll horizontally &rarr;</span>
+                    </div>
+
+                    <div class="netflix-row gap-6 pb-6 pt-2">
+                        {% set countdown_ordered = [] %}
+                        {% for item in countdown_items %}
+                            {% if 'countdown' in item.filename %}
+                                {% set _ = countdown_ordered.append(item) %}
+                            {% endif %}
+                        {% endfor %}
+                        {# Sort descending so 7 days -> 1 day #}
+                        {% for item in countdown_ordered|sort(attribute='order', reverse=True) %}
+                        {% set days_num = item.order|int %}
+                        <div class="w-64 sm:w-72 shrink-0 group relative">
+                            <!-- Step Badge on Top of Card -->
+                            <div class="flex items-center justify-between mb-3 px-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 text-white font-black text-xs flex items-center justify-center shadow-lg border border-amber-300">
+                                        {{ days_num }}
+                                    </span>
+                                    <span class="text-xs font-bold text-amber-200">
+                                        {% if days_num == 1 %}1 Day to Go!{% else %}{{ days_num }} Days to Go{% endif %}
+                                    </span>
+                                </div>
+                                <span class="material-icons text-base text-rose-400/60 group-hover:text-rose-400 transition-colors">favorite</span>
+                            </div>
+
+                            <!-- Card Poster -->
+                            <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-amber-400/20 group-hover:border-amber-400/60 shadow-xl cursor-pointer" onclick="openPreweddingLightbox('{{ r2_url }}/{{ item.filename }}', '{{ item.note }}', '{{ item.title }}')">
+                                <div class="aspect-[9/16] overflow-hidden bg-black relative">
+                                    <img src="{{ r2_url }}/{{ item.filename }}" alt="{{ item.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                        <span class="text-xs text-white font-medium flex items-center gap-1">
+                                            <span class="material-icons text-sm text-amber-300">zoom_in</span> Click to enlarge
+                                        </span>
+                                    </div>
+                                    <div class="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-bold text-amber-300">
+                                        Day -{{ days_num }}
+                                    </div>
+                                </div>
+                                {% if item.note %}
+                                <div class="p-3 bg-surface-dark/95 border-t border-white/5">
+                                    <p class="text-xs text-rose-100/90 font-serif italic line-clamp-2">"{{ item.note }}"</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Final Step: Wedding Day Destination -->
+                        <div class="w-64 sm:w-72 shrink-0 flex flex-col justify-center items-center p-6 rounded-2xl bg-gradient-to-br from-rose-950/60 to-amber-950/40 border-2 border-dashed border-amber-400/50 text-center shadow-2xl">
+                            <span class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-400 to-rose-500 flex items-center justify-center text-white text-2xl shadow-xl mb-3 animate-bounce">
+                                💍
+                            </span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-1">Destination</span>
+                            <h4 class="text-2xl font-cinzel font-bold text-white mb-2">The Wedding Day</h4>
+                            <p class="text-xs text-rose-200/80 font-serif italic mb-4">
+                                Hand in hand, the grand chapter begins forever.
+                            </p>
+                            <a href="/wedding" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition shadow-lg">
+                                Wedding Story &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TILE GRID VIEW (Hidden by default, shown when user clicks Tile Grid View) -->
+                <div id="walkway-grid-container" class="hidden">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                        {% for item in countdown_items %}
+                        <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-white/10 hover:border-amber-400/60 cursor-pointer shadow-xl group" onclick="openPreweddingLightbox('{{ r2_url }}/{{ item.filename }}', '{{ item.note }}', '{{ item.title }}')">
+                            <div class="aspect-[9/16] overflow-hidden bg-black relative">
+                                <img src="{{ r2_url }}/{{ item.filename }}" alt="{{ item.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                    <span class="text-xs text-white font-medium flex items-center gap-1">
+                                        <span class="material-icons text-sm text-amber-300">zoom_in</span> Zoom
+                                    </span>
+                                </div>
+                                <span class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold text-amber-200 border border-white/15">
+                                    {{ item.title }}
+                                </span>
+                            </div>
+                            {% if item.note %}
+                            <div class="p-3 bg-surface-dark/95 border-t border-white/5">
+                                <p class="text-xs text-rose-100/90 font-serif italic line-clamp-2">"{{ item.note }}"</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 2: INSTAGRAM REELS (Vertical Reel Showcase) -->
+            <!-- ========================================== -->
+            {% set reels_items = chapters_map.get('Instagram Reels', []) %}
+            <section id="instagram-reels" class="scroll-mt-28 relative">
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-pink-400/40 text-pink-300 bg-pink-500/10 flex items-center gap-1.5">
+                                <span class="material-icons text-xs text-pink-400">play_circle_filled</span>
+                                Vertical Short Films
+                            </span>
+                            <span class="text-xs text-rose-300/80 font-semibold">{{ reels_items|length }} Official Reels</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide flex items-center gap-3">
+                            <span>Instagram Reels</span>
+                            <span class="text-2xl sm:text-3xl">📱✨</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-rose-200/80 max-w-2xl mt-2 font-serif italic">
+                            Vertical, intimate, and bursting with emotion. Tap to watch with sound, loop, and experience every candid laughter and romantic twirl.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2 self-start md:self-end">
+                        <span class="text-xs text-pink-300/80 font-mono bg-pink-500/10 px-3 py-1 rounded-full border border-pink-400/30">
+                            9:16 Ultra HD
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Reels Grid (Styled as elegant phone screens) -->
+                {% if reels_items|length > 0 %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+                    {% for reel in reels_items %}
+                    <div class="relative flex flex-col items-center">
+                        <!-- Phone Frame Container -->
+                        <div class="phone-mockup w-full max-w-[340px] sm:max-w-[360px] aspect-[9/16] rounded-[36px] overflow-hidden group shadow-2xl relative transition-all duration-300 hover:scale-[1.02]">
+                            <!-- Notch / Speaker -->
+                            <div class="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black/90 rounded-full z-30 flex items-center justify-center">
+                                <div class="w-10 h-1 bg-white/20 rounded-full"></div>
+                            </div>
+
+                            <!-- Video Element -->
+                            <video id="reel-vid-{{ loop.index }}" src="{{ r2_url }}/{{ reel.filename }}" class="w-full h-full object-cover cursor-pointer" loop playsinline preload="metadata" muted onmouseover="this.play()" onmouseout="this.pause()" onclick="openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')"></video>
+
+                            <!-- Gradient Overlays for Instagram UI -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none z-10"></div>
+
+                            <!-- Center Play Icon (Appears when paused) -->
+                            <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none group-hover:scale-110 transition-transform">
+                                <div class="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-2xl group-hover:bg-primary/90 transition-colors">
+                                    <span class="material-icons text-3xl text-white">play_arrow</span>
+                                </div>
+                            </div>
+
+                            <!-- Instagram Top Bar -->
+                            <div class="absolute top-8 left-4 right-4 z-20 flex items-center justify-between text-white/90 pointer-events-none">
+                                <span class="text-xs font-bold font-mono tracking-wider flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                                    REELS
+                                </span>
+                                <span class="material-icons text-lg">camera_alt</span>
+                            </div>
+
+                            <!-- Instagram Right Action Sidebar (Heart, Comment, Share) -->
+                            <div class="absolute bottom-16 right-3 z-20 flex flex-col items-center gap-4 text-white">
+                                <button type="button" class="flex flex-col items-center text-xs group/btn" onclick="event.stopPropagation(); triggerReelHeart(this)">
+                                    <div class="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover/btn:bg-rose-600 transition-colors">
+                                        <span class="material-icons text-xl text-rose-400 group-hover/btn:text-white">favorite</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold mt-1 text-white/80">Love</span>
+                                </button>
+                                <button type="button" class="flex flex-col items-center text-xs group/btn" onclick="event.stopPropagation(); openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')">
+                                    <div class="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover/btn:bg-white/20 transition-colors">
+                                        <span class="material-icons text-xl text-white">fullscreen</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold mt-1 text-white/80">Watch</span>
+                                </button>
+                                <div class="w-8 h-8 rounded-full border-2 border-white/40 overflow-hidden bg-black/60 flex items-center justify-center animate-spin-slow mt-2">
+                                    <span class="material-icons text-sm text-pink-300">music_note</span>
+                                </div>
+                            </div>
+
+                            <!-- Instagram Bottom Caption & Audio -->
+                            <div class="absolute bottom-4 left-4 right-16 z-20 text-white pointer-events-none">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-bold text-xs text-white">@shaiwal_and_shaila</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/20 border border-white/20 font-bold">Follow</span>
+                                </div>
+                                <p class="text-xs text-white/90 font-medium line-clamp-2 drop-shadow-md">
+                                    {{ reel.title }}
+                                </p>
+                                <div class="flex items-center gap-1.5 mt-2 text-[10px] text-white/70">
+                                    <span class="material-icons text-xs">graphic_eq</span>
+                                    <span class="truncate">Original Pre-Wedding Audio &bull; Pure Romance</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Action Buttons Under Phone -->
+                        <div class="mt-4 flex items-center gap-3 w-full max-w-[340px] sm:max-w-[360px] justify-between">
+                            <button onclick="openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-1.5">
+                                <span class="material-icons text-base">play_arrow</span>
+                                <span>Play Full Reel</span>
+                            </button>
+                            <button onclick="toggleReelMute('reel-vid-{{ loop.index }}', this)" class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1">
+                                <span class="material-icons text-base">volume_off</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="rounded-2xl border border-dashed border-pink-500/30 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
+                    <span class="material-icons text-4xl text-pink-400 mb-2">videocam</span>
+                    <h3 class="text-lg font-bold text-white mb-1">Reels Uploaded</h3>
+                </div>
+                {% endif %}
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 3: 4K TEASER & VIDEOS HIGHLIGHT    -->
+            <!-- ========================================== -->
+            {% set teaser_items = chapters_map.get('Teaser & Videos', []) %}
+            <section id="teaser-and-videos" class="scroll-mt-28 relative">
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-purple-400/40 text-purple-300 bg-purple-500/10 flex items-center gap-1.5">
+                                <span class="material-icons text-xs text-purple-400">movie</span>
+                                4K Cinematic Films
+                            </span>
+                            <span class="text-xs text-rose-300/80 font-semibold">{{ teaser_items|length }} Motion Cuts</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide">
+                            Teasers &amp; Cinematic Films
+                        </h2>
+                        <p class="text-xs sm:text-sm text-rose-200/80 max-w-2xl mt-2 font-serif italic">
+                            Experience our official 4K 28s teaser, the curated 11-cut master edit, and full raw unedited footage.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2 self-start md:self-end">
+                        <button onclick="startAiMagic('Teaser & Videos')" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold border border-purple-400 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                            <span class="material-icons text-base text-amber-200">auto_awesome</span>
+                            <span>Play Film Magic</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Teaser Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for item in teaser_items %}
+                    <div class="relative rounded-2xl overflow-hidden bg-surface-dark border {% if item.is_hero_teaser %}border-amber-400/60 shadow-2xl shadow-amber-500/10 ring-1 ring-amber-400/40{% else %}border-white/10{% endif %} group hover:border-purple-400/50 transition-all duration-300">
+                        <div class="aspect-video bg-black relative overflow-hidden">
+                            <video src="{{ r2_url }}/{{ item.filename }}" class="w-full h-full object-cover" muted loop preload="metadata" onmouseover="this.play()" onmouseout="this.pause()"></video>
+                            <button onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ item.title }}')" class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
+                                <span class="material-icons text-5xl text-white drop-shadow-xl bg-purple-600/90 rounded-full p-2 group-hover:scale-110 transition-transform">play_arrow</span>
+                            </button>
+                            {% if item.is_hero_teaser %}
+                            <span class="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-rose-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">
+                                <span class="material-icons text-xs text-amber-200">star</span> Official 4K Teaser
+                            </span>
+                            {% else %}
+                            <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-white/20">
+                                <span class="material-icons text-xs text-purple-400">videocam</span> {{ item.chapter }}
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        <div class="p-4 bg-surface-dark/95 border-t border-white/5 space-y-2">
+                            <h4 class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-1">
+                                {{ item.title }}
+                            </h4>
+                            {% if item.note %}
+                            <p class="text-xs text-rose-200/80 font-serif italic line-clamp-2">"{{ item.note }}"</p>
+                            {% endif %}
+                            <div class="pt-1 flex items-center justify-between">
+                                <button onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ item.title }}')" class="text-xs font-bold text-purple-300 hover:text-white flex items-center gap-1 transition">
+                                    <span>Watch Clip</span>
+                                    <span class="material-icons text-sm">arrow_forward</span>
+                                </button>
+                                <span class="text-[10px] font-mono text-white/50">Full HD / 4K</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 4: THE FOUR LOOKS & HIGHLIGHTS     -->
+            <!-- ========================================== -->
             {% set looks_config = [
                 {
                     "title": "Best Moments & Highlights",
@@ -240,14 +656,6 @@
                     "icon": "auto_awesome",
                     "theme_color": "border-amber-400/40 text-amber-300",
                     "desc": "Handpicked favorite clips cropped directly from our pre-wedding shoot — radiant smiles, playful twirls, romantic glances, and warm embraces."
-                },
-                {
-                    "title": "Teaser & Videos",
-                    "id": "teaser-and-videos",
-                    "badge": "Motion",
-                    "icon": "movie",
-                    "theme_color": "border-purple-400/30 text-purple-300",
-                    "desc": "Cinematic motion teasers, the curated 2m 42s master cut, and unedited raw footage bringing our pre-wedding journey to life."
                 },
                 {
                     "title": "Ethnic Look",
@@ -303,7 +711,7 @@
                             </span>
                             <span class="text-xs text-rose-300/70 font-semibold">{{ items|length }} moments captured</span>
                         </div>
-                        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white flex items-center gap-2">
+                        <h2 class="text-3xl sm:text-4xl font-cinzel font-bold text-white flex items-center gap-2">
                             <span>{{ look.title }}</span>
                         </h2>
                         <p class="text-xs sm:text-sm text-rose-100/70 max-w-2xl mt-1.5 font-serif italic">
@@ -360,7 +768,6 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                <!-- Empty Placeholder -->
                 <div class="rounded-2xl border border-dashed border-rose-500/20 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
                     <span class="material-icons text-4xl text-rose-400/60 mb-2">{{ look.icon }}</span>
                     <h3 class="text-lg font-bold text-white mb-1">Coming Soon: {{ look.title }}</h3>
@@ -374,7 +781,7 @@
             <section class="pt-12 border-t border-rose-500/20 text-center">
                 <div class="max-w-2xl mx-auto space-y-4">
                     <span class="font-cursive text-3xl text-rose-300 block">The Journey Continues</span>
-                    <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white">Relive Every Chapter</h3>
+                    <h3 class="text-2xl sm:text-3xl font-cinzel font-bold text-white">Relive Every Chapter</h3>
                     <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
                         <a href="/events" class="px-5 py-2.5 rounded-full bg-primary hover:bg-rose-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-primary/30 flex items-center gap-2">
                             <span class="material-icons text-sm">event</span>
@@ -415,6 +822,21 @@
         </div>
     </div>
 
+    <!-- Full Instagram Reel Modal Player -->
+    <div id="full-reel-modal" class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-2 sm:p-4">
+        <div class="relative w-full max-w-[420px] aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl border border-white/20">
+            <!-- Close button -->
+            <button onclick="closeFullReelPlayer()" class="absolute top-4 right-4 z-40 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-rose-600 transition">
+                <span class="material-icons text-2xl">close</span>
+            </button>
+            <video id="full-reel-video" src="" controls autoplay loop playsinline class="w-full h-full object-cover"></video>
+            <div class="absolute bottom-4 left-4 right-4 z-30 pointer-events-none text-white drop-shadow-md">
+                <h4 id="full-reel-title" class="font-bold text-sm"></h4>
+                <p class="text-xs text-white/80">Shaiwal &amp; Shaila Pre-Wedding Reel</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Prewedding Lightbox with Full Navigation & Keyboard Support -->
     <div id="pw-lightbox-modal" class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4 select-none">
         <!-- Top Toolbar -->
@@ -447,6 +869,70 @@
 
     <!-- JS Logic -->
     <script>
+        // --- Walkway vs Tile Grid Toggle ---
+        function toggleWalkwayView(mode) {
+            const trackContainer = document.getElementById('walkway-track-container');
+            const gridContainer = document.getElementById('walkway-grid-container');
+            const btnWalkway = document.getElementById('btn-walkway-view');
+            const btnGrid = document.getElementById('btn-grid-view');
+
+            if (mode === 'grid') {
+                trackContainer.classList.add('hidden');
+                gridContainer.classList.remove('hidden');
+                btnGrid.className = 'flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold border border-amber-300 text-xs transition-all shadow-lg';
+                btnWalkway.className = 'flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold transition-all shadow-md';
+            } else {
+                gridContainer.classList.add('hidden');
+                trackContainer.classList.remove('hidden');
+                btnWalkway.className = 'flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold border border-amber-300 text-xs transition-all shadow-lg';
+                btnGrid.className = 'flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold transition-all shadow-md';
+            }
+        }
+
+        // --- Reel Helpers ---
+        function toggleReelMute(videoId, btn) {
+            const vid = document.getElementById(videoId);
+            if (!vid) return;
+            const icon = btn.querySelector('.material-icons');
+            vid.muted = !vid.muted;
+            if (vid.muted) {
+                icon.textContent = 'volume_off';
+            } else {
+                icon.textContent = 'volume_up';
+                vid.play();
+            }
+        }
+
+        function triggerReelHeart(btn) {
+            const heartIcon = btn.querySelector('.material-icons');
+            heartIcon.classList.add('scale-125', 'text-red-500');
+            setTimeout(() => {
+                heartIcon.classList.remove('scale-125');
+            }, 300);
+        }
+
+        function openFullReelPlayer(url, title) {
+            const modal = document.getElementById('full-reel-modal');
+            const vid = document.getElementById('full-reel-video');
+            document.getElementById('full-reel-title').textContent = title || 'Instagram Reel';
+            vid.src = url;
+            vid.muted = false;
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 20);
+            vid.play();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFullReelPlayer() {
+            const modal = document.getElementById('full-reel-modal');
+            const vid = document.getElementById('full-reel-video');
+            vid.pause();
+            vid.src = '';
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 200);
+            document.body.style.overflow = '';
+        }
+
         function toggleViewLayout(containerId, btn) {
             const container = document.getElementById(containerId);
             const label = btn.querySelector('.toggle-label');
@@ -491,12 +977,12 @@
 
         function refreshPwGallery() {
             pwGallery = [];
-            const photoCards = document.querySelectorAll('#looks-start .photo-card');
+            const photoCards = document.querySelectorAll('#content-start .photo-card');
             photoCards.forEach((card) => {
                 const img = card.querySelector('img');
                 if (img) {
                     const section = card.closest('section');
-                    const lookTitle = section ? (section.querySelector('h2 span')?.textContent.trim() || 'Pre-Wedding') : 'Pre-Wedding';
+                    const lookTitle = section ? (section.querySelector('h2')?.textContent.trim() || 'Pre-Wedding') : 'Pre-Wedding';
                     const caption = card.querySelector('p')?.textContent.replace(/"/g, '').trim() || '';
                     pwGallery.push({
                         src: img.getAttribute('src'),
@@ -581,6 +1067,7 @@
                 }
             } else if (e.key === 'Escape') {
                 closePreweddingVideo();
+                closeFullReelPlayer();
             }
         });
     </script>

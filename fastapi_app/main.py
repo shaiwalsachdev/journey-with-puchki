@@ -2046,6 +2046,8 @@ async def read_prewedding(request: Request):
     hero_media = None
     first_video = None
     chapters_map = {
+        "Save the Date & Countdown Walkway": [],
+        "Instagram Reels": [],
         "Best Moments & Highlights": [],
         "Photographer Cuts & Edits": [],
         "Cut Shots for Photographer": [],
@@ -2058,10 +2060,12 @@ async def read_prewedding(request: Request):
         "Unassigned": []
     }
     for item in media:
-        if item.get("media_type") == "video":
+        if item.get("is_hero_teaser"):
+            hero_media = item
+        elif item.get("media_type") == "video":
             if not first_video:
                 first_video = item
-            if "teaser" in item.get("filename", "").lower() or "hero" in item.get("filename", "").lower():
+            if not hero_media and ("teaser" in item.get("filename", "").lower() or "hero" in item.get("filename", "").lower()):
                 hero_media = item
                 
         ch = item.get("chapter", "Unassigned")
