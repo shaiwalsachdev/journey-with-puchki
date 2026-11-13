@@ -97,12 +97,60 @@ async def chat_with_agent(messages: list) -> dict:
         return json.loads(content)
         
     except Exception as e:
-        print("Agent error:", e)
-        return {
-            "text": f"Error connecting to agent: {str(e)}\n\nMake sure your GEMINI_API_KEY is valid.",
-            "cards": [],
-            "metrics": []
-        }
+        err_msg = str(e)
+        print("Agent error:", err_msg)
+        
+        # Smart Romantic Offline Fallback if billing/credits/API key is down
+        try:
+            memories = await get_all_memories()
+            total_mems = len(memories)
+            latest_m = memories[-1] if memories else None
+            
+            # Simple keyword search in memories
+            user_text = messages[-1].get("content", "").lower() if messages else ""
+            matched_cards = []
+            
+            for m in reversed(memories):
+                title = m.get("title", "")
+                desc = m.get("description", "")
+                if any(w in (title + " " + desc).lower() for w in user_text.split() if len(w) > 3):
+                    photos = m.get("photos", [])
+                    photo_url = f"https://pub-5febf239be824301b333f51d2eaee417.r2.dev/uploads/{m.get('id')}/{photos[0]}?v=1" if photos else ""
+                    matched_cards.append({
+                        "type": "memory",
+                        "id": m.get("id"),
+                        "title": title,
+                        "image": photo_url,
+                        "link": f"/memory/{m.get('id')}"
+                    })
+                    if len(matched_cards) >= 3:
+                        break
+                        
+            fallback_text = (
+                "💖 **Hello from Kiara!**\n\n"
+                f"I'm here guarding all **{total_mems} beautiful milestones** of Shaiwal and Shaila's journey!\n\n"
+                "*(Note: Gemini AI Studio credits are currently depleted on this project, but I've pulled their real journey memories directly from the database for you!)*\n\n"
+                "**Try asking me:**\n"
+                "- When was our Pre-Wedding shoot?\n"
+                "- What happened on Karwa Chauth?\n"
+                "- How many memories do we have in total?"
+            )
+            
+            return {
+                "text": fallback_text,
+                "cards": matched_cards,
+                "metrics": [
+                    {"label": "Total Memories", "value": str(total_mems)},
+                    {"label": "Forever Love", "value": "100%"},
+                    {"label": "Wedding Days", "value": "Dec 5–6, 2026"}
+                ]
+            }
+        except Exception as inner_err:
+            return {
+                "text": f"Error connecting to agent: {err_msg}\n\nPlease update your GEMINI_API_KEY with active credits at https://ai.google.dev.",
+                "cards": [],
+                "metrics": []
+            }
 
 async def generate_dynamic_storyline():
     """Background task to generate storyline data based on memories using Kiara."""
