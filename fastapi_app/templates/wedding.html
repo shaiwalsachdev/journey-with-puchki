@@ -207,6 +207,64 @@
         </section>
 
         <!-- ========================================== -->
+        <!-- SAVE THE DATE SPOTLIGHT SECTION            -->
+        <!-- ========================================== -->
+        <section class="max-w-4xl mx-auto mb-20 relative">
+            <div class="rounded-3xl p-6 sm:p-10 glass-royal border border-amber-400/40 shadow-2xl relative overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    <!-- Poster Artwork with Golden Glow -->
+                    <div class="md:col-span-5 flex justify-center">
+                        <div class="relative group cursor-pointer max-w-xs rounded-2xl overflow-hidden shadow-2xl border-2 border-amber-400/40 hover:border-amber-300 transition-all duration-500 hover:scale-[1.02]"
+                             onclick="openWeddingSaveTheDateModal()">
+                            <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1794596409_save_the_date.webp" 
+                                 alt="Save the Date • Shaiwal & Shaila" 
+                                 class="w-full h-auto object-cover rounded-2xl" 
+                                 loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                <span class="text-xs text-amber-200 font-bold flex items-center gap-1.5">
+                                    <span class="material-icons text-base text-amber-300">zoom_in</span>
+                                    Click to view full poster
+                                </span>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-amber-500 text-black text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                Save The Date
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Announcement Text Details -->
+                    <div class="md:col-span-7 space-y-4 text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+                            <span class="material-icons text-sm text-amber-400">celebration</span>
+                            <span>Official Invitation Card</span>
+                        </div>
+                        <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white tracking-wide">
+                            Save The Date
+                        </h2>
+                        <p class="font-cursive text-2xl sm:text-3xl text-amber-200">
+                            December 5 &amp; 6, 2026
+                        </p>
+                        <p class="text-xs sm:text-sm text-amber-100/80 font-serif italic leading-relaxed">
+                            "Together with our families, we joyfully invite you to celebrate the beginning of our forever journey. Save the date and be part of our most treasured memories."
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start items-center">
+                            <button onclick="openWeddingSaveTheDateModal()" 
+                                    class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 flex items-center gap-1.5">
+                                <span class="material-icons text-base">fullscreen</span>
+                                <span>View Full Poster</span>
+                            </button>
+                            <a href="/pre-wedding#countdown-walkway" 
+                               class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/20 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5">
+                                <span class="material-icons text-base text-rose-400">timeline</span>
+                                <span>7-Day Countdown Path</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
         <!-- VIDEO INVITATIONS & MEDIA THEATER SECTION -->
         <!-- ========================================== -->
         <section class="mb-20" id="video-invitations">
@@ -630,6 +688,41 @@
             const fmt = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, "");
             const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title + ' - Shaiwal & Shaila Wedding')}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(location)}&details=${encodeURIComponent('Celebrations of Shaiwal & Shaila Wedding #Shaigothershai')}`;
             window.open(url, '_blank');
+        }
+    </script>
+    <!-- Save The Date Modal -->
+    <div id="wedding-std-modal" class="fixed inset-0 z-[10000] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="relative max-w-lg w-full flex flex-col items-center">
+            <button onclick="closeWeddingSaveTheDateModal()" class="absolute -top-12 right-0 text-white hover:text-amber-300 p-2">
+                <span class="material-icons text-3xl">close</span>
+            </button>
+            <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/prewedding/1794596409_save_the_date.webp" 
+                 alt="Save The Date • Shaiwal & Shaila" 
+                 class="max-w-full max-h-[82vh] object-contain rounded-2xl shadow-2xl border-2 border-amber-400/50" />
+            <div class="mt-4 text-center">
+                <h4 class="font-cinzel text-lg font-bold text-white">Save The Date: Shaiwal &amp; Shaila</h4>
+                <p class="text-xs text-amber-200/80 font-serif italic mt-0.5">December 5 &amp; 6, 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function openWeddingSaveTheDateModal() {
+            const modal = document.getElementById('wedding-std-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 20);
+            document.body.style.overflow = 'hidden';
+            if (typeof fireWeddingConfetti === 'function') {
+                fireWeddingConfetti();
+            }
+        }
+
+        function closeWeddingSaveTheDateModal() {
+            const modal = document.getElementById('wedding-std-modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 200);
+            document.body.style.overflow = '';
         }
     </script>
 </body>
