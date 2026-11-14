@@ -469,12 +469,13 @@
                 </div>
 
                 <!-- Featured: Official Save The Date Spotlight -->
-                {% set std_item = None %}
+                {% set std_ns = namespace(item=None) %}
                 {% for item in countdown_items %}
-                {% if 'save_the_date' in item.filename or item.order == 0 %}
-                {% set std_item = item %}
+                {% if 'save_the_date' in item.filename or item.order == 0 or item.is_save_the_date %}
+                {% set std_ns.item = item %}
                 {% endif %}
                 {% endfor %}
+                {% set std_item = std_ns.item %}
 
                 {% if std_item %}
                 <div
@@ -553,6 +554,44 @@
                     </div>
 
                     <div class="netflix-row gap-6 pb-6 pt-2">
+                        <!-- Step 0: Save The Date Opening Card -->
+                        {% if std_item %}
+                        <div class="w-64 sm:w-72 shrink-0 group relative">
+                            <div class="flex items-center justify-between mb-3 px-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-400 to-rose-600 text-black font-black text-xs flex items-center justify-center shadow-lg border border-amber-300">
+                                        💌
+                                    </span>
+                                    <span class="text-xs font-bold text-amber-300">
+                                        Save The Date
+                                    </span>
+                                </div>
+                                <span class="material-icons text-base text-amber-400 animate-pulse">star</span>
+                            </div>
+
+                            <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border-2 border-amber-400/50 group-hover:border-amber-300 shadow-xl cursor-pointer"
+                                onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', '{{ std_item.note }}', '💌 Official Save The Date')">
+                                <div class="aspect-[9/16] overflow-hidden bg-black relative">
+                                    <img src="{{ r2_url }}/{{ std_item.filename }}" alt="Official Save The Date" loading="lazy"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                        <span class="text-xs text-amber-200 font-bold flex items-center gap-1">
+                                            <span class="material-icons text-sm text-amber-300">zoom_in</span> Zoom Poster
+                                        </span>
+                                    </div>
+                                    <div class="absolute top-2.5 right-2.5 bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow">
+                                        Official
+                                    </div>
+                                </div>
+                                {% if std_item.note %}
+                                <div class="p-3 bg-surface-dark/95 border-t border-white/5">
+                                    <p class="text-xs text-rose-100/90 font-serif italic line-clamp-2">"{{ std_item.note }}"</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+
                         {% set countdown_ordered = [] %}
                         {% for item in countdown_items %}
                         {% if 'countdown' in item.filename %}
