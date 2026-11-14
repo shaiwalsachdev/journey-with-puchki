@@ -381,19 +381,32 @@
         closeBtn.addEventListener('click', stopAiMagic);
 
         function buildPlaylist() {
-            const lookSections = document.querySelectorAll('#looks-start section');
+            const rootContainer = document.getElementById('content-start') || document.getElementById('looks-start') || document.body;
+            const lookSections = rootContainer.querySelectorAll('section');
             let items = [];
 
             lookSections.forEach((sec, idx) => {
-                const title = sec.querySelector('h2 span')?.textContent.trim() || `Look ${idx + 1}`;
-                const desc = sec.querySelector('p.italic')?.textContent.trim() || '';
+                const title = sec.querySelector('h2 span')?.textContent.trim() || sec.querySelector('h2')?.textContent.trim() || `Section ${idx + 1}`;
+                const desc = sec.querySelector('p.italic')?.textContent.trim() || sec.querySelector('p')?.textContent.trim() || '';
 
                 if (currentExploreChapter && currentExploreChapter !== title) return;
 
-                items.push({
-                    type: 'chapter',
-                    title: title,
-                    note: desc
+                // Check for videos first (especially for "Teaser & Videos")
+                const videoCards = sec.querySelectorAll('video');
+                const videoItems = [];
+                videoCards.forEach(vid => {
+                    const src = vid.getAttribute('src');
+                    const card = vid.closest('.group') || vid.closest('.relative');
+                    const note = card?.querySelector('p')?.textContent.replace(/"/g, '').trim() || '';
+                    const vTitle = card?.querySelector('h4')?.textContent.trim() || title;
+                    if (src && !src.includes('blob:')) {
+                        videoItems.push({
+                            type: 'video',
+                            url: src,
+                            title: vTitle,
+                            note: note
+                        });
+                    }
                 });
 
                 const imgEls = sec.querySelectorAll('.photo-card img');
@@ -411,17 +424,28 @@
                     }
                 });
 
-                // Shuffle
-                for (let i = sectionPhotos.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [sectionPhotos[i], sectionPhotos[j]] = [sectionPhotos[j], sectionPhotos[i]];
-                }
+                if (videoItems.length > 0 || sectionPhotos.length > 0) {
+                    items.push({
+                        type: 'chapter',
+                        title: title,
+                        note: desc
+                    });
 
-                if (!currentExploreChapter && currentPhotoCount !== 'all') {
-                    sectionPhotos = sectionPhotos.slice(0, currentPhotoCount);
-                }
+                    // Add videos
+                    items = items.concat(videoItems);
 
-                items = items.concat(sectionPhotos);
+                    // Shuffle photos
+                    for (let i = sectionPhotos.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [sectionPhotos[i], sectionPhotos[j]] = [sectionPhotos[j], sectionPhotos[i]];
+                    }
+
+                    if (!currentExploreChapter && currentPhotoCount !== 'all') {
+                        sectionPhotos = sectionPhotos.slice(0, currentPhotoCount);
+                    }
+
+                    items = items.concat(sectionPhotos);
+                }
             });
 
             // If no photos have been assigned to sections yet, dynamically load shoot photos so AI Magic works immediately!
@@ -489,9 +513,15 @@
             const anims = ['ken-burns-in', 'ken-burns-out', 'pan-right', 'pan-left', 'pan-up', 'pan-down'];
             const chosenAnim = anims[Math.floor(Math.random() * anims.length)];
 
-            incomingLayer.innerHTML = `
-                <img src="${item.url}" class="w-full h-full object-contain max-h-screen" style="animation: ${chosenAnim} ${durations[currentPace] + 1000}ms ease-out forwards;" />
-            `;
+            if (item.type === 'video') {
+                incomingLayer.innerHTML = `
+                    <video src="${item.url}" autoplay playsinline controls class="w-full h-full object-contain max-h-screen"></video>
+                `;
+            } else {
+                incomingLayer.innerHTML = `
+                    <img src="${item.url}" class="w-full h-full object-contain max-h-screen" style="animation: ${chosenAnim} ${durations[currentPace] + 1000}ms ease-out forwards;" />
+                `;
+            }
 
             incomingLayer.classList.add('visible');
             outgoingLayer.classList.remove('visible');
@@ -505,8 +535,8 @@
             setTimeout(() => { shutter.style.opacity = '0'; }, 40);
             setTimeout(() => { shutter.classList.add('hidden'); }, 150);
 
-            // Animate progress bar
-            const duration = durations[currentPace];
+            // Animate progress bar (longer duration for videos if playing)
+            const duration = item.type === 'video' ? 12000 : durations[currentPace];
             progressAnim = progressBar.animate([
                 { width: '0%' },
                 { width: '100%' }
