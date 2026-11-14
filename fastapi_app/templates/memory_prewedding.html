@@ -7,14 +7,17 @@
     <title>Pre-Wedding Story | Shaiwal &amp; Shaila</title>
     <!-- Social Share Preview Meta Tags -->
     <meta property="og:title" content="Shaiwal & Shaila • Pre-Wedding Story & Countdown Walkway" />
-    <meta property="og:description" content="Framed in laughter, sealed in four timeless styles. Watch our official 4K cinematic teaser, explore the 7-day countdown walkway, and vertical Instagram reels." />
+    <meta property="og:description"
+        content="Framed in laughter, sealed in four timeless styles. Watch our official 4K cinematic teaser, explore the 7-day countdown walkway, and vertical Instagram reels." />
     <meta property="og:image" content="{{ r2_url }}/prewedding/1794596409_save_the_date.webp" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Great+Vibes&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Great+Vibes&family=Cinzel:wght@600;700;800&display=swap"
+        rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -55,10 +58,12 @@
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
+
         .netflix-row::-webkit-scrollbar {
             display: none;
         }
-        .netflix-row > * {
+
+        .netflix-row>* {
             flex: 0 0 auto;
             scroll-snap-align: start;
         }
@@ -67,6 +72,7 @@
             transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transform-origin: center center;
         }
+
         .photo-card:hover {
             transform: translateY(-6px) scale(1.02);
             z-index: 20;
@@ -86,7 +92,9 @@
         }
 
         @keyframes shine {
-            to { background-position: 200% center; }
+            to {
+                background-position: 200% center;
+            }
         }
 
         /* Ambient floating sparkle nodes */
@@ -100,9 +108,19 @@
             animation: twinkle 3s ease-in-out infinite;
             pointer-events: none;
         }
+
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.4); }
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
         }
 
         /* Grid / Slider switch */
@@ -112,6 +130,7 @@
             gap: 1.25rem !important;
             overflow: visible !important;
         }
+
         @media (min-width: 768px) {
             .grid-view-mode {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
@@ -128,27 +147,51 @@
 
         /* Floating pulse animation */
         @keyframes floatSlow {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
+
         .animate-float {
             animation: floatSlow 4s ease-in-out infinite;
         }
 
         /* Spin disc animation */
         @keyframes spinSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
+
         .animate-spin-slow {
             animation: spinSlow 6s linear infinite;
         }
 
         /* Wax seal pulse */
         @keyframes sealPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(225, 29, 72, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 0 35px rgba(245, 158, 11, 0.7); }
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(225, 29, 72, 0.5);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 35px rgba(245, 158, 11, 0.7);
+            }
         }
+
         .animate-seal {
             animation: sealPulse 2.5s infinite ease-in-out;
         }
@@ -165,28 +208,33 @@
 
     <!-- Floating Audio & Sparkle Controller Pill (Bottom Right) -->
     <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2">
-        <button id="floating-music-btn" onclick="toggleBackgroundRomanticMusic()" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/80 hover:bg-black text-white border border-rose-400/40 shadow-2xl backdrop-blur-md text-xs font-bold transition-all hover:scale-105 active:scale-95 group">
-            <span id="floating-music-icon" class="material-icons text-base text-rose-400 group-hover:rotate-12 transition-transform">music_note</span>
+        <button id="floating-music-btn" onclick="toggleBackgroundRomanticMusic()"
+            class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/80 hover:bg-black text-white border border-rose-400/40 shadow-2xl backdrop-blur-md text-xs font-bold transition-all hover:scale-105 active:scale-95 group">
+            <span id="floating-music-icon"
+                class="material-icons text-base text-rose-400 group-hover:rotate-12 transition-transform">music_note</span>
             <span id="floating-music-text">Play Romantic Audio</span>
         </button>
-        <button onclick="fireRomanticConfettiShower()" title="Celebrate with Confetti!" class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all">
+        <button onclick="fireRomanticConfettiShower()" title="Celebrate with Confetti!"
+            class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all">
             <span class="material-icons text-lg">celebration</span>
         </button>
     </div>
 
     <!-- Navbar: included directly -->
-    <div class="cinematic-nav fixed top-0 w-full z-[100] transition-colors duration-500 bg-gradient-to-b from-black/90 pb-8 to-transparent">
+    <div
+        class="cinematic-nav fixed top-0 w-full z-[100] transition-colors duration-500 bg-gradient-to-b from-black/90 pb-8 to-transparent">
         {% set page = 'prewedding' %}
         {% include 'partials/navbar.html' %}
     </div>
 
     <!-- Main Content -->
     <main class="relative w-full overflow-hidden pt-20">
-        
+
         <!-- Hero Section -->
         <section class="relative w-full min-h-[92vh] flex items-center py-20 px-4 sm:px-8 lg:px-16">
             {% if hero_media and hero_media.media_type == "video" %}
-            <video id="hero-bg-video" autoplay muted loop playsinline preload="metadata" class="absolute inset-0 w-full h-full object-cover z-0">
+            <video id="hero-bg-video" autoplay muted loop playsinline preload="metadata"
+                class="absolute inset-0 w-full h-full object-cover z-0">
                 <source src="{{ r2_url }}/{{ hero_media.filename }}" type="video/mp4">
             </video>
             {% else %}
@@ -202,22 +250,26 @@
             {% endif %}
 
             <div class="absolute inset-0 hero-vignette z-10 pointer-events-none"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/85 to-transparent w-full md:w-[70vw] z-10 pointer-events-none"></div>
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-[#0F070A] via-[#0F070A]/85 to-transparent w-full md:w-[70vw] z-10 pointer-events-none">
+            </div>
 
             <div class="relative z-20 max-w-3xl pt-6 md:pt-0">
                 <!-- Royal Wedding Monogram Badge -->
                 <div class="flex items-center gap-3 mb-4">
-                    <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/branding/wedding_monogram.webp" 
-                         alt="Shaiwal & Shaila Monogram" 
-                         class="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_16px_rgba(212,175,55,0.45)] hover:scale-110 transition-transform duration-300 cursor-pointer"
-                         onclick="fireRomanticConfettiShower()" />
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-extrabold uppercase tracking-widest backdrop-blur-md">
+                    <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/branding/wedding_monogram.webp"
+                        alt="Shaiwal & Shaila Monogram"
+                        class="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_16px_rgba(212,175,55,0.45)] hover:scale-110 transition-transform duration-300 cursor-pointer"
+                        onclick="fireRomanticConfettiShower()" />
+                    <div
+                        class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-extrabold uppercase tracking-widest backdrop-blur-md">
                         <span class="material-icons text-sm text-rose-400 animate-pulse">favorite</span>
                         <span>The Official 4K Cinematic Experience</span>
                     </div>
                 </div>
 
-                <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 gold-shimmer uppercase leading-[1.1]">
+                <h1
+                    class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 gold-shimmer uppercase leading-[1.1]">
                     Pre-Wedding
                 </h1>
                 <h2 class="font-cursive text-3xl sm:text-5xl text-rose-200 mb-6 font-normal">
@@ -225,37 +277,51 @@
                 </h2>
 
                 <div class="flex items-center gap-3 mb-6 text-xs sm:text-sm font-bold text-gray-300 flex-wrap">
-                    <span class="text-rose-300 bg-rose-500/20 px-3 py-0.5 rounded-full border border-rose-400/40">October 10, 2026</span>
-                    <span class="text-[#46d369] bg-[#46d369]/10 px-2 py-0.5 rounded border border-[#46d369]/20">100% Romance</span>
+                    <span
+                        class="text-rose-300 bg-rose-500/20 px-3 py-0.5 rounded-full border border-rose-400/40">October
+                        10, 2026</span>
+                    <span class="text-[#46d369] bg-[#46d369]/10 px-2 py-0.5 rounded border border-[#46d369]/20">100%
+                        Romance</span>
                     <span>4 Iconic Looks</span>
-                    <span class="border border-amber-400/50 text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded font-bold">✨ 4K Official Teaser</span>
-                    <span class="border border-purple-400/50 text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded font-bold">📱 Instagram Reels</span>
+                    <span
+                        class="border border-amber-400/50 text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded font-bold">✨
+                        4K Official Teaser</span>
+                    <span
+                        class="border border-purple-400/50 text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded font-bold">📱
+                        Instagram Reels</span>
                     <span class="border border-white/30 px-2 py-0.5 rounded text-white/90">Save the Date Walkway</span>
                 </div>
 
                 <p class="text-base sm:text-lg text-rose-100/90 leading-relaxed mb-8 max-w-2xl font-serif italic">
-                    From the winding path of our countdown days and vibrant Instagram reels to timeless ethnic grace, sunny picnics, city streets, and our romantic proposal — every single frame is a forever memory of us.
+                    From the winding path of our countdown days and vibrant Instagram reels to timeless ethnic grace,
+                    sunny picnics, city streets, and our romantic proposal — every single frame is a forever memory of
+                    us.
                 </p>
 
                 <!-- Navigation Quick Anchor Tabs -->
                 <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
-                    <a href="#countdown-walkway" class="px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/30 to-rose-500/30 hover:from-amber-500/50 hover:to-rose-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                    <a href="#countdown-walkway"
+                        class="px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/30 to-rose-500/30 hover:from-amber-500/50 hover:to-rose-500/50 border border-amber-400/60 text-xs sm:text-sm font-extrabold text-amber-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
                         <span class="material-icons text-sm text-amber-300">favorite</span>
                         <span>Save the Date &amp; Walkway</span>
                     </a>
-                    <a href="#instagram-reels" class="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                    <a href="#instagram-reels"
+                        class="px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 border border-purple-400/60 text-xs sm:text-sm font-extrabold text-purple-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
                         <span class="material-icons text-sm text-pink-300">play_circle</span>
                         <span>Instagram Reels</span>
                     </a>
-                    <a href="#teaser-and-videos" class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                    <a href="#teaser-and-videos"
+                        class="px-4 py-2 rounded-full bg-rose-500/30 hover:bg-rose-500/50 border border-rose-400/60 text-xs sm:text-sm font-extrabold text-rose-100 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
                         <span class="material-icons text-sm text-rose-300">movie</span>
                         <span>4K Teaser &amp; Videos</span>
                     </a>
-                    <button onclick="openSecretLoveLetter()" class="px-4 py-2 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-xs sm:text-sm font-extrabold text-amber-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                    <button onclick="openSecretLoveLetter()"
+                        class="px-4 py-2 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-xs sm:text-sm font-extrabold text-amber-200 shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
                         <span class="material-icons text-sm text-amber-300">mail</span>
                         <span>💌 Secret Letter</span>
                     </button>
-                    <button onclick="openShareModal()" class="px-4 py-2 rounded-full bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-xs sm:text-sm font-extrabold text-white shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
+                    <button onclick="openShareModal()"
+                        class="px-4 py-2 rounded-full bg-rose-600/30 hover:bg-rose-600/50 border border-rose-400/50 text-xs sm:text-sm font-extrabold text-white shadow-md transition-all hover:scale-105 flex items-center gap-1.5">
                         <span class="material-icons text-sm">share</span>
                         <span>Share With Family</span>
                     </button>
@@ -264,16 +330,22 @@
                 <!-- Action Buttons -->
                 <div class="flex flex-wrap items-center gap-4">
                     {% if hero_media and hero_media.media_type == "video" %}
-                    <button onclick="playPreweddingVideo('{{ r2_url }}/{{ hero_media.filename }}', '✨ Official 4K Pre-Wedding Teaser')" class="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-extrabold hover:bg-white/90 transition shadow-2xl text-sm sm:text-base hover:scale-105 active:scale-95 group">
-                        <span class="material-icons text-2xl text-rose-600 group-hover:scale-110 transition-transform">play_arrow</span>
+                    <button
+                        onclick="playPreweddingVideo('{{ r2_url }}/{{ hero_media.filename }}', '✨ Official 4K Pre-Wedding Teaser')"
+                        class="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-extrabold hover:bg-white/90 transition shadow-2xl text-sm sm:text-base hover:scale-105 active:scale-95 group">
+                        <span
+                            class="material-icons text-2xl text-rose-600 group-hover:scale-110 transition-transform">play_arrow</span>
                         <span>Play 4K Teaser</span>
                     </button>
                     {% endif %}
-                    <button onclick="openSecretLoveLetter()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 via-rose-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-amber-300/30 hover:scale-105 active:scale-95">
-                        <span class="material-icons text-2xl text-amber-200 group-hover:rotate-12 transition-transform">favorite</span>
+                    <button onclick="openSecretLoveLetter()"
+                        class="flex items-center gap-2 bg-gradient-to-r from-amber-500 via-rose-500 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-white px-7 py-3 rounded-xl font-extrabold transition shadow-2xl text-sm sm:text-base shadow-rose-600/50 group border border-amber-300/30 hover:scale-105 active:scale-95">
+                        <span
+                            class="material-icons text-2xl text-amber-200 group-hover:rotate-12 transition-transform">favorite</span>
                         <span>Unseal Surprise Letter 💌</span>
                     </button>
-                    <button onclick="startAiMagic()" class="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-6 py-3 rounded-xl font-extrabold transition shadow-xl text-sm sm:text-base border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95">
+                    <button onclick="startAiMagic()"
+                        class="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-6 py-3 rounded-xl font-extrabold transition shadow-xl text-sm sm:text-base border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95">
                         <span class="material-icons text-xl text-amber-300">auto_awesome</span>
                         AI Magic ✨
                     </button>
@@ -281,7 +353,9 @@
             </div>
 
             <!-- Bottom Gradient -->
-            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0F070A] z-10 pointer-events-none"></div>
+            <div
+                class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0F070A] z-10 pointer-events-none">
+            </div>
         </section>
 
         <!-- Dynamic Main Content Wrapper -->
@@ -290,39 +364,56 @@
             <!-- ========================================== -->
             <!-- SECTION 0: LIVE WEDDING COUNTDOWN BANNER   -->
             <!-- ========================================== -->
-            <section class="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-rose-950/40 via-surface-dark to-amber-950/30 border border-amber-400/30 shadow-2xl backdrop-blur-xl">
+            <section
+                class="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-rose-950/40 via-surface-dark to-amber-950/30 border border-amber-400/30 shadow-2xl backdrop-blur-xl">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="text-center md:text-left">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold border border-rose-400/30 mb-2">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold border border-rose-400/30 mb-2">
                             <span class="material-icons text-xs text-rose-400 animate-spin">access_time</span>
                             <span>The Big Day Countdown</span>
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-cinzel font-bold text-white">Counting Down to Dec 5 &amp; 6, 2026</h3>
-                        <p class="text-xs sm:text-sm text-rose-200/80 font-serif italic mt-1">Every second brings us closer to "I Do" forever.</p>
+                        <h3 class="text-2xl sm:text-3xl font-cinzel font-bold text-white">Counting Down to Dec 5 &amp;
+                            6, 2026</h3>
+                        <p class="text-xs sm:text-sm text-rose-200/80 font-serif italic mt-1">Every second brings us
+                            closer to "I Do" forever.</p>
                     </div>
 
                     <!-- Live Digital Timer Boxes -->
                     <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
-                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
-                            <span id="pw-cd-days" class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
-                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Days</span>
+                        <div
+                            class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-days"
+                                class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
+                            <span
+                                class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Days</span>
                         </div>
-                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
-                            <span id="pw-cd-hours" class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
-                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Hours</span>
+                        <div
+                            class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-hours"
+                                class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
+                            <span
+                                class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Hours</span>
                         </div>
-                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
-                            <span id="pw-cd-minutes" class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
-                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Mins</span>
+                        <div
+                            class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-minutes"
+                                class="block text-2xl sm:text-4xl font-extrabold text-amber-300 font-mono">--</span>
+                            <span
+                                class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Mins</span>
                         </div>
-                        <div class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
-                            <span id="pw-cd-seconds" class="block text-2xl sm:text-4xl font-extrabold text-rose-400 font-mono animate-pulse">--</span>
-                            <span class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Secs</span>
+                        <div
+                            class="p-3 sm:p-4 rounded-2xl bg-black/50 border border-white/10 min-w-[65px] sm:min-w-[85px] shadow-lg">
+                            <span id="pw-cd-seconds"
+                                class="block text-2xl sm:text-4xl font-extrabold text-rose-400 font-mono animate-pulse">--</span>
+                            <span
+                                class="text-[10px] sm:text-xs font-semibold text-rose-200 uppercase tracking-widest">Secs</span>
                         </div>
                     </div>
 
                     <div class="flex items-center gap-2">
-                        <button onclick="openShareModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2">
+                        <button onclick="openShareModal()"
+                            class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2">
                             <span class="material-icons text-base">share</span>
                             <span>Share Link</span>
                         </button>
@@ -336,33 +427,41 @@
             {% set countdown_items = chapters_map.get('Save the Date & Countdown Walkway', []) %}
             <section id="countdown-walkway" class="scroll-mt-28 relative">
                 <!-- Ambient Glow Behind Countdown -->
-                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-rose-600/10 filter blur-[100px] pointer-events-none -z-10"></div>
+                <div
+                    class="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-rose-600/10 filter blur-[100px] pointer-events-none -z-10">
+                </div>
 
                 <!-- Section Header -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                <div
+                    class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-amber-400/40 text-amber-300 bg-amber-500/10 flex items-center gap-1.5">
+                            <span
+                                class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-amber-400/40 text-amber-300 bg-amber-500/10 flex items-center gap-1.5">
                                 <span class="material-icons text-xs text-amber-400">hourglass_top</span>
                                 Path to Forever
                             </span>
-                            <span class="text-xs text-rose-300/80 font-semibold">Save the Date &amp; 7-Day Countdown</span>
+                            <span class="text-xs text-rose-300/80 font-semibold">Save the Date &amp; 7-Day
+                                Countdown</span>
                         </div>
                         <h2 class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide">
                             The Wedding Walkway
                         </h2>
                         <p class="text-xs sm:text-sm text-rose-200/80 max-w-2xl mt-2 font-serif italic">
-                            Follow our golden trail from 7 days to go, counting down every heart-fluttering sunrise to the magical moment we become one.
+                            Follow our golden trail from 7 days to go, counting down every heart-fluttering sunrise to
+                            the magical moment we become one.
                         </p>
                     </div>
 
                     <!-- View Switcher (Walkway vs Tile Grid) -->
                     <div class="flex items-center gap-2 self-start md:self-end">
-                        <button onclick="toggleWalkwayView('walkway')" id="btn-walkway-view" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold border border-amber-300 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                        <button onclick="toggleWalkwayView('walkway')" id="btn-walkway-view"
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold border border-amber-300 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
                             <span class="material-icons text-base">timeline</span>
                             <span>Walkway Path</span>
                         </button>
-                        <button onclick="toggleWalkwayView('grid')" id="btn-grid-view" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold transition-all shadow-md hover:scale-105">
+                        <button onclick="toggleWalkwayView('grid')" id="btn-grid-view"
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold transition-all shadow-md hover:scale-105">
                             <span class="material-icons text-base">grid_view</span>
                             <span>Tile Grid View</span>
                         </button>
@@ -372,25 +471,30 @@
                 <!-- Featured: Official Save The Date Spotlight -->
                 {% set std_item = None %}
                 {% for item in countdown_items %}
-                    {% if 'save_the_date' in item.filename or item.order == 0 %}
-                        {% set std_item = item %}
-                    {% endif %}
+                {% if 'save_the_date' in item.filename or item.order == 0 %}
+                {% set std_item = item %}
+                {% endif %}
                 {% endfor %}
 
                 {% if std_item %}
-                <div class="mb-14 relative rounded-3xl overflow-hidden bg-gradient-to-br from-rose-950/40 via-surface-dark to-amber-950/20 border border-amber-400/30 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+                <div
+                    class="mb-14 relative rounded-3xl overflow-hidden bg-gradient-to-br from-rose-950/40 via-surface-dark to-amber-950/20 border border-amber-400/30 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <!-- Poster Preview with Glow & Zoom -->
                         <div class="lg:col-span-5 flex justify-center">
-                            <div class="relative group cursor-pointer max-w-xs sm:max-w-sm rounded-2xl overflow-hidden shadow-2xl border-2 border-amber-300/40 hover:border-amber-300 transition-all duration-500 hover:scale-[1.02]" onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', 'Save The Date: Shaiwal & Shaila', '💌 Official Save The Date')">
-                                <img src="{{ r2_url }}/{{ std_item.filename }}" alt="Official Save The Date" class="w-full h-auto object-cover rounded-2xl" loading="lazy" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+                            <div class="relative group cursor-pointer max-w-xs sm:max-w-sm rounded-2xl overflow-hidden shadow-2xl border-2 border-amber-300/40 hover:border-amber-300 transition-all duration-500 hover:scale-[1.02]"
+                                onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', 'Save The Date: Shaiwal & Shaila', '💌 Official Save The Date')">
+                                <img src="{{ r2_url }}/{{ std_item.filename }}" alt="Official Save The Date"
+                                    class="w-full h-auto object-cover rounded-2xl" loading="lazy" />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
                                     <span class="text-xs text-amber-200 font-bold flex items-center gap-1.5">
                                         <span class="material-icons text-base text-amber-300">zoom_in</span>
                                         Click to view full Save the Date poster
                                     </span>
                                 </div>
-                                <span class="absolute top-3 left-3 bg-rose-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                <span
+                                    class="absolute top-3 left-3 bg-rose-600 text-white text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
                                     Official Announcement
                                 </span>
                             </div>
@@ -399,29 +503,35 @@
                         <!-- Announcement Details -->
                         <div class="lg:col-span-7 space-y-4">
                             <div class="flex items-center gap-3">
-                                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/branding/wedding_monogram.webp" 
-                                     alt="Wedding Monogram" 
-                                     class="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-[0_2px_12px_rgba(212,175,55,0.35)]" />
-                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-400/30">
+                                <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/branding/wedding_monogram.webp"
+                                    alt="Wedding Monogram"
+                                    class="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-[0_2px_12px_rgba(212,175,55,0.35)]" />
+                                <div
+                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-400/30">
                                     <span class="material-icons text-sm text-amber-400">celebration</span>
                                     <span>Save The Date</span>
                                 </div>
                             </div>
-                            <h3 class="text-3xl sm:text-4xl font-cinzel font-bold text-white tracking-wide leading-tight">
+                            <h3
+                                class="text-3xl sm:text-4xl font-cinzel font-bold text-white tracking-wide leading-tight">
                                 Shaiwal &amp; Shaila
                             </h3>
                             <p class="font-cursive text-2xl sm:text-3xl text-rose-300">
                                 The Beginning of Forever
                             </p>
                             <p class="text-sm sm:text-base text-rose-100/85 leading-relaxed font-serif italic">
-                                "Two hearts, one soul, and an eternity of smiles ahead. Mark your calendars and join our joyous celebration as we step hand-in-hand into married life."
+                                "Two hearts, one soul, and an eternity of smiles ahead. Mark your calendars and join our
+                                joyous celebration as we step hand-in-hand into married life."
                             </p>
                             <div class="pt-4 flex flex-wrap gap-4 items-center">
-                                <button onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', 'Save The Date: Shaiwal & Shaila', '💌 Official Save The Date')" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95">
+                                <button
+                                    onclick="openPreweddingLightbox('{{ r2_url }}/{{ std_item.filename }}', 'Save The Date: Shaiwal & Shaila', '💌 Official Save The Date')"
+                                    class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95">
                                     <span class="material-icons text-base">fullscreen</span>
                                     <span>Expand Save The Date</span>
                                 </button>
-                                <a href="#walkway-track-container" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all border border-white/20">
+                                <a href="#walkway-track-container"
+                                    class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all border border-white/20">
                                     <span class="material-icons text-base text-rose-400">arrow_downward</span>
                                     <span>Follow The 7-Day Path</span>
                                 </a>
@@ -434,7 +544,8 @@
                 <!-- WALKWAY VIEW (Stepped Walkway Path 7 -> 1) -->
                 <div id="walkway-track-container" class="transition-all duration-300">
                     <div class="flex items-center justify-between mb-4 px-2">
-                        <span class="text-xs uppercase font-extrabold tracking-wider text-amber-300 flex items-center gap-1.5">
+                        <span
+                            class="text-xs uppercase font-extrabold tracking-wider text-amber-300 flex items-center gap-1.5">
                             <span class="material-icons text-sm text-amber-400">hiking</span>
                             Stepped Walkway (Scroll along the path)
                         </span>
@@ -444,9 +555,9 @@
                     <div class="netflix-row gap-6 pb-6 pt-2">
                         {% set countdown_ordered = [] %}
                         {% for item in countdown_items %}
-                            {% if 'countdown' in item.filename %}
-                                {% set _ = countdown_ordered.append(item) %}
-                            {% endif %}
+                        {% if 'countdown' in item.filename %}
+                        {% set _ = countdown_ordered.append(item) %}
+                        {% endif %}
                         {% endfor %}
                         {# Sort descending so 7 days -> 1 day #}
                         {% for item in countdown_ordered|sort(attribute='order', reverse=True) %}
@@ -455,32 +566,40 @@
                             <!-- Step Badge on Top of Card -->
                             <div class="flex items-center justify-between mb-3 px-1">
                                 <div class="flex items-center gap-2">
-                                    <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 text-white font-black text-xs flex items-center justify-center shadow-lg border border-amber-300">
+                                    <span
+                                        class="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-rose-600 text-white font-black text-xs flex items-center justify-center shadow-lg border border-amber-300">
                                         {{ days_num }}
                                     </span>
                                     <span class="text-xs font-bold text-amber-200">
                                         {% if days_num == 1 %}1 Day to Go!{% else %}{{ days_num }} Days to Go{% endif %}
                                     </span>
                                 </div>
-                                <span class="material-icons text-base text-rose-400/60 group-hover:text-rose-400 transition-colors">favorite</span>
+                                <span
+                                    class="material-icons text-base text-rose-400/60 group-hover:text-rose-400 transition-colors">favorite</span>
                             </div>
 
                             <!-- Card Poster -->
-                            <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-amber-400/20 group-hover:border-amber-400/60 shadow-xl cursor-pointer" onclick="openPreweddingLightbox('{{ r2_url }}/{{ item.filename }}', '{{ item.note }}', '{{ item.title }}')">
+                            <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-amber-400/20 group-hover:border-amber-400/60 shadow-xl cursor-pointer"
+                                onclick="openPreweddingLightbox('{{ r2_url }}/{{ item.filename }}', '{{ item.note }}', '{{ item.title }}')">
                                 <div class="aspect-[9/16] overflow-hidden bg-black relative">
-                                    <img src="{{ r2_url }}/{{ item.filename }}" alt="{{ item.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                    <img src="{{ r2_url }}/{{ item.filename }}" alt="{{ item.title }}" loading="lazy"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                                         <span class="text-xs text-white font-medium flex items-center gap-1">
-                                            <span class="material-icons text-sm text-amber-300">zoom_in</span> Click to enlarge
+                                            <span class="material-icons text-sm text-amber-300">zoom_in</span> Click to
+                                            enlarge
                                         </span>
                                     </div>
-                                    <div class="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-bold text-amber-300">
+                                    <div
+                                        class="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-bold text-amber-300">
                                         Day -{{ days_num }}
                                     </div>
                                 </div>
                                 {% if item.note %}
                                 <div class="p-3 bg-surface-dark/95 border-t border-white/5">
-                                    <p class="text-xs text-rose-100/90 font-serif italic line-clamp-2">"{{ item.note }}"</p>
+                                    <p class="text-xs text-rose-100/90 font-serif italic line-clamp-2">"{{ item.note }}"
+                                    </p>
                                 </div>
                                 {% endif %}
                             </div>
@@ -488,16 +607,20 @@
                         {% endfor %}
 
                         <!-- Final Step: Wedding Day Destination -->
-                        <div class="w-64 sm:w-72 shrink-0 flex flex-col justify-center items-center p-6 rounded-2xl bg-gradient-to-br from-rose-950/60 to-amber-950/40 border-2 border-dashed border-amber-400/50 text-center shadow-2xl">
-                            <span class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-400 to-rose-500 flex items-center justify-center text-white text-2xl shadow-xl mb-3 animate-bounce">
+                        <div
+                            class="w-64 sm:w-72 shrink-0 flex flex-col justify-center items-center p-6 rounded-2xl bg-gradient-to-br from-rose-950/60 to-amber-950/40 border-2 border-dashed border-amber-400/50 text-center shadow-2xl">
+                            <span
+                                class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-400 to-rose-500 flex items-center justify-center text-white text-2xl shadow-xl mb-3 animate-bounce">
                                 💍
                             </span>
-                            <span class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-1">Destination</span>
+                            <span
+                                class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-1">Destination</span>
                             <h4 class="text-2xl font-cinzel font-bold text-white mb-2">The Wedding Day</h4>
                             <p class="text-xs text-rose-200/80 font-serif italic mb-4">
                                 Hand in hand, the grand chapter begins forever.
                             </p>
-                            <a href="/wedding" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition shadow-lg">
+                            <a href="/wedding"
+                                class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition shadow-lg">
                                 Wedding Story &rarr;
                             </a>
                         </div>
@@ -508,15 +631,19 @@
                 <div id="walkway-grid-container" class="hidden">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
                         {% for item in countdown_items %}
-                        <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-white/10 hover:border-amber-400/60 cursor-pointer shadow-xl group" onclick="openPreweddingLightbox('{{ r2_url }}/{{ item.filename }}', '{{ item.note }}', '{{ item.title }}')">
+                        <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-white/10 hover:border-amber-400/60 cursor-pointer shadow-xl group"
+                            onclick="openPreweddingLightbox('{{ r2_url }}/{{ item.filename }}', '{{ item.note }}', '{{ item.title }}')">
                             <div class="aspect-[9/16] overflow-hidden bg-black relative">
-                                <img src="{{ r2_url }}/{{ item.filename }}" alt="{{ item.title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                <img src="{{ r2_url }}/{{ item.filename }}" alt="{{ item.title }}" loading="lazy"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                                     <span class="text-xs text-white font-medium flex items-center gap-1">
                                         <span class="material-icons text-sm text-amber-300">zoom_in</span> Zoom
                                     </span>
                                 </div>
-                                <span class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold text-amber-200 border border-white/15">
+                                <span
+                                    class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold text-amber-200 border border-white/15">
                                     {{ item.title }}
                                 </span>
                             </div>
@@ -537,26 +664,32 @@
             {% set reels_items = chapters_map.get('Instagram Reels', []) %}
             <section id="instagram-reels" class="scroll-mt-28 relative">
                 <!-- Section Header -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                <div
+                    class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-pink-400/40 text-pink-300 bg-pink-500/10 flex items-center gap-1.5">
+                            <span
+                                class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-pink-400/40 text-pink-300 bg-pink-500/10 flex items-center gap-1.5">
                                 <span class="material-icons text-xs text-pink-400">play_circle_filled</span>
                                 Vertical Short Films
                             </span>
-                            <span class="text-xs text-rose-300/80 font-semibold">{{ reels_items|length }} Official Reels</span>
+                            <span class="text-xs text-rose-300/80 font-semibold">{{ reels_items|length }} Official
+                                Reels</span>
                         </div>
-                        <h2 class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide flex items-center gap-3">
+                        <h2
+                            class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide flex items-center gap-3">
                             <span>Instagram Reels</span>
                             <span class="text-2xl sm:text-3xl">📱✨</span>
                         </h2>
                         <p class="text-xs sm:text-sm text-rose-200/80 max-w-2xl mt-2 font-serif italic">
-                            Vertical, intimate, and bursting with emotion. Tap to watch with sound, loop, and experience every candid laughter and romantic twirl.
+                            Vertical, intimate, and bursting with emotion. Tap to watch with sound, loop, and experience
+                            every candid laughter and romantic twirl.
                         </p>
                     </div>
 
                     <div class="flex items-center gap-2 self-start md:self-end">
-                        <span class="text-xs text-pink-300/80 font-mono bg-pink-500/10 px-3 py-1 rounded-full border border-pink-400/30">
+                        <span
+                            class="text-xs text-pink-300/80 font-mono bg-pink-500/10 px-3 py-1 rounded-full border border-pink-400/30">
                             9:16 Ultra HD
                         </span>
                     </div>
@@ -568,27 +701,37 @@
                     {% for reel in reels_items %}
                     <div class="relative flex flex-col items-center">
                         <!-- Phone Frame Container -->
-                        <div class="phone-mockup w-full max-w-[340px] sm:max-w-[360px] aspect-[9/16] rounded-[36px] overflow-hidden group shadow-2xl relative transition-all duration-300 hover:scale-[1.02]">
+                        <div
+                            class="phone-mockup w-full max-w-[340px] sm:max-w-[360px] aspect-[9/16] rounded-[36px] overflow-hidden group shadow-2xl relative transition-all duration-300 hover:scale-[1.02]">
                             <!-- Notch / Speaker -->
-                            <div class="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black/90 rounded-full z-30 flex items-center justify-center">
+                            <div
+                                class="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black/90 rounded-full z-30 flex items-center justify-center">
                                 <div class="w-10 h-1 bg-white/20 rounded-full"></div>
                             </div>
 
                             <!-- Video Element -->
-                            <video id="reel-vid-{{ loop.index }}" src="{{ r2_url }}/{{ reel.filename }}" class="w-full h-full object-cover cursor-pointer" loop playsinline preload="metadata" muted onmouseover="this.play()" onmouseout="this.pause()" onclick="openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')"></video>
+                            <video id="reel-vid-{{ loop.index }}" src="{{ r2_url }}/{{ reel.filename }}"
+                                class="w-full h-full object-cover cursor-pointer" loop playsinline preload="metadata"
+                                muted onmouseover="this.play()" onmouseout="this.pause()"
+                                onclick="openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')"></video>
 
                             <!-- Gradient Overlays for Instagram UI -->
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none z-10"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none z-10">
+                            </div>
 
                             <!-- Center Play Icon (Appears when paused) -->
-                            <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none group-hover:scale-110 transition-transform">
-                                <div class="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-2xl group-hover:bg-primary/90 transition-colors">
+                            <div
+                                class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none group-hover:scale-110 transition-transform">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-2xl group-hover:bg-primary/90 transition-colors">
                                     <span class="material-icons text-3xl text-white">play_arrow</span>
                                 </div>
                             </div>
 
                             <!-- Instagram Top Bar -->
-                            <div class="absolute top-8 left-4 right-4 z-20 flex items-center justify-between text-white/90 pointer-events-none">
+                            <div
+                                class="absolute top-8 left-4 right-4 z-20 flex items-center justify-between text-white/90 pointer-events-none">
                                 <span class="text-xs font-bold font-mono tracking-wider flex items-center gap-1.5">
                                     <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
                                     REELS
@@ -598,19 +741,25 @@
 
                             <!-- Instagram Right Action Sidebar (Heart, Comment, Share) -->
                             <div class="absolute bottom-16 right-3 z-20 flex flex-col items-center gap-4 text-white">
-                                <button type="button" class="flex flex-col items-center text-xs group/btn" onclick="event.stopPropagation(); triggerReelHeart(this)">
-                                    <div class="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover/btn:bg-rose-600 transition-colors">
-                                        <span class="material-icons text-xl text-rose-400 group-hover/btn:text-white">favorite</span>
+                                <button type="button" class="flex flex-col items-center text-xs group/btn"
+                                    onclick="event.stopPropagation(); triggerReelHeart(this)">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover/btn:bg-rose-600 transition-colors">
+                                        <span
+                                            class="material-icons text-xl text-rose-400 group-hover/btn:text-white">favorite</span>
                                     </div>
                                     <span class="text-[10px] font-bold mt-1 text-white/80">Love</span>
                                 </button>
-                                <button type="button" class="flex flex-col items-center text-xs group/btn" onclick="event.stopPropagation(); openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')">
-                                    <div class="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover/btn:bg-white/20 transition-colors">
+                                <button type="button" class="flex flex-col items-center text-xs group/btn"
+                                    onclick="event.stopPropagation(); openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover/btn:bg-white/20 transition-colors">
                                         <span class="material-icons text-xl text-white">fullscreen</span>
                                     </div>
                                     <span class="text-[10px] font-bold mt-1 text-white/80">Watch</span>
                                 </button>
-                                <div class="w-8 h-8 rounded-full border-2 border-white/40 overflow-hidden bg-black/60 flex items-center justify-center animate-spin-slow mt-2">
+                                <div
+                                    class="w-8 h-8 rounded-full border-2 border-white/40 overflow-hidden bg-black/60 flex items-center justify-center animate-spin-slow mt-2">
                                     <span class="material-icons text-sm text-pink-300">music_note</span>
                                 </div>
                             </div>
@@ -619,7 +768,8 @@
                             <div class="absolute bottom-4 left-4 right-16 z-20 text-white pointer-events-none">
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="font-bold text-xs text-white">@shaiwal_and_shaila</span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/20 border border-white/20 font-bold">Follow</span>
+                                    <span
+                                        class="text-[10px] px-2 py-0.5 rounded-full bg-white/20 border border-white/20 font-bold">Follow</span>
                                 </div>
                                 <p class="text-xs text-white/90 font-medium line-clamp-2 drop-shadow-md">
                                     {{ reel.title }}
@@ -633,11 +783,13 @@
 
                         <!-- Card Action Buttons Under Phone -->
                         <div class="mt-4 flex items-center gap-3 w-full max-w-[340px] sm:max-w-[360px] justify-between">
-                            <button onclick="openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-1.5">
+                            <button onclick="openFullReelPlayer('{{ r2_url }}/{{ reel.filename }}', '{{ reel.title }}')"
+                                class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-1.5">
                                 <span class="material-icons text-base">play_arrow</span>
                                 <span>Play Full Reel</span>
                             </button>
-                            <button onclick="toggleReelMute('reel-vid-{{ loop.index }}', this)" class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1">
+                            <button onclick="toggleReelMute('reel-vid-{{ loop.index }}', this)"
+                                class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1">
                                 <span class="material-icons text-base">volume_off</span>
                             </button>
                         </div>
@@ -645,7 +797,8 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                <div class="rounded-2xl border border-dashed border-pink-500/30 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
+                <div
+                    class="rounded-2xl border border-dashed border-pink-500/30 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
                     <span class="material-icons text-4xl text-pink-400 mb-2">videocam</span>
                     <h3 class="text-lg font-bold text-white mb-1">Reels Uploaded</h3>
                 </div>
@@ -658,25 +811,30 @@
             {% set teaser_items = chapters_map.get('Teaser & Videos', []) %}
             <section id="teaser-and-videos" class="scroll-mt-28 relative">
                 <!-- Section Header -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                <div
+                    class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-purple-400/40 text-purple-300 bg-purple-500/10 flex items-center gap-1.5">
+                            <span
+                                class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-purple-400/40 text-purple-300 bg-purple-500/10 flex items-center gap-1.5">
                                 <span class="material-icons text-xs text-purple-400">movie</span>
                                 4K Cinematic Films
                             </span>
-                            <span class="text-xs text-rose-300/80 font-semibold">{{ teaser_items|length }} Motion Cuts</span>
+                            <span class="text-xs text-rose-300/80 font-semibold">{{ teaser_items|length }} Motion
+                                Cuts</span>
                         </div>
                         <h2 class="text-3xl sm:text-5xl font-cinzel font-bold text-white tracking-wide">
                             Teasers &amp; Cinematic Films
                         </h2>
                         <p class="text-xs sm:text-sm text-rose-200/80 max-w-2xl mt-2 font-serif italic">
-                            Experience our official 4K 28s teaser, the curated 11-cut master edit, and full raw unedited footage.
+                            Experience our official 4K 28s teaser, the curated 11-cut master edit, and full raw unedited
+                            footage.
                         </p>
                     </div>
 
                     <div class="flex items-center gap-2 self-start md:self-end">
-                        <button onclick="startAiMagic('Teaser & Videos')" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold border border-purple-400 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                        <button onclick="startAiMagic('Teaser & Videos')"
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold border border-purple-400 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
                             <span class="material-icons text-base text-amber-200">auto_awesome</span>
                             <span>Play Film Magic</span>
                         </button>
@@ -686,32 +844,42 @@
                 <!-- Teaser Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {% for item in teaser_items %}
-                    <div class="relative rounded-2xl overflow-hidden bg-surface-dark border {% if item.is_hero_teaser %}border-amber-400/60 shadow-2xl shadow-amber-500/10 ring-1 ring-amber-400/40{% else %}border-white/10{% endif %} group hover:border-purple-400/50 transition-all duration-300">
+                    <div
+                        class="relative rounded-2xl overflow-hidden bg-surface-dark border {% if item.is_hero_teaser %}border-amber-400/60 shadow-2xl shadow-amber-500/10 ring-1 ring-amber-400/40{% else %}border-white/10{% endif %} group hover:border-purple-400/50 transition-all duration-300">
                         <div class="aspect-video bg-black relative overflow-hidden">
-                            <video src="{{ r2_url }}/{{ item.filename }}" class="w-full h-full object-cover" muted loop preload="metadata" onmouseover="this.play()" onmouseout="this.pause()"></video>
-                            <button onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ item.title }}')" class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
-                                <span class="material-icons text-5xl text-white drop-shadow-xl bg-purple-600/90 rounded-full p-2 group-hover:scale-110 transition-transform">play_arrow</span>
+                            <video src="{{ r2_url }}/{{ item.filename }}" class="w-full h-full object-cover" muted loop
+                                preload="metadata" onmouseover="this.play()" onmouseout="this.pause()"></video>
+                            <button
+                                onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ item.title }}')"
+                                class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
+                                <span
+                                    class="material-icons text-5xl text-white drop-shadow-xl bg-purple-600/90 rounded-full p-2 group-hover:scale-110 transition-transform">play_arrow</span>
                             </button>
                             {% if item.is_hero_teaser %}
-                            <span class="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-rose-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">
+                            <span
+                                class="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-rose-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">
                                 <span class="material-icons text-xs text-amber-200">star</span> Official 4K Teaser
                             </span>
                             {% else %}
-                            <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-white/20">
+                            <span
+                                class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-white/20">
                                 <span class="material-icons text-xs text-purple-400">videocam</span> {{ item.chapter }}
                             </span>
                             {% endif %}
                         </div>
 
                         <div class="p-4 bg-surface-dark/95 border-t border-white/5 space-y-2">
-                            <h4 class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-1">
+                            <h4
+                                class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-1">
                                 {{ item.title }}
                             </h4>
                             {% if item.note %}
                             <p class="text-xs text-rose-200/80 font-serif italic line-clamp-2">"{{ item.note }}"</p>
                             {% endif %}
                             <div class="pt-1 flex items-center justify-between">
-                                <button onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ item.title }}')" class="text-xs font-bold text-purple-300 hover:text-white flex items-center gap-1 transition">
+                                <button
+                                    onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ item.title }}')"
+                                    class="text-xs font-bold text-purple-300 hover:text-white flex items-center gap-1 transition">
                                     <span>Watch Clip</span>
                                     <span class="material-icons text-sm">arrow_forward</span>
                                 </button>
@@ -727,67 +895,76 @@
             <!-- SECTION 4: THE FOUR LOOKS & HIGHLIGHTS     -->
             <!-- ========================================== -->
             {% set looks_config = [
-                {
-                    "title": "Best Moments & Highlights",
-                    "id": "best-moments-highlights",
-                    "badge": "Highlights",
-                    "icon": "auto_awesome",
-                    "theme_color": "border-amber-400/40 text-amber-300",
-                    "desc": "Handpicked favorite clips cropped directly from our pre-wedding shoot — radiant smiles, playful twirls, romantic glances, and warm embraces."
-                },
-                {
-                    "title": "Ethnic Look",
-                    "id": "ethnic-look",
-                    "badge": "Look 01",
-                    "icon": "auto_awesome",
-                    "theme_color": "border-rose-400/30 text-rose-300",
-                    "desc": "Draped in heritage and timeless royal charm. Intricate fabrics, regal smiles, and a celebration of tradition."
-                },
-                {
-                    "title": "Picnic Look",
-                    "id": "picnic-look",
-                    "badge": "Look 02",
-                    "icon": "park",
-                    "theme_color": "border-emerald-400/30 text-emerald-300",
-                    "desc": "Sunlit lawns, playful laughs, cozy blankets, and warm sunny skies. The sweet carefree romance of lazy afternoons."
-                },
-                {
-                    "title": "City Look",
-                    "id": "city-look",
-                    "badge": "Look 03",
-                    "icon": "location_city",
-                    "theme_color": "border-sky-400/30 text-sky-300",
-                    "desc": "Modern aesthetics, iconic urban architecture, bold styling, and the rhythm of our favorite city streets."
-                },
-                {
-                    "title": "Proposal Look",
-                    "id": "proposal-look",
-                    "badge": "Look 04",
-                    "icon": "diamond",
-                    "theme_color": "border-rose-400/30 text-rose-300",
-                    "desc": "The breathtaking moment when love found its forever answer. Candlelight, beating hearts, and unforgettable promise."
-                },
-                {
-                    "title": "Photographer Shortlisting",
-                    "id": "photographer-shortlisting",
-                    "badge": "Shortlist",
-                    "icon": "camera_enhance",
-                    "theme_color": "border-indigo-400/30 text-indigo-300",
-                    "desc": "Curated shortlist of our absolute favorite shots to share directly with the photographer for final retouching & albums."
-                }
+            {
+            "title": "Best Moments & Highlights",
+            "id": "best-moments-highlights",
+            "badge": "Highlights",
+            "icon": "auto_awesome",
+            "theme_color": "border-amber-400/40 text-amber-300",
+            "desc": "Handpicked favorite clips cropped directly from our pre-wedding shoot — radiant smiles, playful
+            twirls, romantic glances, and warm embraces."
+            },
+            {
+            "title": "Ethnic Look",
+            "id": "ethnic-look",
+            "badge": "Look 01",
+            "icon": "auto_awesome",
+            "theme_color": "border-rose-400/30 text-rose-300",
+            "desc": "Draped in heritage and timeless royal charm. Intricate fabrics, regal smiles, and a celebration of
+            tradition."
+            },
+            {
+            "title": "Picnic Look",
+            "id": "picnic-look",
+            "badge": "Look 02",
+            "icon": "park",
+            "theme_color": "border-emerald-400/30 text-emerald-300",
+            "desc": "Sunlit lawns, playful laughs, cozy blankets, and warm sunny skies. The sweet carefree romance of
+            lazy afternoons."
+            },
+            {
+            "title": "City Look",
+            "id": "city-look",
+            "badge": "Look 03",
+            "icon": "location_city",
+            "theme_color": "border-sky-400/30 text-sky-300",
+            "desc": "Modern aesthetics, iconic urban architecture, bold styling, and the rhythm of our favorite city
+            streets."
+            },
+            {
+            "title": "Proposal Look",
+            "id": "proposal-look",
+            "badge": "Look 04",
+            "icon": "diamond",
+            "theme_color": "border-rose-400/30 text-rose-300",
+            "desc": "The breathtaking moment when love found its forever answer. Candlelight, beating hearts, and
+            unforgettable promise."
+            },
+            {
+            "title": "Photographer Shortlisting",
+            "id": "photographer-shortlisting",
+            "badge": "Shortlist",
+            "icon": "camera_enhance",
+            "theme_color": "border-indigo-400/30 text-indigo-300",
+            "desc": "Curated shortlist of our absolute favorite shots to share directly with the photographer for final
+            retouching & albums."
+            }
             ] %}
 
             {% for look in looks_config %}
             {% set items = chapters_map.get(look.title, []) %}
             <section id="{{ look.id }}" class="scroll-mt-28">
                 <!-- Section Header -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-3 border-b border-rose-500/15">
+                <div
+                    class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-3 border-b border-rose-500/15">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] uppercase font-extrabold tracking-widest px-2.5 py-0.5 rounded-full border {{ look.theme_color }}">
+                            <span
+                                class="text-[10px] uppercase font-extrabold tracking-widest px-2.5 py-0.5 rounded-full border {{ look.theme_color }}">
                                 {{ look.badge }}
                             </span>
-                            <span class="text-xs text-rose-300/70 font-semibold">{{ items|length }} moments captured</span>
+                            <span class="text-xs text-rose-300/70 font-semibold">{{ items|length }} moments
+                                captured</span>
                         </div>
                         <h2 class="text-3xl sm:text-4xl font-cinzel font-bold text-white flex items-center gap-2">
                             <span>{{ look.title }}</span>
@@ -800,11 +977,13 @@
                     <!-- View Mode Toggle & Section AI Magic -->
                     {% if items|length > 0 %}
                     <div class="flex items-center gap-2 self-start md:self-end flex-wrap">
-                        <button onclick="startAiMagic('{{ look.title }}')" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold border border-rose-400 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
+                        <button onclick="startAiMagic('{{ look.title }}')"
+                            class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold border border-rose-400 text-xs transition-all shadow-lg hover:scale-105 active:scale-95">
                             <span class="material-icons text-base text-amber-200">auto_awesome</span>
                             <span>Play {{ look.title }} AI Magic</span>
                         </button>
-                        <button onclick="toggleViewLayout('{{ look.id }}-row', this)" class="layout-toggle-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 text-xs font-bold transition-all shadow-md hover:scale-105">
+                        <button onclick="toggleViewLayout('{{ look.id }}-row', this)"
+                            class="layout-toggle-btn flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 text-xs font-bold transition-all shadow-md hover:scale-105">
                             <span class="material-icons text-base">grid_view</span>
                             <span class="toggle-label">View as Grid</span>
                         </button>
@@ -816,20 +995,30 @@
                 <!-- Items Row / Grid Container -->
                 <div id="{{ look.id }}-row" class="netflix-row gap-5 pb-4">
                     {% for item in items %}
-                    <div class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-white/10 w-72 sm:w-80 shrink-0 group">
+                    <div
+                        class="photo-card relative rounded-2xl overflow-hidden bg-surface-dark border border-white/10 w-72 sm:w-80 shrink-0 group">
                         <div class="aspect-[3/4] overflow-hidden bg-black relative">
                             {% if item.media_type == "video" %}
-                            <video src="{{ r2_url }}/{{ item.filename }}" class="w-full h-full object-cover" muted loop preload="metadata" onmouseover="this.play()" onmouseout="this.pause()"></video>
-                            <button onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ look.title }}')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
-                                <span class="material-icons text-5xl text-white drop-shadow-xl bg-primary/80 rounded-full p-2 group-hover:scale-110 transition-transform">play_arrow</span>
+                            <video src="{{ r2_url }}/{{ item.filename }}" class="w-full h-full object-cover" muted loop
+                                preload="metadata" onmouseover="this.play()" onmouseout="this.pause()"></video>
+                            <button
+                                onclick="playPreweddingVideo('{{ r2_url }}/{{ item.filename }}', '{{ look.title }}')"
+                                class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-colors">
+                                <span
+                                    class="material-icons text-5xl text-white drop-shadow-xl bg-primary/80 rounded-full p-2 group-hover:scale-110 transition-transform">play_arrow</span>
                             </button>
-                            <span class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-white/20">
+                            <span
+                                class="absolute top-3 left-3 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-white/20">
                                 <span class="material-icons text-xs text-rose-400">videocam</span> Video
                             </span>
                             {% else %}
-                            {% set photo_src = '/local-photos/' ~ item.filename if item.is_local else r2_url ~ '/' ~ item.filename %}
-                            <img src="{{ photo_src }}" alt="{{ look.title }}" loading="lazy" class="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-500" onclick="openPreweddingLightbox('{{ photo_src }}', '{{ item.note }}', '{{ look.title }}')" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 pointer-events-none">
+                            {% set photo_src = '/local-photos/' ~ item.filename if item.is_local else r2_url ~ '/' ~
+                            item.filename %}
+                            <img src="{{ photo_src }}" alt="{{ look.title }}" loading="lazy"
+                                class="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-500"
+                                onclick="openPreweddingLightbox('{{ photo_src }}', '{{ item.note }}', '{{ look.title }}')" />
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 pointer-events-none">
                                 <span class="text-xs text-white font-medium flex items-center gap-1">
                                     <span class="material-icons text-sm text-rose-400">zoom_in</span> Click to expand
                                 </span>
@@ -846,10 +1035,12 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                <div class="rounded-2xl border border-dashed border-rose-500/20 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
+                <div
+                    class="rounded-2xl border border-dashed border-rose-500/20 p-8 text-center bg-surface-dark/40 flex flex-col items-center justify-center">
                     <span class="material-icons text-4xl text-rose-400/60 mb-2">{{ look.icon }}</span>
                     <h3 class="text-lg font-bold text-white mb-1">Coming Soon: {{ look.title }}</h3>
-                    <p class="text-xs text-rose-200/60 max-w-md font-serif italic">This chapter's moments and frames will appear here soon.</p>
+                    <p class="text-xs text-rose-200/60 max-w-md font-serif italic">This chapter's moments and frames
+                        will appear here soon.</p>
                 </div>
                 {% endif %}
             </section>
@@ -860,15 +1051,20 @@
             <!-- ========================================== -->
             {% if guestbook_wishes and guestbook_wishes|length > 0 %}
             <section class="relative rounded-3xl p-6 sm:p-10 bg-surface-dark/80 border border-white/10 shadow-2xl">
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-rose-500/20">
                     <div>
-                        <span class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-rose-400/40 text-rose-300 bg-rose-500/10">
+                        <span
+                            class="text-[10px] uppercase font-extrabold tracking-widest px-3 py-1 rounded-full border border-rose-400/40 text-rose-300 bg-rose-500/10">
                             Heartfelt Messages
                         </span>
-                        <h3 class="text-2xl sm:text-4xl font-cinzel font-bold text-white mt-2">Family &amp; Friends Love</h3>
-                        <p class="text-xs sm:text-sm text-rose-200/80 font-serif italic mt-1">Warm blessings pouring in as we step closer to the wedding day.</p>
+                        <h3 class="text-2xl sm:text-4xl font-cinzel font-bold text-white mt-2">Family &amp; Friends Love
+                        </h3>
+                        <p class="text-xs sm:text-sm text-rose-200/80 font-serif italic mt-1">Warm blessings pouring in
+                            as we step closer to the wedding day.</p>
                     </div>
-                    <a href="/guestbook" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto">
+                    <a href="/guestbook"
+                        class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto">
                         <span class="material-icons text-sm text-rose-400">edit_note</span>
                         <span>Sign The Guestbook</span>
                     </a>
@@ -876,7 +1072,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {% for wish in guestbook_wishes[:4] %}
-                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 hover:border-rose-400/40 transition-colors flex flex-col justify-between shadow-lg">
+                    <div
+                        class="p-5 rounded-2xl bg-black/40 border border-white/10 hover:border-rose-400/40 transition-colors flex flex-col justify-between shadow-lg">
                         <p class="text-xs text-rose-100/90 font-serif italic leading-relaxed mb-4">
                             "{{ wish.message }}"
                         </p>
@@ -896,15 +1093,18 @@
                     <span class="font-cursive text-3xl text-rose-300 block">The Journey Continues</span>
                     <h3 class="text-2xl sm:text-3xl font-cinzel font-bold text-white">Relive Every Chapter</h3>
                     <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                        <a href="/events" class="px-5 py-2.5 rounded-full bg-primary hover:bg-rose-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-primary/30 flex items-center gap-2">
+                        <a href="/events"
+                            class="px-5 py-2.5 rounded-full bg-primary hover:bg-rose-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-primary/30 flex items-center gap-2">
                             <span class="material-icons text-sm">event</span>
                             <span>All Events &amp; Milestones</span>
                         </a>
-                        <a href="/roka" class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
+                        <a href="/roka"
+                            class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
                             <span class="material-icons text-sm text-rose-400">favorite</span>
                             <span>Relive The Roka</span>
                         </a>
-                        <a href="/wedding" class="px-5 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
+                        <a href="/wedding"
+                            class="px-5 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
                             <span class="material-icons text-sm text-amber-400">celebration</span>
                             <span>Wedding Celebrations</span>
                         </a>
@@ -915,10 +1115,13 @@
     </main>
 
     <!-- Custom Pre-Wedding Video Modal -->
-    <div id="prewedding-video-modal" class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
-        <div class="absolute top-0 w-full z-20 p-6 flex items-center justify-between bg-gradient-to-b from-black/90 to-transparent">
+    <div id="prewedding-video-modal"
+        class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
+        <div
+            class="absolute top-0 w-full z-20 p-6 flex items-center justify-between bg-gradient-to-b from-black/90 to-transparent">
             <div class="flex items-center gap-4">
-                <button onclick="closePreweddingVideo()" class="text-white hover:text-rose-500 transition flex items-center gap-2">
+                <button onclick="closePreweddingVideo()"
+                    class="text-white hover:text-rose-500 transition flex items-center gap-2">
                     <span class="material-icons text-3xl">arrow_back</span>
                 </button>
                 <div>
@@ -930,19 +1133,24 @@
                 <span class="material-icons text-3xl">close</span>
             </button>
         </div>
-        <div id="pw-video-container" class="w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl flex items-center justify-center">
+        <div id="pw-video-container"
+            class="w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl flex items-center justify-center">
             <!-- Dynamic Video -->
         </div>
     </div>
 
     <!-- Full Instagram Reel Modal Player -->
-    <div id="full-reel-modal" class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-2 sm:p-4">
-        <div class="relative w-full max-w-[420px] aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl border border-white/20">
+    <div id="full-reel-modal"
+        class="fixed inset-0 z-[9999] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-2 sm:p-4">
+        <div
+            class="relative w-full max-w-[420px] aspect-[9/16] rounded-3xl overflow-hidden bg-black shadow-2xl border border-white/20">
             <!-- Close button -->
-            <button onclick="closeFullReelPlayer()" class="absolute top-4 right-4 z-40 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-rose-600 transition">
+            <button onclick="closeFullReelPlayer()"
+                class="absolute top-4 right-4 z-40 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-rose-600 transition">
                 <span class="material-icons text-2xl">close</span>
             </button>
-            <video id="full-reel-video" src="" controls autoplay loop playsinline class="w-full h-full object-cover"></video>
+            <video id="full-reel-video" src="" controls autoplay loop playsinline
+                class="w-full h-full object-cover"></video>
             <div class="absolute bottom-4 left-4 right-4 z-30 pointer-events-none text-white drop-shadow-md">
                 <h4 id="full-reel-title" class="font-bold text-sm"></h4>
                 <p class="text-xs text-white/80">Shaiwal &amp; Shaila Pre-Wedding Reel</p>
@@ -951,10 +1159,13 @@
     </div>
 
     <!-- SURPRISE REVEAL: Interactive Wax-Sealed Secret Love Letter Modal -->
-    <div id="love-letter-modal" class="fixed inset-0 z-[10000] bg-black/95 hidden opacity-0 transition-opacity duration-500 flex items-center justify-center p-4">
-        <div class="relative w-full max-w-xl bg-gradient-to-br from-[#1b0811] via-[#12050b] to-[#250d18] border-2 border-amber-400/40 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-rose-600/30 overflow-hidden">
+    <div id="love-letter-modal"
+        class="fixed inset-0 z-[10000] bg-black/95 hidden opacity-0 transition-opacity duration-500 flex items-center justify-center p-4">
+        <div
+            class="relative w-full max-w-xl bg-gradient-to-br from-[#1b0811] via-[#12050b] to-[#250d18] border-2 border-amber-400/40 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-rose-600/30 overflow-hidden">
             <!-- Close icon -->
-            <button onclick="closeSecretLoveLetter()" class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-rose-600 transition">
+            <button onclick="closeSecretLoveLetter()"
+                class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-rose-600 transition">
                 <span class="material-icons text-2xl">close</span>
             </button>
 
@@ -962,26 +1173,30 @@
             <div id="letter-sealed-view" class="text-center py-6 space-y-6">
                 <!-- Monogram Crest -->
                 <div class="flex justify-center mb-1">
-                    <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/branding/wedding_monogram.webp" 
-                         alt="Shaiwal & Shaila Monogram" 
-                         class="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_16px_rgba(212,175,55,0.4)]" />
+                    <img src="https://pub-5febf239be824301b333f51d2eaee417.r2.dev/branding/wedding_monogram.webp"
+                        alt="Shaiwal & Shaila Monogram"
+                        class="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_16px_rgba(212,175,55,0.4)]" />
                 </div>
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
+                <div
+                    class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
                     <span>A Letter For Shaila</span>
                 </div>
                 <h3 class="text-3xl sm:text-4xl font-cinzel font-bold text-white tracking-wide">
                     Confidential &bull; Only For Puchki
                 </h3>
                 <p class="text-sm sm:text-base text-rose-200/80 font-serif italic max-w-md mx-auto">
-                    "Written from the heart on the night of our Pre-Wedding shoot, sealed with love and waiting for you to unwrap."
+                    "Written from the heart on the night of our Pre-Wedding shoot, sealed with love and waiting for you
+                    to unwrap."
                 </p>
 
                 <!-- Wax Seal Click Trigger -->
                 <div class="py-4 flex flex-col items-center cursor-pointer group" onclick="unsealLetter()">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-rose-700 via-rose-600 to-amber-500 flex items-center justify-center text-white border-4 border-amber-300/80 shadow-2xl group-hover:scale-110 active:scale-95 transition-all animate-seal">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gradient-to-tr from-rose-700 via-rose-600 to-amber-500 flex items-center justify-center text-white border-4 border-amber-300/80 shadow-2xl group-hover:scale-110 active:scale-95 transition-all animate-seal">
                         <span class="text-4xl font-serif">💌</span>
                     </div>
-                    <span class="mt-4 text-xs font-extrabold uppercase tracking-widest text-amber-300 group-hover:text-white transition-colors flex items-center gap-1.5">
+                    <span
+                        class="mt-4 text-xs font-extrabold uppercase tracking-widest text-amber-300 group-hover:text-white transition-colors flex items-center gap-1.5">
                         <span class="material-icons text-sm text-amber-400">touch_app</span>
                         Tap To Break The Seal
                     </span>
@@ -991,7 +1206,8 @@
             <!-- State 2: Unsealed Heartfelt Letter -->
             <div id="letter-open-view" class="hidden space-y-6 max-h-[75vh] overflow-y-auto pr-1">
                 <div class="flex items-center justify-between border-b border-amber-400/20 pb-3">
-                    <span class="text-xs font-mono uppercase tracking-widest text-amber-300">October 10, 2026 &bull; Sandoz Night</span>
+                    <span class="text-xs font-mono uppercase tracking-widest text-amber-300">October 10, 2026 &bull;
+                        Sandoz Night</span>
                     <span class="text-xs text-rose-300 font-serif italic">To My Forever Puchki ❤️</span>
                 </div>
 
@@ -1000,13 +1216,21 @@
                         "My dearest Puchki,
                     </p>
                     <p>
-                        Watching you twirl in that ethnic saree, laughing under the picnic sunlight, and running together across city streets today felt like living inside my favorite movie. But the moment you held my hands during the proposal setup, with your sparkling eyes and that shy radiant smile, my heart knew once again that choosing you is the easiest, most beautiful decision I will ever make.
+                        Watching you twirl in that ethnic saree, laughing under the picnic sunlight, and running
+                        together across city streets today felt like living inside my favorite movie. But the moment you
+                        held my hands during the proposal setup, with your sparkling eyes and that shy radiant smile, my
+                        heart knew once again that choosing you is the easiest, most beautiful decision I will ever
+                        make.
                     </p>
                     <p>
-                        No matter how long the drives were or how tired we got, sitting opposite you at Cafe Sandoz, watching you savor every single bite of that warm Gulab Jamun with the biggest childish smile on your face... that was my true highlight of the entire day.
+                        No matter how long the drives were or how tired we got, sitting opposite you at Cafe Sandoz,
+                        watching you savor every single bite of that warm Gulab Jamun with the biggest childish smile on
+                        your face... that was my true highlight of the entire day.
                     </p>
                     <p>
-                        Counting down these final days till December 5 &amp; 6 is making my heartbeat race in the best way possible. I cannot wait to stand beside you as your husband and love you through every lifetime.
+                        Counting down these final days till December 5 &amp; 6 is making my heartbeat race in the best
+                        way possible. I cannot wait to stand beside you as your husband and love you through every
+                        lifetime.
                     </p>
                     <p class="pt-2 text-right not-italic font-bold text-amber-300 font-sans">
                         Forever &amp; Always Yours,<br>
@@ -1015,7 +1239,8 @@
                 </div>
 
                 <div class="pt-4 border-t border-amber-400/20 flex flex-wrap gap-3 items-center justify-between">
-                    <button onclick="fireRomanticConfettiShower()" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition">
+                    <button onclick="fireRomanticConfettiShower()"
+                        class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition">
                         <span class="material-icons text-sm">celebration</span>
                         <span>Send More Confetti!</span>
                     </button>
@@ -1028,27 +1253,34 @@
     </div>
 
     <!-- SHARE LINK POPUP MODAL -->
-    <div id="share-link-modal" class="fixed inset-0 z-[10000] bg-black/90 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
-        <div class="relative w-full max-w-md bg-surface-dark border border-amber-400/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
-            <button onclick="closeShareModal()" class="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-rose-600 transition">
+    <div id="share-link-modal"
+        class="fixed inset-0 z-[10000] bg-black/90 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div
+            class="relative w-full max-w-md bg-surface-dark border border-amber-400/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <button onclick="closeShareModal()"
+                class="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-rose-600 transition">
                 <span class="material-icons text-xl">close</span>
             </button>
 
             <div class="text-center space-y-2">
-                <span class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-2xl">
+                <span
+                    class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto text-2xl">
                     💌
                 </span>
                 <h3 class="text-2xl font-cinzel font-bold text-white">Share Our Story</h3>
-                <p class="text-xs text-rose-200/80 font-serif italic">Send this magical pre-wedding link to friends, cousins, and family.</p>
+                <p class="text-xs text-rose-200/80 font-serif italic">Send this magical pre-wedding link to friends,
+                    cousins, and family.</p>
             </div>
 
             <!-- Share Buttons -->
             <div class="space-y-3">
-                <button onclick="shareViaWhatsApp()" class="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg hover:scale-[1.02]">
+                <button onclick="shareViaWhatsApp()"
+                    class="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg hover:scale-[1.02]">
                     <span class="material-icons text-base">chat</span>
                     <span>Share on WhatsApp</span>
                 </button>
-                <button onclick="copyPreweddingLink()" id="btn-copy-link" class="w-full py-3 px-4 rounded-xl bg-white/15 hover:bg-white/25 text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/20 transition hover:scale-[1.02]">
+                <button onclick="copyPreweddingLink()" id="btn-copy-link"
+                    class="w-full py-3 px-4 rounded-xl bg-white/15 hover:bg-white/25 text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/20 transition hover:scale-[1.02]">
                     <span class="material-icons text-base">content_copy</span>
                     <span id="copy-link-text">Copy Magic Link</span>
                 </button>
@@ -1057,31 +1289,42 @@
     </div>
 
     <!-- Prewedding Lightbox with Full Navigation & Keyboard Support -->
-    <div id="pw-lightbox-modal" class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4 select-none">
+    <div id="pw-lightbox-modal"
+        class="fixed inset-0 z-[9998] bg-black/95 hidden opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center p-4 select-none">
         <!-- Top Toolbar -->
-        <div class="absolute top-0 left-0 w-full p-4 md:p-6 flex items-center justify-between z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+        <div
+            class="absolute top-0 left-0 w-full p-4 md:p-6 flex items-center justify-between z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
             <div class="flex items-center gap-3">
-                <span id="pw-lightbox-badge" class="text-xs uppercase font-extrabold tracking-widest text-rose-400 bg-rose-500/20 px-3.5 py-1 rounded-full border border-rose-500/30"></span>
-                <span id="pw-lightbox-counter" class="text-xs font-mono text-gray-300 bg-white/10 px-2.5 py-0.5 rounded-full"></span>
+                <span id="pw-lightbox-badge"
+                    class="text-xs uppercase font-extrabold tracking-widest text-rose-400 bg-rose-500/20 px-3.5 py-1 rounded-full border border-rose-500/30"></span>
+                <span id="pw-lightbox-counter"
+                    class="text-xs font-mono text-gray-300 bg-white/10 px-2.5 py-0.5 rounded-full"></span>
             </div>
-            <button onclick="closePreweddingLightbox()" class="text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors">
+            <button onclick="closePreweddingLightbox()"
+                class="text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors">
                 <span class="material-icons text-3xl">close</span>
             </button>
         </div>
 
         <!-- Prev / Next Navigation Buttons -->
-        <button type="button" onclick="pwLightboxPrev()" class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
-            <span class="material-icons text-3xl md:text-4xl group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
+        <button type="button" onclick="pwLightboxPrev()"
+            class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
+            <span
+                class="material-icons text-3xl md:text-4xl group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
         </button>
-        <button type="button" onclick="pwLightboxNext()" class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
-            <span class="material-icons text-3xl md:text-4xl group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+        <button type="button" onclick="pwLightboxNext()"
+            class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/60 hover:bg-rose-600 text-white border border-white/20 flex items-center justify-center transition shadow-2xl hover:scale-110 active:scale-95 group">
+            <span
+                class="material-icons text-3xl md:text-4xl group-hover:translate-x-0.5 transition-transform">chevron_right</span>
         </button>
 
         <!-- Center Image Stage -->
         <div class="relative max-w-5xl max-h-[82vh] w-full flex flex-col items-center justify-center px-12 md:px-16">
-            <img id="pw-lightbox-img" src="" alt="Prewedding photo" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl border border-white/10 transition-all duration-300" />
+            <img id="pw-lightbox-img" src="" alt="Prewedding photo"
+                class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl border border-white/10 transition-all duration-300" />
             <div id="pw-lightbox-meta" class="mt-4 text-center max-w-2xl px-4">
-                <p id="pw-lightbox-caption" class="text-sm md:text-base font-serif italic text-rose-100/95 leading-relaxed"></p>
+                <p id="pw-lightbox-caption"
+                    class="text-sm md:text-base font-serif italic text-rose-100/95 leading-relaxed"></p>
             </div>
         </div>
     </div>
@@ -1175,7 +1418,7 @@
         function unsealLetter() {
             const sealedView = document.getElementById('letter-sealed-view');
             const openView = document.getElementById('letter-open-view');
-            
+
             // Grand confetti blast
             if (typeof confetti === 'function') {
                 confetti({
@@ -1311,7 +1554,7 @@
             const modal = document.getElementById('prewedding-video-modal');
             const container = document.getElementById('pw-video-container');
             document.getElementById('pw-video-title').textContent = title || 'Pre-Wedding Clip';
-            
+
             container.innerHTML = `
                 <video src="${url}" controls autoplay preload="auto" class="w-full h-full object-contain"></video>
             `;
@@ -1445,4 +1688,5 @@
     <!-- Pre-Wedding AI Magic Component -->
     {% include 'partials/ai_magic_prewedding.html' %}
 </body>
+
 </html>
