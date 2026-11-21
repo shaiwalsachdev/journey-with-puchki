@@ -88,7 +88,7 @@ WEDDING_DETAILS = {
             "id": "wedding-invite-bride",
             "title": "Bride's Family Wedding Invite",
             "sub": "Official Video Invitation from Shaila (Bride's Family)",
-            "duration": "1:04",
+            "duration": "0:50",
             "badge": "Bride's Family Special 👰",
             "video_url": "/static/videos/wedding_invite_bride.mp4",
             "poster_url": "/static/videos/wedding_invite_bride_poster.jpg",
