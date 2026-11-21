@@ -280,21 +280,26 @@
 
             <!-- Video Version Switcher Tabs -->
             <div class="flex justify-center mb-8">
-                <div class="inline-flex p-1.5 rounded-2xl glass-royal border border-amber-400/30 gap-2 max-w-3xl w-full flex-wrap sm:flex-nowrap">
+                <div class="inline-flex p-1.5 rounded-2xl glass-royal border border-amber-400/30 gap-1.5 max-w-4xl w-full flex-wrap sm:flex-nowrap">
                     <button id="tab-btn-bride" onclick="switchVideo('bride')"
-                        class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 glass-tab-active text-amber-200">
+                        class="flex-1 py-3 px-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-1.5 glass-tab-active text-amber-200">
                         <span>👰</span>
-                        <span>Bride's Family Invite</span>
+                        <span>Bride's Invite</span>
+                    </button>
+                    <button id="tab-btn-bride-haldi" onclick="switchVideo('bride-haldi')"
+                        class="flex-1 py-3 px-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-1.5 text-amber-100/70 hover:text-white">
+                        <span>👰</span>
+                        <span>Bride (+ Haldi)</span>
                     </button>
                     <button id="tab-btn-haldi" onclick="switchVideo('haldi')"
-                        class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 text-amber-100/70 hover:text-white">
+                        class="flex-1 py-3 px-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-1.5 text-amber-100/70 hover:text-white">
                         <span>🤵</span>
-                        <span>Groom's Family (+ Haldi)</span>
+                        <span>Groom (+ Haldi)</span>
                     </button>
                     <button id="tab-btn-sagan" onclick="switchVideo('sagan')"
-                        class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 text-amber-100/70 hover:text-white">
+                        class="flex-1 py-3 px-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-1.5 text-amber-100/70 hover:text-white">
                         <span>🤵</span>
-                        <span>Groom's Family Invite</span>
+                        <span>Groom's Invite</span>
                     </button>
                 </div>
             </div>
@@ -360,64 +365,84 @@
             </div>
 
             <!-- Mini Thumbnails for Direct Quick Selection -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto mt-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mt-6">
                 <!-- Video 1 Preview Card: Bride's Family -->
                 <div onclick="switchVideo('bride')" class="cursor-pointer glass-royal p-3.5 rounded-2xl border border-amber-500/20 hover:border-amber-400 transition-all flex gap-3.5 items-center group">
-                    <div class="relative w-24 h-16 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
+                    <div class="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
                         <img src="/static/videos/wedding_invite_bride_poster.jpg" alt="Bride's Family Wedding Invite" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                         <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
                             <span class="material-icons text-amber-300 text-2xl group-hover:scale-110 transition-transform">play_circle</span>
                         </div>
                     </div>
-                    <div>
+                    <div class="min-w-0">
                         <div class="flex items-center gap-1.5 mb-0.5">
-                            <span class="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase bg-rose-500/20 text-rose-300">1:04 Min</span>
-                            <span class="text-[9px] text-amber-200/80 font-bold">Bride's Family 👰</span>
+                            <span class="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase bg-rose-500/20 text-rose-300">0:50 Min</span>
+                            <span class="text-[8px] text-amber-200/80 font-bold">Bride's Family 👰</span>
                         </div>
-                        <h4 class="font-cinzel text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-tight">
+                        <h4 class="font-cinzel text-xs font-bold text-white group-hover:text-amber-300 transition-colors leading-tight truncate">
                             Bride's Family Invite
                         </h4>
-                        <p class="text-[10px] text-amber-100/60 line-clamp-1 mt-0.5">Shaila's Family Official Invitation</p>
+                        <p class="text-[9px] text-amber-100/60 truncate mt-0.5">Shaila's Official Invitation</p>
                     </div>
                 </div>
 
-                <!-- Video 2 Preview Card: Groom's Family Haldi -->
+                <!-- Video 2 Preview Card: Bride's Family Haldi -->
+                <div onclick="switchVideo('bride-haldi')" class="cursor-pointer glass-royal p-3.5 rounded-2xl border border-amber-500/20 hover:border-amber-400 transition-all flex gap-3.5 items-center group">
+                    <div class="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
+                        <img src="/static/videos/wedding_invite_bride_haldi_poster.jpg" alt="Bride's Family Invite + Haldi" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <span class="material-icons text-amber-300 text-2xl group-hover:scale-110 transition-transform">play_circle</span>
+                        </div>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-1.5 mb-0.5">
+                            <span class="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase bg-rose-500/20 text-rose-300">1:04 Min</span>
+                            <span class="text-[8px] text-amber-200/80 font-bold">Bride's Family 👰</span>
+                        </div>
+                        <h4 class="font-cinzel text-xs font-bold text-white group-hover:text-amber-300 transition-colors leading-tight truncate">
+                            Bride (+ Haldi)
+                        </h4>
+                        <p class="text-[9px] text-amber-100/60 truncate mt-0.5">Includes Haldi Ceremony</p>
+                    </div>
+                </div>
+
+                <!-- Video 3 Preview Card: Groom's Family Haldi -->
                 <div onclick="switchVideo('haldi')" class="cursor-pointer glass-royal p-3.5 rounded-2xl border border-amber-500/20 hover:border-amber-400 transition-all flex gap-3.5 items-center group">
-                    <div class="relative w-24 h-16 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
+                    <div class="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
                         <img src="/static/videos/wedding_invite_haldi_poster.jpg" alt="Groom's Family Invite + Haldi" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                         <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
                             <span class="material-icons text-amber-300 text-2xl group-hover:scale-110 transition-transform">play_circle</span>
                         </div>
                     </div>
-                    <div>
+                    <div class="min-w-0">
                         <div class="flex items-center gap-1.5 mb-0.5">
-                            <span class="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase bg-amber-500/20 text-amber-300">1:24 Min</span>
-                            <span class="text-[9px] text-amber-200/80 font-bold">Groom's Family 🤵</span>
+                            <span class="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase bg-amber-500/20 text-amber-300">1:24 Min</span>
+                            <span class="text-[8px] text-amber-200/80 font-bold">Groom's Family 🤵</span>
                         </div>
-                        <h4 class="font-cinzel text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-tight">
-                            Groom's Family (+ Haldi)
+                        <h4 class="font-cinzel text-xs font-bold text-white group-hover:text-amber-300 transition-colors leading-tight truncate">
+                            Groom (+ Haldi)
                         </h4>
-                        <p class="text-[10px] text-amber-100/60 line-clamp-1 mt-0.5">Includes Haldi at Meriton &amp; Pheras</p>
+                        <p class="text-[9px] text-amber-100/60 truncate mt-0.5">Includes Haldi at Meriton</p>
                     </div>
                 </div>
 
-                <!-- Video 3 Preview Card: Groom's Family Main -->
+                <!-- Video 4 Preview Card: Groom's Family Main -->
                 <div onclick="switchVideo('sagan')" class="cursor-pointer glass-royal p-3.5 rounded-2xl border border-amber-500/20 hover:border-amber-400 transition-all flex gap-3.5 items-center group">
-                    <div class="relative w-24 h-16 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
+                    <div class="relative w-20 h-14 rounded-lg overflow-hidden shrink-0 border border-amber-400/30">
                         <img src="/static/videos/wedding_invite_poster.jpg" alt="Groom's Family Wedding Invite" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                         <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
                             <span class="material-icons text-amber-300 text-2xl group-hover:scale-110 transition-transform">play_circle</span>
                         </div>
                     </div>
-                    <div>
+                    <div class="min-w-0">
                         <div class="flex items-center gap-1.5 mb-0.5">
-                            <span class="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase bg-amber-500/20 text-amber-300">0:42 Min</span>
-                            <span class="text-[9px] text-amber-200/80 font-bold">Groom's Family 🤵</span>
+                            <span class="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase bg-amber-500/20 text-amber-300">0:42 Min</span>
+                            <span class="text-[8px] text-amber-200/80 font-bold">Groom's Family 🤵</span>
                         </div>
-                        <h4 class="font-cinzel text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors leading-tight">
-                            Groom's Family Invite
+                        <h4 class="font-cinzel text-xs font-bold text-white group-hover:text-amber-300 transition-colors leading-tight truncate">
+                            Groom's Invite
                         </h4>
-                        <p class="text-[10px] text-amber-100/60 line-clamp-1 mt-0.5">Official Sagan &amp; Wedding Ring Ceremony</p>
+                        <p class="text-[9px] text-amber-100/60 truncate mt-0.5">Official Sagan &amp; Wedding</p>
                     </div>
                 </div>
             </div>
@@ -578,6 +603,13 @@
                 poster: "/static/videos/wedding_invite_bride_poster.jpg",
                 filename: "Wedding_Invite_Bride_Family_Shaila_Shaiwal.mp4"
             },
+            "bride-haldi": {
+                title: "Bride's Family Wedding Invite (+ Haldi)",
+                sub: "Complete Invitation from Bride's Family including Haldi Ceremony & Wedding Details",
+                src: "/static/videos/wedding_invite_bride_haldi.mp4",
+                poster: "/static/videos/wedding_invite_bride_haldi_poster.jpg",
+                filename: "Wedding_Invite_Bride_Haldi_Shaila_Shaiwal.mp4"
+            },
             haldi: {
                 title: "Groom's Family Wedding Invite + Haldi Version",
                 sub: "Complete Invitation from Groom's Family including Haldi Ceremony, Sagan & Wedding Details",
@@ -599,6 +631,7 @@
         const videoSub = document.getElementById('current-video-sub');
         const downloadLink = document.getElementById('download-video-link');
         const tabBride = document.getElementById('tab-btn-bride');
+        const tabBrideHaldi = document.getElementById('tab-btn-bride-haldi');
         const tabHaldi = document.getElementById('tab-btn-haldi');
         const tabSagan = document.getElementById('tab-btn-sagan');
 
@@ -606,11 +639,12 @@
             const current = videoData[type];
             if (!current) return;
 
-            const activeClass = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 glass-tab-active text-amber-200";
-            const inactiveClass = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 text-amber-100/70 hover:text-white";
+            const activeClass = "flex-1 py-3 px-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-1.5 glass-tab-active text-amber-200";
+            const inactiveClass = "flex-1 py-3 px-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-1.5 text-amber-100/70 hover:text-white";
 
             // Update UI tabs
             if (tabBride) tabBride.className = (type === 'bride') ? activeClass : inactiveClass;
+            if (tabBrideHaldi) tabBrideHaldi.className = (type === 'bride-haldi') ? activeClass : inactiveClass;
             if (tabHaldi) tabHaldi.className = (type === 'haldi') ? activeClass : inactiveClass;
             if (tabSagan) tabSagan.className = (type === 'sagan') ? activeClass : inactiveClass;
 
@@ -618,6 +652,12 @@
             videoTitle.innerText = current.title;
             videoSub.innerText = current.sub;
             downloadLink.href = current.src;
+            downloadLink.download = current.filename;
+            mainVideo.src = current.src;
+            mainVideo.poster = current.poster;
+            mainVideo.load();
+            mainVideo.play().catch(() => {});
+        }
             downloadLink.download = current.filename;
 
             // Pause and load new source

@@ -95,6 +95,16 @@ WEDDING_DETAILS = {
             "features": ["Shaila & Shaiwal Love Story", "Sagan & Wedding Details", "Bride's Family Blessings"]
         },
         {
+            "id": "wedding-invite-bride-haldi",
+            "title": "Bride's Family Wedding Invite (+ Haldi)",
+            "sub": "Complete Invitation from Bride's Family including Haldi Ceremony & Wedding Details",
+            "duration": "1:04",
+            "badge": "Bride's Family (Extended) 👰",
+            "video_url": "/static/videos/wedding_invite_bride_haldi.mp4",
+            "poster_url": "/static/videos/wedding_invite_bride_haldi_poster.jpg",
+            "features": ["Includes Haldi Ceremony", "Sagan & Wedding Details", "Extended Soundtrack"]
+        },
+        {
             "id": "wedding-invite-haldi",
             "title": "Groom's Family Wedding Invite + Haldi Version",
             "sub": "Complete Invitation from Groom's Family including Haldi Ceremony, Sagan & Wedding Details",
