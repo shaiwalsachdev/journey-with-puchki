@@ -653,21 +653,12 @@
             videoSub.innerText = current.sub;
             downloadLink.href = current.src;
             downloadLink.download = current.filename;
-            mainVideo.src = current.src;
-            mainVideo.poster = current.poster;
-            mainVideo.load();
-            mainVideo.play().catch(() => {});
-        }
-            downloadLink.download = current.filename;
 
-            // Pause and load new source
-            const wasPlaying = !mainVideo.paused;
+            // Load new source & play
             mainVideo.src = current.src;
             mainVideo.poster = current.poster;
             mainVideo.load();
-            if (wasPlaying) {
-                mainVideo.play().catch(e => console.log(e));
-            }
+            mainVideo.play().catch(e => console.log('Autoplay deferred:', e));
         }
 
         function seekVideo(seconds) {
